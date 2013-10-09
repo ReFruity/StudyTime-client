@@ -1,0 +1,21 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Artem Artemyev -- Developer/Designer -- @viiv_c58
+    Rostislav Kirillov -- Developer/Designer -- @TheRast1234
+    Katerina Boronina -- Developer/Designer -- @_Greenest
+    Tatiana Nadymova -- Developer/Designer -- @tnady_alive
+    Nuta Blinicheva -- Designer/PR -- @KoRghik
+    Vlad Kosovskikh -- Developer
+    Alexander Promakh -- Developer
+
+# THANKS
+
+    Pavel Egorov
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+    jQuery, Angular, Twitter Bootstrap, CoffeeScript, LESS

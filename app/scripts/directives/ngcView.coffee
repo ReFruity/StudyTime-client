@@ -1,0 +1,64 @@
+angular.module('app.directives')
+.directive "ngcView", [ "$route", "$anchorScroll", "$compile", "$controller", "$animate",
+    ($route, $anchorScroll, $compile, $controller, $animate) ->
+      restrict: "ECA"
+      terminal: true
+      priority: 1000
+      transclude: "element"
+      compile: (element, attr, linker) ->
+        (scope, $element, attr) ->
+          currentScope = undefined
+          currentElement = undefined
+          currentOriginalPath = undefined
+          currentParams = undefined
+          onloadExp = attr.onload or ""
+
+          cleanupLastView = ->
+            if currentScope
+              currentScope.$destroy()
+              currentScope = null
+            if currentElement
+              $animate.leave currentElement
+              currentElement = null
+
+          update = ->
+            locals = $route.current and $route.current.locals
+            template = locals and locals.$template
+
+            if $route.current and $route.current.$$route
+              if $route.current.$$route.preventNestedReload and currentOriginalPath is $route.current.$$route.originalPath
+                if $route.current.$$route.dependencies
+                  for d of $route.current.$$route.dependencies
+                    paramName = $route.current.$$route.dependencies[d]
+                    return  if currentParams[paramName] is $route.current.params[paramName]
+                else
+                  return
+              currentOriginalPath = $route.current.$$route.originalPath
+              currentParams = angular.copy($route.current.params)
+
+            if template
+              newScope = scope.$new()
+              linker newScope, (clone) ->
+                cleanupLastView()
+                clone.html template
+                $animate.enter clone, null, $element
+                link = $compile(clone.contents())
+                current = $route.current
+                currentScope = current.scope = newScope
+                currentElement = clone
+                if current.controller
+                  locals.$scope = currentScope
+                  controller = $controller(current.controller, locals)
+                  currentScope[current.controllerAs] = controller  if current.controllerAs
+                  clone.data "$ngControllerController", controller
+                  clone.contents().data "$ngControllerController", controller
+                link currentScope
+                currentScope.$emit "$viewContentLoaded"
+                currentScope.$eval onloadExp
+                $anchorScroll()
+            else
+              cleanupLastView()
+
+          scope.$on "$routeChangeSuccess", update
+          update()
+  ]
