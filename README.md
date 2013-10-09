@@ -1,10 +1,7 @@
-# StudyTime
-### Sked of university
-[StudyTime.me](http://studytime.me)
+# StudyTime-client
+[StudyTime.me](http://studytime.me) developed by students of Ural State University for resolving major students problem - unknown timetable. 
+This project is a client-side HTML5 implementation (PhoneGap ready).
 
-## Description
-StudyTime developed by students of Ural State University for resolving major students problem - unknown sked
-
-## RoadMap
+## Road map
 + first
 + second
