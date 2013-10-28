@@ -1,0 +1,12 @@
+CACHE MANIFEST
+#v12
+
+#NETWORK:
+css/app.css
+js/app.js
+js/vendor.js
+index.html
+partials/index.html
+
+SETTINGS:
+prefer-online
