@@ -24,7 +24,13 @@ exports.config =
           'app/styles/app.less'
         ]
 
+    templates:
+      joinTo:
+        'js/dontUseMe' : /^app/ # dirty hack for Jade compiling.
+
   plugins:
+    jade_angular:
+      modules_folder: 'partials'
     uglify:
       mangle: true
       compress:
