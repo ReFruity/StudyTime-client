@@ -10,7 +10,7 @@
     ],
     "dependencies": {
         "console-polyfill": "~0.1.0",
-        "bootstrap": "~3.0",
+        "bootstrap-stylus": "~3.0",
         "font-awesome": "~3.2.1",
         "angular": "1.2.0-rc.2",
         "angular-cookies": "1.2.0-rc.2",
