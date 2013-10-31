@@ -16,6 +16,7 @@ App = angular.module('app', [
   'app.directives'
   'app.filters'
   'app.services'
+  'partials'
 ])
 
 .config([
