@@ -20,7 +20,7 @@
     "coffee-script-brunch": ">= 1.0 < 1.8",
 
     "css-brunch": ">= 1.0 < 1.8",
-    "stylus-brunch": ">= 1.0 < 1.8",
+    "stylus-brunch": "git+ssh://git@github.com:proAlexandr/stylus-brunch.git",
 
     "jade-angularjs-brunch": "~0.0.5",
     "jade": "~0.33",

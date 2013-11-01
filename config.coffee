@@ -4,8 +4,8 @@ exports.config =
     assets: /^app\/(assets|font)\//
 
   modules:
-    definition: false
-    wrapper: false
+    definition: no
+    wrapper: no
 
   paths:
     public: '_public'
@@ -19,7 +19,6 @@ exports.config =
     stylesheets:
       joinTo:
         'css/app.css': /^(app|vendor)/
-        'css/font-awesome.css': /bower_components\/font-awesome\/css\/font-awesome\.css/
 
     templates:
       joinTo:
@@ -33,10 +32,12 @@ exports.config =
       modules_folder: 'partials'
       locals: {}
     uglify:
-      mangle: true
+      mangle: yes
       compress:
         global_defs:
-          DEBUG: false
+          DEBUG: yes
+    stylus:
+      includeCss: yes
 
 # Enable or disable minifying of result js / css files.
-  minify: true
+  minify: yes
