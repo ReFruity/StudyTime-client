@@ -23,12 +23,15 @@ exports.config =
 
     templates:
       joinTo:
-        'js/dontUseMe' : /^app/ # dirty hack for Jade compiling.
-        'index.html' : /^app\/index/
+        'js/dontUseMe': /^app/ # dirty hack for Jade compiling.
+        'index.html': /^app\/index/
 
   plugins:
+    jade:
+      pretty: yes # Adds pretty-indentation whitespaces to output (false by default)
     jade_angular:
       modules_folder: 'partials'
+      locals: {}
     uglify:
       mangle: true
       compress:
@@ -36,4 +39,4 @@ exports.config =
           DEBUG: false
 
 # Enable or disable minifying of result js / css files.
-  minify: false
+  minify: true
