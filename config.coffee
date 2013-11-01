@@ -19,14 +19,12 @@ exports.config =
     stylesheets:
       joinTo:
         'css/app.css': /^(app|vendor)/
-      order:
-        before: [
-          'app/styles/app.less'
-        ]
+        'css/font-awesome.css': /bower_components\/font-awesome\/css\/font-awesome\.css/
 
     templates:
       joinTo:
         'js/dontUseMe' : /^app/ # dirty hack for Jade compiling.
+        'index.html' : /^app\/index/
 
   plugins:
     jade_angular:
