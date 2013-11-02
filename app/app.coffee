@@ -1,10 +1,11 @@
 'use strict'
 
 # Declare modules with requirements
-angular.module('app.controllers', [])
-angular.module('app.filters', [])
-angular.module('app.services', [])
-angular.module('app.directives', ['app.services'])
+angular.module 'app.controllers', []
+angular.module 'app.filters', []
+angular.module 'app.services', []
+angular.module 'app.directives', ['app.services']
+angular.module('app', ['pascalprecht.translate'])
 
 # Declare app level module which depends on filters, and services
 App = angular.module('app', [
@@ -26,7 +27,8 @@ App = angular.module('app', [
     ($routeProvider, $locationProvider) ->
       $routeProvider
 
-      .when('/', {templateUrl: '/partials/index.html'})
+      .when('/', templateUrl: '/partials/index.html')
+      .when('/terms', templateUrl: '/partials/terms.html')
 
       # Catch all
       .otherwise({redirectTo: '/'})
