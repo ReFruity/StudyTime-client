@@ -20,9 +20,9 @@
     "coffee-script-brunch": ">= 1.0 < 1.8",
 
     "css-brunch": ">= 1.0 < 1.8",
-    "stylus-brunch": "git+ssh://git@github.com:proAlexandr/stylus-brunch.git",
+    "stylus-brunch": "git://github.com/proAlexandr/stylus-brunch.git",
 
-    "jade-angularjs-brunch": "git+ssh://git@github.com:proAlexandr/jade-angularjs-brunch.git",
+    "jade-angularjs-brunch": "git://github.com/proAlexandr/jade-angularjs-brunch.git",
 
     "auto-reload-brunch": ">= 1.0 < 1.8",
     "uglify-js-brunch": ">= 1.0 < 1.8",
