@@ -17,7 +17,7 @@ App = angular.module('app', [
   'app.directives'
   'app.filters'
   'app.services'
-  'partials'
+  'app.templates'
 ])
 
 .config([
@@ -27,10 +27,14 @@ App = angular.module('app', [
     ($routeProvider, $locationProvider) ->
       $routeProvider
 
-      .when('/', templateUrl: '/partials/index.html')
-      .when('/terms', templateUrl: '/partials/terms.html')
+      .when('/', templateUrl: 'app/partials/index.jade')
+      .when('/terms', templateUrl: 'app/partials/terms.jade')
+      .when('/:groupName/:weekDay?/:classNum?/:atomClass?',
+          templateUrl: 'app/partials/groups/group.jade',
+          controller: GroupCtrl,
+          preventNestedReload: true
+        )
 
-      # Catch all
       .otherwise({redirectTo: '/'})
 
       # Without server side support html5 must be disabled.

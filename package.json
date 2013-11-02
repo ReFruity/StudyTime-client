@@ -22,8 +22,7 @@
     "css-brunch": ">= 1.0 < 1.8",
     "stylus-brunch": "git+ssh://git@github.com:proAlexandr/stylus-brunch.git",
 
-    "jade-angularjs-brunch": "~0.0.5",
-    "jade": "~0.33",
+    "jade-angularjs-brunch": "git+ssh://git@github.com:proAlexandr/jade-angularjs-brunch.git",
 
     "auto-reload-brunch": ">= 1.0 < 1.8",
     "uglify-js-brunch": ">= 1.0 < 1.8",

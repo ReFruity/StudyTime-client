@@ -23,13 +23,15 @@ exports.config =
     templates:
       joinTo:
         'js/dontUseMe': /^app/ # dirty hack for Jade compiling.
-        'index.html': /^app\/index/
+#        'index.html': /^app\/index/
 
   plugins:
     jade:
       pretty: yes # Adds pretty-indentation whitespaces to output (false by default)
     jade_angular:
-      modules_folder: 'partials'
+      single_file: true
+      single_file_name: 'js/partials.js'
+      static_mask: /^app,index.jade/ # static index.html
       locals: {}
     uglify:
       mangle: yes
