@@ -23,7 +23,9 @@ html(ng-app="app")
           enabled: true
       };
   body
-    div(ngc-view='ngc-view')
+    #wrap
+      include partials/header
+      .ngc-view
 
     //<script type="text/javascript" src="phonegap.js"></script>
     script(type='text/javascript', src='js/vendor.js')

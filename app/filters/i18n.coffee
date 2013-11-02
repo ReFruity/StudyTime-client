@@ -3,13 +3,22 @@ angular.module('app.filters').filter('translate', [ ->
     ru:
       layouts:
         main:
+          site_name: "StudyTime"
           about: "О проекте"
           terms: "Соглашение"
           authors: "Кто авторы?"
+          navigation:
+            shedule: "Рассписание"
+            auditoriums: "Аудитории"
+            cources: "Спецкурсы"
+
+      buttons:
+        sign_in: "Вход"
 
       schedules:
         index:
-          choose_group: "Выберите группу"
+          choose_group: "Выбери группу"
+
 
 
   (path) ->
