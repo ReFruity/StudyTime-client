@@ -1,9 +1,16 @@
 angular.module('app.filters').filter('translate', [ ->
   data =
     ru:
-      partials:
-        terms:
-          title: "Заголовок"
+      layouts:
+        main:
+          about: "О проекте"
+          terms: "Соглашение"
+          authors: "Кто авторы?"
+
+      schedules:
+        index:
+          choose_group: "Выберите группу"
+
 
   (path) ->
     @locale = 'ru'

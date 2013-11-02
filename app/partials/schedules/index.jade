@@ -1,0 +1,5 @@
+.container#schedule-index
+  h1.text-center {{ 'schedules.index.choose_group' | translate }}
+  .groups
+    .group.pull-left(ng-repeat='(name, values) in groups')
+      {{ name }}

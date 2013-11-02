@@ -27,13 +27,13 @@ App = angular.module('app', [
     ($routeProvider, $locationProvider) ->
       $routeProvider
 
-      .when('/', templateUrl: 'app/partials/index.jade')
-      .when('/terms', templateUrl: 'app/partials/terms.jade')
-      .when('/:groupName/:weekDay?/:classNum?/:atomClass?',
-          templateUrl: 'app/partials/groups/group.jade',
-          controller: GroupCtrl,
-          preventNestedReload: true
-        )
+      .when('/', templateUrl: 'app/partials/schedules/index.jade', controller: ScheduleIndexCtrl)
+#      .when('/terms', templateUrl: 'app/partials/terms.jade')
+#      .when('/:groupName/:weekDay?/:classNum?/:atomClass?',
+#          templateUrl: 'app/partials/groups/group.jade',
+#          controller: GroupCtrl,
+#          preventNestedReload: true
+#        )
 
       .otherwise({redirectTo: '/'})
 
