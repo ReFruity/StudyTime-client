@@ -17,6 +17,3 @@ test/test-results.xml
 
 # Bower stuff.
 bower_components/
-
-# Dont copy AppCache manifest
-app/assets/studytime.manifest
