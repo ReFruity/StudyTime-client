@@ -7,6 +7,7 @@ angular.module 'app.services', []
 angular.module 'app.directives', ['app.services']
 angular.module('app', ['pascalprecht.translate'])
 
+
 # Declare app level module which depends on filters, and services
 App = angular.module('app', [
   'ngCookies'
