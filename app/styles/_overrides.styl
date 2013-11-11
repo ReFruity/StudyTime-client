@@ -4,6 +4,11 @@ Place custom styles here. These styles should loaded after
 bootstrap, so they may override it's behavior.
 */
 
+// Needed for ng-cloak work
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+  display: none !important
+
+
 /* Overthrow CSS:
    Enable overflow: auto on elements with overthrow class when html element has overthrow class too.
    See: https://github.com/filamentgroup/Overthrow */
