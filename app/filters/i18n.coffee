@@ -8,7 +8,7 @@ angular.module('app.filters').filter('translate', [ ->
           terms: "Соглашение"
           authors: "Кто авторы?"
           navigation:
-            shedule: "Рассписание"
+            shedule: "Расписание"
             auditoriums: "Аудитории"
             cources: "Спецкурсы"
 
