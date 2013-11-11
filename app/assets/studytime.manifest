@@ -3,9 +3,8 @@ CACHE MANIFEST
 # Version: <version>
 
 FALLBACK:
-/ /index.html
+/ /offline.html
 
 NETWORK:
-/
 *
 //api.studytime.me
