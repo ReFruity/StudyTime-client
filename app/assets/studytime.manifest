@@ -2,8 +2,9 @@ CACHE MANIFEST
 # AppName: StudyTime
 # Version: <version>
 
+FALLBACK:
+/ /offline.html
+
 NETWORK:
 *
-
-FALLBACK:
-/humans.txt /offline.html
+//api.studytime.me
