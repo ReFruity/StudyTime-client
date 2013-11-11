@@ -3,7 +3,7 @@ CACHE MANIFEST
 # Version: <version>
 
 FALLBACK:
-/ /index.html
+/ /
 
 NETWORK:
 *
