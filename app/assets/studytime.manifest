@@ -1,2 +1,7 @@
-# Application: StudyTime
+CACHE MANIFEST
+# AppName: StudyTime
 # Version: <version>
+NETWORK:
+/
+*
+//api.studytime.me
