@@ -6,4 +6,4 @@ NETWORK:
 *
 
 FALLBACK:
-/ offline.html
+/humans.txt /offline.html
