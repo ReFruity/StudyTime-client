@@ -40,6 +40,9 @@ exports.config =
           DEBUG: yes
     stylus:
       includeCss: yes
+    cleancss:
+      keepSpecialComments: 0
+      removeEmpty: true
 
 # Enable or disable minifying of result js / css files.
   minify: yes
