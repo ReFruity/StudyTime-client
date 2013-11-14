@@ -1,9 +1,6 @@
-'use strict'
-
-
 angular.module('app.controllers')
 
-.controller('SchedulesIndexCtrl', [
+.controller('CoursesIndexCtrl', [
     '$scope'
 
     ($scope) ->

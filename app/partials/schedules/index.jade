@@ -1,11 +1,8 @@
-.container#schedule-index
-  h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
-  .row
-    .col-md-offset-1.col-md-10
-      .course.col-md-3(ng-repeat='(name, values) in groups')
-        .course-content
-          h3.text-center {{ name }}
-          .groups
-            .line(ng-repeat='line in values')
-              .group.col-md-4(ng-repeat='group in line')
-                {{ group.name }}
+.schedule-header
+    .container Верхняя панелька
+
+div(ng-include, src="'app/partials/schedules/studies.jade'")
+//div(ng-switch on='group.state')
+    div(ng-switch-when="studies", ng-include, src="'app/partials/schedules/studies.jade'")
+    div(ng-switch-when="exams", ng-include, src="'app/partials/schedules/exams.jade'")
+    div(ng-switch-when="vacation", ng-include, src="'app/partials/schedules/vacation.jade'")

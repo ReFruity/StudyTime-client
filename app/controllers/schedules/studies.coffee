@@ -1,11 +1,8 @@
-'use strict'
-
-
 angular.module('app.controllers')
 
-.controller('SchedulesIndexCtrl', [
+.controller('SchedulesStudiesCtrl', [
     '$scope'
 
     ($scope) ->
-      ""
+      console.log "there"
   ])

@@ -17,15 +17,6 @@ html(ng-app="app", ng-cloak)
 
     link(rel="stylesheet", href="css/app.css")
     script.
-      function onUpdateReady() {
-        alert('found new version!');
-      }
-
-      window.applicationCache.addEventListener('updateready', onUpdateReady);
-      if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
-        onUpdateReady();
-      }
-
       window.brunch = window.brunch || {};
       window.brunch['auto-reload'] = {
           enabled: true

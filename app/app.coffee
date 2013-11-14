@@ -5,7 +5,6 @@ angular.module 'app.controllers', []
 angular.module 'app.filters', []
 angular.module 'app.services', []
 angular.module 'app.directives', ['app.services']
-angular.module('app', ['pascalprecht.translate'])
 
 
 # Declare app level module which depends on filters, and services
@@ -28,18 +27,32 @@ App = angular.module('app', [
     ($routeProvider, $locationProvider) ->
       $routeProvider
 
-      .when('/', templateUrl: 'app/partials/schedules/index.jade', controller: ScheduleIndexCtrl)
-#      .when('/terms', templateUrl: 'app/partials/terms.jade')
-#      .when('/:groupName/:weekDay?/:classNum?/:atomClass?',
-#          templateUrl: 'app/partials/groups/group.jade',
-#          controller: GroupCtrl,
-#          preventNestedReload: true
-#        )
-
+      .when('/', templateUrl: 'app/partials/groups/index.jade', controller: 'GroupsIndexCtrl')
+      .when('/terms', templateUrl: 'app/partials/terms.jade')
+      .when('/places', templateUrl: 'app/partials/places/index.jade', controller: 'PlacesIndexCtrl')
+      .when('/courses', templateUrl: 'app/partials/courses/index.jade', controller: 'CoursesIndexCtrl')
+      .when('/:groupName/:weekDay?/:classNum?/:atomClass?',
+          templateUrl: 'app/partials/schedules/index.jade',
+          controller: 'SchedulesIndexCtrl',
+          preventNestedReload: true
+        )
       .otherwise({redirectTo: '/'})
 
       # Without server side support html5 must be disabled.
       $locationProvider.html5Mode(if checkPhonegap() then false else true)
+  ])
+
+.run([
+    '$rootScope'
+    '$location'
+    '$cookies'
+    '$route'
+    '$routeParams'
+
+    ($rootScope, $location, $cookies, $route, $routeParams) ->
+      $rootScope.$route = $route
+      $rootScope.$location = $location
+      $rootScope.$routeParams = $routeParams
   ])
 
 # FastClick

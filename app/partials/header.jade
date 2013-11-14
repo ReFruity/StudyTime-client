@@ -1,12 +1,16 @@
 .header
-  .container
-    .row.text-right
-      .col-md-4.text-center
-        h2.site-name {{ 'layouts.main.site_name' | translate }}
-      .col-md-6.text-center
-        ul.navigation
-          li {{ 'layouts.main.navigation.shedule' | translate }}
-          li {{ 'layouts.main.navigation.auditoriums' | translate }}
-          li {{ 'layouts.main.navigation.cources' | translate }}
-      .col-md-1.session-btns.text-center
-        .btn.btn-warning {{ 'buttons.sign_in' | translate }}
+    .container
+        .row.text-right
+            .col-md-4.text-center
+                h2.site-name
+                    a(href='/') {{ 'layouts.main.site_name' | translate }}
+            .col-md-6.text-center
+                ul.navigation
+                    li(ng-class='{active: $location.path() == "/" || $routeParams.groupName}')
+                        a(href='/') {{ 'layouts.main.navigation.shedule' | translate }}
+                    li(ng-class='{active: $location.path() == "/places"}')
+                        a(href='/places') {{ 'layouts.main.navigation.auditoriums' | translate }}
+                    li(ng-class='{active: $location.path() == "/courses"}')
+                        a(href='/courses') {{ 'layouts.main.navigation.cources' | translate }}
+            .col-md-1.session-btns.text-center
+                .btn.btn-warning {{ 'buttons.sign_in' | translate }}

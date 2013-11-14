@@ -1,0 +1,11 @@
+.container#schedule-index
+    h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
+    .row
+        .col-md-offset-1.col-md-10
+            .course.col-md-3(ng-repeat='(name, values) in groups')
+                .course-content
+                    h3.text-center {{ name }}
+                    .groups
+                        .line(ng-repeat='line in values')
+                            .group.col-md-4(ng-repeat='group in line')
+                                a(href='/{{name}}-{{ group.name }}') {{ group.name }}
