@@ -1,11 +1,10 @@
 @import _variables
 
+
 .header
-  .site-name
+  .navbar-brand
     color: $theme-color
 
-  .session-btns
-    margin-top: 20px
 
   ul.navigation
     list-style: none
@@ -17,3 +16,36 @@
       &:active, &:hover, &.active
         color: $theme-color
         border-bottom: 2px solid $theme-color
+
+
+body
+/*overflow hidden*/
+
+/*#wrap*/
+/*position relative*/
+
+.header
+  height: 53px
+/*position absolute*/
+/*top 0*/
+
+.footer
+  height: 74px
+/*bottom 0*/
+/*position absolute*/
+
+.overthrow
+  height 100px
+/*top: 53px*/
+/*bottom 74px*/
+/*right 0*/
+/*left 0*/
+/*position absolute*/
+/*clear both*/
+
+
+// Mobile
+@media $media-max-phone
+  .footer
+    display: none
+
