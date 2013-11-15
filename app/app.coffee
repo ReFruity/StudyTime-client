@@ -63,3 +63,9 @@ window.addEventListener('load', ->
 # Phonegap checker
 window.checkPhonegap = ->
   return (window.cordova || window.PhoneGap || window.phonegap) && /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent)
+
+# Disable scrolling bounce of body
+document.ontouchmove = (e) ->
+  e.preventDefault()
+document.getElementById('wrap').ontouchmove = (e) ->
+  e.stopPropagation();
