@@ -63,3 +63,11 @@ window.addEventListener('load', ->
 # Phonegap checker
 window.checkPhonegap = ->
   return (window.cordova || window.PhoneGap || window.phonegap) && /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent)
+
+# Remove scroll bounce effect in IOS devices
+document.body.addEventListener('touchmove', (event) ->
+  event.preventDefault();
+, false);
+window.onresize = ->
+  angular.element(document.body).css('width': window.innerWidth, 'height': window.innerHeight);
+window.onresize()
