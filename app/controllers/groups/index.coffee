@@ -8,13 +8,13 @@ angular.module('app.controllers')
 
     ($scope) ->
       #TODO: redirect to last opened group
-
       $scope.groups =
         "КН": [
           [
             {name: 101},
             {name: 102},
-            {name: 103}
+            {name: 103},
+            {name: 104}
           ],
           [
             {name: 201},
@@ -31,11 +31,13 @@ angular.module('app.controllers')
             {name: 101},
             {name: 102},
             {name: 103}
+            {name: 104}
           ],
           [
             {name: 201},
             {name: 202},
             {name: 203}
+            {name: 204}
           ],
           [
             {name: 301},
@@ -93,17 +95,19 @@ angular.module('app.controllers')
         "ФТ": [
           [
             {name: 101},
-            {name: 102},
-            {name: 103}
           ],
           [
             {name: 201},
-            {name: 202},
-            {name: 203}
           ],
           [
             {name: 301},
-            {name: 302}
+          ],
+          [
+            {name: 401},
+          ],
+          [
+            {name: 501},
           ],
         ]
+      $scope.groupKeys = _.keys($scope.groups)
   ])

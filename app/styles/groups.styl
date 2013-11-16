@@ -3,11 +3,47 @@
 #schedule-index
   > .title
     margin-bottom: 40px
-  .course
-    margin-bottom: 10px
+  .speciality
+    border: 5px solid #fff
+    background: $panel-footer-bg
     .course-content
-      background: $panel-footer-bg
       overflow: hidden
       padding: 0 15px 15px
       .line
-        line-height: 30px
+        overflow: hidden
+        .group
+          margin-bottom 10px
+
+// todo $screen-md
+@media(min-width: 992px)
+  #schedule-index
+    .speciality
+      width: 25%
+
+    .schedule-table
+      display table
+      .schedule-row
+        display table-row
+        .speciality
+          display table-cell
+
+//todo $screen-md
+@media(max-width: 991px)
+  #schedule-index
+    &.container
+      max-width 100%
+      padding 0
+      width 100%
+    .schedule-table
+      &.col-md-10
+        padding 0
+      .speciality
+        border none
+        h3
+          padding: 15px 20px 9px
+          border-bottom: 1px solid #ddd;
+          margin: 0 0 15px;
+          background: #fff;
+        .group
+          font-size 25px
+
