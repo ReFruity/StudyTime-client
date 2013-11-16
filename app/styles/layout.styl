@@ -3,6 +3,10 @@
 .header
   .navbar-brand
     color: $theme-color
+    a
+      color: $theme-color
+  .mobile-navbar
+    display none
 
   ul.navigation
     list-style: none
@@ -14,3 +18,13 @@
       &:active, &:hover, &.active
         color: $theme-color
         border-bottom: 2px solid $theme-color
+
+// todo add variable
+@media(max-width: 768px)
+  .header
+    .mobile-navbar
+      display block
+      h3
+        margin 0 100px
+        padding: 10px
+        color: $theme-color

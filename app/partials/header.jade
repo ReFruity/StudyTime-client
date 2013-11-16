@@ -12,3 +12,8 @@ header.header
                         a(href='/places') {{ 'layouts.main.navigation.auditoriums' | translate }}
                     li(ng-class='{active: $location.path() == "/courses"}')
                         a(href='/courses') {{ 'layouts.main.navigation.cources' | translate }}
+            .mobile-navbar
+                .navbar-brand
+                    i.fa.fa-lg(class='{{mobileHeader.backBtn.icon}}')
+                    a(href="#") {{ mobileHeader.backBtn.title }}
+                h3.text-center {{ mobileHeader.title }}

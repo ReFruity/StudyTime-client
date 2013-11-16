@@ -53,6 +53,12 @@ App = angular.module('app', [
       $rootScope.$route = $route
       $rootScope.$location = $location
       $rootScope.$routeParams = $routeParams
+
+      $rootScope.mobileHeader =
+        title: 'Заголовок'
+        backBtn:
+          title: 'Назад'
+          icon: 'fa-angle-left'
   ])
 
 # FastClick
