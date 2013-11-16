@@ -8,7 +8,6 @@ angular.module('app.controllers')
 
     ($scope) ->
       #TODO: redirect to last opened group
-
       $scope.groups =
         "КН": [
           [
