@@ -8,70 +8,21 @@ bootstrap, so they may override it's behavior.
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
   display: none !important
 
-// Footer
-.footer
-  border-top: 1px solid $panel-inner-border
-  /*background-color: whitesmoke*/
-  padding: 10px 0
-
-/* .box-shadow(inset 0 5px 15px rgba(0, 0, 0, .025)) */
-
-// Application styles
-.donetrue
-  text-decoration: line-through
-  color: grey
-
-ul
-  padding-left: 0
-
-// Bottom footer
-
 html, body
   height: 100%
 
 #wrap
   min-height: 100%
 
-.ngc-view
-  padding-bottom: $footer-height
-
 .footer
   position: relative
   margin-top: - $footer-height
   height: $footer-height
   clear: both
+  border-top: 1px solid $panel-inner-border
+  padding: 10px 0
 
 // todo make $screen-tablet
 @media (max-width: 768px)
-  html
-    margin:0;
-    padding:0;
-    overflow: hidden;
-
-  body
-    position: absolute;
-    width:100%;
-    height:100%;
-    overflow: auto;
-
   .footer
     display none
-
-  .overthrow-enabled
-    .header
-      position: absolute
-      top 0
-      left 0
-      right 0
-
-    #wrap
-      min-height 0
-
-    .overthrow
-      overflow auto
-      -webkit-overflow-scrolling touch
-      position absolute
-      top $navbar-height
-      bottom $navbar-height
-      left 0
-      right 0
