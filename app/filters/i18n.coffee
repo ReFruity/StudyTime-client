@@ -17,7 +17,16 @@ angular.module('app.filters').filter('translate', [ ->
 
       schedules:
         index:
-          choose_group: "Выбери группу"
+          choose_group: "Выберите группу"
+          subscribe: "Подписаться"
+          next_week: "Следующая неделя >"
+        studies:
+          monday: "Понедельник"
+          tuesday: "Вторник"
+          wednesday: "Среда"
+          thursday: "Четверг"
+          friday: "Пятница"
+          saturday: "Суббота"
 
 
 

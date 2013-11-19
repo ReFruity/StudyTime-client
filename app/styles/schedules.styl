@@ -1,2 +1,97 @@
 @import _variables
 
+.schedule-header
+  background: #f0f0f0
+  .navbar
+    max-height: 50px
+    overflow: hidden
+    .navbar-header
+      padding: 0 15px 15px 0
+    .navbar-brand
+      padding: 15px 15px 15px
+      &:active, &:hover, &.active
+        color: #000000
+    .navbar-link
+      padding: 15px 20px 0 0
+      text-decoration: none
+      color: #00A000
+      &:active, &:hover, &.active
+        color: #000000
+    .navbar-text
+      padding: 3px 130px
+  .btn
+    margin-top: 7px
+
+#schedule-greed
+  > .title
+  .lesson-cell
+    border: 1px solid #f0f0f0
+    border-top: none
+    overflow: hidden
+    padding: 0 25px 25px
+    min-height: 50px
+    min-width: 250px
+    &:active, &:hover, &.active
+      cursor: pointer
+    &.current
+      border: 1px solid #FF6600
+  .lesson-cell-l
+    margin-left: -15%
+  .lesson-cell-l-t
+    border-radius: 10px 10px 0 0
+    border-top: 1px solid #f0f0f0
+  .lesson-cell-l-b
+    border-radius: 0 0 10px 10px
+    margin-bottom: 20px
+  .lesson-cell-c
+    margin-left: 42%
+  .lesson-cell-c-t
+    border-radius: 10px 10px 0 0
+    border-top: 1px solid #f0f0f0
+  .lesson-cell-c-b
+    border-radius: 0 0 10px 10px
+    margin-bottom: 20px
+  .lesson-cell-r
+    margin-left: 100%
+  .lesson-cell-r-t
+    border-radius: 10px 10px 0 0
+    border-top: 1px solid #f0f0f0
+  .lesson-cell-r-b
+    border-radius: 0 0 10px 10px
+    margin-bottom: 20px
+  .lesson-cell-title
+    border: none
+    max-height: 50px
+    max-width: 50px
+  .lesson-title
+    text-align: center
+    padding-top: 5px
+    padding-bottom: 5px
+    margin-left: 35px
+    margin-right: 35px
+    color: #000000
+    &.current
+      border-radius: 10px 10px 10px 10px
+      background: #FF6600
+      color: #FFFFFF
+  .lesson-title-date
+    text-align: right
+    margin-top: -15%
+    margin-right: -5%
+    color: #FFFFFF
+    &.current
+      color: #000000
+  .lesson-time
+    max-width: 20px
+    margin-left: -10%
+    margin-bottom: -10%
+  .lesson-time-number
+    padding-left: 15px
+    margin-bottom: -2%
+    color: #000000
+    &.current
+      color: #FF6600
+  .lesson-time-start
+    color: #000000
+    &.current
+      color: #FF6600
