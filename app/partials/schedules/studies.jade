@@ -1,4 +1,162 @@
 div(ng-controller='SchedulesStudiesCtrl')
-    .container Расписание
-
-i.fa.fa-th-large
+    .container#schedule-greed
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l.lesson-cell-title
+                        h4.lesson-title.current {{ 'schedules.studies.monday' | translate }}
+                        h5.lesson-title-date.current {{ '7 окт.' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c.lesson-cell-title
+                        h4.lesson-title {{ 'schedules.studies.tuesday' | translate }}
+                        h5.lesson-title-date {{ '8 окт.' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r.lesson-cell-title
+                        h4.lesson-title {{ 'schedules.studies.wednesday' | translate }}
+                        h5.lesson-title-date {{ '9 окт.' }}
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                   h4.lesson-time-number.current {{ '1' }}
+                   .lesson-time-start.current {{ '09:00' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l.lesson-cell-l-t.current
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c.lesson-cell-c-t
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r.lesson-cell-r-t
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '2' }}
+                    .lesson-time-start {{ '10:40' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '3' }}
+                    .lesson-time-start {{ '12:50' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '4' }}
+                    .lesson-time-start {{ '14:30' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '5' }}
+                    .lesson-time-start {{ '16:10' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '6' }}
+                    .lesson-time-start {{ '17:50' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l.lesson-cell-l-b
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c.lesson-cell-c-b
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r.lesson-cell-r-b
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l.lesson-cell-title
+                        h4.lesson-title {{ 'schedules.studies.thursday' | translate }}
+                        h5.lesson-title-date {{ '10 окт.' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c.lesson-cell-title
+                        h4.lesson-title {{ 'schedules.studies.friday' | translate }}
+                        h5.lesson-title-date {{ '11 окт.' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r.lesson-cell-title
+                        h4.lesson-title {{ 'schedules.studies.saturday' | translate }}
+                        h5.lesson-title-date {{ '12 окт.' }}
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                   h4.lesson-time-number {{ '1' }}
+                   .lesson-time-start {{ '09:00' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l.lesson-cell-l-t.current
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c.lesson-cell-c-t
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r.lesson-cell-r-t
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '2' }}
+                    .lesson-time-start {{ '10:40' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '3' }}
+                    .lesson-time-start {{ '12:50' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '4' }}
+                    .lesson-time-start {{ '14:30' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '5' }}
+                    .lesson-time-start {{ '16:10' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r
+        .row
+            .col-md-offset-1.col-md-10
+                .lesson.col-md-3.lesson-time
+                    h4.lesson-time-number {{ '6' }}
+                    .lesson-time-start {{ '17:50' }}
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-l.lesson-cell-l-b
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-c.lesson-cell-c-b
+                .lesson.col-md-3
+                    .lesson-cell.lesson-cell-r.lesson-cell-r-b
