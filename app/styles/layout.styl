@@ -1,30 +1,49 @@
 @import _variables
 
-.header
-  .navbar-brand
-    color: $theme-color
-    a
-      color: $theme-color
-  .mobile-navbar
+.nav
+  i.fa
     display none
 
-  ul.navigation
-    list-style: none
-    display inline-block
-    li
-      display inline-block
-      border-bottom: 2px solid #fff
-      padding 25px 20px 20px
-      &:active, &:hover, &.active
-        color: $theme-color
-        border-bottom: 2px solid $theme-color
-
-// todo add variable
-@media(max-width: 768px)
+@media $screen-tablet-media-q
+  #wrap
+    padding-top $navbar-height
   .header
-    .mobile-navbar
-      display block
-      h3
-        margin 0 100px
-        padding: 10px
-        color: $theme-color
+    .navbar
+      position fixed
+      right 0
+      left 0
+      z-index $zindex-navbar-fixed
+      height $navbar-height * 0.6
+    .navbar-form
+        display none
+    .navbar-header
+      float left
+      margin-right 0.3em
+      .navbar-brand
+        background-color $navbar-default-link-active-bg
+        span
+          display none
+        &:after
+          content "ST"
+    .navbar-right
+      float left !important
+    .nav
+      margin 0
+      i.fa
+        display block
+      li
+        text-align center
+        float left
+        a
+          margin 0
+          padding 1em 0.5em
+          background none !important
+          font-size 0.7em
+          line-height 1.3em
+
+        &.active
+          a
+            color $theme-color !important
+          i.fa
+            color $theme-color
+
