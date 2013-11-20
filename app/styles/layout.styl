@@ -1,22 +1,19 @@
 @import _variables
 
+// Disable navigation icons
 .nav
   i.fa
     display none
 
+
 @media $screen-tablet-media-q
-  #wrap
-    padding-top $navbar-height
   .header
     .navbar
-      position fixed
-      right 0
-      left 0
-      z-index $zindex-navbar-fixed
       height $navbar-height+2
 
     .navbar-form
         display none
+
     .navbar-header
       float left
       margin-right 0.3em
@@ -26,8 +23,10 @@
           display none
         &:after
           content "ST"
+
     .navbar-right
       float left !important
+
     .nav
       margin 0
       i.fa

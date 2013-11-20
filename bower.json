@@ -21,7 +21,8 @@
         "angular-animate": "1.2.1",
 
         "js-base64": "~2.1.2",
-        "underscore": "~1.5.2"
+        "underscore": "~1.5.2",
+        "overthrow-dist": "~0.7.0"
     },
     "overrides": {
         "bootstrap": {

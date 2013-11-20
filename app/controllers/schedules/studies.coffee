@@ -4,5 +4,5 @@ angular.module('app.controllers')
     '$scope'
 
     ($scope) ->
-      console.log "there"
+      console.log "studies"
   ])

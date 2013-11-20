@@ -1,11 +1,12 @@
-.container#schedule-index
-    h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
-    .col-md-offset-1.col-md-10.schedule-table
-        .schedule-row(ng-repeat='speciality in groupKeys', ng-if='$index % 4 == 0', ng-init='speciality_index = $index')
-            .speciality(ng-repeat='i in [0,1,2,3]', ng-if='groups[groupKeys[speciality_index + i]] != undefined', ng-init='speciality = groupKeys[speciality_index + i]')
-                h3.text-center {{ speciality }}
-                .course-content
-                    .groups(ng-init='values = groups[speciality]')
-                        .line(ng-repeat='line in values')
-                            .group.col-md-4.col-xs-3.text-center(ng-repeat='group in line')
-                                a(href='/{{speciality}}-{{ group.name }}') {{ group.name }}
+.overthrow.non-bounce
+    .container#schedule-index
+        h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
+        .col-md-offset-1.col-md-10.schedule-table
+            .schedule-row(ng-repeat='speciality in groupKeys', ng-if='$index % 4 == 0', ng-init='speciality_index = $index')
+                .speciality(ng-repeat='i in [0,1,2,3]', ng-if='groups[groupKeys[speciality_index + i]] != undefined', ng-init='speciality = groupKeys[speciality_index + i]')
+                    h3.text-center {{ speciality }}
+                    .course-content
+                        .groups(ng-init='values = groups[speciality]')
+                            .line(ng-repeat='line in values')
+                                .group.col-md-4.col-xs-3.text-center(ng-repeat='group in line')
+                                    a(href='/{{speciality}}-{{ group.name }}') {{ group.name }}

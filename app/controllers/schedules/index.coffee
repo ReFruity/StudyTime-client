@@ -7,5 +7,5 @@ angular.module('app.controllers')
     '$scope'
 
     ($scope) ->
-      ""
+      console.log "schedule"
   ])

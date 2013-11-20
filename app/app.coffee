@@ -39,7 +39,7 @@ App = angular.module('app', [
       .otherwise({redirectTo: '/'})
 
       # Without server side support html5 must be disabled.
-      $locationProvider.html5Mode(if checkPhonegap() then false else true)
+      $locationProvider.html5Mode(true)
   ])
 
 .run([
