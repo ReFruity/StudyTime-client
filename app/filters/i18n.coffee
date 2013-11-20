@@ -21,14 +21,12 @@ angular.module('app.filters').filter('translate', [ ->
           subscribe: "Подписаться"
           next_week: "Следующая неделя >"
         studies:
-          monday: "Понедельник"
-          tuesday: "Вторник"
-          wednesday: "Среда"
-          thursday: "Четверг"
-          friday: "Пятница"
-          saturday: "Суббота"
-
-
+          Mon: "Понедельник"
+          Tue: "Вторник"
+          Wed: "Среда"
+          Thu: "Четверг"
+          Fri: "Пятница"
+          Sat: "Суббота"
 
   (path) ->
     @locale = 'ru'

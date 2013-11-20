@@ -1,12 +1,8 @@
 @import _variables
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
-.opacity-shower-start {
-  opacity 0
-  transition(opacity 1s ease)
-}
-.opacity-shower-end {
-  opacity 1
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
 
 html, body
@@ -16,11 +12,12 @@ html, body
   min-height 100%
 
 .footer
-  position: relative
-  height: $footer-height
-  clear: both
-  border-top: 1px solid $panel-inner-border
-  padding: 10px 0
+  position relative
+  height $footer-height
+  margin -($footer-height) 0 0 0
+  clear both
+  border-top 1px solid $panel-inner-border
+  padding 10px 0
 
 @media $screen-tablet-media-q
   .footer

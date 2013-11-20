@@ -27,10 +27,9 @@ html(ng-app="app")
           enabled: true
       };
   body
-    div(ng-class="{'opacity-shower-end':true}").opacity-shower-start
-        include partials/header
-        #wrap(ngc-view).ng-cloak
-        include partials/footer
+    include partials/header
+    #wrap.ngc-view.ng-cloak
+    include partials/footer
 
     //<script type="text/javascript" src="phonegap.js"></script>
     script(type='text/javascript', src='js/vendor.js')
