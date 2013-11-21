@@ -1,8 +1,9 @@
 angular.module('app.directives')
 .run([
     '$rootScope'
+    '$timeout'
 
-    ($rootScope) ->
+    ($rootScope, $timeout) ->
       # Work only for Apple Standalone application
       html = angular.element(document.documentElement)
       if not html.hasClass('standalone') or html.hasClass('phonegap')
@@ -11,6 +12,24 @@ angular.module('app.directives')
       # Create global list of nonbounce elements
       $rootScope.__non_bounce = []
       startY = 0
+      lock = false
+
+      # Lock when changing view
+      $rootScope.$on '$viewContentChangeStart', ->
+        lock = true
+
+      $rootScope.$on '$viewContentChangeEnd', ->
+        # Disable bounce scrolling
+        scroll_elements = document.querySelectorAll(".overthrow");
+        for e in scroll_elements
+          angular.element(e).attr('style', '-webkit-overflow-scrolling: auto')
+
+        # Ensble bounce scrolling after 50ms
+        $timeout(->
+          lock = false
+          for e in scroll_elements
+            angular.element(e).attr('style', '')
+        , 50)
 
       # Track touch start
       angular.element(document).on('touchstart', (evt) ->
@@ -19,14 +38,17 @@ angular.module('app.directives')
 
       # Track touch move
       angular.element(document).on('touchmove', (evt) ->
+        if lock
+          return evt.preventDefault()
+
         # Prevents scrolling of all but the nonbounce elements
         if not (evt.touches and evt.touches.length > 1)
           if (e == evt.target for e in $rootScope.__non_bounce).indexOf(true) >= 0
-            evt.preventDefault()
+            return evt.preventDefault()
 
         # Prevents scrolling of nonbounce element if bound conditions are met
         if (!hasCorrectBounds(evt))
-          evt.preventDefault()
+          return evt.preventDefault()
       )
 
       hasCorrectBounds = (evt) ->
@@ -50,7 +72,7 @@ angular.module('app.directives')
         return true
 
       closest = (elem, selector) ->
-        matchesSelector = elem.matches or elem.webkitMatchesSelector or elem.mozMatchesSelector or elem.msMatchesSelector;
+        matchesSelector = elem.matches or elem.webkitMatchesSelector or elem.mozMatchesSelector or elem.msMatchesSelector
 
         while (elem)
           if elem == document
@@ -61,6 +83,7 @@ angular.module('app.directives')
             elem = elem.parentNode
 
         return false
+
   ])
 .directive("nonBounce", [ "$animate", ($animate) ->
     restrict: "ECA"

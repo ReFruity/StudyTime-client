@@ -21,6 +21,9 @@ angular.module('app.directives')
               $animate.leave currentElement
               currentElement = null
 
+          enterAnimationDone = ->
+            currentScope.$emit "$viewContentChangeEnd"
+
           update = ->
             locals = $route.current and $route.current.locals
             template = locals and locals.$template
@@ -41,11 +44,12 @@ angular.module('app.directives')
               linker newScope, (clone) ->
                 cleanupLastView()
                 clone.html template
-                $animate.enter clone, null, $element
                 link = $compile(clone.contents())
                 current = $route.current
                 currentScope = current.scope = newScope
                 currentElement = clone
+                currentScope.$emit "$viewContentChangeStart"
+                $animate.enter clone, null, $element, enterAnimationDone
                 if current.controller
                   locals.$scope = currentScope
                   controller = $controller(current.controller, locals)
