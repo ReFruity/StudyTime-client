@@ -69,3 +69,10 @@ window.addEventListener('load', ->
 # Phonegap checker
 window.checkPhonegap = ->
   return (window.cordova || window.PhoneGap || window.phonegap) && /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent)
+
+# Detect Apple StandAlone or PhoneGap application and
+# add css class to html
+if navigator.standalone or checkPhonegap()
+  angular.element(document.documentElement).addClass('standalone')
+if checkPhonegap()
+  angular.element(document.documentElement).addClass('phonegap')

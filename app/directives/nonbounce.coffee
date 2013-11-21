@@ -3,7 +3,7 @@ angular.module('app.directives')
     '$rootScope'
 
     ($rootScope) ->
-      if not /ios|iphone|ipod|ipad/i.test(navigator.userAgent)
+      if not angular.element(document.documentElement).hasClass('standalone')
         return
 
       # Create global list of nonbounce elements
