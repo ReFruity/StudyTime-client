@@ -3,7 +3,9 @@ angular.module('app.directives')
     '$rootScope'
 
     ($rootScope) ->
-      if not angular.element(document.documentElement).hasClass('standalone')
+      # Work only for Apple Standalone application
+      html = angular.element(document.documentElement)
+      if not html.hasClass('standalone') or html.hasClass('phonegap')
         return
 
       # Create global list of nonbounce elements
