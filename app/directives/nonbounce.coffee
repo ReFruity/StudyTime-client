@@ -18,7 +18,7 @@ angular.module('app.directives')
       $rootScope.$on '$viewContentChangeStart', ->
         lock = true
       $rootScope.$on '$viewContentChangeEnd', ->
-        $timeout( ->
+        $timeout(->
           lock = false
         , 100)
 
@@ -26,7 +26,6 @@ angular.module('app.directives')
       angular.element(document).on('touchstart', (evt) ->
         if lock
           return evt.preventDefault()
-
         startY = if evt.touches then evt.touches[0].screenY else evt.screenY
       )
 
