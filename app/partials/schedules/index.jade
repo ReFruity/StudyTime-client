@@ -1,17 +1,18 @@
 .overthrow.non-bounce
-    .schedule-header
-        .navbar.navbar-default
-            .container
-                .collapse.navbar-collapse
-                    a.navbar-header(href="#")
-                        i.fa.fa-th-large
-                    a.navbar-brand(href="#") {{ 'КН-402' }}
-                    form.btn.btn-success {{ 'schedules.index.subscribe' | translate }}
-                    a.navbar-link.navbar-right(href="#") {{ 'schedules.index.next_week' | translate }}
-                    h5.navbar-text.navbar-right {{ 'Обновлено вчера в 16:16' }}
+    .animated-view
+        .schedule-header
+            .navbar.navbar-default
+                .container
+                    .collapse.navbar-collapse
+                        a.navbar-header(href="#")
+                            i.fa.fa-th-large
+                        a.navbar-brand(href="#") {{ 'КН-402' }}
+                        form.btn.btn-success {{ 'schedules.index.subscribe' | translate }}
+                        a.navbar-link.navbar-right(href="#") {{ 'schedules.index.next_week' | translate }}
+                        h5.navbar-text.navbar-right {{ 'Обновлено вчера в 16:16' }}
 
-    div(ng-include, src="'app/partials/schedules/studies.jade'")
-    //div(ng-switch on='group.state')
+        div(ng-include, src="'app/partials/schedules/studies.jade'")
+//div(ng-switch on='group.state')
         div(ng-switch-when="studies", ng-include, src="'app/partials/schedules/studies.jade'")
         div(ng-switch-when="exams", ng-include, src="'app/partials/schedules/exams.jade'")
         div(ng-switch-when="vacation", ng-include, src="'app/partials/schedules/vacation.jade'")

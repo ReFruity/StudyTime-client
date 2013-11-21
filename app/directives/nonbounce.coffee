@@ -17,19 +17,8 @@ angular.module('app.directives')
       # Lock when changing view
       $rootScope.$on '$viewContentChangeStart', ->
         lock = true
-
       $rootScope.$on '$viewContentChangeEnd', ->
-        # Disable bounce scrolling
-        scroll_elements = document.querySelectorAll(".overthrow");
-        for e in scroll_elements
-          angular.element(e).attr('style', '-webkit-overflow-scrolling: auto')
-
-        # Ensble bounce scrolling after 50ms
-        $timeout(->
-          lock = false
-          for e in scroll_elements
-            angular.element(e).attr('style', '')
-        , 50)
+        lock = false
 
       # Track touch start
       angular.element(document).on('touchstart', (evt) ->
