@@ -3,47 +3,53 @@
 #schedule-index
   > .title
     margin-bottom: 40px
+
   .speciality
-    border: 5px solid #fff
-    background: $panel-footer-bg
-    .course-content
-      overflow: hidden
-      padding: 0 15px 15px
-      .line
-        overflow: hidden
-        .group
-          margin-bottom 10px
+    width: 25%
 
-// todo $screen-md
-@media(min-width: 992px)
+  .schedule-table
+    display table
+    padding 0
+    .schedule-row
+      display table-row
+      .speciality
+        display table-cell
+        border: 5px solid #fff
+        background: $panel-footer-bg
+        .course-content
+          overflow: hidden
+          padding: 15px
+          .line
+            overflow: hidden
+            .group
+              padding 5px
+
+@media $screen-tablet-media-q
   #schedule-index
-    .speciality
-      width: 25%
-
     .schedule-table
-      display table
+      display block
       .schedule-row
-        display table-row
+        display block
         .speciality
-          display table-cell
+          border none
+          display block
+          width 100%
 
-//todo $screen-md
-@media(max-width: 991px)
-  #schedule-index
     &.container
       max-width 100%
       padding 0
       width 100%
-    .schedule-table
       &.col-md-10
         padding 0
       .speciality
         border none
         h3
-          padding: 15px 20px 9px
-          border-bottom: 1px solid #ddd;
-          margin: 0 0 15px;
-          background: #fff;
-        .group
-          font-size 25px
+          padding 15px 20px 9px
+          border-bottom 1px solid #ddd
+          margin 0
+          background #fff
+        .course-content
+          padding 0 !important
+          .group
+            font-size 25px
 
