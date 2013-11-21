@@ -18,9 +18,7 @@ angular.module('app.directives')
       $rootScope.$on '$viewContentChangeStart', ->
         lock = true
       $rootScope.$on '$viewContentChangeEnd', ->
-        $timeout( ->
-          lock = false
-        , 150)
+        lock = false
 
       # Track touch start
       angular.element(document).on('touchstart', (evt) ->
