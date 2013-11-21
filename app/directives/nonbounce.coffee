@@ -70,7 +70,7 @@ angular.module('app.directives')
       if scope.__non_bounce
         index = scope.__non_bounce.push(elm[0]) - 1
 
-      scope.$on('$destroy', ->
-        scope.__non_bounce[index] = undefined
-      )
+        scope.$on('$destroy', ->
+          scope.__non_bounce[index] = undefined
+        )
   ])
