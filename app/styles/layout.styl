@@ -11,35 +11,36 @@
     margin 0
 
 // Animate view changes on standalone mode
-#wrap
-  &.ng-leave, &.ng-enter
-    position absolute
-    top 0
-    left 0
-    right 0
-    bottom 0
+.standalone
+  #wrap
+    &.ng-leave, &.ng-enter
+      position absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
 
-  &.ng-leave
-    -webkit-animation: 0.5s slideOutRight;
-    -moz-animation: 0.5s slideOutRight;
-    -o-animation: 0.5s slideOutRight;
-    animation: 0.5s slideOutRight;
+    &.ng-leave
+      -webkit-animation: 0.5s slideOutRight;
+      -moz-animation: 0.5s slideOutRight;
+      -o-animation: 0.5s slideOutRight;
+      animation: 0.5s slideOutRight;
 
-  &.ng-enter
-    -webkit-animation: 0.5s slideInLeft;
-    -moz-animation: 0.5s slideInLeft;
-    -o-animation: 0.5s slideInLeft;
-    animation: 0.5s slideInLeft;
-    -webkit-overflow-scrolling touch
+    &.ng-enter
+      -webkit-animation: 0.5s slideInLeft;
+      -moz-animation: 0.5s slideInLeft;
+      -o-animation: 0.5s slideInLeft;
+      animation: 0.5s slideInLeft;
+      -webkit-overflow-scrolling touch
 
 @media $screen-tablet-media-q
   .header
     .navbar
-      height $navbar-height + 2
+      height $navbar-height+2
       margin 0
 
     .navbar-form
-      display none
+        display none
 
     .navbar-header
       float left
