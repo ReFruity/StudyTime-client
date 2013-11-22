@@ -1,6 +1,6 @@
 angular.module('app.directives')
-.directive "ngcView", [ "$route", "$anchorScroll", "$compile", "$controller", "$animate",
-    ($route, $anchorScroll, $compile, $controller, $animate) ->
+.directive "ngcView", [ "$route", "$anchorScroll", "$compile", "$controller", "$animate", "$timeout"
+    ($route, $anchorScroll, $compile, $controller, $animate, $timeout) ->
       restrict: "ECA"
       terminal: true
       priority: 1000
@@ -12,6 +12,7 @@ angular.module('app.directives')
           currentOriginalPath = undefined
           currentParams = undefined
           onloadExp = attr.onload or ""
+          firstCall = true
 
           cleanupLastView = ->
             if currentScope
@@ -45,17 +46,32 @@ angular.module('app.directives')
                 cleanupLastView()
                 clone.html template
                 link = $compile(clone.contents())
+
+                # Skip first animation
+                if firstCall
+                  afterNode = $element and $element[$element.length - 1]
+                  parentNode = afterNode && afterNode.parentNode
+                  afterNextSibling = (afterNode && afterNode.nextSibling) || null;
+                  angular.forEach(clone, (node) ->
+                    parentNode.insertBefore(node, afterNextSibling)
+                  )
+                  $timeout(enterAnimationDone, 0, false)
+                  firstCall = false
+                else
+                  $animate.enter clone, null, $element, enterAnimationDone
+
                 current = $route.current
                 currentScope = current.scope = newScope
                 currentElement = clone
                 currentScope.$emit "$viewContentChangeStart"
-                $animate.enter clone, null, $element, enterAnimationDone
+
                 if current.controller
                   locals.$scope = currentScope
                   controller = $controller(current.controller, locals)
                   currentScope[current.controllerAs] = controller  if current.controllerAs
                   clone.data "$ngControllerController", controller
                   clone.contents().data "$ngControllerController", controller
+
                 link currentScope
                 currentScope.$emit "$viewContentLoaded"
                 currentScope.$eval onloadExp
