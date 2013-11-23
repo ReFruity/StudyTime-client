@@ -1,15 +1,15 @@
 div(ng-controller='SchedulesStudiesCtrl')
-    .container#schedule-greed(breakpoint="min-width: 992px", ng-init="classes=[1,2,3,4,5,6]")
+    #schedule-greed(breakpoint="min-width: 992px", ng-init="classes=[1,2,3,4,5,6]")
         // Three columns
         div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]")
             div(ng-repeat="line in lines")
-                .row
+                .row.container
                     .col-md-offset-1.col-md-10
                         .lesson.col-md-3(ng-repeat="dow in line")
                             .lesson-cell.lesson-cell-l.lesson-cell-title
                                 h4.lesson-title {{ 'schedules.studies.'+dow | translate }}
                                 h5.lesson-title-date {{ '7 окт.' }}
-                .row(ng-repeat="class in classes")
+                .row.container(ng-repeat="class in classes")
                     .col-md-offset-1.col-md-10
                         .lesson.col-md-3.lesson-time
                             h4.lesson-time-number.current {{ class }}
@@ -18,5 +18,56 @@ div(ng-controller='SchedulesStudiesCtrl')
                             .lesson-cell.lesson-cell-l.lesson-cell-c-t
 
         // One column
-        div(ng-if="!matches", ng-init="days=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']")
-            div TODO: one column template there
+        div(ng-if="!matches")
+            .lesson-info
+                .lesson-info-icons
+                    a.btn(ng-click="viewType='info'", ng-class="{'btn-success':viewType=='info'}")
+                        i.fa.fa-info-circle
+                    br
+                    a.btn(ng-click="viewType='files'", ng-class="{'btn-success':viewType=='files'}")
+                        i.fa.fa-info-circle
+                div(ng-switch on="viewType")
+                  .lesson-info-data(ng-switch-when="info")
+                      span.lesson-name Математический анализ
+                      br
+                      a.lesson-lecturer Кошелев Антон Александрович
+                      br
+                      span.lesson-start-time начало в 10:40
+                  .lesson-info-files(ng-switch-when="files")
+                      .lesson-info-files-header
+                        h4 Приложения
+                        a.btn
+                            i.fa.fa-plus
+                        a.btn(ng-click="search = (search) ? false : true")
+                            i.fa.fa-search
+                        input(type="number", size="24")
+                      .lesson-info-file-search(ng-if="search")
+                        select#search-type
+                            option 1
+                            option 2
+                        select#search-date
+                            option 3
+                            option 4
+                        input(type="search")
+                      .clear-fix
+                      .lesson-info-file-block
+                          a.btn.btn-edit
+                              i.fa.fa-edit
+                          a.file-name Вопросы-к-экзамену1.pdf
+                          span.file-size 5Mb
+                          br
+                          span.file-comment Темы 1 семестра
+                      .lesson-info-file-block
+                          a.btn.btn-edit
+                              i.fa.fa-edit
+                          a.file-name Вопросы-к-экзамену2.pdf
+                          span.file-size 5Mb
+                          br
+                          span.file-comment Темы 1 семестра
+                      .lesson-info-file-block
+                          a.btn.btn-edit
+                              i.fa.fa-edit
+                          a.file-name Вопросы-к-экзамену3.pdf
+                          span.file-size 5Mb
+                          br
+                          span.file-comment Темы 1 семестра
