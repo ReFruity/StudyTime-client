@@ -63,8 +63,8 @@ App = angular.module('app', [
 
 # FastClick
 window.addEventListener('load', ->
-  new FastClick(document.body)
-, false);
+    FastClick.attach(document.body);
+, false)
 
 # Phonegap checker
 window.checkPhonegap = ->
