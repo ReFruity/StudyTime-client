@@ -3,19 +3,19 @@ div(ng-controller='SchedulesStudiesCtrl')
         // Three columns
         div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]")
             div(ng-repeat="line in lines")
-                .row
-                    .col-md-offset-1.col-md-10
-                        .lesson.col-md-3(ng-repeat="dow in line")
-                            .lesson-cell.lesson-cell-l.lesson-cell-title
-                                h4.lesson-title {{ 'schedules.studies.'+dow | translate }}
-                                h5.lesson-title-date {{ '7 окт.' }}
-                .row(ng-repeat="class in classes")
-                    .col-md-offset-1.col-md-10
-                        .lesson.col-md-3.lesson-time
-                            h4.lesson-time-number.current {{ class }}
-                            .lesson-time-start.current {{ '09:00' }}
-                        .lesson.col-md-3(ng-repeat="dow in line")
-                            .lesson-cell.lesson-cell-l.lesson-cell-c-t
+                .row-fluid
+                    .container
+                        .col-md-4(ng-repeat="dow in line")
+                            .lesson-cell.lesson-cell-title
+                                h4.lesson-cell-title-day {{ 'schedules.studies.'+dow | translate }}
+                                h5.lesson-cell-title-date {{ '7 окт.' }}
+                .row-fluid(ng-repeat="class in classes")
+                    .lesson-time
+                        h4.lesson-time-number {{ class }}
+                        h5.lesson-time-start {{ '09:00' }}
+                    .container
+                        .col-md-4(ng-repeat="dow in line")
+                            .lesson-cell
 
         // One column
         div(ng-if="!matches", ng-init="days=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']")

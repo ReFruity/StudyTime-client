@@ -26,72 +26,129 @@
   > .title
   .lesson-cell
     border: 1px solid #f0f0f0
-    border-top: none
     overflow: hidden
-    padding: 0 25px 25px
     min-height: 50px
-    min-width: 250px
     &:active, &:hover, &.active
       cursor: pointer
     &.current
       border: 1px solid #FF6600
-  .lesson-cell-l
-    margin-left: -15%
-  .lesson-cell-l-t
+  .lesson-cell-top
     border-radius: 10px 10px 0 0
-    border-top: 1px solid #f0f0f0
-  .lesson-cell-l-b
+  .lesson-cell-bottom
     border-radius: 0 0 10px 10px
-    margin-bottom: 20px
-  .lesson-cell-c
-    margin-left: 42%
-  .lesson-cell-c-t
-    border-radius: 10px 10px 0 0
-    border-top: 1px solid #f0f0f0
-  .lesson-cell-c-b
-    border-radius: 0 0 10px 10px
-    margin-bottom: 20px
-  .lesson-cell-r
-    margin-left: 100%
-  .lesson-cell-r-t
-    border-radius: 10px 10px 0 0
-    border-top: 1px solid #f0f0f0
-  .lesson-cell-r-b
-    border-radius: 0 0 10px 10px
-    margin-bottom: 20px
   .lesson-cell-title
     border: none
-    max-height: 50px
-    max-width: 50px
-  .lesson-title
+    margin-top: 10%
+    &:active, &:hover, &.active
+      cursor: default
+  .lesson-cell-title-day
     text-align: center
-    padding-top: 5px
-    padding-bottom: 5px
-    margin-left: 35px
-    margin-right: 35px
+    padding: 3px 0
+    margin: 10px 70px
     color: #000000
     &.current
       border-radius: 10px 10px 10px 10px
       background: #FF6600
       color: #FFFFFF
-  .lesson-title-date
+  .lesson-cell-title-date
     text-align: right
-    margin-top: -15%
-    margin-right: -5%
+    margin-top: -9%
+    margin-right: 10%
     color: #FFFFFF
     &.current
       color: #000000
   .lesson-time
+    float: left
+    max-height: 50px
     max-width: 20px
-    margin-left: -10%
-    margin-bottom: -10%
+    margin-left: -3%
   .lesson-time-number
-    padding-left: 15px
-    margin-bottom: -2%
+    text-align: center
+    margin-left: 60%
+    margin-bottom: -50%
     color: #000000
     &.current
       color: #FF6600
   .lesson-time-start
+    text-align: left
     color: #000000
     &.current
       color: #FF6600
+
+#wrap
+  .lesson-info
+    background: #ebebeb
+    height: 215px
+    width: 100%
+    .lesson-info-icons
+      padding: 16px 0 0 58px
+      float: left
+      width: auto
+      height: 100%
+      a
+        margin: 0 0 10px 0
+    .lesson-info-data
+      float: left
+      padding: 12px 0 0 30px
+      .lesson-name
+        font-size: 17pt
+        color: #444444
+      .lesson-lecturer
+        color: #207E62
+        cursor: pointer
+      .lesson-start-time
+        font-size: 14pt
+        color: #444444
+    .lesson-info-files
+      float: left
+      display: inline-block
+      padding: 12px 0 0 30px
+      width: 90% /*Temp*/
+      .lesson-info-files-header
+        width: 100%
+        h4
+          display: inline-block
+          margin: 0 10px 0 0
+        input
+          width: 250px
+          height: 30px
+      .lesson-info-file-search
+        width: 100%
+        height: 40px
+        padding: 10px 0 0 0
+        select
+          float: left
+          width: 130px
+          height: 30px
+        input
+          float: left
+          width: 470px
+          height: 30px
+      .lesson-info-file-block
+        width: 360px
+        height: 55px
+        border: 2px #929292 solid
+        border-radius: 5px
+        background-color: #FFFFFF
+        margin: 10px 10px 0 0
+        float: left
+        .btn-edit
+          float: right
+          margin: 2px
+        .file-name
+          float: left
+          padding: 0 10px 0 10px
+          margin-top: 5px
+          border-right: 1px solid #606060
+          color: #207E62
+          cursor: pointer
+        .file-size
+          float: left
+          padding: 5px 0 0 10px
+          color: #606060
+        .file-comment
+          float: left
+          padding: 3px 0 0 10px
+          color: #7A7A7A
+        &:hover
+          background-color: #F7F6F6
