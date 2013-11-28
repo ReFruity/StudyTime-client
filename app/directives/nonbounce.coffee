@@ -12,29 +12,26 @@ angular.module('app.directives')
       # Create global list of nonbounce elements
       $rootScope.__non_bounce = []
       startY = 0
-      lock = false
 
       # Lock when changing view
+      overlay = undefined
       $rootScope.$on '$viewContentChangeStart', ->
-        lock = true
+        overlay = angular.element("<div class='overlay'></div>")
+        angular.element(document).find('body').append(overlay)
       $rootScope.$on '$viewContentChangeEnd', ->
         $timeout(->
-          lock = false
-        , 100)
+          if overlay
+            overlay.remove()
+            overlay = undefined
+        )
 
       # Track touch start
       angular.element(document).on('touchstart', (evt) ->
-        if lock
-          return evt.preventDefault()
         startY = if evt.touches then evt.touches[0].screenY else evt.screenY
       )
 
       # Track touch move
       angular.element(document).on('touchmove', (evt) ->
-        #
-        if lock
-          return evt.preventDefault()
-
         # Prevents scrolling of all but the nonbounce elements
         if not (evt.touches and evt.touches.length > 1)
           if (e == evt.target for e in $rootScope.__non_bounce).indexOf(true) >= 0
