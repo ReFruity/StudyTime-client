@@ -1,13 +1,5 @@
 @import _variables
-
-.lessen-info
-  overflow hidden
-
-.lessen-transitions {
-    transition: all 0.5s ease;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-}
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 .schedule-header
   background: #f0f0f0
@@ -84,20 +76,28 @@
     &.current
       color: #FF6600
 
+
+.lessen-transitions
+  transition(all 0.5s ease)
+
 .lesson-info
+  overflow hidden
   background: #ebebeb
-  height: 215px
   width: 100%
+  padding 0
+  margin 0
+
   .lesson-info-icons
-    padding: 16px 0 0 58px
+    margin 0 0 0 -37px
+    padding 15px 0
     float: left
     width: auto
     height: 100%
     a
       margin: 0 0 10px 0
   .lesson-info-data
+    padding 15px 25px
     float: left
-    padding: 12px 0 0 30px
     .lesson-name
       font-size: 17pt
       color: #444444

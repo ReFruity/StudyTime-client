@@ -204,12 +204,12 @@ $zindex-modal ?=             1050;
 // Extra small screen / phone
 $screen-xs ?=                  480px;
 $screen-phone ?=               $screen-xs;
-$screen-phone-media-q ?=       "(max-width: " + $screen-phone + ")"
+$screen-phone-media-q ?=       "(max-width: " + ($screen-phone - 1) + ")"
 
 // Small screen / tablet
 $screen-sm ?=                  768px;
 $screen-tablet ?=              $screen-sm;
-$screen-tablet-media-q ?=      "(max-width: " + $screen-tablet + ")"
+$screen-tablet-media-q ?=      "(max-width: " + ($screen-tablet - 1) + ")"
 
 // Medium screen / desktop
 $screen-md ?=                  992px;

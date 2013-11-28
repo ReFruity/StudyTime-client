@@ -1,5 +1,5 @@
 angular.module('app.animations')
-.animation ".lessen-info", [
+.animation ".lesson-info", [
     '$timeout'
 
     ($timeout) ->
