@@ -4,6 +4,7 @@
 angular.module 'app.controllers', []
 angular.module 'app.filters', []
 angular.module 'app.services', []
+angular.module 'app.animations', []
 angular.module 'app.directives', ['app.services']
 
 
@@ -18,6 +19,7 @@ App = angular.module('app', [
   'app.filters'
   'app.services'
   'app.templates'
+  'app.animations'
 ])
 
 .config([
@@ -54,11 +56,8 @@ App = angular.module('app', [
       $rootScope.$location = $location
       $rootScope.$routeParams = $routeParams
 
-      $rootScope.mobileHeader =
-        title: 'Заголовок'
-        backBtn:
-          title: 'Назад'
-          icon: 'fa-angle-left'
+      $rootScope.in = (val, arr) ->
+        return val in arr
   ])
 
 # FastClick

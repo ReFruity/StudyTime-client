@@ -1,11 +1,11 @@
 div(ng-controller='SchedulesStudiesCtrl')
-    .container#schedule-greed(breakpoint="min-width: 992px", ng-init="classes=[1,2,3,4,5,6]")
+    .container#schedule-greed(breakpoint="min-width: 992px", ng-init="classes=['1','2','3','4','5','6']")
         // Three columns
         div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]")
             div(ng-repeat="line in lines")
                 .row-fluid
                     .container
-                        .col-md-4(ng-repeat="dow in line")
+                        .col-md-4(ng-repeat="dow in line", bindonce)
                             .lesson-cell.lesson-cell-title
                                 h4.lesson-cell-title-day {{ 'schedules.studies.'+dow | translate }}
                                 h5.lesson-cell-title-date {{ '7 окт.' }}
@@ -14,8 +14,11 @@ div(ng-controller='SchedulesStudiesCtrl')
                         h4.lesson-time-number {{ class }}
                         h5.lesson-time-start {{ '09:00' }}
                     .container
-                        .col-md-4(ng-repeat="dow in line")
-                            .lesson-cell
+                        .col-md-4(ng-repeat="dow in line", bindonce)
+                            .lesson-cell(ng-click="showDetails(dow, class)")
+                    .lessen-info(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
+                        div 123123
+                        div 32423432
 
         // One column
         div(ng-if="!matches")
@@ -27,7 +30,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                     a.btn(ng-click="viewType='files'", ng-class="{'btn-success':viewType=='files'}")
                         i.fa.fa-info-circle
                 div(ng-switch on="viewType")
-                  .lesson-info-data(ng-switch-when="info", ng-switch-default)
+                  .lesson-info-data(ng-switch-default)
                       span.lesson-name Математический анализ
                       br
                       a.lesson-lecturer Кошелев Антон Александрович
