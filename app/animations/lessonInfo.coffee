@@ -4,7 +4,7 @@ angular.module('app.animations')
 
     ($timeout) ->
       enter: (element, done) ->
-        contentHeight = element[0].offsetHeight
+        contentHeight = element[0].offsetHeight + 1
         element.removeClass('lessen-transitions')
         element[0].style.maxHeight = "0px"
 
@@ -20,7 +20,7 @@ angular.module('app.animations')
         return undefined
 
       leave: (element, done) ->
-        contentHeight = element[0].offsetHeight
+        contentHeight = element[0].offsetHeight + 1
         element.removeClass('lessen-transitions')
         element[0].style.maxHeight = contentHeight + "px"
 
