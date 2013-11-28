@@ -1,4 +1,5 @@
 @import _variables
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 // Disable navigation icons
 .nav
@@ -24,35 +25,31 @@
     bottom 0
 
     &.ng-leave
-      -webkit-animation: 0.5s empty
-      -moz-animation: 0.5s empty
-      -o-animation: 0.5s empty
-      animation: 0.5s empty
+      -webkit-animation: 0.7s empty
+      -moz-animation: 0.7s empty
+      -o-animation: 0.7s empty
+      animation: 0.7s empty
       .animated-view
-        -webkit-animation: 0.5s slideOutRight
-        -moz-animation: 0.5s slideOutRight
-        -o-animation: 0.5s slideOutRight
-        animation: 0.5s slideOutRight
+        -webkit-animation: 0.7s slideOutRight cubic-bezier(0.23, 1, 0.32, 1)
+        -moz-animation: 0.7s slideOutRight cubic-bezier(0.23, 1, 0.32, 1)
+        -o-animation: 0.7s slideOutRight cubic-bezier(0.23, 1, 0.32, 1)
+        animation: 0.7s slideOutRight cubic-bezier(0.23, 1, 0.32, 1)
 
     &.ng-enter
-      -webkit-animation: 0.5s empty
-      -moz-animation: 0.5s empty
-      -o-animation: 0.5s empty
-      animation: 0.5s empty
+      -webkit-animation: 0.7s empty
+      -moz-animation: 0.7s empty
+      -o-animation: 0.7s empty
+      animation: 0.7s empty
       z-index 1000
       .animated-view
         height 100%
-        -webkit-animation: 0.5s slideInLeft
-        -moz-animation: 0.5s slideInLeft
-        -o-animation: 0.5s slideInLeft
-        animation: 0.5s slideInLeft
-
+        box-shadow(0 0 100px 0 rgba(0, 0, 0, 0.2))
+        -webkit-animation: 0.7s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
+        -moz-animation: 0.7s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
+        -o-animation: 0.7s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
+        animation: 0.7s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
 
 @media $screen-tablet-media-q
-  a
-    &:hover, &:active
-      text-decoration none
-
   .header
     .navbar
       height $navbar-height + 2

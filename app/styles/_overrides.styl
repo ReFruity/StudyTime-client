@@ -37,6 +37,12 @@ body
   z-index 1000000
 
 @media $screen-tablet-media-q
+  .header
+    a
+      &:hover, &:active
+        text-decoration none
+        color $navbar-default-link-color !important
+
   .footer
     display none
 
