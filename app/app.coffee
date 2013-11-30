@@ -20,6 +20,7 @@ App = angular.module('app', [
   'app.services'
   'app.templates'
   'app.animations'
+  'QuickList'
 ])
 
 .config([

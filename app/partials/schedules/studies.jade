@@ -16,7 +16,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                             h5.lesson-time-start {{ '09:00' }}
                         .col-sm-4(ng-repeat="dow in line", bindonce)
                             .lesson-cell(ng-click="showDetails(dow, class)")
-                    .lesson-info(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
+                    .lesson-info.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
                         .container
                             .lesson-info-icons
                                 a.btn(ng-click="viewType='info'", ng-class="{'btn-success':viewType=='info'}")

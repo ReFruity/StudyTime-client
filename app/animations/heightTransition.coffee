@@ -1,11 +1,11 @@
 angular.module('app.animations')
-.animation ".lesson-info", [
+.animation ".height-transition", [
     '$timeout'
 
     ($timeout) ->
       enter: (element, done) ->
         contentHeight = element[0].offsetHeight + 1
-        element.removeClass('lessen-transitions')
+        element.removeClass('max-height-transition')
         element[0].style.maxHeight = "0px"
 
         $timeout(->
@@ -13,7 +13,7 @@ angular.module('app.animations')
             element[0].style.maxHeight = "9999px"
             done()
           )
-          element.addClass('lessen-transitions')
+          element.addClass('max-height-transition')
           element[0].style.maxHeight = contentHeight + "px"
         , 10)
 
@@ -21,11 +21,11 @@ angular.module('app.animations')
 
       leave: (element, done) ->
         contentHeight = element[0].offsetHeight + 1
-        element.removeClass('lessen-transitions')
+        element.removeClass('max-height-transition')
         element[0].style.maxHeight = contentHeight + "px"
 
         $timeout(->
-          element.addClass('lessen-transitions')
+          element.addClass('max-height-transition')
           element[0].style.maxHeight = "0px"
           element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', done)
         , 10)
