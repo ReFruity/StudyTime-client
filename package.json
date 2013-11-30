@@ -13,7 +13,7 @@
     "test": "node_modules/.bin/karma start test/karma.conf.js"
   },
   "dependencies": {
-    "brunch": "~1.7",
+    "brunch": "=1.7.10",
 
     "coffee-script": "~1.6",
     "javascript-brunch": ">= 1.0 < 1.8",
