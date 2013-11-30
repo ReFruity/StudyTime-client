@@ -18,12 +18,10 @@ angular.module('app.directives')
       $rootScope.$on '$viewContentChangeStart', ->
         overlay = angular.element("<div class='overlay'></div>")
         angular.element(document).find('body').append(overlay)
-
-        $timeout(->
-          if overlay
-            overlay.remove()
-            overlay = undefined
-        , 630)
+      $rootScope.$on '$viewContentChangeEnd', ->
+        if overlay
+          overlay.remove()
+          overlay = undefined
 
 
       # Track touch start
