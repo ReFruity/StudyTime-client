@@ -19,5 +19,5 @@ test/test-results.xml
 bower_components/
 
 # Application unique config
-app/config/config.coffee
+/app/config/config.coffee
 
