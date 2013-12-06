@@ -1,0 +1,3 @@
+angular.module('app').constant 'config',
+  apiUrl: 'http://studytime.ftp.sh/api/v2'
+  facultyId: '5290652f743b323d9249db75'
