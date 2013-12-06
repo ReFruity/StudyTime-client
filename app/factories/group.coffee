@@ -3,10 +3,3 @@ angular.module('app.services').factory "Group", ($resource, config) ->
     query:
       method: "GET"
       isArray: false
-
-#  $scope.group = Group.get({groupName: $routeParams.groupName});
-
-#    cut:
-#      method: "GET"
-#      params:
-#        _method: "cut"
