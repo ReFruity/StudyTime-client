@@ -1,0 +1,5 @@
+.lesson-info-data(ng-controller="ClassInfoCtrl")
+    span.lesson-name {{clazz.subject.name}}
+    div(ng-repeat="prof in clazz.professor")
+        a.lesson-lecturer {{prof.name}}
+    span.lesson-start-time {{clazz.description}}

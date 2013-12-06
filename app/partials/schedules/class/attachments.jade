@@ -1,0 +1,38 @@
+.lesson-info-files(ng-controller="ClassAttachmentsCtrl")
+    .lesson-info-files-header
+        h4 Приложения
+        a.btn
+            i.fa.fa-plus
+        a.btn(ng-click="search = (search) ? false : true")
+            i.fa.fa-search
+        input(type="number", size="24")
+    .lesson-info-file-search(ng-if="search")
+        select#search-type
+            option 1
+            option 2
+        select#search-date
+            option 3
+            option 4
+        input(type="search")
+    .clear-fix
+    .lesson-info-file-block
+        a.btn.btn-edit
+            i.fa.fa-edit
+        a.file-name Вопросы-к-экзамену1.pdf
+        span.file-size 5Mb
+        br
+        span.file-comment Темы 1 семестра
+    .lesson-info-file-block
+        a.btn.btn-edit
+            i.fa.fa-edit
+        a.file-name Вопросы-к-экзамену2.pdf
+        span.file-size 5Mb
+        br
+        span.file-comment Темы 1 семестра
+    .lesson-info-file-block
+        a.btn.btn-edit
+            i.fa.fa-edit
+        a.file-name Вопросы-к-экзамену3.pdf
+        span.file-size 5Mb
+        br
+        span.file-comment Темы 1 семестра

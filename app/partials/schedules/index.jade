@@ -9,7 +9,7 @@
                         a.navbar-brand(href="#") {{ 'КН-402' }}
                         form.btn.btn-success {{ 'schedules.index.subscribe' | translate }}
                         a.navbar-link.navbar-right(href="#") {{ 'schedules.index.next_week' | translate }}
-                        h5.navbar-text.navbar-right {{ 'Обновлено вчера в 16:16' }}
+                        h5.navbar-text.navbar-right Обновлено {{ last_update | date:'yyyy-MM-dd в HH:mm'}}
 
         div(ng-include, src="'app/partials/schedules/studies.jade'")
 //div(ng-switch on='group.state')

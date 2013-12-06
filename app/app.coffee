@@ -20,9 +20,8 @@ App = angular.module('app', [
   'app.services'
   'app.templates'
   'app.animations'
-  'QuickList'
+  'LocalStorageModule'
 ])
-
 .config([
     '$routeProvider'
     '$locationProvider'
@@ -56,7 +55,6 @@ App = angular.module('app', [
       $rootScope.$route = $route
       $rootScope.$location = $location
       $rootScope.$routeParams = $routeParams
-
       $rootScope.in = (val, arr) ->
         return val in arr
   ])

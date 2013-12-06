@@ -1,0 +1,14 @@
+.lesson-details(ng-controller="ClassIndexCtrl")
+    .container
+        .lesson-info-icons
+            a.btn(ng-click="viewType='info'", ng-class="{'btn-success':viewType=='info' || !viewType}")
+                i.fa.fa-info-circle
+            br
+            a.btn(ng-click="viewType='attachments'", ng-class="{'btn-success':viewType=='attachments'}")
+                i.fa.fa-info-circle
+
+        div(ng-switch on="viewType")
+            div(ng-switch-default)
+                div(ng-include, src="'app/partials/schedules/class/info.jade'")
+            div(ng-switch-when="attachments")
+                div(ng-include, src="'app/partials/schedules/class/attachments.jade'")

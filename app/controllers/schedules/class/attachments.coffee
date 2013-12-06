@@ -1,10 +1,11 @@
 'use strict'
 
+
 angular.module('app.controllers')
 
-.controller('SchedulesIndexCtrl', [
+.controller('ClassAttachmentsCtrl', [
     '$scope'
 
     ($scope) ->
-      $scope.last_update = undefined
+      ""
   ])

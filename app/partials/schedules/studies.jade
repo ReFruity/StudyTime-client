@@ -15,60 +15,10 @@ div(ng-controller='SchedulesStudiesCtrl')
                             h4.lesson-time-number {{ class }}
                             h5.lesson-time-start {{ '09:00' }}
                         .col-sm-4(ng-repeat="dow in line", bindonce)
-                            .lesson-cell(ng-click="showDetails(dow, class)")
-                    .lesson-info.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
-                        .container
-                            .lesson-info-icons
-                                a.btn(ng-click="viewType='info'", ng-class="{'btn-success':viewType=='info'}")
-                                    i.fa.fa-info-circle
-                                br
-                                a.btn(ng-click="viewType='files'", ng-class="{'btn-success':viewType=='files'}")
-                                    i.fa.fa-info-circle
-                            div(ng-switch on="viewType")
-                                .lesson-info-data(ng-switch-default)
-                                    span.lesson-name Математический анализ
-                                    br
-                                    a.lesson-lecturer Кошелев Антон Александрович
-                                    br
-                                    span.lesson-start-time начало в 10:40
-                                .lesson-info-files(ng-switch-when="files")
-                                    .lesson-info-files-header
-                                        h4 Приложения
-                                        a.btn
-                                            i.fa.fa-plus
-                                        a.btn(ng-click="search = (search) ? false : true")
-                                            i.fa.fa-search
-                                        input(type="number", size="24")
-                                    .lesson-info-file-search(ng-if="search")
-                                        select#search-type
-                                            option 1
-                                            option 2
-                                        select#search-date
-                                            option 3
-                                            option 4
-                                        input(type="search")
-                                    .clear-fix
-                                    .lesson-info-file-block
-                                        a.btn.btn-edit
-                                            i.fa.fa-edit
-                                        a.file-name Вопросы-к-экзамену1.pdf
-                                        span.file-size 5Mb
-                                        br
-                                        span.file-comment Темы 1 семестра
-                                    .lesson-info-file-block
-                                        a.btn.btn-edit
-                                            i.fa.fa-edit
-                                        a.file-name Вопросы-к-экзамену2.pdf
-                                        span.file-size 5Mb
-                                        br
-                                        span.file-comment Темы 1 семестра
-                                    .lesson-info-file-block
-                                        a.btn.btn-edit
-                                            i.fa.fa-edit
-                                        a.file-name Вопросы-к-экзамену3.pdf
-                                        span.file-size 5Mb
-                                        br
-                                        span.file-comment Темы 1 семестра
+                            .lesson-cell(ng-click="showDetails(dow, class, line)")
+                                .lesson-atom-cell(ng-repeat="atom in sched[dow][class]") {{atom.subject.name}}
+                    .lesson-details-container.height-transition(ng-if="sched && $routeParams.classNum == class && in($routeParams.weekDay, line)")
+                        div(ng-include, src="'app/partials/schedules/class/index.jade'")
 
         // One column
         div(ng-if="!matches") TODO: One column schedule
