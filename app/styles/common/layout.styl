@@ -1,15 +1,10 @@
-@import _variables
+@import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 // Disable navigation icons
 .nav
   i.fa
     display none
-
-// No navbar marging
-.header
-  .navbar
-    margin 0
 
 // Animate view changes on standalone mode
 // VERY DIRTY HACK
@@ -47,52 +42,3 @@
         -moz-animation: 0.5s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
         -o-animation: 0.5s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
         animation: 0.5s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
-
-@media $screen-tablet-media-q
-  .header
-    .navbar
-      height $navbar-height + 2
-      margin 0
-
-    .navbar-form
-      display none
-
-    .navbar-header
-      float left
-      margin-right 0.3em
-      .navbar-brand
-        background-color $navbar-default-link-active-bg
-        span
-          display none
-        &:after
-          content "ST"
-
-    .navbar-right
-      float left !important
-
-    .nav
-      margin 0
-      position absolute
-      left 55px
-      right 0
-      i.fa
-        display block
-        line-height 1.2em
-        font-size 2.4em
-      li
-        text-align center
-        float left
-        width 33.3333333%
-        a
-          margin 0
-          padding 0.7em 0.5em
-          background none !important
-          font-size 0.7em
-          line-height 1.3em
-
-        &.active
-          a
-            color $theme-color !important
-          i.fa
-            color $theme-color
-

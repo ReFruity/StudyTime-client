@@ -1,4 +1,4 @@
-angular.module('app').constant('config',
-  apiUrl: 'http://api.st/api/v2'
+angular.module('app').value 'config',
+  apiUrl: 'http://studytime.ftp.sh/api/v2'
   facultyId: '529514619197d92f57df1008'
-)
+  facultyName: 'ИМКН'

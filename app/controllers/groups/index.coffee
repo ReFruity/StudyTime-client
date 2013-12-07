@@ -8,11 +8,18 @@ angular.module('app.controllers')
     ($scope, config, Group) ->
       #TODO: redirect to last opened group
 
-      $scope.chunks = [];
-      $scope.groups = Group.get faculty: config.facultyId, (groups) ->
-        $scope.groupKeys = _.keys(groups)
+      $scope.updateGroups = (groups) ->
+        $scope.groups = groups
+        $scope.groupKeys = _.keys($scope.groups)
 
-        #deleting angular keys
-        for key in ['$promise', '$resolved']
-          $scope.groupKeys.splice($scope.groupKeys.indexOf(key), 1)
+      Group.get(faculty: config.facultyId).then(
+        $scope.updateGroups
+        , (reason) ->
+          console.log(reason)
+        , $scope.updateGroups
+      )
+
+
+      #deleting angular keys
+
   ])
