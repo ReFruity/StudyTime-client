@@ -44,6 +44,7 @@ App = angular.module('app', [
       $locationProvider.html5Mode(true)
   ])
 
+# RootScope extendings
 .run([
     '$rootScope'
     '$location'

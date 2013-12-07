@@ -8,11 +8,10 @@ angular.module('app.services')
 
 
     ($q, $http, localeStorage, config, $timeout) ->
-      get: (params) ->
+      get: (faculty = 'ИМКН') ->
         deferred = $q.defer()
 
         $timeout(->
-          faculty = params.faculty
           group_idnt = "group.#{faculty}"
 
           # Load schedule from cache

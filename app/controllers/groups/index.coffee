@@ -12,13 +12,12 @@ angular.module('app.controllers')
         $scope.groups = groups
         $scope.groupKeys = _.keys($scope.groups)
 
-      Group.get(faculty: config.facultyId).then(
+      Group.get().then(
         $scope.updateGroups
         , (reason) ->
           console.log(reason)
         , $scope.updateGroups
       )
-
 
       #deleting angular keys
 
