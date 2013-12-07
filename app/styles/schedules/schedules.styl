@@ -27,25 +27,34 @@
   > .title
   .lesson-cell
     border: 1px solid #f0f0f0
+    border-bottom: none
     overflow: hidden
     min-height: 50px
     &:active, &:hover, &.active
       cursor: pointer
     &.current
       border: 1px solid #FF6600
+  .lesson-cell-mobile
+    border-left: none
+    border-right: none
+    &.current
+      border-left: none
+      border-right: none
   .lesson-cell-top
     border-radius: 10px 10px 0 0
   .lesson-cell-bottom
+    border-bottom: 1px solid #f0f0f0
     border-radius: 0 0 10px 10px
+  .lesson-cell-mobile-bottom
+    border-bottom: 1px solid #f0f0f0
   .lesson-cell-title
     border: none
-    margin-top: 10%
     &:active, &:hover, &.active
       cursor: default
   .lesson-cell-title-day
     text-align: center
-    padding: 3px 0
-    margin: 10px 70px
+    padding: 5px
+    margin: 10px 40px
     color: #000000
     &.current
       border-radius: 10px 10px 10px 10px
@@ -53,25 +62,26 @@
       color: #FFFFFF
   .lesson-cell-title-date
     text-align: right
-    margin-top: -9%
-    margin-right: 10%
+    margin: -10% 0
     color: #FFFFFF
     &.current
       color: #000000
   .lesson-time
     float: left
     max-height: 50px
-    max-width: 20px
-    margin-left: -3%
+    max-width: 50px
+    margin-left: -5%
+  .lesson-time-mobile
+    margin-left: 0
   .lesson-time-number
     text-align: center
-    margin-left: 60%
-    margin-bottom: -50%
+    margin: 30% -30% -30% 60%
     color: #000000
     &.current
       color: #FF6600
   .lesson-time-start
-    text-align: left
+    text-align: right
+    margin-left: 50%
     color: #000000
     &.current
       color: #FF6600
