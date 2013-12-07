@@ -1,12 +1,19 @@
 footer.footer.ng-cloak
-  .container
-    .row
-      .widgets.col-md-4.text-center
-        img(src='http://promakh.ru/share/s-widgets.png')
-      .navigation.col-md-4.text-center
-        ul.list-inline
-          li= "{{ 'layouts.main.about'| translate }}"
-          li= "{{ 'layouts.main.terms'| translate }}"
-          li
-            a(href='/humans.txt')= "{{ 'layouts.main.authors'| translate }}"
-      .copyright.col-md-4.text-center= "©2013 StudyTime.me"
+    .container
+        .row
+            .widgets.col-md-2
+                a(href='#').widget.widget-twitter
+                    ic.fa.fa-twitter
+                a(href='#').widget.widget-vk
+                    ic.fa.fa-vk
+                a(href='#').widget.widget-facebook
+                    ic.fa.fa-facebook
+
+                    //img(src='http://promakh.ru/share/s-widgets.png')
+            .navigation.col-md-7.text-center
+                ul.list-inline
+                    li= "{{ 'layouts.main.about'| translate }}"
+                    li= "{{ 'layouts.main.terms'| translate }}"
+                    li
+                        a(href='/humans.txt')= "{{ 'layouts.main.authors'| translate }}"
+            .copyright.col-md-3.text-center= "©2013 StudyTime.me"

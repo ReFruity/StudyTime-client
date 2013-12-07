@@ -1,7 +1,9 @@
 .overthrow.non-bounce
     .animated-view
         .container#schedule-index
-            h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
+            //h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
+            .select-group-continer.text-center
+                img(src='/images/select-group.png')
             .col-md-12.schedule-table
                 .schedule-row(ng-repeat='speciality in groupKeys', ng-if='$index % 4 == 0', ng-init='speciality_index = $index', bindonce)
                     .speciality(ng-repeat='i in [0,1,2,3]', ng-if='groups[groupKeys[speciality_index + i]] != undefined', ng-init='speciality = groupKeys[speciality_index + i]', bindonce)
@@ -9,4 +11,4 @@
                         .course-content
                             .groups(ng-init='values = groups[speciality]')
                                 .line(ng-repeat='line in values', bindonce)
-                                    a.group.col-md-4.col-xs-3.text-center(ng-repeat='group in line', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
+                                    a.group.col-md-3.col-xs-3.text-center(ng-repeat='group in line', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
