@@ -5,7 +5,9 @@
             i.fa.fa-plus
         a.btn(ng-click="search = (search) ? false : true")
             i.fa.fa-search
-        input(type="number", size="24")
+        select#search-teacher
+            option Кошелев Антон Александрович
+            option Рогожин Сергей Алексеевич
     .lesson-info-file-search(ng-if="search")
         select#search-type
             option 1
@@ -15,24 +17,26 @@
             option 4
         input(type="search")
     .clear-fix
-    .lesson-info-file-block
-        a.btn.btn-edit
-            i.fa.fa-edit
-        a.file-name Вопросы-к-экзамену1.pdf
-        span.file-size 5Mb
-        br
-        span.file-comment Темы 1 семестра
-    .lesson-info-file-block
-        a.btn.btn-edit
-            i.fa.fa-edit
-        a.file-name Вопросы-к-экзамену2.pdf
-        span.file-size 5Mb
-        br
-        span.file-comment Темы 1 семестра
-    .lesson-info-file-block
-        a.btn.btn-edit
-            i.fa.fa-edit
-        a.file-name Вопросы-к-экзамену3.pdf
-        span.file-size 5Mb
-        br
-        span.file-comment Темы 1 семестра
+    .row
+        .col-sm-5.lesson-info-file-block
+            a.btn.btn-edit
+                i.fa.fa-edit
+            a.file-name Вопросы-к-экзамену1.pdf
+            span.file-size 5Mb
+            br
+            span.file-comment Темы 1 семестра
+        .col-sm-5.lesson-info-file-block
+            a.btn.btn-edit
+                i.fa.fa-edit
+            a.file-name Вопросы-к-экзамену2.pdf
+            span.file-size 5Mb
+            br
+            span.file-comment Темы 1 семестра
+    .row
+        .col-sm-5.lesson-info-file-block
+            a.btn.btn-edit
+                i.fa.fa-edit
+            a.file-name Вопросы-к-экзамену3.pdf
+            span.file-size 5Mb
+            br
+            span.file-comment Темы 1 семестра
