@@ -26,27 +26,24 @@
 #schedule-greed
   > .title
   .lesson-cell
-    border: 1px solid #f0f0f0
+    border: 1px solid #f5f8fa
     border-bottom: none
     overflow: hidden
     min-height: 50px
     &:active, &:hover, &.active
       cursor: pointer
     &.current
-      border: 1px solid #FF6600
+      border: 1px solid #f16520
   .lesson-cell-mobile
     border-left: none
     border-right: none
-    &.current
-      border-left: none
-      border-right: none
   .lesson-cell-top
     border-radius: 10px 10px 0 0
   .lesson-cell-bottom
-    border-bottom: 1px solid #f0f0f0
+    border-bottom: 1px solid #f5f8fa
     border-radius: 0 0 10px 10px
   .lesson-cell-mobile-bottom
-    border-bottom: 1px solid #f0f0f0
+    border-bottom: 1px solid #f5f8fa
   .lesson-cell-title
     border: none
     &:active, &:hover, &.active
@@ -55,17 +52,17 @@
     text-align: center
     padding: 5px
     margin: 10px 40px
-    color: #000000
+    color: #4b5456
     &.current
       border-radius: 10px 10px 10px 10px
-      background: #FF6600
+      background: #f16520
       color: #FFFFFF
   .lesson-cell-title-date
     text-align: right
     margin: -10% 0
     color: #FFFFFF
     &.current
-      color: #000000
+      color: #6b787b
   .lesson-time
     float: left
     max-height: 50px
@@ -76,15 +73,32 @@
   .lesson-time-number
     text-align: center
     margin: 30% -30% -30% 60%
-    color: #000000
+    color: #4b5456
     &.current
-      color: #FF6600
+      color: #f16520
   .lesson-time-start
     text-align: right
     margin-left: 50%
-    color: #000000
+    color: #4b5456
     &.current
-      color: #FF6600
+      color: #f16520
+  .lesson-parity
+    text-align: center
+  .lesson-parity-0
+    margin-top: 15px
+  .lesson-parity-1
+    margin-top: 3px
+    margin-bottom: -22px
+  .lesson-parity-2
+    margin-top: 22px
+  .lesson-half-1
+    float: left
+    text-align: left
+    margin-left: 10px
+  .lesson-half-2
+    float: right
+    text-align: right
+    margin-right: 10px
 
 .lesson-details-container
   overflow hidden
