@@ -3,6 +3,7 @@ header.header.ng-cloak
         .container
             .navbar-header
                 a.navbar-brand(href="#")
+                    div.logo
                     span {{ 'layouts.main.site_name' | translate }}
                 div(ng-controller="AppCacheUpdateManagerCtrl")
                     div(ng-switch on="appCacheStatus")
