@@ -1,10 +1,11 @@
 angular.module('app.animations')
 .animation ".height-transition", [
     '$timeout'
+    '$rootScope'
 
-    ($timeout) ->
+    ($timeout, $rootScope) ->
       enter: (element, done) ->
-        contentHeight = element[0].offsetHeight + 1
+        contentHeight = element[0].offsetHeight
         element.removeClass('max-height-transition')
         element[0].style.maxHeight = "0px"
 

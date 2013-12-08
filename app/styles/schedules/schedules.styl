@@ -24,24 +24,73 @@
     margin-top: 7px
 
 #schedule-greed
-  > .title
-  .lesson-cell
-    border: 1px solid #f5f8fa
-    border-bottom: none
-    overflow: hidden
-    min-height: 50px
-    &:active, &:hover, &.active
-      cursor: pointer
-    &.current
-      border: 1px solid #f16520
+  // Desktop schedule
+  .lessons-desktop
+    // Rounded dow corners
+    >:first-child + div.lessons-row
+      .lesson-cell
+        border-radius: 10px 10px 0 0
+    >:last-child
+      .lesson-cell
+        border-bottom: 1px solid #f5f8fa
+        border-radius: 0 0 10px 10px
+
+    .lessons-row
+      // Class number
+      .lesson-time-wrapper
+        float left
+        height: 50px
+        width: 50px
+        margin-left -50px
+        color #4b5456
+        text-align center
+        padding 10px 0
+        &.current
+          color: #f16520
+
+        .lesson-time
+          height: 50px
+          width: 50px
+          margin-left 10px
+          .lesson-time-number, .lesson-time-start
+            margin: 0
+
+      // Main cell style
+      .lesson-cell
+        border: 1px solid #f5f8fa
+        border-bottom: none
+        overflow: hidden
+        height: 50px
+        &:active, &:hover, &.active
+          cursor: pointer
+        &.current
+          border: 1px solid #f16520
+
+        // Atom class positioning
+        .lesson-parity-0
+          margin-top: 15px
+        .lesson-parity-1
+          margin-top: 3px
+          margin-bottom: -22px
+        .lesson-parity-2
+          margin-top: 22px
+        .lesson-half-1
+          float: left
+          text-align: left
+          margin-left: 10px
+        .lesson-half-2
+          float: right
+          text-align: right
+          margin-right: 10px
+
+
+  // Mobile schedule
+  .lessons-mobile
+
   .lesson-cell-mobile
     border-left: none
     border-right: none
-  .lesson-cell-top
-    border-radius: 10px 10px 0 0
-  .lesson-cell-bottom
-    border-bottom: 1px solid #f5f8fa
-    border-radius: 0 0 10px 10px
+
   .lesson-cell-mobile-bottom
     border-bottom: 1px solid #f5f8fa
   .lesson-cell-title
@@ -63,42 +112,9 @@
     color: #FFFFFF
     &.current
       color: #6b787b
-  .lesson-time
-    float: left
-    max-height: 50px
-    max-width: 50px
-    margin-left: -5%
+
   .lesson-time-mobile
     margin-left: 0
-  .lesson-time-number
-    text-align: center
-    margin: 30% -30% -30% 60%
-    color: #4b5456
-    &.current
-      color: #f16520
-  .lesson-time-start
-    text-align: right
-    margin-left: 50%
-    color: #4b5456
-    &.current
-      color: #f16520
-  .lesson-parity
-    text-align: center
-  .lesson-parity-0
-    margin-top: 15px
-  .lesson-parity-1
-    margin-top: 3px
-    margin-bottom: -22px
-  .lesson-parity-2
-    margin-top: 22px
-  .lesson-half-1
-    float: left
-    text-align: left
-    margin-left: 10px
-  .lesson-half-2
-    float: right
-    text-align: right
-    margin-right: 10px
 
 .lesson-details-container
   overflow hidden
@@ -109,7 +125,7 @@
 
 .lesson-details
   .lesson-info-icons
-    margin 0 0 0 -37px
+    margin 0 0 0 - 37px
     padding 15px 0
     float: left
     width: auto

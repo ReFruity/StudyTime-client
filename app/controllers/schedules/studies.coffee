@@ -29,11 +29,11 @@ angular.module('app.controllers')
           $rootScope.$emit("openedClassUpdated")
 
       # Opend class details
-      $scope.showDetails = (dow, clazz, dows=undefined) ->
-        if $routeParams.weekDay is dow and $routeParams.classNum is clazz
+      $scope.showDetails = (dow, clazz, atom, dows=undefined) ->
+        if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom+""
           $location.path('/' + $routeParams.groupName)
         else
-          $scope.openedClass = $scope.sched[dow][clazz][0]
-          $rootScope.$emit("openedClassUpdated", dow, clazz, dows)
-          $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz)
+          $scope.openedClass = $scope.sched[dow][clazz][atom]
+          $rootScope.$emit("openedClassUpdated", dow, clazz, atom, dows)
+          $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
   ])

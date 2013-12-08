@@ -1,6 +1,4 @@
-.max-height-transition
-  transition(max-height 0.8s cubic-bezier(0.23,1,0.32,1))
-
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 @keyframes empty {
   from {
@@ -10,6 +8,11 @@
     -webkit-transform translateX(0)
   }
 }
+
+.max-height-transition {
+  transition(max-height 0.8s cubic-bezier(0.23, 1, 0.32, 1))
+}
+
 
 @-webkit-keyframes empty {
   from {

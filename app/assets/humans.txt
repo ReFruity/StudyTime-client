@@ -7,9 +7,10 @@
     Rostislav Kirillov -- Developer/Designer -- @TheRast1234
     Katerina Boronina -- Developer/Designer -- @_Greenest
     Tatiana Nadymova -- Developer/Designer -- @tnady_alive
-    Nuta Blinicheva -- Designer/PR -- @KoRghik
+    Nuta Blinicheva -- PR -- @KoRghik
     Vlad Kosovskikh -- Developer
     Alexander Promakh -- Developer
+    Anna Chernykh -- Designer -- @angel39310
 
 # THANKS
 
