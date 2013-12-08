@@ -1,4 +1,5 @@
 @import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 // No navbar marging
 .header
@@ -6,8 +7,8 @@
     margin 0
 
 header
-  padding-top: 11px
-  margin-bottom: 40px
+  padding-top: 10px
+  margin-bottom: 30px
   .navbar-brand
     padding-top: 10px
     color: #4b5456
@@ -15,15 +16,18 @@ header
     background: #f5f8fa
     li
       a
+        font-size 18px
+        font-weight 300
         padding: 19px 32px 21px
         color: #4b5456
       &.active
         a, i.fa
-          color $theme-color
+          color #fff
+        background #3baba1
       &:hover
         a, i.fa
           color: #fff
-          background: #3baba1
+          background: lighten(#3baba1, 5%)
 
 
 @media $screen-tablet-media-q

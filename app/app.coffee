@@ -21,6 +21,7 @@ App = angular.module('app', [
   'app.templates'
   'app.animations'
   'LocalStorageModule'
+  'pasvaz.bindonce'
 ])
 .config([
     '$routeProvider'

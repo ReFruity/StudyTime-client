@@ -19,7 +19,7 @@ angular.module('app.filters').filter('translate', [ ->
         index:
           choose_group: "Выберите группу"
           subscribe: "Подписаться"
-          next_week: "Следующая неделя >"
+          next_week: "Следующая неделя"
         studies:
           Mon: "Понедельник"
           Tue: "Вторник"

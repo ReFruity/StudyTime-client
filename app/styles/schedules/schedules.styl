@@ -6,30 +6,68 @@
   .navbar
     background: #fff
     border none
-    max-height: 50px
-    overflow: hidden
+    height 35px
+    min-height 35px
+    margin-bottom 0
 
-    .navbar-header
-      padding: 0 15px 15px 0
-      .back-btn
+    // Remove link decoration
+    a
+      &:active, &:hover, &.active
+        text-decoration none
+
+    // Back to groups list button
+    .back-btn
+      font-size 24px
+      font-weight 400
+      white-space nowrap
+      .back-logo-square
         background #3baba1
+        padding 6px 8px 7px 6px
+        color #fdfdfd
+        .fa
+          transform(rotate(90deg))
+      .group-name
+        margin-left 10px
 
-    .navbar-brand
-      padding: 15px 15px 15px
-      &:active, &:hover, &.active
-        color: #000000
-    .navbar-link
-      padding: 15px 20px 0 0
-      text-decoration: none
-      color: #00A000
-      &:active, &:hover, &.active
-        color: #000000
-    .navbar-text
-      padding: 3px 130px
-  .btn
-    margin-top: 7px
+    // Update indicator
+    .schedule-updated-text
+      margin 0
+      padding 0
+      font-size 18px
+      color #aaaaaa
+      font-weight 100
+      vertical-align middle
+      line-height: 35px;
+      letter-spacing 1px
+      white-space nowrap
+
+    // Next week button
+    .next-week-btn
+      font-size 18px
+      font-weight 500
+      font-size-adjust 2px
+      cursor pointer
+      white-space nowrap
+
+      span
+        vertical-align middle
+      .fa
+        vertical-align middle
+        font-size 35px
+        font-weight 600
+        margin-left 8px
 
 #schedule-greed
+  user-select(none)
+
+  // Week parity handling
+  &.week-even
+    .lesson-parity-1
+      opacity 0.2
+  &.week-odd
+    .lesson-parity-2
+      opacity 0.2
+
   // Desktop schedule
   .lessons-desktop
     .lessons-row
@@ -41,53 +79,133 @@
         margin-left - 50px
         color #4b5456
         text-align center
-        padding 7px 0
-        &.current
-          color: #f16520
+        padding 15px 0
 
         .lesson-time
           height: 50px
           width: 50px
           margin-left 10px
+          opacity 0.4
+          &.current
+            color: #ff4b00
+            opacity 1
+
           .lesson-time-number, .lesson-time-start
             margin: 0
 
+      // Maker hovered row class number more visible
+      &:hover
+        .lesson-time
+          opacity 1
+
       // Main cell style
       .lesson-cell
-        border: 1px solid #f5f8fa
-        border-bottom: none
+        position relative
+        border-top: 1px solid #f5f8fa
+        border-left: 1px solid lighten(#f5f8fa, 60%)
+        border-right: 1px solid lighten(#f5f8fa, 60%)
         overflow: hidden
-        height: 50px
+        height: 64px
+        text-align center
+        font-size 18px
         &:active, &:hover, &.active
           cursor: pointer
         &.current
-          border: 1px solid #f16520
+          border: 1px solid #ff4b00
 
         // Atom class positioning
+        .lesson-atom-cell
+          position absolute
+          border-left 1px solid #f5f8fa
+          border-right 1px solid #f5f8fa
+          padding 0 10px
+
+          .lesson-name
+            font-weight 300
+            white-space nowrap
+            color #4b5456
+
+          .lesson-place
+            color #3baba1
+            margin-left 10px
+
         .lesson-parity-0
-          margin-top: 15px
+          height 64px
+          line-height 64px
         .lesson-parity-1
-          margin-top: 3px
-          margin-bottom: -22px
+          line-height 32px
+          font-size 14px
+          top 0
+          bottom 31px
+          border-bottom 1px solid #f5f8fa
         .lesson-parity-2
-          margin-top: 22px
+          line-height 32px
+          font-size 14px
+          top 31px
+          bottom 0
+          border-top 1px solid #f5f8fa
+        .lesson-half-0
+          left - 1px
+          right - 1px
         .lesson-half-1
-          float: left
-          text-align: left
-          margin-left: 10px
+          left - 1px
         .lesson-half-2
-          float: right
-          text-align: right
-          margin-right: 10px
+          right - 1px
+
+      @media (min-width: 768px)
+        .lesson-cell
+          width 210px
+          .lesson-half-1
+            right 104px
+          .lesson-half-2
+            left 103px
+
+      @media (min-width: 992px)
+        .lesson-cell
+          width 280px
+          .lesson-half-1
+            right 138px
+          .lesson-half-2
+            left 139px
 
     // Rounded dow corners
     > :first-child + div.lessons-row
       .lesson-cell
         border-radius: 10px 10px 0 0
+        border-top: 1px solid lighten(#f5f8fa, 60%)
     > :last-child
       .lesson-cell
-        border-bottom: 1px solid #f5f8fa
+        border-bottom: 1px solid lighten(#f5f8fa, 60%)
         border-radius: 0 0 10px 10px
+
+    // Day of week
+    .lesson-cell-title
+      margin 70px 0 30px 0
+      font-size 18px
+      text-align: center
+
+      .lesson-cell-title-day
+        text-align: center
+        padding: 5px
+        color: #4b5456
+
+      .lesson-cell-title-date
+        display: inline-block;
+        width: 50px;
+        margin-right: -55px;
+        font-size 14px
+        color lighten(#6b787b, 80%)
+        font-weight 100
+
+      &.current
+        .lesson-cell-title-day
+          border-radius: 5px
+          background: #ff4b00
+          color: #fff
+          padding: 7px 20px;
+        .lesson-cell-title-date
+          color: #6b787b
+          font-weight 500
 
   // Mobile schedule
   .lessons-mobile
@@ -97,25 +215,6 @@
 
   .lesson-cell-mobile-bottom
     border-bottom: 1px solid #f5f8fa
-  .lesson-cell-title
-    border: none
-    &:active, &:hover, &.active
-      cursor: default
-  .lesson-cell-title-day
-    text-align: center
-    padding: 5px
-    margin: 10px 40px
-    color: #4b5456
-    &.current
-      border-radius: 10px 10px 10px 10px
-      background: #f16520
-      color: #FFFFFF
-  .lesson-cell-title-date
-    text-align: right
-    margin: -10% 0
-    color: #FFFFFF
-    &.current
-      color: #6b787b
 
   .lesson-time-mobile
     margin-left: 0

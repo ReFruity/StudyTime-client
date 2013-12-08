@@ -1,33 +1,45 @@
 div(ng-controller='SchedulesStudiesCtrl')
+    // Schedule navigation
     .schedule-header
         .navbar.navbar-default
-            .container
-                div(ng-include, src="'app/partials/schedules/navigation.jade'")
-                a.navbar-link.navbar-right(href="#") {{ 'schedules.index.next_week' | translate }}
-                h5.navbar-text.navbar-right Обновлено {{ last_update | date:'yyyy-MM-dd в HH:mm'}}
+            .container.row-fluid(bindonce)
+                .col-sm-4
+                    a.back-btn(href="/")
+                        span.back-logo-square
+                            i.fa.fa-th
+                        span.group-name(bo-html="$routeParams.groupName")
+                .col-sm-4.text-center
+                    span.schedule-updated-text
+                        span(ng-if="last_update", bo-html="'Обновлено ' + '{{ last_update | relativeDate}}'")
+                        span(ng-if="!last_update") Обновляется...
+                .col-sm-4.text-right
+                    a.next-week-btn
+                        span(bo-html="'schedules.index.next_week' | translate")
+                        i.fa.fa-angle-right
 
     div(ng-if="sched")
-        #schedule-greed(breakpoint="min-width: 768px", ng-init="classes=['1','2','3','4','5','6']")
+        #schedule-greed(breakpoint="min-width: 768px", class="week-{{currentParity}}", ng-init="classes=['1','2','3','4','5','6']")
             // Three columns
-            div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]")
-                .lessons-desktop(ng-repeat="line in lines", bindonce)
-                    .row-fluid
-                        .container
-                            .col-sm-4(ng-repeat="dow in line", bindonce)
-                                .lesson-cell-title
-                                    h4.lesson-cell-title-day {{ 'schedules.studies.'+dow | translate }}
-                                    h5.lesson-cell-title-date {{ '7 окт.' }}
-                    .lessons-row.row-fluid(ng-repeat="class in classes")
-                        .container
+            div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]", bindonce)
+                .lessons-desktop(ng-repeat="line in lines")
+                    .container.row-fluid
+                        .col-sm-4(ng-repeat="dow in line")
+                            h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
+                                span.lesson-cell-title-day(bo-html="'schedules.studies.'+dow | translate")
+                                div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
+                    .lessons-row(ng-repeat="class in classes")
+                        .container.row-fluid
                             .lesson-time-wrapper
-                                .lesson-time
-                                    h4.lesson-time-number {{ class }}
-                                    h5.lesson-time-start {{ timing[class].start | minutesToHours }}
-                            .lesson-cell-wrapper.col-sm-4(ng-repeat="dow in line", bindonce)
-                                .lesson-cell
+                                .lesson-time(ng-class="{'current': currentClass == class}")
+                                    h4.lesson-time-number(bo-html="class")
+                                    h5.lesson-time-start(bo-html="timing[class].start | minutesToHours")
+                            .lesson-cell-wrapper.col-sm-4(ng-repeat="dow in line")
+                                .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}")
                                     .lesson-atom-cell(ng-repeat="atom in sched[dow][class]",
                                     class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
-                                    ng-click="showDetails(dow, class, $index, line)") {{atom.subject.name}}
+                                    ng-click="showDetails(dow, class, $index, line)")
+                                        span.lesson-name {{atom.subject.name}}
+                                        span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
                             div(ng-include, src="'app/partials/schedules/class/index.jade'")
             // One column
