@@ -1,7 +1,7 @@
 footer.footer.ng-cloak
     .container
         .row
-            .widgets.col-md-2
+            .widgets.col-md-2.col-xs-6
                 a(href='#').widget.widget-twitter
                     ic.fa.fa-twitter
                 a(href='#').widget.widget-vk
@@ -10,10 +10,10 @@ footer.footer.ng-cloak
                     ic.fa.fa-facebook
 
                     //img(src='http://promakh.ru/share/s-widgets.png')
-            .navigation.col-md-7.text-center
+            .navigation.col-md-7.text-center.visible-md.visible-lg
                 ul.list-inline
                     li= "{{ 'layouts.main.about'| translate }}"
                     li= "{{ 'layouts.main.terms'| translate }}"
                     li
                         a(href='/humans.txt')= "{{ 'layouts.main.authors'| translate }}"
-            .copyright.col-md-3.text-center= "©2013 StudyTime.me"
+            .copyright.col-md-3.col-xs-6.text-right= "©2013 StudyTime.me"
