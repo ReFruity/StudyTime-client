@@ -1,13 +1,19 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
+// Navigation
 .schedule-header
-  background: #f0f0f0
   .navbar
+    background: #fff
+    border none
     max-height: 50px
     overflow: hidden
+
     .navbar-header
       padding: 0 15px 15px 0
+      .back-btn
+        background #3baba1
+
     .navbar-brand
       padding: 15px 15px 15px
       &:active, &:hover, &.active
@@ -26,25 +32,16 @@
 #schedule-greed
   // Desktop schedule
   .lessons-desktop
-    // Rounded dow corners
-    >:first-child + div.lessons-row
-      .lesson-cell
-        border-radius: 10px 10px 0 0
-    >:last-child
-      .lesson-cell
-        border-bottom: 1px solid #f5f8fa
-        border-radius: 0 0 10px 10px
-
     .lessons-row
       // Class number
       .lesson-time-wrapper
         float left
         height: 50px
         width: 50px
-        margin-left -50px
+        margin-left - 50px
         color #4b5456
         text-align center
-        padding 10px 0
+        padding 7px 0
         &.current
           color: #f16520
 
@@ -83,10 +80,17 @@
           text-align: right
           margin-right: 10px
 
+    // Rounded dow corners
+    > :first-child + div.lessons-row
+      .lesson-cell
+        border-radius: 10px 10px 0 0
+    > :last-child
+      .lesson-cell
+        border-bottom: 1px solid #f5f8fa
+        border-radius: 0 0 10px 10px
 
   // Mobile schedule
   .lessons-mobile
-
   .lesson-cell-mobile
     border-left: none
     border-right: none
