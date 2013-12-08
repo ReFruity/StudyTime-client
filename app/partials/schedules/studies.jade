@@ -11,7 +11,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                 .col-sm-4.text-center
                     span.schedule-updated-text
                         span(ng-if="last_update", bo-html="'Обновлено ' + '{{ last_update | relativeDate}}'")
-                        span(ng-if="!last_update") Обновляется...
+                        span(ng-if="!last_update") Проверка обновлений...
                 .col-sm-4.text-right
                     a.next-week-btn
                         span(bo-html="'schedules.index.next_week' | translate")
