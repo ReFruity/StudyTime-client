@@ -3,7 +3,7 @@
         .container#schedule-index
             //h2.text-center.title {{ 'schedules.index.choose_group' | translate }}
             .select-group-container.text-center
-                img(src='/images/select-group.png')
+                .select-group-img
             .col-md-12.schedule-table
                 .schedule-row(ng-repeat='speciality in groupKeys', ng-if='$index % 4 == 0', ng-init='speciality_index = $index', bindonce)
                     .speciality(ng-repeat='i in [0,1,2,3]', ng-if='groups[groupKeys[speciality_index + i]] != undefined', ng-init='speciality = groupKeys[speciality_index + i]', bindonce)
