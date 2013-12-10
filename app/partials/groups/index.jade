@@ -3,11 +3,11 @@
         .container#schedule-index
             .select-group-container.text-center
                 .select-group-img
-            .col-md-12.schedule-table(breakpoint="min-width: 768px")
+            .col-md-12.schedule-table(breakpoint="max-width: 767px")
                 .schedule-row(ng-repeat='line in groupKeys')
                     .speciality(ng-repeat='speciality in line')
                         h3.text-center(ng-click="openSpeciality(speciality)") {{ speciality }}
-                        .course-content.height-transition(ng-if="openedSpeciality == speciality || matches")
+                        .course-content.height-transition(ng-if="openedSpeciality == speciality || !matches")
                             .groups
                                 .line(ng-repeat='courseRow in groups[speciality]')
                                     a.group.text-center(ng-repeat='group in courseRow | orderBy:"name"', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
