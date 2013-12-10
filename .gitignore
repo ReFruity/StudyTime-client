@@ -18,6 +18,3 @@ test/test-results.xml
 # Bower stuff.
 bower_components/
 
-# Application unique config
-/app/config/config.coffee
-
