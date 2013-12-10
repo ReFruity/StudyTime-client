@@ -1,90 +1,41 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
-// No navbar marging
-.header
-  .navbar
-    margin 0
-
+// Custom desktop navigation
 header
-  padding-top: 11px
-  margin-bottom: 25px
-  .navbar-brand
-    padding-top: 6px
-    color: #4b5456
-    .logo
-      display inline-block
-      background-image url(/images/logo.png)
-      width 38px
-      height 35px
-      vertical-align middle
-      margin-left 22px
-    span
-      margin-left 10px
-      vertical-align middle
-  ul.nav
-    background: #f5f8fa
-    margin-right 10px
-    li
-      a
-        font-size 18px
-        font-weight 300
-        padding: 19px 29px 21px
-        color: #4b5456
-      &.active
-        a, i.fa
-          color #fff
-        background #3baba1
-      &:hover
-        a, i.fa
-          color: #fff
-          background: lighten(#3baba1, 5%)
+  padding-top: 10px
+  nav
+    border 0 !important
+    .navbar-brand
+      span
+        margin-left 10px
+    ul.nav
+      background $brand-info-bg
 
+// iOS like navigation on mobile
+@media $media-max-phone
+  header
+    padding-top 0
 
-@media $screen-tablet-media-q
-  .header
-    padding 0
-    margin 0
-    .navbar
-      border none
-      height 79px
-
-    .navbar-form
-      display none
-
-    .navbar-header
-      float left
-      margin-right 0.3em
+    nav
       .navbar-brand
-        display none
-        /*background-color $navbar-default-link-active-bg*/
-        /*span*/
-        /*display none*/
-        /*&:after*/
-        /*content "ST"*/
+        span
+          display none
 
-    .navbar-right
-      float left !important
-
-    .nav
-      margin 0
-      position absolute
-      left 110px
-      right 0
-      i.fa
-        display block
-        line-height 1.2em
-        font-size 36px
-      li
-        text-align center
-        float left
-        width 33.333333%
-        a
-          margin 0
-          padding 5px
-          font-family arial
-          font-size 16px
-          line-height 1.3em
-          span
-            margin 3px 0
-            display inline-block
+      ul.nav
+        margin 0
+        position absolute
+        left 67px
+        right 0
+        top 0
+        li
+          text-align center
+          float left
+          width 33.333333%
+          a
+            margin 0
+            padding 6px 0 0 0
+            font-size $font-size-small
+            span
+              margin 0
+              display inline-block

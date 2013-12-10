@@ -1,19 +1,35 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
-/*body*/
-/*font-family: arial*/
-/*font-size: 16px*/
-/*color: #4b5456*/
+html
+  height 100%
 
-// Disable navigation icons
-.nav
-  i.fa
-    display none
+body
+  min-height 100%
+  position relative
+
+
+// For preventing AngularJS blink
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+  display: none !important
+
+// Overlay for disabling any interraction from user
+.overlay
+  background-color rgb(255, 255, 255)
+  bottom 0
+  left 0
+  position fixed
+  right 0
+  top 0
+  opacity 0
+  z-index 1000000
+
+// Make some space from footer to content
+#wrap
+  padding-bottom $footer-height + 70
 
 
 // Animate view changes on standalone mode
-// VERY DIRTY HACK
 .standalone
   #wrap
     position absolute
@@ -45,3 +61,32 @@
         -moz-animation: 0.5s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
         -o-animation: 0.5s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
         animation: 0.5s slideInLeft cubic-bezier(0.23, 1, 0.32, 1)
+
+
+@media $media-max-phone
+  #wrap
+    min-height 0 !important
+    height auto !important
+    padding-bottom 10px
+
+  .overthrow-enabled.standalone
+    .header
+      position absolute
+      top 0
+      left 0
+      right 0
+      opacity 0.96
+      z-index 100000
+
+    .overthrow
+      overflow auto
+      -webkit-overflow-scrolling touch
+      position absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
+
+      .animated-view
+        padding-top $navbar-height
+        background #fff

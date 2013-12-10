@@ -1,43 +1,49 @@
 @import "../_variables"
 
 footer
-  margin-top 80px
-  background #4b5456
-  padding 35px 0
-  color #7d8080
-  line-height 30px
+  position absolute
+  bottom 0
+  left 0
+  right 0
+  height $footer-height
+  background $footer-bg
+  padding ceil(($footer-height / 2)  - ($font-size-base / 2) ) 0
+
+  color $footer-color
   a
-    color #7d8080
+    color $footer-link-color
+    text-decoration underline
     &:hover
-      text-decoration none
-      color: #fff
+      color: $footer-link-hover-color
 
   .widgets
     .widget
       color: #fff
-      font-size 18px
-      width 30px
-      height 30px
-      line-height 30px
+      font-size $font-size-medium
+      width $footer-widget-size
+      height $footer-widget-size
+      border-radius $footer-widget-radius
       display inline-block
-      border-radius 15px
+      margin-top - ($font-size-medium / 2)
+      line-height $footer-widget-size
       margin-left 15px
       text-align center
+
       &:first-child
         margin-left 0
       &.widget-twitter
-        background #f16520
+        background $brand-warning
       &.widget-vk
-        background #3baba1
+        background $brand-success
         .fa
           padding-right: 1px
       &.widget-facebook
-        background #a2cd5c
+        background $brand-info
 
   .navigation
     ul
       margin 0
 
-@media $screen-tablet-media-q
+@media $media-max-phone
   footer
-    margin 0
+    display none

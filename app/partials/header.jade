@@ -1,11 +1,11 @@
-header.header.ng-cloak
-    .navbar(role="navigation")
+header.header.ng-cloak(bindonce)
+    nav.navbar.navbar-default(role="navigation")
         .container
             .navbar-header
                 a.navbar-brand(href="#")
-                    div.logo
-                    span {{ 'layouts.main.site_name' | translate }}
-                div(ng-controller="AppCacheUpdateManagerCtrl")
+                    div.stico-logo
+                    span(bo-html="'layouts.main.site_name' | translate")
+                div.navbar-ui-status4(ng-controller="AppCacheUpdateManagerCtrl")
                     div(ng-switch on="appCacheStatus")
                         div(ng-switch-when="2")
                             span Проверка обновлений...
@@ -13,19 +13,17 @@ header.header.ng-cloak
                             span Загрузка новой версии...
                         div(ng-switch-when="4")
                             span Обновление готово
-            div
-                //form.navbar-form.navbar-right
-                //.btn.btn-warning {{ 'buttons.sign_in' | translate }}
-                ul.nav.navbar-nav.navbar-right
+            div.navbar-inner
+                ul.nav.navbar-nav.navbar-right(bindonce)
                     li(ng-class='{active: $location.path() == "/" || $routeParams.groupName}')
                         a(href='/')
-                            i.fa.fa-calendar.fa-2x
-                            span {{ 'layouts.main.navigation.shedule' | translate }}
+                            i.fa.fa-calendar.fa-2x.visible-xs
+                            span(bo-html="'layouts.main.navigation.shedule' | translate")
                     li(ng-class='{active: $location.path() == "/places"}')
                         a(href='/places')
-                            i.fa.fa-map-marker.fa-2x
-                            span {{ 'layouts.main.navigation.auditoriums' | translate }}
+                            i.fa.fa-map-marker.fa-2x.visible-xs
+                            span(bo-html="'layouts.main.navigation.auditoriums' | translate")
                     li(ng-class='{active: $location.path() == "/courses"}')
                         a(href='/courses')
-                            i.fa.fa-rocket.fa-2x
-                            span {{ 'layouts.main.navigation.cources' | translate }}
+                            i.fa.fa-rocket.fa-2x.visible-xs
+                            span(bo-html="'layouts.main.navigation.cources' | translate")

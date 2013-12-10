@@ -1,4 +1,5 @@
 @import '../_variables'
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 #schedule-index
   > .title
@@ -15,26 +16,24 @@
       .speciality
         display table-cell
         border: 9px solid #fff
-        background: #f5f8fa
-        h3
-          padding 28px 0 0 0
-          margin 0
-          font-size 30px
+        background: $brand-info-bg
+
         .course-content
           overflow: hidden
-          padding: 28px 15px 34px
+          padding: 5px 15px 25px
           .line
             overflow: hidden
             .group
-              padding 3px
-              color: #839fa5
+              @media $media-min-tablet
+                padding 3px 5px
+              @media $media-min-desktop
+                padding 3px 10px
+              float left
               text-decoration none
-              font-size 16px
-              &:hover
-                color: #f16520
+              font-size $font-size-medium
 
   .select-group-container
-    margin-top 25px
+    margin-top 20px
     margin-bottom: 30px
     .select-group-img
       display inline-block
@@ -42,7 +41,7 @@
       width 295px
       height 59px
 
-@media $screen-tablet-media-q
+@media $media-max-phone
   #schedule-index
     .schedule-table
       display block
@@ -54,17 +53,16 @@
           width 100%
           background #fff
           h3
-            padding 26px 0 25px
-            font-size 36px
-            background #dce8ec
+            padding 20px 0 20px
+            margin 0
+            background darken($brand-info-bg, 7%)
+            border-bottom 1px solid darken($brand-info-bg, 14%)
           .course-content
-            padding 11px 0
+            padding 0
             .line
-              line-height 75px
               .group
-                font-family arial
-                font-size 28px
-
+                padding 10px 20px
+                font-size $font-size-large
 
 
     &.container
@@ -75,4 +73,5 @@
         padding 0
 
     .select-group-container
+      margin-top 10px
       margin-bottom 20px

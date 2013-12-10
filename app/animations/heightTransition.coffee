@@ -10,12 +10,12 @@ angular.module('app.animations')
         element[0].style.maxHeight = "0px"
 
         $timeout(->
+          element.addClass('max-height-transition')
+          element[0].style.maxHeight = contentHeight + "px"
           element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
             element[0].style.maxHeight = "9999px"
             done()
           )
-          element.addClass('max-height-transition')
-          element[0].style.maxHeight = contentHeight + "px"
         , 10)
 
         return undefined
@@ -28,7 +28,9 @@ angular.module('app.animations')
         $timeout(->
           element.addClass('max-height-transition')
           element[0].style.maxHeight = "0px"
-          element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', done)
+          element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
+            done()
+          )
         , 10)
 
         return undefined

@@ -23,11 +23,14 @@ exports.config =
     stylesheets:
       joinTo:
         'css/app.css': /^(app|vendor)/
+      order:
+        before: [
+          'app/styles/app.styl'
+        ]
 
     templates:
       joinTo:
-        'js/dontUseMe': /^app/ # dirty hack for Jade compiling.
-#        'index.html': /^app\/index/
+        'js/dontUseMe': /^app/
 
   plugins:
     jade:

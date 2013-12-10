@@ -1,24 +1,38 @@
 angular.module('app.controllers')
-
+.value('groupValues', openedSpeciality: undefined)
 .controller('GroupsIndexCtrl', [
     '$scope'
     'config'
     'Group'
+    'groupValues'
 
-    ($scope, config, Group) ->
-      #TODO: redirect to last opened group
+    ($scope, config, Group, groupValues) ->
+      # Chunk array
+      chunkArray = (array, chunkSize) ->
+        [].concat.apply [], array.map((elem, i) ->
+          (if i % chunkSize then [] else [array.slice(i, i + chunkSize)])
+        )
 
+      # Get gorups handler
+      $scope.openedSpeciality = groupValues.openedSpeciality
       $scope.updateGroups = (groups) ->
         $scope.groups = groups
-        $scope.groupKeys = _.keys($scope.groups)
+        $scope.groupKeys = chunkArray(_.keys($scope.groups), 4)
 
+        if not $scope.openedSpeciality
+          $scope.openSpeciality($scope.groupKeys[0][0])
+
+      # Open some speciality
+      $scope.openSpeciality = (spec) ->
+        $scope.openedSpeciality = if spec and spec == $scope.openedSpeciality then undefined else spec
+        groupValues.openedSpeciality = $scope.openedSpeciality
+
+      # Initiate groups request
       Group.get().then(
         $scope.updateGroups
-        , (reason) ->
-          console.log(reason)
-        , $scope.updateGroups
+      , (reason) ->
+        console.log(reason)
+      , $scope.updateGroups
       )
-
-      #deleting angular keys
 
   ])

@@ -1,19 +1,18 @@
-footer.footer.ng-cloak
+footer.footer.ng-cloak(bindonce)
     .container
         .row
-            .widgets.col-md-2.col-xs-6
+            .widgets.col-md-3.col-xs-6
                 a(href='#').widget.widget-twitter
-                    ic.fa.fa-twitter
+                    i.fa.fa-twitter
                 a(href='#').widget.widget-vk
-                    ic.fa.fa-vk
+                    i.fa.fa-vk
                 a(href='#').widget.widget-facebook
-                    ic.fa.fa-facebook
+                    i.fa.fa-facebook
 
-                    //img(src='http://promakh.ru/share/s-widgets.png')
-            .navigation.col-md-7.text-center.visible-md.visible-lg
+            .navigation.col-md-6.text-center.visible-md.visible-lg
                 ul.list-inline
-                    li= "{{ 'layouts.main.about'| translate }}"
-                    li= "{{ 'layouts.main.terms'| translate }}"
+                    li(bo-html="'layouts.main.about'| translate")
+                    li(bo-html="'layouts.main.terms'| translate")
                     li
-                        a(href='/humans.txt')= "{{ 'layouts.main.authors'| translate }}"
+                        a(href='/humans.txt', bo-html="'layouts.main.authors'| translate")
             .copyright.col-md-3.col-xs-6.text-right= "©2013 StudyTime.me"
