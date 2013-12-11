@@ -30,7 +30,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                     .lessons-row(ng-repeat="class in classes")
                         .container.row-fluid
                             .lesson-time-wrapper
-                                .lesson-time(ng-class="{'current': currentClass == class}")
+                                .lesson-time(ng-class="{'current': currentClass == class && in(currentDow, line)}")
                                     h4.lesson-time-number(bo-html="class")
                                     h5.lesson-time-start(bo-html="timing[class].start | minutesToHours")
                             .lesson-cell-wrapper.col-sm-4(ng-repeat="dow in line")
