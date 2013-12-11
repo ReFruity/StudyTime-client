@@ -5,8 +5,9 @@ angular.module('app.controllers')
     'config'
     'Group'
     'groupValues'
+    '$location'
 
-    ($scope, config, Group, groupValues) ->
+    ($scope, config, Group, groupValues, $location) ->
       # Chunk array
       chunkArray = (array, chunkSize) ->
         [].concat.apply [], array.map((elem, i) ->
@@ -27,12 +28,16 @@ angular.module('app.controllers')
         $scope.openedSpeciality = if spec and spec == $scope.openedSpeciality then undefined else spec
         groupValues.openedSpeciality = $scope.openedSpeciality
 
-      # Initiate groups request
-      Group.get().then(
-        $scope.updateGroups
-      , (reason) ->
-        console.log(reason)
-      , $scope.updateGroups
-      )
+      # Open last opened group
+      groupName = Group.lastOpened.get()
+      if groupName
+        $location.path("/#{groupName}")
+      else
+        Group.get().then(
+          $scope.updateGroups
+        , (reason) ->
+          console.log(reason)
+        , $scope.updateGroups
+        )
 
   ])

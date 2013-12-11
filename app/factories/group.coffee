@@ -8,6 +8,12 @@ angular.module('app.services')
 
 
     ($q, $http, localeStorage, config, $timeout) ->
+      lastOpened:
+        get: ->
+          localeStorage.get('group.lasteOpened')
+        set: (groupName) ->
+          localeStorage.add('group.lasteOpened', groupName)
+
       get: (faculty = 'ИМКН') ->
         deferred = $q.defer()
 

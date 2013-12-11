@@ -4,7 +4,7 @@ div(ng-controller='SchedulesStudiesCtrl')
         .navbar.navbar-default
             .container.row-fluid(bindonce)
                 .col-sm-4
-                    a.back-btn(href="/")
+                    a.back-btn(href="#", ng-click="showGroups()")
                         div.back-logo-square
                             i.the-icon
                         span.group-name(bo-html="$routeParams.groupName")

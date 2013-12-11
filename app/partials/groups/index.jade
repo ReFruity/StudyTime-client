@@ -13,7 +13,7 @@
                                     .line(ng-repeat='courseRow in groups[speciality]')
                                         a.group.text-center(ng-repeat='group in courseRow | orderBy:"name"', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
 
-            // We need to duplicate because transition animation needed only on mobile
+            // We need create same tamplate for desktop without speciality animation
             div(ng-if="!matches")
                 .col-md-12.schedule-table(breakpoint="max-width: 767px")
                     .schedule-row(ng-repeat='line in groupKeys')
@@ -23,4 +23,6 @@
                                 .groups
                                     .line(ng-repeat='courseRow in groups[speciality]')
                                         a.group.text-center(ng-repeat='group in courseRow | orderBy:"name"', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
+
+        // For better animation on mobile devices
         .expander
