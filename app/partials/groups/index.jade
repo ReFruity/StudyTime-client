@@ -1,10 +1,10 @@
 .overthrow.non-bounce
     .animated-view
-        .container#schedule-index
+        .container#schedule-index(breakpoint="max-width: 767px")
             .select-group-container.text-center
                 .select-group-img
-            .col-md-12.schedule-table(breakpoint="max-width: 767px")
-                div(ng-if="matches")
+            div(ng-if="matches")
+                .col-md-12.schedule-table
                     .schedule-row(ng-repeat='line in groupKeys')
                         .speciality(ng-repeat='speciality in line')
                             h3.text-center(ng-click="openSpeciality(speciality)") {{ speciality }}
@@ -13,8 +13,9 @@
                                     .line(ng-repeat='courseRow in groups[speciality]')
                                         a.group.text-center(ng-repeat='group in courseRow | orderBy:"name"', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
 
-                // We need to duplicate because transition animation needed only on mobile
-                div(ng-if="!matches")
+            // We need to duplicate because transition animation needed only on mobile
+            div(ng-if="!matches")
+                .col-md-12.schedule-table(breakpoint="max-width: 767px")
                     .schedule-row(ng-repeat='line in groupKeys')
                         .speciality(ng-repeat='speciality in line')
                             h3.text-center(ng-click="openSpeciality(speciality)") {{ speciality }}
@@ -22,3 +23,4 @@
                                 .groups
                                     .line(ng-repeat='courseRow in groups[speciality]')
                                         a.group.text-center(ng-repeat='group in courseRow | orderBy:"name"', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
+        .expander

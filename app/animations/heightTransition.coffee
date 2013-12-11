@@ -5,28 +5,29 @@ angular.module('app.animations')
 
     ($timeout, $rootScope) ->
       enter: (element, done) ->
+        element[0].style.position = "absolute"
+        element[0].style.opacity = "0"
+        element[0].style.display = "block"
         contentHeight = element[0].offsetHeight
-        element.removeClass('max-height-transition')
         element[0].style.maxHeight = "0px"
+        element.removeClass('max-height-transition')
 
         $timeout(->
+          element[0].style.position = "static"
+          element[0].style.opacity = "1"
           element.addClass('max-height-transition')
           element[0].style.maxHeight = contentHeight + "px"
-          doneInvoked = false
+
           element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
-            doneInvoked = true
             element[0].style.maxHeight = "9999px"
             done()
           )
-          $timeout(->
-            if not doneInvoked
-              done()
-          , 900)
         , 10)
 
         return undefined
 
       leave: (element, done) ->
+        element[0].style.display = "block"
         contentHeight = element[0].offsetHeight + 1
         element.removeClass('max-height-transition')
         element[0].style.maxHeight = contentHeight + "px"
@@ -34,15 +35,9 @@ angular.module('app.animations')
         $timeout(->
           element.addClass('max-height-transition')
           element[0].style.maxHeight = "0px"
-          doneInvoked = false
           element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
-            doneInvoked = true
             done()
           )
-          $timeout(->
-            if not doneInvoked
-              done()
-          , 900)
         , 10)
 
         return undefined
