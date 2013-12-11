@@ -35,9 +35,10 @@ div(ng-controller='SchedulesStudiesCtrl')
                                     h5.lesson-time-start(bo-html="timing[class].start | minutesToHours")
                             .lesson-cell-wrapper.col-sm-4(ng-repeat="dow in line")
                                 .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}")
+                                    .arrow(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                                     .lesson-atom-cell(ng-repeat="atom in sched[dow][class]",
                                     class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
-                                    ng-click="showDetails(dow, class, $index, line)")
+                                    ng-click="columnIndex = $index; showDetails(dow, class, $index, line)")
                                         span.lesson-name {{atom.subject.name}}
                                         span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")

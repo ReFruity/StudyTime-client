@@ -13,7 +13,7 @@ angular.module('app.animations')
         element.removeClass('max-height-transition')
 
         $timeout(->
-          element[0].style.position = "static"
+          element[0].style.position = "relative"
           element[0].style.opacity = "1"
           element.addClass('max-height-transition')
           element[0].style.maxHeight = contentHeight + "px"

@@ -35,7 +35,7 @@ angular.module('app.controllers')
       # When user goes to some class
       initOpenedClassDetails = (sched)->
         if $routeParams.weekDay and $routeParams.classNum
-          $scope.openedClass = sched[$routeParams.weekDay][$routeParams.classNum][0]
+          $scope.openedClass = sched[$routeParams.weekDay][$routeParams.classNum][$routeParams.atomClass]
           $rootScope.$emit("openedClassUpdated")
 
       # Set current class and dow base on faculty timing
@@ -90,6 +90,7 @@ angular.module('app.controllers')
 
       # Opend class details
       $scope.showDetails = (dow, clazz, atom, dows = undefined) ->
+        $scope.columnIndex = atom
         if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom + ""
           $location.path('/' + $routeParams.groupName)
         else
