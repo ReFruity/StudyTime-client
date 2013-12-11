@@ -45,8 +45,8 @@
     .schedule-updated-text
       margin 0
       padding 0
-      font-size 18px
-      color #aaaaaa
+      font-size $font-size-medium
+      color #aaa
       font-weight 100
       vertical-align middle
       line-height: 35px;
@@ -55,7 +55,7 @@
 
     // Next week button
     .next-week-btn
-      font-size 18px
+      font-size $font-size-medium
       font-weight 200
       font-size-adjust 2px
       cursor pointer
@@ -117,7 +117,7 @@
         overflow: hidden
         height: 64px
         text-align center
-        font-size 18px
+        font-size $font-size-medium
         &:active, &:hover, &.active
           cursor: pointer
         &.current
@@ -144,13 +144,13 @@
           line-height 64px
         .lesson-parity-1
           line-height 32px
-          font-size 14px
+          font-size $font-size-base
           top 0
           bottom 31px
           border-bottom 1px solid lighten($brand-info, 82%)
         .lesson-parity-2
           line-height 32px
-          font-size 14px
+          font-size 1$font-size-base
           top 31px
           bottom 0
           border-top 1px solid lighten($brand-info, 82%)
@@ -182,7 +182,7 @@
     // Day of week
     .lesson-cell-title
       margin 45px 0 30px 0
-      font-size 22px
+      font-size $font-size-large
       text-align: center
 
       .lesson-cell-title-day
@@ -194,7 +194,7 @@
         display: inline-block;
         width: 50px;
         margin-right: -55px;
-        font-size 14px
+        font-size $font-size-base
         color lighten(#brand-primary, 30%)
         font-weight 100
 
