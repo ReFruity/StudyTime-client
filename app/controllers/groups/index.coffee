@@ -1,5 +1,16 @@
 angular.module('app.controllers')
 .value('groupValues', openedSpeciality: undefined)
+.run([
+    '$rootScope'
+    'Group'
+    '$location'
+
+    ($rootScope, Group, $location) ->
+      # Get last opened group and redirect to it
+      $rootScope.lastOpenedGroup = Group.lastOpened.get()
+      if $rootScope.lastOpenedGroup and $rootScope.lastOpenedGroup.length > 0
+        $location.path("/#{$rootScope.lastOpenedGroup}")
+  ])
 .controller('GroupsIndexCtrl', [
     '$scope'
     'config'
@@ -29,15 +40,9 @@ angular.module('app.controllers')
         groupValues.openedSpeciality = $scope.openedSpeciality
 
       # Open last opened group
-      groupName = Group.lastOpened.get()
-      if groupName and groupName.length > 0
-        $location.path("/#{groupName}")
-      else
-        Group.get().then(
-          $scope.updateGroups
-        , (reason) ->
-          console.log(reason)
-        , $scope.updateGroups
-        )
-
+      Group.get().then(
+        $scope.updateGroups
+      , (reason) ->
+        console.log(reason)
+      , $scope.updateGroups)
   ])

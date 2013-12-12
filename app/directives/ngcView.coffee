@@ -51,6 +51,7 @@ angular.module('app.directives')
                 current = $route.current
                 currentScope = current.scope = newScope
                 currentElement = clone
+                currentScope.$emit "$viewContentChangeStart"
 
                 # Skip first animation
                 if firstCall
@@ -60,11 +61,9 @@ angular.module('app.directives')
                   angular.forEach(clone, (node) ->
                     parentNode.insertBefore(node, afterNextSibling)
                   )
-                  currentScope.$emit "$viewContentChangeStart"
-                  $timeout(enterAnimationDone, 0, false)
+                  enterAnimationDone()
                   firstCall = false
                 else
-                  currentScope.$emit "$viewContentChangeStart"
                   $animate.enter clone, null, $element, enterAnimationDone
 
                 if current.controller
