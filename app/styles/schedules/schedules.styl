@@ -124,12 +124,7 @@
           position absolute
           z-index 10000
           bottom 0px
-          width 0
-          height 0
-          border-left 10px solid transparent
-          border-right 10px solid transparent
-          border-bottom 5px solid #eee
-          margin-left -11px
+          margin-left -12px
 
         // Atom class positioning
         .lesson-atom-cell
@@ -154,6 +149,7 @@
           height 64px
           line-height 64px
         .lesson-parity-1
+          background #fff
           line-height 32px
           font-size $font-size-base
           top 0
@@ -169,6 +165,7 @@
           left - 1px
           right - 1px
         .lesson-half-1
+          background #fff
           left - 1px
         .lesson-half-2
           right - 1px
@@ -179,7 +176,7 @@
           .lesson-half-1
             right 104px
           .lesson-half-2
-            left 103px
+            left 105px
 
       @media (min-width: 992px)
         .lesson-cell
@@ -233,7 +230,7 @@
 
 .lesson-details-container
   overflow hidden
-  background: #ebebeb
+  background: $brand-info-bg
   width: 100%
   padding 0
   margin 0

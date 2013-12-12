@@ -1,0 +1,40 @@
+.arrow-up
+  display: inline-block;
+  background-image: url("../images/arrow-up.png");
+  background-size: 25px 7px;
+  width: 25px;
+  height: 7px;
+
+.arrow-up.ng-enter
+  -webkit-animation: 0.7s arrowUpIn cubic-bezier(0.23, 1, 0.32, 1)
+  -moz-animation: 0.7s arrowUpIn cubic-bezier(0.23, 1, 0.32, 1)
+  -o-animation: 0.7s arrowUpIn cubic-bezier(0.23, 1, 0.32, 1)
+  animation: 0.7s arrowUpIn cubic-bezier(0.23, 1, 0.32, 1)
+
+.arrow-up.ng-leave
+  -webkit-animation: 0.7s arrowUpOut cubic-bezier(0.23, 1, 0.32, 1)
+  -moz-animation: 0.7s arrowUpOut cubic-bezier(0.23, 1, 0.32, 1)
+  -o-animation: 0.7s arrowUpOut cubic-bezier(0.23, 1, 0.32, 1)
+  animation: 0.7s arrowUpOut cubic-bezier(0.23, 1, 0.32, 1)
+
+@keyframes arrowUpIn {
+  from {
+    opacity 0
+    -webkit-transform translateY(-100%)
+  }
+  to {
+    opacity 1
+    -webkit-transform translateY(0)
+  }
+}
+
+@keyframes arrowUpOut {
+  from {
+    opacity 1
+    -webkit-transform translateY(0)
+  }
+  to {
+    opacity 0
+    -webkit-transform translateY(-100%)
+  }
+}

@@ -16,7 +16,7 @@ header.header.ng-cloak(bindonce)
             div.navbar-inner
                 ul.nav.navbar-nav.navbar-right(bindonce)
                     li(ng-class='{active: $location.path() == "/" || $routeParams.groupName}')
-                        a(href='/')
+                        a(href='/{{$routeParams.groupName}}')
                             i.fa.fa-calendar.fa-2x.visible-xs
                             span(bo-html="'layouts.main.navigation.shedule' | translate")
                     li(ng-class='{active: $location.path() == "/places"}')
