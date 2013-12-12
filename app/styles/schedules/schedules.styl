@@ -108,7 +108,7 @@
       // Main cell style
       .lesson-cell
         position relative
-        border-top: 1px solid lighten($brand-info, 82%)
+        border-bottom: 1px solid lighten($brand-info, 82%)
         overflow: hidden
         height: 64px
         text-align center
@@ -186,6 +186,14 @@
           .lesson-half-2
             left 139px
 
+    // Rounded dow corners
+    > :first-child + div.lessons-row
+      .lesson-cell
+        border-top: 1px solid lighten($brand-info, 82%)
+    > :last-child
+      .lesson-cell
+        border-bottom: 0
+
 
     // Day of week
     .lesson-cell-title
@@ -230,10 +238,13 @@
 
 .lesson-details-container
   overflow hidden
-  background: $brand-info-bg
-  width: 100%
+  background $brand-info-bg
+  width 100%
   padding 0
   margin 0
+  z-index 10000
+  position relative
+  top -1px
 
 .lesson-details
   .lesson-info-icons
