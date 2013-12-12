@@ -11,7 +11,7 @@ angular.module('app.controllers')
     ($scope, Group, $routeParams, $location) ->
       Group.lastOpened.set($routeParams.groupName)
       $scope.showGroups = ->
-        Group.lastOpened.set(undefined)
+        Group.lastOpened.set("")
         $location.path('/')
 
   ])

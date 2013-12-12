@@ -30,7 +30,7 @@ angular.module('app.controllers')
 
       # Open last opened group
       groupName = Group.lastOpened.get()
-      if groupName
+      if groupName and groupName.length > 0
         $location.path("/#{groupName}")
       else
         Group.get().then(
