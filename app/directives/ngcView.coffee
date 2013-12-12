@@ -47,6 +47,12 @@ angular.module('app.directives')
                 clone.html template
                 link = $compile(clone.contents())
 
+                # Replace elements
+                current = $route.current
+                currentScope = current.scope = newScope
+                currentElement = clone
+                currentScope.$emit "$viewContentChangeStart"
+
                 # Skip first animation
                 if firstCall
                   afterNode = $element and $element[$element.length - 1]
@@ -55,15 +61,10 @@ angular.module('app.directives')
                   angular.forEach(clone, (node) ->
                     parentNode.insertBefore(node, afterNextSibling)
                   )
-                  $timeout(enterAnimationDone, 0, false)
+                  enterAnimationDone()
                   firstCall = false
                 else
                   $animate.enter clone, null, $element, enterAnimationDone
-
-                current = $route.current
-                currentScope = current.scope = newScope
-                currentElement = clone
-                currentScope.$emit "$viewContentChangeStart"
 
                 if current.controller
                   locals.$scope = currentScope
