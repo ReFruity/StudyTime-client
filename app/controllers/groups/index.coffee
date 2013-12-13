@@ -4,12 +4,16 @@ angular.module('app.controllers')
     '$rootScope'
     'Group'
     '$location'
+    '$route'
 
-    ($rootScope, Group, $location) ->
+    ($rootScope, Group, $location, $route) ->
       # Get last opened group and redirect to it
-      $rootScope.lastOpenedGroup = Group.lastOpened.get()
-      if $rootScope.lastOpenedGroup and $rootScope.lastOpenedGroup.length > 0
-        $location.path("/#{$rootScope.lastOpenedGroup}")
+      if $location.path().length <= 1
+        $rootScope.lastOpenedGroup = Group.lastOpened.get()
+        if $rootScope.lastOpenedGroup and $rootScope.lastOpenedGroup.length > 0
+          $location.path("/#{$rootScope.lastOpenedGroup}")
+
+      # Executed inly once on startup
   ])
 .controller('GroupsIndexCtrl', [
     '$scope'
@@ -40,7 +44,7 @@ angular.module('app.controllers')
         groupValues.openedSpeciality = $scope.openedSpeciality
 
       # Open last opened group
-      Group.get().then(
+      Group.list().then(
         $scope.updateGroups
       , (reason) ->
         console.log(reason)

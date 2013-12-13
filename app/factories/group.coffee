@@ -5,43 +5,33 @@ angular.module('app.services')
     'localStorageService'
     'config'
     '$timeout'
+    'Cachier'
 
 
-    ($q, $http, localeStorage, config, $timeout) ->
+    ($q, $http, localeStorage, config, $timeout, Cachier) ->
       lastOpened:
         get: ->
           localeStorage.get('group.lasteOpened')
         set: (groupName) ->
           localeStorage.add('group.lasteOpened', groupName)
 
-      get: (faculty = 'ИМКН') ->
-        deferred = $q.defer()
+      lastShowedState:
+        get: (group_name) ->
+          localeStorage.get("group.#{group_name}.lasteShowedState")
+        set: (group_name, state) ->
+          localeStorage.add("group.#{group_name}.lasteShowedState", state)
 
-        $timeout(->
-          group_idnt = "group.#{faculty}"
-
-          # Load schedule from cache
-          cache_value = localeStorage.get(group_idnt)
-          cache_value = if cache_value then angular.fromJson(cache_value) else undefined
-          deferred.notify(cache_value) if cache_value
-
-          # Update cache
-          $http(
-            method: 'GET'
-            url: "#{config.apiUrl}/group"
-            params:
-              faculty: faculty
-          )
-          .success (data)->
-              # Send data to user
-              if data.length == 0
-                deferred.reject false
-              else
-                localeStorage.add group_idnt, angular.toJson(data)
-                deferred.resolve data
-          .error (data) ->
-            deferred.reject false
+      get: (name_or_id) ->
+        Cachier("group.#{name_or_id}",
+          method: 'GET'
+          url: "#{config.apiUrl}/group/#{name_or_id}"
         )
 
-        deferred.promise
+      list: (faculty = 'ИМКН') ->
+        Cachier("group.#{faculty}",
+          method: 'GET'
+          url: "#{config.apiUrl}/group"
+          params:
+            faculty: faculty
+        )
   ]

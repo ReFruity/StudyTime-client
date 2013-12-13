@@ -1,7 +1,9 @@
 .overthrow.non-bounce
     .animated-view
-        div(ng-include, src="'app/partials/schedules/studies.jade'")
-//div(ng-switch on='group.state')
-        div(ng-switch-when="studies", ng-include, src="'app/partials/schedules/studies.jade'")
-        div(ng-switch-when="exams", ng-include, src="'app/partials/schedules/exams.jade'")
-        div(ng-switch-when="vacation", ng-include, src="'app/partials/schedules/vacation.jade'")
+        div(ng-switch on='showingState')
+            div(ng-switch-when="studies")
+                div(ng-include, src="'app/partials/schedules/studies.jade'")
+            div(ng-switch-when="exams")
+                div(ng-include, src="'app/partials/schedules/exams.jade'")
+            div(ng-switch-when="vacation")
+                div(ng-include, src="'app/partials/schedules/vacation.jade'")

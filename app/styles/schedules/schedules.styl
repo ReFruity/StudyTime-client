@@ -5,11 +5,12 @@
 .schedule-header
   user-select(none)
   .navbar
-    background: #fff
+    background #fff
     border none
-    height 35px
-    min-height 35px
+    height auto
+    min-height 0
     margin-bottom 0
+    white-space nowrap
 
     // Remove link decoration
     a
@@ -22,14 +23,16 @@
       padding 0 15px 0 0
       font-size $font-size-large
       font-weight 400
-      white-space nowrap
+      display inline-block
+      margin-top - floor($font-size-large - $font-size-medium)
       .back-logo-square
         float left
-        margin-top -1px
-        height 36px
         background $brand-info
-        padding 4px
+        padding 0 4px
         color #fff
+        .the-icon
+          vertical-align middle
+          margin-top - (floor($font-size-large - $font-size-medium) - 1)
       .group-name
         margin-left 10px
       &:hover
@@ -38,6 +41,12 @@
         .group-name
           color darken($link-color, 25%)
 
+    // Change schedule type
+    .type-changer
+      font-size $font-size-medium
+      cursor pointer
+
+
     // Update indicator
     .schedule-updated-text
       margin 0
@@ -45,26 +54,24 @@
       font-size $font-size-medium
       color #aaa
       font-weight 100
-      vertical-align middle
-      line-height: 35px;
       letter-spacing 1px
       white-space nowrap
+      vertical-align bottom
 
     // Next week button
     .next-week-btn
       font-size $font-size-medium
       font-weight 200
-      font-size-adjust 2px
       cursor pointer
       white-space nowrap
+      vertical-align bottom
 
-      span
-        vertical-align middle
       .fa
-        vertical-align middle
         font-size 35px
         font-weight 600
         margin-left 8px
+        vertical-align middle
+        margin-top -4px
 
 #schedule-greed
   user-select(none)
@@ -194,9 +201,9 @@
     > :first-child + div.lessons-row
       .lesson-cell
         border-top: 1px solid lighten($brand-info, 82%)
-    > :last-child
-      .lesson-cell
-        border-bottom: 0
+    //> :last-child
+    //  .lesson-cell
+    //    border-bottom: 0
 
 
     // Day of week
