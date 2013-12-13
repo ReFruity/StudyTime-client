@@ -94,7 +94,6 @@ angular.module('app.controllers')
         if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom + ""
           $location.path('/' + $routeParams.groupName)
         else
-          $scope.openedClass = $scope.sched[dow][clazz][atom]
-          $rootScope.$emit("openedClassUpdated", dow, clazz, atom, dows)
           $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
+          $rootScope.$emit("openedClassUpdated", dow, clazz, atom, dows)
   ])

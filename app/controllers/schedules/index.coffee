@@ -37,6 +37,5 @@ angular.module('app.controllers')
         updateGroup
       , (reject_reason) ->
         console.log "group getting rejected"
-      , updateGroup
-      )
+      , updateGroup)
   ])
