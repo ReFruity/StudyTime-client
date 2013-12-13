@@ -19,7 +19,7 @@ angular.module('app.controllers')
       $scope.clazz = angular.copy($scope.sched[init_dow][init_clazz][init_atom])
 
       # Update when change class on one line
-      $rootScope.$on("openedClassUpdated", (e, dow, clazz, atom, dows=undefined)->
+      $scope.$on("openedClassUpdated", (e, dow, clazz, atom, dows=undefined)->
         if (dows and init_dow in dows and clazz is init_clazz) or not dows
           $scope.viewType = 'info'
           $scope.clazz = angular.copy($scope.sched[dow][clazz][atom])
