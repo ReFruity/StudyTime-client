@@ -10,7 +10,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                             .col-sm-4
                                 a.back-btn(ng-click="showGroups()")
                                     .back-logo-square
-                                        i.the-icon
+                                        i.stico-groups-list
                                     span.group-name(bo-html="$routeParams.groupName")
                                 a.type-changer(ng-if="group && group.state == 'exams'", ng-click="") Сессия
 
@@ -21,7 +21,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                             .col-sm-4.text-right
                                 a.next-week-btn
                                     span(bo-html="'schedules.index.next_week' | translate")
-                                    i.fa.fa-angle-right
+                                    i.stico-arrow-right
                 // Schedule
                 .lessons-desktop(ng-repeat="line in lines")
                     .container.row-fluid

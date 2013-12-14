@@ -17,13 +17,16 @@ header.header.ng-cloak(bindonce)
                 ul.nav.navbar-nav.navbar-right(bindonce)
                     li(ng-class='{active: $location.path() == "/" || $routeParams.groupName}')
                         a(href='/{{lastOpenedGroup}}')
-                            i.fa.fa-calendar.fa-2x.visible-xs
+                            .visible-xs
+                                i.stico-schedule
                             span(bo-html="'layouts.main.navigation.shedule' | translate")
                     li(ng-class='{active: $location.path() == "/places"}')
                         a(href='/places')
-                            i.fa.fa-map-marker.fa-2x.visible-xs
+                            .visible-xs
+                                i.stico-map
                             span(bo-html="'layouts.main.navigation.auditoriums' | translate")
                     li(ng-class='{active: $location.path() == "/courses"}')
                         a(href='/courses')
-                            i.fa.fa-rocket.fa-2x.visible-xs
+                            .visible-xs
+                                i.stico-spec-courses
                             span(bo-html="'layouts.main.navigation.cources' | translate")
