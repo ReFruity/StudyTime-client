@@ -1,47 +1,47 @@
 {
-    "name": "StudyTime-client",
-    "repo": "c58/StudyTime-client",
-    "version": "2.0.0",
-    "main": "_public/js/app.js",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "components"
-    ],
-    "dependencies": {
-        "console-polyfill": "~0.1.0",
-
-        "bootstrap-stylus": "~3.0",
-        "font-awesome": "~4.0.3",
-
-        "angular": "~1.2.3",
-        "angular-cookies": "~1.2.3",
-        "angular-route": "~1.2.3",
-        "angular-resource": "~1.2.3",
-        "angular-animate": "~1.2.3",
-
-        "js-base64": "~2.1.2",
-        "underscore": "~1.5.2",
-        "overthrow-dist": "~0.7.0"
+  "name": "StudyTime-client",
+  "repo": "c58/StudyTime-client",
+  "version": "2.0.0",
+  "main": "_public/js/app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "console-polyfill": "~0.1.0",
+    "bootstrap-stylus": "~3.0",
+    "font-awesome": "~4.0.3",
+    "angular": "1.2.x",
+    "angular-cookies": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-resource": "1.2.x",
+    "angular-animate": "1.2.x",
+    "js-base64": "~2.1.2",
+    "underscore": "~1.5.2",
+    "overthrow-dist": "~0.7.0"
+  },
+  "overrides": {
+    "bootstrap": {
+      "ignore": [
+        "*"
+      ]
     },
-    "overrides": {
-        "bootstrap": {
-            "ignore": [
-                "*"
-            ]
-        },
-        "font-awesome": {
-            "main": [
-                "css/font-awesome.css",
-                "font/fontawesome-webfont.eot",
-                "font/fontawesome-webfont.svg",
-                "font/fontawesome-webfont.ttf",
-                "font/fontawesome-webfont.woff",
-                "font/FontAwesome.otf"
-            ]
-        },
-        "underscore": {
-          "main": "underscore-min.js"
-        }
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css",
+        "font/fontawesome-webfont.eot",
+        "font/fontawesome-webfont.svg",
+        "font/fontawesome-webfont.ttf",
+        "font/fontawesome-webfont.woff",
+        "font/FontAwesome.otf"
+      ]
+    },
+    "underscore": {
+      "main": "underscore-min.js"
     }
+  },
+  "resolutions": {
+    "angular": "1.2.x"
+  }
 }
