@@ -95,5 +95,4 @@ angular.module('app.controllers')
           $location.path('/' + $routeParams.groupName)
         else
           $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
-          $rootScope.$emit("openedClassUpdated", dow, clazz, atom, dows)
   ])
