@@ -22,7 +22,7 @@ angular.module('app.services')
           localeStorage.add("group.#{group_name}.lasteShowedState", state)
 
       get: (name_or_id) ->
-        Cachier("group.#{name_or_id}", (cache_value)->
+        Cachier("group.obj.#{name_or_id}", (cache_value)->
           method: 'GET'
           url: "#{config.apiUrl}/group/#{name_or_id}"
           params:
@@ -30,7 +30,7 @@ angular.module('app.services')
         )
 
       list: (faculty = 'ИМКН') ->
-        Cachier("group.#{faculty}", (cache_value)->
+        Cachier("group.list.#{faculty}", (cache_value)->
           method: 'GET'
           url: "#{config.apiUrl}/group"
           params:
