@@ -22,16 +22,19 @@ angular.module('app.services')
           localeStorage.add("group.#{group_name}.lasteShowedState", state)
 
       get: (name_or_id) ->
-        Cachier("group.#{name_or_id}",
+        Cachier("group.#{name_or_id}", (cache_value)->
           method: 'GET'
           url: "#{config.apiUrl}/group/#{name_or_id}"
+          params:
+            if_updated_after: if cache_value and cache_value.updated then cache_value.updated else new Date(0).toISOString()
         )
 
       list: (faculty = 'ИМКН') ->
-        Cachier("group.#{faculty}",
+        Cachier("group.#{faculty}", (cache_value)->
           method: 'GET'
           url: "#{config.apiUrl}/group"
           params:
             faculty: faculty
+            if_updated_after: if cache_value and cache_value.updated then cache_value.updated else new Date(0).toISOString()
         )
   ]

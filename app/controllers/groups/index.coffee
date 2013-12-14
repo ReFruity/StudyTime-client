@@ -32,7 +32,7 @@ angular.module('app.controllers')
       # Get gorups handler
       $scope.openedSpeciality = groupValues.openedSpeciality
       $scope.updateGroups = (groups) ->
-        $scope.groups = groups
+        $scope.groups = groups.groups
         $scope.groupKeys = chunkArray(_.keys($scope.groups), 4)
 
         if not $scope.openedSpeciality
