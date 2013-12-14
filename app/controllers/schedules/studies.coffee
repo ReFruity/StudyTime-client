@@ -65,7 +65,7 @@ angular.module('app.controllers')
 
       # Week parity updater
       updateWeekParity = ->
-        d = new Date(currentDate)
+        d = new Date($scope.dowDates['Mon'])
         d.setHours(0, 0, 0)
         d.setDate(d.getDate() + 4 - (d.getDay() || 7))
         yearStart = new Date(d.getFullYear(), 0, 1)
