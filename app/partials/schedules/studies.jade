@@ -40,7 +40,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                                     .arrow.arrow-up(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                                     .lesson-atom-cell(ng-repeat="atom in sched[dow][class]",
                                     class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
-                                    ng-click="columnIndex = $index; showDetails(dow, class, $index, line)")
+                                    ng-click="columnIndex = $index; showDetails(dow, class, $index)")
                                         span.lesson-name {{atom.subject.name}}
                                         span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")

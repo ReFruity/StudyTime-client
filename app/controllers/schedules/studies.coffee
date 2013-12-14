@@ -89,7 +89,7 @@ angular.module('app.controllers')
       )
 
       # Opend class details
-      $scope.showDetails = (dow, clazz, atom, dows = undefined) ->
+      $scope.showDetails = (dow, clazz, atom) ->
         $scope.columnIndex = atom
         if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom + ""
           $location.path('/' + $routeParams.groupName)
