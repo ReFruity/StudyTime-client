@@ -9,7 +9,9 @@ angular.module('app.controllers')
       # Just update appCache status
       appCache = window.applicationCache
       handleCacheEvent = (e) ->
-        $scope.appCacheStatus = appCache.status
+        $scope.$apply(->
+          $scope.appCacheStatus = appCache.status
+        )
 
       # Handle error
       handleCacheError = (e) ->
