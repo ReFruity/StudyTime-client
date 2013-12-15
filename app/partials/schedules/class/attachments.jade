@@ -1,42 +1,35 @@
-.lesson-info-files(ng-controller="ClassAttachmentsCtrl")
+.lesson-info-files.col-xs-12(ng-controller="ClassAttachmentsCtrl")
     .lesson-info-files-header
-        h4 Приложения
-        a.btn
-            i.fa.fa-plus
-        a.btn(ng-click="search = (search) ? false : true")
-            i.fa.fa-search
-        select#search-teacher
-            option Кошелев Антон Александрович
-            option Рогожин Сергей Алексеевич
-    .lesson-info-file-search(ng-if="search")
-        select#search-type
-            option 1
-            option 2
-        select#search-date
-            option 3
-            option 4
-        input(type="search")
-    .clear-fix
-    .row
-        .col-sm-5.lesson-info-file-block
-            a.btn.btn-edit
-                i.fa.fa-edit
-            a.file-name Вопросы-к-экзамену1.pdf
-            span.file-size 5Mb
-            br
-            span.file-comment Темы 1 семестра
-        .col-sm-5.lesson-info-file-block
-            a.btn.btn-edit
-                i.fa.fa-edit
-            a.file-name Вопросы-к-экзамену2.pdf
-            span.file-size 5Mb
-            br
-            span.file-comment Темы 1 семестра
-    .row
-        .col-sm-5.lesson-info-file-block
-            a.btn.btn-edit
-                i.fa.fa-edit
-            a.file-name Вопросы-к-экзамену3.pdf
-            span.file-size 5Mb
-            br
-            span.file-comment Темы 1 семестра
+        span.att-label Приложения
+        a.add-btn(href="javascript:")
+            i.stico-plus
+            span Добавить
+
+        label
+            select
+                option Кошелев Антон Александрович
+                option Рогожин Сергей Алексеевич
+    .attachments
+        .file-cont
+            .file-header
+                a.file-name(href="javascript:") Вопросы-к-экзамену1.pdf
+                span.file-size 5Mb
+                span.file-date 21 октября 2013
+            .file-descr
+                span.file-comment Темы 1 семестра
+
+        .file-cont
+            .file-header
+                a.file-name(href="javascript:") Вопросы-к-экзамену1.pdf
+                span.file-size 5Mb
+                span.file-date 21 октября 2013
+            .file-descr
+                span.file-comment Темы 1 семестра
+
+        .file-cont
+            .file-header
+                a.file-name(href="javascript:") Вопросы-к-экзамену1.pdf
+                span.file-size 5Mb
+                span.file-date 21 октября 2013
+            .file-descr
+                span.file-comment Темы 1 семестра

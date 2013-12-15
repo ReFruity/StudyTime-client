@@ -71,6 +71,8 @@
         vertical-align middle
         margin-top -2px
 
+
+// Schedule
 #schedule-greed
   user-select(none)
 
@@ -115,7 +117,7 @@
       // Main cell style
       .lesson-cell
         position relative
-        border-bottom: 1px solid lighten($brand-info, 82%)
+        border-bottom: 1px solid lighten($brand-primary, 93%)
         overflow: hidden
         height: 64px
         text-align center
@@ -136,9 +138,9 @@
         // Atom class positioning
         .lesson-atom-cell
           position absolute
-          border-left 1px solid lighten($brand-info, 82%)
-          border-right 1px solid lighten($brand-info, 82%)
-          padding 0 10px
+          border-left 1px solid lighten($brand-primary, 93%)
+          border-right 1px solid lighten($brand-primary, 93%)
+          padding 0 12px
           overflow hidden
 
           &:hover
@@ -162,13 +164,13 @@
           font-size $font-size-base
           top 0
           bottom 31px
-          border-bottom 1px solid lighten($brand-info, 82%)
+          border-bottom 1px solid lighten($brand-primary, 93%)
         .lesson-parity-2
           line-height 32px
           font-size $font-size-base
           top 31px
           bottom 0
-          border-top 1px solid lighten($brand-info, 82%)
+          border-top 1px solid lighten($brand-primary, 93%)
         .lesson-half-0
           left - 2px
           right - 2px
@@ -198,7 +200,7 @@
     // Rounded dow corners
     > :first-child + div.lessons-row
       .lesson-cell
-        border-top: 1px solid lighten($brand-info, 82%)
+        border-top: 1px solid lighten($brand-primary, 93%)
     //> :last-child
     //  .lesson-cell
     //    border-bottom: 0
@@ -244,125 +246,3 @@
 
   .lesson-time-mobile
     margin-left: 0
-
-.lesson-details-container
-  overflow hidden
-  background $brand-info-bg
-  width 100%
-  padding 0
-  margin 0
-  z-index 10000
-  position relative
-  top -1px
-
-.lesson-details
-  .lesson-info-icons
-    margin 0 0 0 - 37px
-    padding 15px 0
-    float: left
-    width: auto
-    height: 100%
-    a
-      margin: 0 0 10px 0
-  .lesson-info-data
-    padding 15px 25px
-    float: left
-    .lesson-name
-      font-size: 17pt
-      color: #444444
-    .lesson-lecturer
-      color: #207E62
-      cursor: pointer
-    .lesson-start-time
-      font-size: 14pt
-      color: #444444
-  .lesson-info-files
-    float: left
-    display: inline-block
-    padding: 12px 0 0 30px
-    width: 90% /*Temp*/
-    .lesson-info-files-header
-      width: 100%
-      h4
-        display: inline-block
-        margin: 0 10px 0 0
-      #search-teacher
-        width: 250px
-        height: 30px
-    .lesson-info-file-search
-      width: 100%
-      height: 40px
-      padding: 10px 0 0 0
-      select
-        float: left
-        width: 20%
-        height: 30px
-      input
-        float: left
-        width: 60%
-        height: 30px
-    .lesson-info-file-block
-      height: 55px
-      border: 2px #929292 solid
-      border-radius: 5px
-      background-color: #FFFFFF
-      margin: 10px 10px 0 0
-      float: left
-      .btn-edit
-        float: right
-        margin: 2px
-      .file-name
-        float: left
-        padding: 0 10px 0 10px
-        margin-top: 5px
-        border-right: 1px solid #606060
-        color: #207E62
-        cursor: pointer
-      .file-size
-        float: left
-        padding: 5px 0 0 10px
-        color: #606060
-      .file-comment
-        float: left
-        padding: 3px 0 0 10px
-        color: #7A7A7A
-      &:hover
-        background-color: #F7F6F6
-
-.tests-and-exams
-  font-family: "Helvetica Light"
-  max-width: 750px
-  margin: 0 auto 20px
-  #test-title
-    color: #4b5456
-    font-size: 1.6em
-    display: block
-    margin-bottom: 15px
-  #exam-title
-    color: #4b5456
-    font-size: 1.6em
-    display: block
-    margin: 25px 0 15px
-  .info
-    .date
-      font-family: Arial
-      font-size: 1.3em
-      font-weight: 700
-      color: #4b5456
-      margin-right: 15px
-    .time
-      font-size: 1.1em
-      color: #4b5456
-      margin-right: 15px
-    .name
-      font-size: 1.3em
-      color: #f16520
-      margin-right: 15px
-    .teacher
-      font-size: 1.3em
-      font-style: oblique
-      color: #aaaaaa
-      margin-right: 15px
-    .audit
-      font-size: 1.1em
-      color: #4b5456

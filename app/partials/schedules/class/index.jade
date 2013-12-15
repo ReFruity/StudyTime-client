@@ -1,13 +1,19 @@
 .lesson-details(ng-controller="ClassIndexCtrl")
     .container
-        .lesson-info-icons
-            a.btn(ng-click="viewType='info'", ng-class="{'btn-success':viewType=='info' || !viewType}")
-                i.fa.fa-info-circle
-            br
-            a.btn(ng-click="viewType='attachments'", ng-class="{'btn-success':viewType=='attachments'}")
-                i.fa.fa-info-circle
+        .close-btn
+            a(href="/{{$routeParams.groupName}}")
+                i.stico-cross
 
-        div(ng-switch on="viewType")
+        .lesson-info-icons-cont
+            ul.lesson-info-icons
+                li(ng-class="{'active':viewType=='info' || !viewType}")
+                    a(ng-click="viewType='info'", href='javascript:')
+                        i.stico-info
+                li(ng-class="{'active':viewType=='attachments'}")
+                    a(ng-click="viewType='attachments'", href='javascript:')
+                        i.stico-files
+
+        div.row-fluid(ng-switch on="viewType")
             div(ng-switch-default)
                 div(ng-include, src="'app/partials/schedules/class/info.jade'")
             div(ng-switch-when="attachments")

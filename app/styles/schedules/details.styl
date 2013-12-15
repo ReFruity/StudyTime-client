@@ -1,0 +1,104 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.lesson-details-container
+  overflow hidden
+  background $brand-info-bg
+  width 100%
+  padding 0
+  margin 0
+  z-index 10000
+  position relative
+  top - 1px
+
+.lesson-details
+  // Close details button
+  .close-btn
+    float right
+    margin 15px 15px 0 0
+    position relative
+    z-index 10000
+
+  // Navigation icons
+  .lesson-info-icons-cont
+    float: left
+    width: 50px
+    margin 8px 0 10px -50px
+
+    ul.lesson-info-icons
+      list-style-type none
+      margin 0 0 0 16px
+      padding 0
+      li
+        margin 10px 0 0 0
+        padding 0
+        a
+          border-radius 5px
+          padding 21px 4px 1px 4px
+        &.active
+          a
+            background $brand-info
+
+  // Information about class
+  .lesson-info-data
+    padding 15px 25px
+    .lesson-info-header
+      font-size $font-size-large
+      .lesson-name
+        margin-right 10px
+      .lesson-place
+        margin-left 10px
+        color $brand-info
+
+    .lesson-lecturer
+      margin-left 1px
+      cursor pointer
+
+  // Attacments
+  .lesson-info-files
+    padding 15px 25px
+
+    // Navigation
+    .lesson-info-files-header
+      .att-label
+        font-size $font-size-large
+        vertical-align middle
+      .add-btn
+        display inline-block
+        margin-top 5px
+        padding 0 5px
+        margin-left 10px
+        vertical-align middle
+        &:hover
+          text-decoration none
+        i
+          vertical-align middle
+        span
+          margin-left 5px
+          vertical-align middle
+
+
+    .attachments
+      margin 10px 0 0 0
+      .file-cont
+        margin 0 0 10px 0
+        .file-header
+          font-size $font-size-medium
+          .file-name
+            text-decoration underline
+          .file-size
+            font-weight 500
+            margin-left 15px
+          .file-date
+            margin-left 15px
+            font-weight 200
+            opacity 0.3
+        &:hover
+          .file-header
+            .file-date
+              opacity 1
+        .file-descr
+          font-size $font-size-medium
+          font-weight 100
+          color lighten($brand-primary, 10%)
+          letter-spacing 1px
