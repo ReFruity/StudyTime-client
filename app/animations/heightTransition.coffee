@@ -10,6 +10,7 @@ angular.module('app.animations')
         element[0].style.display = "block"
         contentHeight = element[0].offsetHeight
         element[0].style.maxHeight = "0px"
+        element[0].style.overflow = "hidden"
         element.removeClass('max-height-transition')
 
         $timeout(->
@@ -20,6 +21,7 @@ angular.module('app.animations')
 
           element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
             element[0].style.maxHeight = "9999px"
+            element[0].style.overflow = "visible"
             done()
           )
         , 10)
@@ -31,11 +33,13 @@ angular.module('app.animations')
         contentHeight = element[0].offsetHeight + 1
         element.removeClass('max-height-transition')
         element[0].style.maxHeight = contentHeight + "px"
+        element[0].style.overflow = "hidden"
 
         $timeout(->
           element.addClass('max-height-transition')
           element[0].style.maxHeight = "0px"
           element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
+            element[0].style.overflow = "visible"
             done()
           )
         , 10)
