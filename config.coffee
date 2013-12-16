@@ -17,6 +17,7 @@ exports.config =
         'js/vendor.js': /^(bower_components|vendor)/
       order:
         before: [
+          'vendor/angular-file-upload-html5-shim.js'
           'app/app.coffee'
         ]
 

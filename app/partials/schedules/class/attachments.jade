@@ -1,22 +1,18 @@
-.lesson-info-files.col-xs-12(ng-controller="ClassAttachmentsCtrl")
+.lesson-info-files(ng-controller="ClassAttachmentsCtrl")
     .lesson-info-files-header
         span.att-label Приложения
         .upload-cont
-            a.add-btn(href="", ng-click="showUploadDropdown = !showUploadDropdown")
+            a.add-btn(ng-click="showUploadDropdown = !showUploadDropdown")
                 i.stico-plus
                 span Добавить
             .upload-dropdown(ng-if="showUploadDropdown")
                 ul.att-types(ng-init="type='file'")
                     li(ng-class="{'current': type == 'file'}", ng-click="type='file'") Файл
                     li(ng-class="{'current': type == 'link'}", ng-click="type='link'") Ссылка
-                ul.att-sub-types
-                    li Конспект
-                    li Учебник
-                    li Задачник
-                    li Практика
-                    li Билеты
-                    li Другой
-
+                ul.att-sub-types(ng-init="types=[['note','Конспект'], ['book','Учебник'], ['tasks','Задачник'], ['practice','Практика'],['quiz','Билеты'],['other','Другое']]")
+                    li(ng-repeat="t in types", ng-click="type == 'link' && addLink(t[0])")
+                        input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])", multiple)
+                        span {{t[1]}}
         label
             select
                 option Кошелев Антон Александрович
@@ -24,7 +20,7 @@
     .attachments
         .file-cont
             .file-header
-                a.file-name(href="") Вопросы-к-экзамену1.pdf
+                a.file-name Вопросы-к-экзамену1.pdf
                 span.file-size 5Mb
                 span.file-date 21 октября 2013
             .file-descr
@@ -32,7 +28,7 @@
 
         .file-cont
             .file-header
-                a.file-name(href="") Вопросы-к-экзамену1.pdf
+                a.file-name Вопросы-к-экзамену1.pdf
                 span.file-size 5Mb
                 span.file-date 21 октября 2013
             .file-descr
@@ -40,7 +36,7 @@
 
         .file-cont
             .file-header
-                a.file-name(href="") Вопросы-к-экзамену1.pdf
+                a.file-name Вопросы-к-экзамену1.pdf
                 span.file-size 5Mb
                 span.file-date 21 октября 2013
             .file-descr

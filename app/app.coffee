@@ -22,6 +22,7 @@ App = angular.module('app', [
   'app.animations'
   'LocalStorageModule'
   'pasvaz.bindonce'
+  'angularFileUpload'
 ])
 .config([
     '$routeProvider'

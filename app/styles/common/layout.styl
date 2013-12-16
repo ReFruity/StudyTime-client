@@ -8,6 +8,8 @@ body
   min-height 100%
   position relative
 
+a
+  cursor pointer
 
 // For preventing AngularJS blink
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
@@ -58,6 +60,7 @@ select
 
 label
   position relative
+  outline none
   &:after
     content:'<>';
     font: $font-size-small "Consolas", monospace;

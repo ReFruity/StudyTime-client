@@ -75,7 +75,7 @@
 
           ul.att-types
             list-style-type none
-            margin 10px 0 0 15px
+            margin 10px 0 0 10px
             padding 0
             li
               float left
@@ -89,17 +89,26 @@
                 color #fff
 
           ul.att-sub-types
-            border 2px solid $brand-info-bg
+            border 2px solid lighten($brand-primary, 80%)
             margin -10px 0 0 0
-            padding 45px 0 5px 0
+            padding 40px 0 5px 0
             list-style-type none
             background #fff
             border-radius 5px
-            min-width 155px
+            min-width 147px
             li
               padding 3px 15px
               color $link-color
               cursor pointer
+              position relative
+              overflow hidden
+              input
+                top 0
+                left 0
+                opacity 0
+                font-size 18px
+                position absolute
+                outline none
               &:hover
                 background $link-hover-color
                 color #fff

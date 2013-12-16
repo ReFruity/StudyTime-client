@@ -7,10 +7,10 @@
         .lesson-info-icons-cont
             ul.lesson-info-icons
                 li(ng-class="{'active':viewType=='info' || !viewType}")
-                    a(ng-click="viewType='info'", href='')
+                    a(ng-click="viewType='info'")
                         i.stico-info
                 li(ng-class="{'active':viewType=='attachments'}")
-                    a(ng-click="viewType='attachments'", href='')
+                    a(ng-click="viewType='attachments'")
                         i.stico-files
 
         div.row-fluid(ng-switch on="viewType")
