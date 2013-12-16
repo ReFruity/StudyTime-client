@@ -26,7 +26,61 @@ body
 
 // Make some space from footer to content
 #wrap
-  padding-bottom $footer-height + 70
+  padding-bottom $footer-height
+
+
+// Stylish select
+select
+  display inline-block
+  vertical-align middle
+  padding: 3px 10px;
+  margin: 5px 0 0 10px;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:4px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background: #fff;
+  color: $brand-primary;
+  border:none;
+  outline:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  cursor:pointer;
+  font-size $font-size-base
+  height 25px
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+  select
+    padding-right 30px
+
+label
+  position relative
+  &:after
+    content:'<>';
+    font: $font-size-small "Consolas", monospace;
+    color: lighten($brand-primary, 80%);
+    rotate(90deg)
+    right:4px;
+    top:11px;
+    padding:0 0 2px;
+    position:absolute;
+    pointer-events:none;
+    letter-spacing 1px
+
+  &:before
+    content:'';
+    border-radius:4px;
+    right:-3px;
+    top:5px;
+    width:28px;
+    height:25px;
+    background:#fff;
+    position:absolute;
+    pointer-events:none;
+    display:block;
 
 
 // Animate view changes on standalone mode
