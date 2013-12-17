@@ -54,8 +54,8 @@ div(ng-controller='SchedulesStudiesCtrl')
                     h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
                         span.lesson-cell-title-day(bo-html="'schedules.studies.'+dow | translate")
                         div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
-                    .lesson-cell(ng-repeat="class in classes")
-                        .lesson-cell-into(ng-class="{'current': currentDow == dow && currentClass == class}")
+                    .lesson-row(ng-repeat="class in classes")
+                        .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}")
                             .lesson-time-wrapper
                                 .lesson-time(ng-class="{'current': currentDow == dow && currentClass == class}")
                                     h4.lesson-time-number(bo-html="class")

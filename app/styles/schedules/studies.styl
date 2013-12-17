@@ -237,8 +237,8 @@
 
   // Mobile schedule
   .lessons-mobile
-    .lesson-cell
-      .lesson-cell-into
+    .lesson-row
+      .lesson-cell
         position relative
         border-bottom: 1px solid lighten($brand-info, 82%)
         overflow: hidden
@@ -313,8 +313,8 @@
           .lesson-time
             opacity 1
     //First class top border
-    > :first-child + div.lesson-cell
-      .lesson-cell-into
+    > :first-child + div.lesson-row
+      .lesson-cell
         border-top: 1px solid lighten($brand-info, 82%)
         &.current
           border-top: 1px solid $brand-warning
