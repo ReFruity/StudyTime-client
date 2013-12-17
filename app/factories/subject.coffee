@@ -8,19 +8,18 @@ angular.module('app.services')
     'Cachier'
 
     ($q, $http, localeStorage, config, $timeout, Cachier) ->
-      sign_upload: ->
+      sign_upload: (subject_id)->
         deferred = $q.defer()
         $timeout(->
           $http(
             method: 'POST'
-            url: "#{config.apiUrl}/subject/"
+            url: "#{config.apiUrl}/subject/#{subject_id}/attachment/sign"
           )
           .success (data)->
               # Send data to user
               if data.length == 0
                 deferred.reject false
               else
-                localeStorage.add cache_idnt, angular.toJson(data)
                 deferred.resolve data
           .error (data) ->
             deferred.reject false

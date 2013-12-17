@@ -95,4 +95,7 @@ angular.module('app.controllers')
           $location.path('/' + $routeParams.groupName)
         else
           $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
+
+      $scope.closeDetails = ->
+        $location.path('/' + $routeParams.groupName)
   ])

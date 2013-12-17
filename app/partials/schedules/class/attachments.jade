@@ -5,14 +5,15 @@
             a.add-btn(ng-click="showUploadDropdown = !showUploadDropdown")
                 i.stico-plus
                 span Добавить
-            .upload-dropdown(ng-if="showUploadDropdown")
-                ul.att-types(ng-init="type='file'")
-                    li(ng-class="{'current': type == 'file'}", ng-click="type='file'") Файл
-                    li(ng-class="{'current': type == 'link'}", ng-click="type='link'") Ссылка
-                ul.att-sub-types(ng-init="types=[['note','Конспект'], ['book','Учебник'], ['tasks','Задачник'], ['practice','Практика'],['quiz','Билеты'],['other','Другое']]")
-                    li(ng-repeat="t in types", ng-click="type == 'link' && addLink(t[0])")
-                        input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])", multiple)
-                        span {{t[1]}}
+            span(ng-if="showUploadDropdown")
+                .upload-dropdown(click-outside="$parent.showUploadDropdown = false")
+                    ul.att-types(ng-init="type='file'")
+                        li(ng-class="{'current': type == 'file'}", ng-click="type='file'") Файл
+                        li(ng-class="{'current': type == 'link'}", ng-click="type='link'") Ссылка
+                    ul.att-sub-types(ng-init="types=[['note','Конспект'], ['book','Учебник'], ['tasks','Задачник'], ['practice','Практика'],['quiz','Билеты'],['other','Другое']]")
+                        li(ng-repeat="t in types", ng-click="type == 'link' && addLink(t[0])")
+                            input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])", multiple)
+                            span {{t[1]}}
         label
             select
                 option Кошелев Антон Александрович

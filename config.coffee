@@ -18,6 +18,7 @@ exports.config =
       order:
         before: [
           'vendor/angular-file-upload-html5-shim.js'
+          'app/directives/jqliteExtends.coffee'
           'app/app.coffee'
         ]
 

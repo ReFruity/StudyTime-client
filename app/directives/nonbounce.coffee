@@ -48,7 +48,7 @@ angular.module('app.directives')
 
       hasCorrectBounds = (evt) ->
         y = if evt.touches then evt.touches[0].screenY else evt.screenY
-        nonbounce = closest(evt.target, ".non-bounce")
+        nonbounce = angular.element(evt.target).closest(".non-bounce")
 
         if not nonbounce
           return true
@@ -65,19 +65,6 @@ angular.module('app.directives')
           return false
 
         return true
-
-      closest = (elem, selector) ->
-        matchesSelector = elem.matches or elem.webkitMatchesSelector or elem.mozMatchesSelector or elem.msMatchesSelector
-
-        while (elem)
-          if elem == document
-            return document
-          if matchesSelector.call(elem, selector)
-            return elem
-          else
-            elem = elem.parentNode
-
-        return false
 
   ])
 .directive("nonBounce", [ "$animate", ($animate) ->

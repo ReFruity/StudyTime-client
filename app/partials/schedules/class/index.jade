@@ -1,4 +1,4 @@
-.lesson-details(ng-controller="ClassIndexCtrl")
+.lesson-details(ng-controller="ClassIndexCtrl", click-outside="closeDetails()", exclude=".lesson-atom-cell")
     .container
         .close-btn
             a(href="/{{$routeParams.groupName}}")
