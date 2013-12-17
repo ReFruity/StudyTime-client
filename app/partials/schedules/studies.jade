@@ -54,18 +54,18 @@ div(ng-controller='SchedulesStudiesCtrl')
                     h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
                         span.lesson-cell-title-day(bo-html="'schedules.studies.'+dow | translate")
                         div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
-                    .lesson-cell(ng-repeat="class in classes",
-                        ng-class="{'current': currentDow == dow && currentClass == class}")
-                        .lesson-time-wrapper
-                            .lesson-time(ng-class="{'current': currentDow == dow && currentClass == class}")
-                                h4.lesson-time-number(bo-html="class")
-                                h5.lesson-time-start(bo-html="timing[class].start | minutesToHours")
-                        .lesson-inside(ng-class="{'current': currentDow == dow && currentClass == class}",
-                            ng-repeat="atom in sched[dow][class]",
-                            class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
-                            ng-click="columnIndex = $index; showDetails(dow, class, $index)")
+                    .lesson-cell(ng-repeat="class in classes")
+                        .lesson-cell-into(ng-class="{'current': currentDow == dow && currentClass == class}")
+                            .lesson-time-wrapper
+                                .lesson-time(ng-class="{'current': currentDow == dow && currentClass == class}")
+                                    h4.lesson-time-number(bo-html="class")
+                                    h5.lesson-time-start(bo-html="timing[class].start | minutesToHours")
+                            .lesson-inside(ng-class="{'current': currentDow == dow && currentClass == class}",
+                                ng-repeat="atom in sched[dow][class]",
+                                class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
+                                ng-click="columnIndex = $index; showDetails(dow, class, $index)")
                                 .arrow.arrow-up(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                                 span.lesson-name {{atom.subject.name}}
                                 span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
-                        .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, lines)")
+                        .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                             div(ng-include, src="'app/partials/schedules/class/index.jade'")
