@@ -12,33 +12,17 @@
                         li(ng-class="{'current': type == 'link'}", ng-click="type='link'") Ссылка
                     ul.att-sub-types(ng-init="types=[['note','Конспект'], ['book','Учебник'], ['tasks','Задачник'], ['practice','Практика'],['quiz','Билеты'],['other','Другое']]")
                         li(ng-repeat="t in types", ng-click="type == 'link' && addLink(t[0])")
-                            input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])", multiple)
+                            input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])")
                             span {{t[1]}}
         label
             select
-                option Кошелев Антон Александрович
-                option Рогожин Сергей Алексеевич
+                option(value="") Любой преподаватель
+                option(ng-repeat="p in professors", value="{{p.object}}") {{ p.name }}
     .attachments
-        .file-cont
+        .file-cont(ng-repeat="att in attachments")
             .file-header
-                a.file-name Вопросы-к-экзамену1.pdf
-                span.file-size 5Mb
-                span.file-date 21 октября 2013
+                a.file-name(href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}") {{ att.name }}
+                span.file-size {{ att.size | redeableSize }}
+                span.file-date {{ att.updated | date:'dd MMM yyyy' }}
             .file-descr
-                span.file-comment Темы 1 семестра
-
-        .file-cont
-            .file-header
-                a.file-name Вопросы-к-экзамену1.pdf
-                span.file-size 5Mb
-                span.file-date 21 октября 2013
-            .file-descr
-                span.file-comment Темы 1 семестра
-
-        .file-cont
-            .file-header
-                a.file-name Вопросы-к-экзамену1.pdf
-                span.file-size 5Mb
-                span.file-date 21 октября 2013
-            .file-descr
-                span.file-comment Темы 1 семестра
+                span.file-comment {{ att.description }}

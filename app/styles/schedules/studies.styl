@@ -1,6 +1,12 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
+// Variables
+$sched-border-color ?= lighten($brand-primary, 93%)
+$sched-inner-border-color ?= lighten($brand-primary, 93%)
+$sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
+
+
 // Navigation
 .schedule-header
   user-select(none)
@@ -85,49 +91,171 @@
       opacity 0.2
 
   // Desktop schedule
-  .lessons-desktop
-    .lessons-row
-      // Class number
-      .lesson-time-wrapper
-        float left
+  .lessons-row
+    // Class number
+    .lesson-time-wrapper
+      float left
+      height: 50px
+      width: 50px
+      margin-left - 50px
+      color $brand-primary
+      text-align center
+      padding 15px 0
+
+      .lesson-time
         height: 50px
         width: 50px
-        margin-left - 50px
-        color $brand-primary
-        text-align center
-        padding 15px 0
-
-        .lesson-time
-          height: 50px
-          width: 50px
-          margin-left 10px
-          opacity 0.4
-          &.current
-            color: $brand-warning
-            opacity 1
-
-          .lesson-time-number, .lesson-time-start
-            margin: 0
-
-      // Maker hovered row class number more visible
-      &:hover
-        .lesson-time
+        margin-left 10px
+        opacity 0.4
+        &.current
+          color: $brand-warning
           opacity 1
 
-      // Main cell style
+        .lesson-time-number, .lesson-time-start
+          margin: 0
+
+    // Maker hovered row class number more visible
+    &:hover
+      .lesson-time
+        opacity 1
+
+    // Main cell style
+    .lesson-cell
+      position relative
+      border-bottom: 1px solid $sched-border-color
+      overflow: hidden
+      height: 64px
+      text-align center
+      font-size $font-size-medium
+      &:active, &:hover, &.active
+        cursor: pointer
+      &.current
+        border: 1px solid $brand-warning !important
+
+      // Arrow when details showed
+      .arrow
+        left 50%
+        position absolute
+        z-index 10000
+        bottom 0px
+        margin-left -12px
+
+      // Atom class positioning
+      .lesson-atom-cell
+        position absolute
+        border-left 1px solid $sched-border-color
+        border-right 1px solid $sched-border-color
+        padding 0 12px
+        overflow hidden
+
+        &:hover
+          background $sched-cell-hover-bg
+
+        .lesson-name
+          font-weight 300
+          white-space nowrap
+          color #4b5456
+
+        .lesson-place
+          color #3baba1
+          margin-left 10px
+
+      .lesson-parity-0
+        height 64px
+        line-height 64px
+      .lesson-parity-1
+        background #fff
+        line-height 32px
+        font-size $font-size-base
+        top 0
+        bottom 31px
+        border-bottom 1px solid $sched-border-color
+      .lesson-parity-2
+        line-height 32px
+        font-size $font-size-base
+        top 31px
+        bottom 0
+        border-top 1px solid $sched-border-color
+      .lesson-half-0
+        left - 2px
+        right - 2px
+      .lesson-half-1
+        background #fff
+        left - 2px
+      .lesson-half-2
+        background #fff
+        right - 2px
+
+    @media (min-width: 768px)
+      .lesson-cell
+        width 211px
+        .lesson-half-1
+          right 105px
+        .lesson-half-2
+          left 105px
+
+    @media (min-width: 992px)
+      .lesson-cell
+        width 281px
+        .lesson-half-1
+          right 140px
+        .lesson-half-2
+          left 140px
+
+  // Rounded dow corners
+  > :first-child + div.lessons-row
+    .lesson-cell
+      border-top: 1px solid $sched-border-color
+  //> :last-child
+  //  .lesson-cell
+  //    border-bottom: 0
+
+
+  // Day of week
+  .lesson-cell-title
+    margin 45px 0 30px 0
+    font-size $font-size-large
+    text-align: center
+
+    .lesson-cell-title-day
+      text-align: center
+      padding: 5px
+      color: #4b5456
+
+    .lesson-cell-title-date
+      display: inline-block;
+      width: 50px;
+      margin-right: -55px;
+      font-size $font-size-base
+      color lighten(#brand-primary, 30%)
+      font-weight 100
+
+    &.current
+      .lesson-cell-title-day
+        border-radius: 5px
+        background: $brand-warning
+        color: #fff
+        padding: 7px 20px;
+      .lesson-cell-title-date
+        color: $brand-primary
+        font-weight 300
+
+
+  // Mobile schedule
+  .lessons-mobile
+    .lesson-row
       .lesson-cell
         position relative
-        border-bottom: 1px solid lighten($brand-primary, 93%)
+        border-bottom: 1px solid $sched-border-color
         overflow: hidden
         height: 64px
         text-align center
         font-size $font-size-medium
-        &:active, &:hover, &.active
-          cursor: pointer
         &.current
-          border: 1px solid $brand-warning
+          border-top: 1px solid $brand-warning !important
+          border-bottom: 1px solid $brand-warning !important
 
-        // Arrow when details showed
+        // Arrow when details showed?
         .arrow
           left 50%
           position absolute
@@ -135,132 +263,13 @@
           bottom 0px
           margin-left -12px
 
-        // Atom class positioning
-        .lesson-atom-cell
-          position absolute
-          border-left 1px solid lighten($brand-primary, 93%)
-          border-right 1px solid lighten($brand-primary, 93%)
-          padding 0 12px
-          overflow hidden
-
-          &:hover
-            background lighten($brand-info-bg, 80%)
-
-          .lesson-name
-            font-weight 300
-            white-space nowrap
-            color #4b5456
-
-          .lesson-place
-            color #3baba1
-            margin-left 10px
-
-        .lesson-parity-0
-          height 64px
-          line-height 64px
-        .lesson-parity-1
-          background #fff
-          line-height 32px
-          font-size $font-size-base
-          top 0
-          bottom 31px
-          border-bottom 1px solid lighten($brand-primary, 93%)
-        .lesson-parity-2
-          line-height 32px
-          font-size $font-size-base
-          top 31px
-          bottom 0
-          border-top 1px solid lighten($brand-primary, 93%)
-        .lesson-half-0
-          left - 2px
-          right - 2px
-        .lesson-half-1
-          background #fff
-          left - 2px
-        .lesson-half-2
-          background #fff
-          right - 2px
-
-      @media (min-width: 768px)
-        .lesson-cell
-          width 211px
-          .lesson-half-1
-            right 105px
-          .lesson-half-2
-            left 105px
-
-      @media (min-width: 992px)
-        .lesson-cell
-          width 281px
-          .lesson-half-1
-            right 140px
-          .lesson-half-2
-            left 140px
-
-    // Rounded dow corners
-    > :first-child + div.lessons-row
-      .lesson-cell
-        border-top: 1px solid lighten($brand-primary, 93%)
-    //> :last-child
-    //  .lesson-cell
-    //    border-bottom: 0
-
-
-    // Day of week
-    .lesson-cell-title
-      margin 45px 0 30px 0
-      font-size $font-size-large
-      text-align: center
-
-      .lesson-cell-title-day
-        text-align: center
-        padding: 5px
-        color: #4b5456
-
-      .lesson-cell-title-date
-        display: inline-block;
-        width: 50px;
-        margin-right: -55px;
-        font-size $font-size-base
-        color lighten(#brand-primary, 30%)
-        font-weight 100
-
-      &.current
-        .lesson-cell-title-day
-          border-radius: 5px
-          background: $brand-warning
-          color: #fff
-          padding: 7px 20px;
-        .lesson-cell-title-date
-          color: $brand-primary
-          font-weight 300
-
-  // Mobile schedule
-  .lessons-mobile
-    .lesson-row
-      .lesson-cell
-        position relative
-        border-bottom: 1px solid lighten($brand-info, 82%)
-        overflow: hidden
-        height: 64px
-        text-align center
-        font-size $font-size-medium
-        &:active, &:hover, &.active
-          cursor: pointer
-        &.current
-          border: 1px solid $brand-warning
-        // Arrow when details showed?
-        .arrow
-          position absolute
         // Class name and place
         .lesson-inside
           position absolute
-          border-left 1px solid lighten($brand-info, 82%)
-          border-right 1px solid lighten($brand-info, 82%)
+          border-left 1px solid $sched-border-color
+          border-right 1px solid $sched-border-color
           overflow: hidden
           padding 0 60px
-          &:hover
-            background lighten($brand-info-bg, 80%)
           .lesson-name
             white-space nowrap
             color #4b5456
@@ -272,12 +281,12 @@
         .lesson-parity-1
           line-height 32px
           font-size $font-size-base
-          border-bottom 1px solid lighten($brand-info, 82%)
+          border-bottom 1px solid $sched-border-color
         .lesson-parity-2
           line-height 32px
           font-size $font-size-base
           top 31px
-          border-top 1px solid lighten($brand-info, 82%)
+          border-top 1px solid $sched-border-color
         .lesson-half-0
           left - 2px
           right - 2px
@@ -308,16 +317,12 @@
               opacity 1
             .lesson-time-number, .lesson-time-start
               margin: 0
-        // Maker hovered row class number more visible
-        &:hover
-          .lesson-time
-            opacity 1
+
     //First class top border
     > :first-child + div.lesson-row
       .lesson-cell
-        border-top: 1px solid lighten($brand-info, 82%)
-        &.current
-          border-top: 1px solid $brand-warning
+        border-top: 1px solid $sched-border-color
+
     // Day of week
     .lesson-cell-title
       margin 45px 0 30px 0

@@ -8,6 +8,9 @@ angular.module('app.services')
     'Cachier'
 
     ($q, $http, localeStorage, config, $timeout, Cachier) ->
+      upload_done: (subject_id, event_id, professor_id, link, name, descr, type, s3)->
+        ""
+
       sign_upload: (subject_id)->
         deferred = $q.defer()
         $timeout(->

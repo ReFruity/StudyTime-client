@@ -56,6 +56,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                         div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
                     .lesson-row(ng-repeat="class in classes")
                         .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}")
+                            //.arrow.arrow-up(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                             .lesson-time-wrapper
                                 .lesson-time(ng-class="{'current': currentDow == dow && currentClass == class}")
                                     h4.lesson-time-number(bo-html="class")
@@ -64,7 +65,6 @@ div(ng-controller='SchedulesStudiesCtrl')
                                 ng-repeat="atom in sched[dow][class]",
                                 class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
                                 ng-click="columnIndex = $index; showDetails(dow, class, $index)")
-                                .arrow.arrow-up(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                                 span.lesson-name {{atom.subject.name}}
                                 span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")

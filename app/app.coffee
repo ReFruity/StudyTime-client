@@ -10,8 +10,6 @@ angular.module 'app.directives', ['app.services']
 
 # Declare app level module which depends on filters, and services
 App = angular.module('app', [
-  'ngCookies'
-  'ngResource'
   'ngRoute'
   'ngAnimate'
   'app.controllers'
@@ -50,11 +48,10 @@ App = angular.module('app', [
 .run([
     '$rootScope'
     '$location'
-    '$cookies'
     '$route'
     '$routeParams'
 
-    ($rootScope, $location, $cookies, $route, $routeParams) ->
+    ($rootScope, $location, $route, $routeParams) ->
       $rootScope.$route = $route
       $rootScope.$location = $location
       $rootScope.$routeParams = $routeParams
