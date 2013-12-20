@@ -27,6 +27,7 @@ exports.config =
         'css/app.css': /^(app|vendor)/
       order:
         before: [
+          'app/styles/open-sans-font.styl'
           'app/styles/app.styl'
         ]
 

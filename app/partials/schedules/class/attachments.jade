@@ -14,10 +14,10 @@
                         li(ng-repeat="t in types", ng-click="type == 'link' && addLink(t[0])")
                             input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])")
                             span {{t[1]}}
-        label
-            select
-                option(value="") Любой преподаватель
-                option(ng-repeat="p in professors", value="{{p.object}}") {{ p.name }}
+        //label
+        //    select
+        //        option(value="") Любой преподаватель
+        //        option(ng-repeat="p in professors", value="{{p.object}}") {{ p.name }}
     .attachments
         .file-cont(ng-repeat="att in attachments")
             .file-header
