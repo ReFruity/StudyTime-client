@@ -68,12 +68,17 @@ $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
     .next-week-btn
       font-size $font-size-medium
       font-weight 200
-      cursor pointer
       white-space nowrap
       vertical-align bottom
+      margin-right -5px
 
+      a
+        cursor pointer
+        padding 5px
+        span
+          cursor pointer
+          padding 0 7px
       .stico-arrow-right
-        margin-left 5px
         vertical-align middle
         margin-top -2px
 

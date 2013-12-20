@@ -81,16 +81,21 @@ angular.module('app.controllers')
       updateTimer = undefined
       updateCurrentsPeriodicaly = ->
         updateTimer = $timeout(->
-          currentDate = new Date()
-          updateCurrents()
-          updateDowDates()
+          now = new Date()
+          if now > currentDate
+            updateScheduleForDate()
+
           updateCurrentsPeriodicaly()
-          updateWeekParity()
         , 300000)
       updateCurrentsPeriodicaly()
       $scope.$on('$destroy', ->
         $timeout.cancel(updateTimer)
       )
+
+      updateScheduleForDate = ->
+        updateCurrents()
+        updateDowDates()
+        updateWeekParity()
 
       # Opend class details
       $scope.showDetails = (dow, clazz, atom) ->
@@ -100,6 +105,27 @@ angular.module('app.controllers')
         else
           $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
 
+      # Close details
       $scope.closeDetails = ->
         $location.path('/' + $routeParams.groupName)
+
+      # Show next week
+      $scope.nextWeek = ->
+        now = new Date(currentDate)
+        now.setDate(now.getDate() + 7)
+        currentDate = now
+        $scope.in_feature = true
+        updateScheduleForDate()
+
+      # Show previous week
+      $scope.prevWeek = ->
+        if $scope.in_feature
+          real_now = new Date()
+          now = new Date(currentDate)
+          now.setDate(now.getDate() - 7)
+          currentDate = now
+          updateScheduleForDate()
+
+          if now <= real_now
+            $scope.in_feature = false
   ])

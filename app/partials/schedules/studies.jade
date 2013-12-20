@@ -18,10 +18,20 @@ div(ng-controller='SchedulesStudiesCtrl')
                                 span.schedule-updated-text
                                     span(ng-if="last_update", bo-html="'Обновлено ' + '{{ last_update | relativeDate}}'")
                                     span(ng-if="!last_update") Проверка обновлений...
-                            .col-sm-4.text-right
-                                a.next-week-btn
-                                    span(bo-html="'schedules.index.next_week' | translate")
-                                    i.stico-arrow-right
+                            .col-sm-4.text-right(ng-if="!in_feature")
+                                .next-week-btn
+                                    a(ng-click="nextWeek()")
+                                        span(bo-html="'schedules.index.next_week' | translate")
+                                        i.stico-arrow-right
+                            .col-sm-4.text-right(ng-if="in_feature")
+                                .next-week-btn
+                                    a(ng-click="prevWeek()")
+                                        i.stico-arrow-right.rotate-180
+                                        span {{dowDates['Mon'] | date: 'dd MMM'}}
+                                    span &#8211;
+                                    a(ng-click="nextWeek()")
+                                        span {{dowDates['Sat'] | date: 'dd MMM'}}
+                                        i.stico-arrow-right
                 // Schedule
                 .lessons-desktop(ng-repeat="line in lines")
                     .container.row-fluid
