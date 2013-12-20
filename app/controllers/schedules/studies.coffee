@@ -46,10 +46,14 @@ angular.module('app.controllers')
         $scope.currentDow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][currentDate.getDay()]
 
         # Set current class num
-        for clazz in
+        $scope.currentClass = "1"
+        greeter_count = 0
+        for clazz in _.keys($scope.timing)
           if mins >= $scope.timing[clazz].start
             $scope.currentClass = clazz
-            break
+            greeter_count++
+        if greeter_count == $scope.timing.length
+          $scope.currentClass = undefined
 
       # Update dow dates and current view data
       updateDowDates = ->
