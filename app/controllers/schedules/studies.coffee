@@ -46,8 +46,8 @@ angular.module('app.controllers')
         $scope.currentDow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][currentDate.getDay()]
 
         # Set current class num
-        for clazz in _.keys($scope.timing)
-          if mins >= $scope.timing[clazz].start and mins <= $scope.timing[clazz].end
+        for clazz in
+          if mins >= $scope.timing[clazz].start
             $scope.currentClass = clazz
             break
 
