@@ -1,6 +1,7 @@
 div(ng-controller='SchedulesStudiesCtrl')
     div(ng-if="sched")
         #schedule-greed(breakpoint="min-width: 768px", class="week-{{currentParity}}", ng-init="classes=['1','2','3','4','5','6']")
+
             // Three columns
             div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]", bindonce)
                 // Navigation
@@ -12,8 +13,10 @@ div(ng-controller='SchedulesStudiesCtrl')
                                     .back-logo-square
                                         i.stico-groups-list
                                     span.group-name(bo-html="$routeParams.groupName")
-                                a.type-changer(ng-if="group && group.state == 'exams'", ng-click="") Сессия
-
+                                //(ng-if="group && group.state=='exams'")
+                                .type-changer
+                                    a.active Семестр
+                                    a(ng-click="showScheduleType('exams')") Сессия
                             .col-sm-4.text-center
                                 span.schedule-updated-text
                                     span(ng-if="last_update", bo-html="'Обновлено ' + '{{ last_update | relativeDate}}'")
@@ -55,6 +58,8 @@ div(ng-controller='SchedulesStudiesCtrl')
                                         span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
                             div(ng-include, src="'app/partials/schedules/class/index.jade'")
+
+
             // One column
             div(ng-if="!matches", ng-init="lines=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']", bindonce)
                 // Navigation
@@ -72,9 +77,9 @@ div(ng-controller='SchedulesStudiesCtrl')
                                     h4.lesson-time-number(bo-html="class")
                                     h5.lesson-time-start(bo-html="timing[class].start | minutesToHours")
                             .lesson-inside(ng-class="{'current': currentDow == dow && currentClass == class}",
-                                ng-repeat="atom in sched[dow][class]",
-                                class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
-                                ng-click="columnIndex = $index; showDetails(dow, class, $index)")
+                            ng-repeat="atom in sched[dow][class]",
+                            class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
+                            ng-click="columnIndex = $index; showDetails(dow, class, $index)")
                                 span.lesson-name {{atom.subject.name}}
                                 span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")

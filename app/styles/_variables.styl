@@ -588,14 +588,14 @@ $component-offset-horizontal ?= 180px;
 // --------------------------------------------------
 
 // Small screen / tablet
-$container-tablet ?=            ((720px + $grid-gutter-width));
+$container-tablet ?=            ((720px + $grid-gutter-width) - 40);
 
 // Medium screen / desktop
-$container-desktop ?=           ((940px + $grid-gutter-width));
+$container-desktop ?=           ((940px + $grid-gutter-width) - 40);
 
 // Large screen / wide desktop
 // $container-lg-desktop ?=        ((1140px + $grid-gutter-width));*/
-$container-lg-desktop ?=        $container-desktop;
+$container-lg-desktop ?=        ($container-desktop);
 
 
 // Stylus Extras

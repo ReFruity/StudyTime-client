@@ -5,7 +5,7 @@
 $sched-border-color ?= lighten($brand-primary, 93%)
 $sched-inner-border-color ?= lighten($brand-primary, 93%)
 $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
-
+$sched-nav-height ?= 35px
 
 // Navigation
 .schedule-header
@@ -13,7 +13,7 @@ $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
   .navbar
     background #fff
     border none
-    height auto
+    height $sched-nav-height
     min-height 0
     margin-bottom 0
     white-space nowrap
@@ -28,17 +28,19 @@ $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
       cursor pointer
       padding 0 15px 0 0
       font-size $font-size-large
+      height $sched-nav-height
       font-weight 400
-      display inline-block
-      margin-top - floor($font-size-large - $font-size-medium)
+      display block
+      float left
+
       .back-logo-square
         float left
         background $brand-info
-        padding 0 4px
+        padding 4px
         color #fff
         .stico-groups-list
-          vertical-align middle
-          margin-top - (floor($font-size-large - $font-size-medium) - 1)
+          display block
+
       .group-name
         margin-left 10px
       &:hover
@@ -49,8 +51,30 @@ $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
 
     // Change schedule type
     .type-changer
-      font-size $font-size-medium
-      cursor pointer
+      @media (min-width: 992px)
+        display inline-block
+        border 1px solid $brand-info
+        border-radius $line-height-computed
+        height ($sched-nav-height - 1)
+        line-height ($sched-nav-height - 2)
+        a
+          font-size $font-size-base
+          cursor pointer
+          padding 8px 9px
+          &.active
+            background $brand-info
+            border-radius $line-height-computed
+            color #fff
+            margin-right: -1px
+            margin-left: -1px
+      @media (max-width: 991px)
+        display inline-block
+        height $sched-nav-height
+        a
+          font-size $font-size-medium
+          line-height $sched-nav-height
+          &.active
+            display none
 
 
     // Update indicator
@@ -61,15 +85,15 @@ $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
       color #ddd
       font-weight 100
       white-space nowrap
-      vertical-align bottom
+      line-height $sched-nav-height
 
     // Next week button
     .next-week-btn
       font-size $font-size-medium
       font-weight 200
       white-space nowrap
-      vertical-align bottom
       margin-right -5px
+      line-height $sched-nav-height
 
       a
         cursor pointer
@@ -78,8 +102,8 @@ $sched-cell-hover-bg ?= lighten($brand-info-bg, 80%)
           cursor pointer
           padding 0 7px
       .stico-arrow-right
-        vertical-align middle
         margin-top -2px
+        vertical-align middle
 
 
 // Schedule

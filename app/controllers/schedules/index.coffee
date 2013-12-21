@@ -25,6 +25,7 @@ angular.module('app.controllers')
       $scope.showScheduleType = (type)->
         Group.lastShowedState.set($routeParams.groupName, type)
         $scope.showingState = type
+        $location.path("/"+$routeParams.groupName)
 
       # Update group object and showing schedule type if needed
       updateGroup = (group) ->
