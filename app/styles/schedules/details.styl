@@ -10,146 +10,243 @@
   position relative
   top - 1px
 
-.lesson-details
-  // Close details button
-  .close-btn
-    float right
-    margin 15px 15px 0 0
-    position relative
-    z-index 10000
+@media $media-max-phone
+  .lesson-details
+    border-bottom 1px solid $sched-border-color
 
-  // Navigation icons
-  .lesson-info-icons-cont
-    float: left
-    width: 50px
-    margin 8px 0 10px -50px
-
-    ul.lesson-info-icons
-      list-style-type none
-      margin 0 0 0 16px
+    .container
+      margin 0
       padding 0
-      li
-        margin 10px 0 0 0
+
+    // Close details button
+    .close-btn
+      display none
+
+    // Navigation icons
+    .lesson-info-icons-cont
+      ul.lesson-info-icons
+        list-style-type none
+        margin 0
         padding 0
-        a
-          border-radius 5px
-          padding 21px 4px 1px 4px
-        &.active
+        border-bottom 4px solid $brand-info
+        height 42px
+        li
+          width 50%
+          float left
+          padding 0
+          margin 0
           a
-            background $brand-info
-
-  // Information about class
-  .lesson-info-data
-    padding 15px 25px
-    .lesson-info-header
-      font-size $font-size-large
-      .lesson-name
-        margin-right 10px
-      .lesson-place
-        margin-left 10px
-        color $brand-info
-
-    .lesson-lecturer
-      margin-left 1px
-      cursor pointer
-
-  // Attacments
-  .lesson-info-files
-    padding 15px 25px
-
-    // Navigation
-    .lesson-info-files-header
-      .att-label
-        font-size $font-size-large
-        vertical-align middle
-
-      .upload-cont
-        display inline-block
-        position relative
-
-        .upload-dropdown
-          position absolute
-          top 35px
-          left 18px
-          z-index 10000
-
-          ul.att-types
-            list-style-type none
-            margin 10px 0 0 10px
-            padding 0
-            li
-              float left
-              padding 3px 10px
-              color $link-color
-              cursor pointer
-              &:hover
-                color $link-hover-color
-              &.current
-                background $brand-info
-                color #fff
-
-          ul.att-sub-types
-            border 2px solid lighten($brand-primary, 80%)
-            margin -10px 0 0 0
-            padding 40px 0 5px 0
-            list-style-type none
-            background #fff
-            border-radius 5px
-            min-width 147px
-            li
-              padding 3px 15px
-              color $link-color
-              cursor pointer
-              position relative
-              overflow hidden
-              input
-                top 0
-                left 0
-                opacity 0
-                font-size 18px
-                position absolute
-                outline none
-              &:hover
-                background $link-hover-color
-                color #fff
-
-
-        .add-btn
-          display inline-block
-          margin-top 5px
-          padding 0 5px
-          margin-left 10px
-          vertical-align middle
-          &:hover
-            text-decoration none
-          i
-            vertical-align middle
-          span
-            margin-left 5px
-            vertical-align middle
-
-
-    .attachments
-      margin 10px 0 0 1px
-      .file-cont
-        margin 0 0 10px 0
-        .file-header
-          font-size $font-size-medium
-          .file-name
-            text-decoration underline
-          .file-size
-            font-weight 500
-            margin-left 15px
-          .file-date
-            margin-left 15px
-            font-weight 200
-            opacity 0.3
-        &:hover
-          .file-header
-            .file-date
+            opacity 0.5
+            display block
+            text-align center
+            line-height 20px
+            i
+              margin 5px 0 0 0
+          &.active
+            a
               opacity 1
-        .file-descr
-          font-size $font-size-medium
-          font-weight 100
-          color lighten($brand-primary, 10%)
-          letter-spacing 1px
+              background $brand-info
+
+    // Information about class
+    .lesson-info-data
+      padding 15px 20px
+      .lesson-info-header
+        margin-bottom 5px
+        font-size $font-size-large
+        line-height ( $line-height-computed * 1.2 )
+        .lesson-name
+          margin-right 10px
+        .lesson-place
+          color $brand-info
+
+      .lesson-lecturer
+        margin-left 1px
+        cursor pointer
+
+    // Attacments
+    .lesson-info-files
+      // Navigation
+      .lesson-info-files-header
+        .att-label
+          display none
+
+        .upload-cont
+          display none
+
+      .attachments
+        margin 0
+        .file-cont
+          display block
+          padding 10px 20px
+          border-bottom 1px solid #fff
+          &:last-child
+            border-bottom none
+          &:hover
+            color $link-color
+            text-decoration none
+          .file-header
+            font-size $font-size-medium
+            .file-name
+              display block
+              text-decoration underline
+          .file-descr
+            font-size $font-size-base
+            font-weight 300
+            color lighten($brand-primary, 40%)
+            letter-spacing 1px
+          .file-details
+            font-size $font-size-small
+            color lighten($brand-primary, 70%)
+            .file-size
+              font-weight 500
+              color lighten($brand-primary, 70%)
+            .file-date
+              margin-left 15px
+              font-weight 300
+              color lighten($brand-primary, 70%)
+
+
+@media $media-min-tablet
+  .lesson-details
+    // Close details button
+    .close-btn
+      float right
+      margin 15px 15px 0 0
+      position relative
+      z-index 10000
+
+    // Navigation icons
+    .lesson-info-icons-cont
+      float: left
+      width: 50px
+      margin 8px 0 10px -50px
+
+      ul.lesson-info-icons
+        list-style-type none
+        margin 0 0 0 16px
+        padding 0
+        li
+          margin 10px 0 0 0
+          padding 0
+          a
+            border-radius 5px
+            padding 21px 4px 1px 4px
+          &.active
+            a
+              background $brand-info
+
+    // Information about class
+    .lesson-info-data
+      padding 15px 25px
+      .lesson-info-header
+        font-size $font-size-large
+        .lesson-name
+          margin-right 10px
+        .lesson-place
+          margin-left 10px
+          color $brand-info
+
+      .lesson-lecturer
+        margin-left 1px
+        cursor pointer
+
+    // Attacments
+    .lesson-info-files
+      padding 15px 25px
+
+      // Navigation
+      .lesson-info-files-header
+        .att-label
+          font-size $font-size-large
+          vertical-align middle
+
+        .upload-cont
+          display inline-block
+          position relative
+
+          .upload-dropdown
+            position absolute
+            top 35px
+            left 18px
+            z-index 10000
+
+            ul.att-types
+              list-style-type none
+              margin 10px 0 0 10px
+              padding 0
+              li
+                float left
+                padding 3px 10px
+                color $link-color
+                cursor pointer
+                &:hover
+                  color $link-hover-color
+                &.current
+                  background $brand-info
+                  color #fff
+
+            ul.att-sub-types
+              border 2px solid lighten($brand-primary, 80%)
+              margin -10px 0 0 0
+              padding 40px 0 5px 0
+              list-style-type none
+              background #fff
+              border-radius 5px
+              min-width 147px
+              li
+                padding 3px 15px
+                color $link-color
+                cursor pointer
+                position relative
+                overflow hidden
+                input
+                  top 0
+                  left 0
+                  opacity 0
+                  font-size 18px
+                  position absolute
+                  outline none
+                &:hover
+                  background $link-hover-color
+                  color #fff
+
+
+          .add-btn
+            display inline-block
+            margin-top 5px
+            padding 0 5px
+            margin-left 10px
+            vertical-align middle
+            &:hover
+              text-decoration none
+            i
+              vertical-align middle
+            span
+              margin-left 5px
+              vertical-align middle
+
+
+      .attachments
+        margin 10px 0 0 1px
+        .file-cont
+          margin 0 0 10px 0
+          .file-header
+            font-size $font-size-medium
+            .file-name
+              text-decoration underline
+            .file-size
+              font-weight 500
+              margin-left 15px
+            .file-date
+              margin-left 15px
+              font-weight 200
+              opacity 0.3
+          &:hover
+            .file-header
+              .file-date
+                opacity 1
+          .file-descr
+            font-size $font-size-medium
+            font-weight 300
+            color lighten($brand-primary, 40%)
+            letter-spacing 1px

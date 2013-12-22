@@ -3,7 +3,7 @@ header.header.ng-cloak(bindonce)
         .container
             .navbar-header
                 a.navbar-brand(href="#")
-                    div.stico-logo
+                    div.stico-logo(ng-class="{'spin-logo': spinLogo}")
                     span(bo-html="'layouts.main.site_name' | translate")
                 div.navbar-ui-status4(ng-controller="AppCacheUpdateManagerCtrl")
                     div(ng-switch on="appCacheStatus")

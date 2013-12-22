@@ -18,11 +18,23 @@
         //    select
         //        option(value="") Любой преподаватель
         //        option(ng-repeat="p in professors", value="{{p.object}}") {{ p.name }}
-    .attachments
-        .file-cont(ng-repeat="att in attachments")
-            .file-header
-                a.file-name(href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}") {{ att.name }}
-                span.file-size {{ att.size | redeableSize }}
-                span.file-date {{ att.updated | date:'dd MMM yyyy' }}
-            .file-descr
-                span.file-comment {{ att.description }}
+    div(breakpoint="min-width: 768px")
+        div(ng-if="matches", class="desktop")
+            .attachments
+                .file-cont(ng-repeat="att in attachments")
+                    .file-header
+                        a.file-name(href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}") {{ att.name }}
+                        span.file-size {{ att.size | redeableSize }}
+                        span.file-date {{ att.updated | date:'dd MMM yyyy' }}
+                    .file-descr
+                        span.file-comment {{ att.description }}
+        div(ng-if="!matches", class="mobile")
+            .attachments
+                a.file-cont(ng-repeat="att in attachments", target="_blank", href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}")
+                    .file-header
+                        span.file-name {{ att.name }}
+                    .file-descr
+                        span.file-comment {{ att.description }}
+                    .file-details
+                        span.file-size {{ att.size | redeableSize }}
+                        span.file-date {{ att.updated | date:'dd MMM yyyy' }}

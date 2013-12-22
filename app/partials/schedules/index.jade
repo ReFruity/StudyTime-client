@@ -1,5 +1,8 @@
 .overthrow.non-bounce
     .animated-view
+        div(ng-if="scheduleLoading")
+            div(ng-include, src="'app/partials/loading.jade'")
+
         div(ng-switch on='showingState')
             div(ng-switch-when="studies")
                 div(ng-include, src="'app/partials/schedules/studies.jade'")

@@ -4,13 +4,17 @@ angular.module('app.controllers')
 
 .controller('AppCacheUpdateManagerCtrl', [
     '$scope'
+    '$rootScope'
 
-    ($scope) ->
+    ($scope, $rootScope) ->
       # Just update appCache status
       appCache = window.applicationCache
       handleCacheEvent = (e) ->
         $scope.$apply(->
-          $scope.appCacheStatus = appCache.status
+          if appCache.status == 3
+            $rootScope.spinLogo = yes
+          else
+            $rootScope.spinLogo = no
         )
 
       # Handle error

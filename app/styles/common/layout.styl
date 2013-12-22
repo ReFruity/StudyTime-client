@@ -15,6 +15,24 @@ a
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
   display: none !important
 
+// Loading bar
+.loading-container
+  font-size $font-size-large
+  text-align center
+  padding 20px
+  font-weight 300
+  color lighten($brand-primary, 70%)
+  position absolute
+  z-index 10000000000
+  left 50%
+  margin-left -80px
+  -webkit-animation: fadeInLong 1.5s cubic-bezier(1, .04, .54, 1);
+  -moz-animation: fadeInLong 1.5s cubic-bezier(1, .04, .54, 1);
+  -ms-animation: fadeInLong 1.5s cubic-bezier(1, .04, .54, 1);
+  -o-animation: fadeInLong 1.5s cubic-bezier(1, .04, .54, 1);
+  animation: fadeInLong 1.5s cubic-bezier(1, .04, .54, 1);
+
+
 // Overlay for disabling any interraction from user
 .overlay
   background-color rgb(255, 255, 255)

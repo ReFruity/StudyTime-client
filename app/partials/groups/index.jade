@@ -3,6 +3,10 @@
         .container#schedule-index(breakpoint="max-width: 767px")
             .select-group-container.text-center
                 .select-group-img
+
+            div(ng-if="!groups", class="fade-in")
+                div(ng-include, src="'app/partials/loading.jade'")
+
             div(ng-if="matches")
                 .col-md-12.schedule-table
                     .schedule-row(ng-repeat='line in groupKeys')

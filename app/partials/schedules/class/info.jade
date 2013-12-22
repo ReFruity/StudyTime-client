@@ -1,7 +1,7 @@
 .lesson-info-data.col-xs-12(ng-controller="ClassInfoCtrl")
     .lesson-info-header
         span.lesson-name {{clazz.subject.name}}
-        span.lesson-place(ng-repeat="place in clazz.place") {{place.name}}
+        span.lesson-place(ng-repeat="place in clazz.place") {{place.name+"  "}}
     div(ng-repeat="prof in clazz.professor")
         a.lesson-lecturer {{prof.name}}
     span.lesson-description {{clazz.description}}

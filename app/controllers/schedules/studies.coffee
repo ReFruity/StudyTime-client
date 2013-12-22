@@ -15,6 +15,7 @@ angular.module('app.controllers')
       raw_schedule = undefined
       Schedule.get($routeParams.groupName).then(
         (sched) ->
+          $rootScope.scheduleLoading = no
           raw_schedule = sched
           initOpenedClassDetails(sched.schedule)
           $scope.sched = sched.schedule
@@ -22,9 +23,12 @@ angular.module('app.controllers')
           $scope.last_update = sched.updated
           updateCurrents()
       , (reason) ->
+        $rootScope.scheduleLoading = no
         if raw_schedule and raw_schedule.updated
           $scope.last_update = raw_schedule.updated
       , (cached_sched) ->
+        console.log $scope
+        $rootScope.scheduleLoading = no
         raw_schedule = cached_sched
         initOpenedClassDetails(cached_sched.schedule)
         $scope.sched = cached_sched.schedule

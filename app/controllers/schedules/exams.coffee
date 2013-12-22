@@ -2,7 +2,8 @@ angular.module('app.controllers')
 
 .controller('SchedulesExamsCtrl', [
     '$scope'
+    '$rootScope'
 
-    ($scope) ->
-      ""
+    ($scope, $rootScope) ->
+      $rootScope.scheduleLoading = no
   ])

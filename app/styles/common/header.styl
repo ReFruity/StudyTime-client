@@ -9,10 +9,22 @@ header
     border 0 !important
     .navbar-brand
       cursor default
+      white-space nowrap
       span
+        line-height ($navbar-height / 1.4)
         margin-left 10px
     ul.nav
       background $brand-info-bg
+
+    .spin-logo
+      vertical-align middle
+      display block
+      float left
+      -webkit-animation: spin 2s infinite linear;
+      -moz-animation: spin 2s infinite linear;
+      -ms-animation: spin 2s infinite linear;
+      -o-animation: spin s infinite linear;
+      animation: spin 2s infinite linear;
 
 // iOS like navigation on mobile
 @media $media-max-phone

@@ -13,6 +13,7 @@ angular.module('app.controllers')
       # Set last opened group in cache
       Group.lastOpened.set($routeParams.groupName)
       $rootScope.lastOpenedGroup = $routeParams.groupName
+      $rootScope.scheduleLoading = yes
 
       # Remove last opened group from cache
       $scope.showGroups = ->

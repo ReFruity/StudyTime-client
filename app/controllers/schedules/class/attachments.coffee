@@ -22,6 +22,15 @@ angular.module('app.controllers')
           description: "Тест jgbcfybz"
           link: "upload/2423/sgsdf_fsdf.pdf"
           s3: true
+          size: 123412
+        },
+        {
+          name: "Вычислительный эусперемент.pdf"
+          updated: new Date()
+          description: "Тест jgbcfybz"
+          link: "upload/2423/sgsdf_fsdf.pdf"
+          s3: true
+          size: 123412
         }
       ]
       $scope.professors = [
