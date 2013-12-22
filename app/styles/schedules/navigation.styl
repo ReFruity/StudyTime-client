@@ -81,7 +81,7 @@
           margin 0
           padding 0
           font-size $font-size-medium
-          color #ddd
+          color #aaa
           font-weight 100
           white-space nowrap
           line-height $sched-nav-height
@@ -111,15 +111,14 @@
     // Navigation
     .schedule-header
       user-select(none)
+      margin 0 -17px 0 -22px
       .navbar
         border none
-        height ($sched-nav-mobile-height + 5)
         min-height 0
-        margin -15px 0 0 0
+        margin (($font-size-large - $font-size-medium) - 20) 0 0 0
         white-space nowrap
         padding 0 0 5px 0
-        border-bottom 1px solid $sched-border-color
-        line-height $sched-nav-mobile-height
+        margin-top
 
         // Remove link decoration
         a
@@ -129,8 +128,9 @@
         // Back to groups list button
         .back-btn
           cursor pointer
-          height $sched-nav-mobile-height
           font-size $font-size-medium
+          padding 12px
+          line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
           span
             margin 0 0 0 5px
           .stico-arrow-right
@@ -138,31 +138,27 @@
 
         .group-name
           margin-left 10px
-          font-weight 500
+          font-weight 400
           font-size $font-size-large
 
         // Change schedule type
         .type-changer
           display inline-block
-          height $sched-nav-mobile-height
           font-size $font-size-medium
+          line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
           a
+            padding 12px
             &.active
               display none
 
 
         // Update indicator
         .nav-middle
-          position relative
           .schedule-updated-text
             font-size $font-size-medium
             background #fff
-            top 0
-            left 0
-            right 0
             margin 0
             padding 0
-            color #ddd
+            color #aaa
             font-weight 100
             white-space nowrap
-            position absolute

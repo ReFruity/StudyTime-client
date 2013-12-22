@@ -37,7 +37,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                                         span {{dowDates['Sat'] | date: 'dd MMM'}}
                                         i.stico-arrow-right
                 // Schedule
-                div(ng-repeat="line in lines")
+                .lessons-grid(ng-repeat="line in lines")
                     .container.row-fluid
                         .col-sm-4(ng-repeat="dow in line")
                             h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
@@ -72,7 +72,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                                     i.stico-arrow-right.rotate-180
                                     span Группы
                             .col-xs-4.text-center.nav-middle
-                                span.group-name(bo-html="$routeParams.groupName")
+                                span.group-name(ng-if="last_update", bo-html="$routeParams.groupName")
                                 span.schedule-updated-text
                                     span(ng-if="!last_update") Обновление...
                             //(ng-if="group && group.state=='exams'")
