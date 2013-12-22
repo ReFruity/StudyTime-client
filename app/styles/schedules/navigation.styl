@@ -111,7 +111,11 @@
     // Navigation
     .schedule-header
       user-select(none)
-      margin 0 -17px 0 -22px
+
+      .row-fluid
+        > :first-child, > :last-child
+          padding 0
+
       .navbar
         border none
         min-height 0
