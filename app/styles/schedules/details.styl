@@ -28,8 +28,8 @@
         list-style-type none
         margin 0
         padding 0
-        border-bottom 4px solid $brand-info
-        height 42px
+        border-bottom 5px solid $brand-info
+        height $sched-nav-mobile-height
         li
           width 50%
           float left
@@ -39,9 +39,9 @@
             opacity 0.5
             display block
             text-align center
-            line-height 20px
+            line-height ($sched-nav-mobile-height - $font-size-base - 1)
             i
-              margin 5px 0 0 0
+              margin (($sched-nav-mobile-height - 34)/2) 0 0 0
           &.active
             a
               opacity 1
