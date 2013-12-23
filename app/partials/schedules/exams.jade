@@ -28,7 +28,7 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
                                 i.stico-arrow-right.rotate-180
                                 span Группы
                         .col-xs-4.text-center.nav-middle
-                            span.group-name(bo-html="$routeParams.groupName")
+                            span.group-name(ng-if="last_update", bo-html="$routeParams.groupName")
                             span.schedule-updated-text
                                 span(ng-if="!last_update") Обновление...
                         //(ng-if="group && group.state=='exams'")
@@ -38,10 +38,23 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
                                     span Семестр
 
 
-        h2.container Зачётная неделя (с 22 дек. по 30 дек.)
-        .info.container
-            span.date 25 дек.
-            span.time 9:00
-            span.name АСВТ
-            span.teacher Сибиряков Александр Евгеньевич
-            span.audit 632
+        .session-part(ng-repeat="part in parts")
+            .container
+                .row-fluid
+                    .col-sm-12
+                        h2 {{part.name}} с {{this[part.type+'_bounds'][0] | date: 'd MMM'}} по {{this[part.type+'_bounds'][1] | date: 'd MMM'}}
+
+            div(ng-repeat="test in this[part.type] | orderBy: 'activity.start':false")
+                .info.container(ng-class="{'started': test.started}")
+                    .row-fluid
+                        .col-sm-12
+                            a(ng-click="showDetails(test.dow, test.number, test.index)")
+                                span.date {{test.activity.start | date: 'd MMM'}}
+                                span.time {{test.time.start | minutesToHours}}
+                                span.name {{test.subject.name}}
+                                span.teacher {{test.professor[0].name}}
+                                span.audit {{test.place[0].name}}
+
+                .lesson-details-container.height-transition(ng-if="$routeParams.weekDay == test.dow && $routeParams.classNum == test.number && $routeParams.atomClass == test.index")
+                    div(ng-include, src="'app/partials/schedules/class/session-index.jade'")
+

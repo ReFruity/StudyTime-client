@@ -96,22 +96,11 @@ angular.module('app.controllers')
         $timeout.cancel(updateTimer)
       )
 
+      # Update schedule
       updateScheduleForDate = ->
         updateCurrents()
         updateDowDates()
         updateWeekParity()
-
-      # Opend class details
-      $scope.showDetails = (dow, clazz, atom) ->
-        $scope.columnIndex = atom
-        if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom + ""
-          $location.path('/' + $routeParams.groupName)
-        else
-          $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
-
-      # Close details
-      $scope.closeDetails = ->
-        $location.path('/' + $routeParams.groupName)
 
       # Show next week
       $scope.nextWeek = ->

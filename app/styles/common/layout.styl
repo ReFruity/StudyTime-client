@@ -51,34 +51,7 @@ a
 .rotate-180
   rotate(180deg)
 
-// Stylish select
-select
-  display inline-block
-  vertical-align middle
-  padding: 3px 10px;
-  margin: 5px 0 0 10px;
-  -webkit-border-radius:5px;
-  -moz-border-radius:5px;
-  border-radius:4px;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-  background: #fff;
-  color: $brand-primary;
-  border:none;
-  outline:none;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  appearance:none;
-  cursor:pointer;
-  font-size $font-size-base
-  height 25px
-
-@media screen and (-webkit-min-device-pixel-ratio:0)
-  select
-    padding-right 30px
-
-label
+label.select
   position relative
   outline none
   &:after
@@ -104,6 +77,33 @@ label
     position:absolute;
     pointer-events:none;
     display:block;
+
+  // Stylish select
+  select
+    display inline-block
+    vertical-align middle
+    padding: 3px 10px;
+    margin: 5px 0 0 10px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:4px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background: #fff;
+    color: $brand-primary;
+    border:none;
+    outline:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    font-size $font-size-base
+    height 25px
+
+  @media screen and (-webkit-min-device-pixel-ratio:0)
+    select
+      padding-right 30px
 
 
 // Animate view changes on standalone mode

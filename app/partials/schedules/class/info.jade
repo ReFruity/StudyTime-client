@@ -1,4 +1,4 @@
-.lesson-info-data.col-xs-12(ng-controller="ClassInfoCtrl")
+.lesson-info-data(ng-controller="ClassInfoCtrl")
     .lesson-info-header
         span.lesson-name {{clazz.subject.name}}
         span.lesson-place(ng-repeat="place in clazz.place") {{place.name+"  "}}

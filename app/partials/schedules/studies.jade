@@ -14,6 +14,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                                     .back-logo-square
                                         i.stico-groups-list
                                     span.group-name(bo-html="$routeParams.groupName")
+                                a(ng-click="$rs.editingEvent = {}") Ред.
                                 //(ng-if="group && group.state=='exams'")
                                 .type-changer
                                     a.active Семестр
@@ -58,7 +59,7 @@ div(ng-controller='SchedulesStudiesCtrl')
                                         span.lesson-name {{atom.subject.name | shortest}}
                                         span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
-                            div(ng-include, src="'app/partials/schedules/class/index.jade'")
+                            div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
 
 
             // One column
@@ -100,4 +101,4 @@ div(ng-controller='SchedulesStudiesCtrl')
                                 span.lesson-name {{atom.subject.name | shortest}}
                                 span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
-                            div(ng-include, src="'app/partials/schedules/class/index.jade'")
+                            div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")

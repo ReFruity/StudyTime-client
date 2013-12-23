@@ -1,0 +1,9 @@
+.lesson-details(ng-controller="ClassIndexCtrl", click-outside="closeDetails()", exclude=".lesson-atom-cell")
+    .container
+        div.row.details-row.session
+            div.col-sm-3(ng-include, src="'app/partials/schedules/class/timer.jade'")
+            div.col-sm-9(ng-include, src="'app/partials/schedules/class/attachments.jade'")
+
+            .close-btn
+                a(href="/{{$routeParams.groupName}}")
+                    i.stico-cross

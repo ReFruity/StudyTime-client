@@ -25,8 +25,9 @@ App = angular.module('app', [
 .config([
     '$routeProvider'
     '$locationProvider'
+    '$httpProvider'
 
-    ($routeProvider, $locationProvider) ->
+    ($routeProvider, $locationProvider, $httpProvider) ->
       $routeProvider
 
       .when('/', templateUrl: 'app/partials/groups/index.jade', controller: 'GroupsIndexCtrl')
@@ -57,6 +58,8 @@ App = angular.module('app', [
       $rootScope.$routeParams = $routeParams
       $rootScope.in = (val, arr) ->
         return val in arr
+
+      $rootScope.$isAdmin = yes
   ])
 
 # FastClick

@@ -1,0 +1,73 @@
+.schedule-editor(ng-controller="SchedulesEditorCtrl")
+    // (ng-if="values.event != undefined")
+    .container.height-transition
+        form(role="form", ng-submit="makeChanges()")
+            .row
+                .col-xs-6.form-group
+                    label.sr-only(for="groupInput") Группа
+                    input#groupInput.form-control(ng-model="values.event.group", placeholder="Группа", identifiers-list)
+
+                .col-xs-6.form-group
+                    label.sr-only(for="subjectInput") Предмет
+                    input#subjectInput.form-control(ng-model="values.event.subject", , placeholder="Предмет", identifiers-list)
+
+            .row
+                .col-xs-6.form-group
+                    label.sr-only(for="professorInput") Преподаватель
+                    input#professorInput.form-control(ng-model="values.event.professor", placeholder="Преподаватель", identifiers-list)
+
+                .col-xs-3.form-group
+                    label.sr-only(for="eventTypeInput") Тип события
+                    select#eventTypeInput.form-control(ng-model="values.event.type", ng-options="t[0] as t[1] for t in [['practice', 'Практика'], ['lecture', 'Лекция'], ['course', 'Спецкурс'], ['exam','Экзамен'], ['test','Зачет'], ['consult','Консультация']]")
+                        option(value="") -- Тип события --
+
+                .col-xs-3.form-group
+                    label.sr-only(for="numberInput") Номер пары
+                    select#numberInput.form-control(ng-model="values.event.number", ng-options="t for t in ['1','2','3','4','5','6']", values-list)
+                        option(value="") -- Номер пары --
+            .row
+                .col-xs-3.form-group
+                    label.sr-only(for="placeInput") Аудитория
+                    input#placeInput.form-control(ng-model="values.event.place", placeholder="Аудитория", identifiers-list)
+                .col-xs-3.form-group
+                    label.sr-only(for="dowInput") День недели
+                    select#dowInput.form-control(ng-model="values.event.dow", ng-options="t[0] as t[1] for t in [['Mon', 'Понедельник'], ['Tue', 'Вторник'], ['Wed', 'Среда'], ['Thu','Четверг'], ['Fri','Пятница'], ['Sun','Суббота']]")
+                        option(value="") -- День недели --
+
+                .col-xs-3.form-group
+                    label.sr-only(for="startTimeInput") Время начала
+                    input#startTimeInput.form-control(ng-model="values.event.time.start", placeholder="Время начала", time)
+                .col-xs-3.form-group
+                    label.sr-only(for="endTimeInput") Время конца
+                    input#endTimeInput.form-control(ng-model="values.event.time.end", placeholder="Время конца", time)
+
+            .row
+                .col-xs-3.form-group
+                    label.sr-only(for="parityInput") Четность
+                    select#parityInput.form-control(ng-model="values.event.parity", ng-options="t[0] as t[1] for t in [[0, 'Каждую неделю'], [2, 'По четным'], [1, 'По нечетным']]")
+                        option(value="") -- Четность --
+                .col-xs-3.form-group
+                    label.sr-only(for="groupPartInput") Часть группы
+                    select#groupPartInput.form-control(ng-model="values.event.half_group", ng-options="t[0] as t[1] for t in [[0, 'Вся группа'], [1, 'Первая подгруппа'], [2, 'Вторая подгруппа']]")
+                        option(value="") -- Часть группы --
+
+                .col-xs-3.form-group
+                    label.sr-only(for="startDateInput") Дата начала
+                    datepicker(ng-model='values.event.activity.start', id="startDateInput", placeholder="Дата начала")
+                .col-xs-3.form-group
+                    label.sr-only(for="endDateInput") Дата конца
+                    datepicker(ng-model='values.event.activity.end', id="endDateInput", placeholder="Дата конца")
+
+            .row
+                .col-xs-12
+                    .form-group
+                        label.sr-only(for="descrInput") Описание
+                        textarea#descrInput.form-control(ng-model="values.event.description", placeholder="Описание")
+
+            .row
+                .col-xs-6
+                    .form-group
+                        button.btn.btn-default.form-control(type="button", ng-click="clear()") Очистить
+                .col-xs-6
+                    .form-group
+                        button.btn.btn-success.form-control(type="submit") Готово

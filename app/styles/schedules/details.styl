@@ -49,7 +49,7 @@
 
     // Information about class
     .lesson-info-data
-      padding 15px 20px
+      padding 15px 0px
       .lesson-info-header
         margin-bottom 5px
         font-size $font-size-large
@@ -62,6 +62,30 @@
       .lesson-lecturer
         margin-left 1px
         cursor pointer
+
+    // Back timer
+    .back-timer
+      text-align center
+      margin 10px 0px
+      h4
+        font-size $font-size-base
+
+      .timer-container
+        background $brand-danger
+        color #fff
+        border-radius 5px
+        padding 20px
+        > span
+          font-size $font-size-large
+          display block
+          font-weight 500
+          > span
+            margin-left 10px
+            font-size $font-size-medium
+            font-weight 300
+
+    .details-row
+      margin 0
 
     // Attacments
     .lesson-info-files
@@ -77,7 +101,7 @@
         margin 0
         .file-cont
           display block
-          padding 10px 20px
+          padding 10px 0px
           border-bottom 1px solid #fff
           &:last-child
             border-bottom none
@@ -110,9 +134,9 @@
   .lesson-details
     // Close details button
     .close-btn
-      float right
-      margin 15px 15px 0 0
-      position relative
+      top 15px
+      right 15px
+      position absolute
       z-index 10000
 
     // Navigation icons
@@ -151,7 +175,35 @@
         cursor pointer
         font-size $font-size-medium
 
+    // Back timer
+    .back-timer
+      text-align center
+      margin 20px 0 20px 15px
+      h4
+        font-size $font-size-base
+
+      .timer-container
+        background $brand-danger
+        color #fff
+        border-radius 5px
+        padding 20px
+        > span
+          font-size $font-size-large
+          display block
+          font-weight 500
+          > span
+            margin-left 10px
+            font-size $font-size-medium
+            font-weight 300
+
     // Attacments
+    .details-row
+      position relative
+
+    .session
+      .lesson-info-files
+        padding 15px 0px !important
+
     .lesson-info-files
       padding 15px 25px
 
@@ -162,6 +214,7 @@
           vertical-align middle
 
         .upload-cont
+          font-size $font-size-base
           display inline-block
           position relative
 

@@ -1,9 +1,5 @@
 .lesson-details(ng-controller="ClassIndexCtrl", click-outside="closeDetails()", exclude=".lesson-atom-cell")
     .container
-        .close-btn
-            a(href="/{{$routeParams.groupName}}")
-                i.stico-cross
-
         .lesson-info-icons-cont
             ul.lesson-info-icons
                 li(ng-class="{'active':viewType=='info' || !viewType}")
@@ -13,8 +9,11 @@
                     a(ng-click="viewType='attachments'")
                         i.stico-files
 
-        div.row-fluid(ng-switch on="viewType")
+        div.row.details-row(ng-switch on="viewType")
             div(ng-switch-default)
-                div(ng-include, src="'app/partials/schedules/class/info.jade'")
+                div.col-xs-12(ng-include, src="'app/partials/schedules/class/info.jade'")
             div(ng-switch-when="attachments")
-                div(ng-include, src="'app/partials/schedules/class/attachments.jade'")
+                div.col-xs-12(ng-include, src="'app/partials/schedules/class/attachments.jade'")
+            .close-btn
+                a(href="/{{$routeParams.groupName}}")
+                    i.stico-cross

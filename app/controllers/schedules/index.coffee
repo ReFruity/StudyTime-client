@@ -34,6 +34,18 @@ angular.module('app.controllers')
         if not $scope.showingState or $scope.showingState.length == 0
           $scope.showScheduleType(group.state)
 
+      # Opend class details
+      $scope.showDetails = (dow, clazz, atom) ->
+        $scope.columnIndex = atom
+        if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom + ""
+          $location.path('/' + $routeParams.groupName)
+        else
+          $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
+
+      # Close details
+      $scope.closeDetails = ->
+        $location.path('/' + $routeParams.groupName)
+
       # Get group object for showing schedule with some type
       Group.get($routeParams.groupName).then(
         updateGroup

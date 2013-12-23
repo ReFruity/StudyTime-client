@@ -1,0 +1,10 @@
+.back-timer(ng-controller="ClassTimerCtrl")
+    h4(ng-if="!starts") Осталось...
+    .timer-container
+        span.days(ng-if="days > 0") {{days}}
+            span дней
+        span.hours(ng-if="hours > 0") {{hours}}
+            span часов
+        span.minutes(ng-if="minutes > 0") {{minutes}}
+            span минут
+        span.starts(ng-if="starts") Время истекло
