@@ -28,15 +28,14 @@
         list-style-type none
         margin 0
         padding 0
-        border-bottom 5px solid $brand-info
         height $sched-nav-mobile-height
+        background darken($brand-info-bg, 5%)
         li
           width 50%
           float left
           padding 0
           margin 0
           a
-            opacity 0.5
             display block
             text-align center
             line-height ($sched-nav-mobile-height - $font-size-base - 1)
@@ -75,10 +74,13 @@
         color #fff
         border-radius 5px
         padding 20px
+        white-space normal
         > span
+          display inline-block
           font-size $font-size-large
-          display block
           font-weight 500
+          margin-right 10px
+          white-space nowrap
           > span
             margin-left 10px
             font-size $font-size-medium
@@ -89,6 +91,12 @@
 
     // Attacments
     .lesson-info-files
+      .no-attachments
+        font-size $font-size-medium
+        opacity 0.4
+        font-weight 300
+        padding 10px 0
+
       // Navigation
       .lesson-info-files-header
         .att-label
@@ -124,8 +132,8 @@
             .file-size
               font-weight 500
               color lighten($brand-primary, 70%)
+              margin-right 15px
             .file-date
-              margin-left 15px
               font-weight 300
               color lighten($brand-primary, 70%)
 
@@ -141,8 +149,10 @@
 
     // Navigation icons
     .lesson-info-icons-cont
-      float: left
-      width: 50px
+      position relative
+      z-index 10000
+      float left
+      width 50px
       margin 8px 0 10px -50px
 
       ul.lesson-info-icons
@@ -204,8 +214,14 @@
       .lesson-info-files
         padding 15px 0px !important
 
+
     .lesson-info-files
       padding 15px 25px
+
+      .no-attachments
+          font-size $font-size-medium
+          opacity 0.4
+          font-weight 300
 
       // Navigation
       .lesson-info-files-header
@@ -282,6 +298,24 @@
 
       .attachments
         margin 10px 0 0 1px
+
+        .upload-info-form
+          input
+            margin-bottom 5px
+          .upload-info
+            margin-bottom 5px
+
+          .progress-percents
+            line-height 34px
+
+        .progress-percents
+          color darkgreen
+          font-weight 500
+          font-size $font-size-medium
+        .progress-sizes
+          padding-left 10px
+          color lighten($text-color, 80%)
+
         .file-cont
           margin 0 0 10px 0
           .file-header
@@ -295,10 +329,6 @@
               margin-left 15px
               font-weight 200
               opacity 0.3
-          &:hover
-            .file-header
-              .file-date
-                opacity 1
           .file-descr
             font-size $font-size-medium
             font-weight 300

@@ -7,10 +7,10 @@
 
     .session-part
       h2
-        text-align center
         font-size $font-size-medium
         font-weight 600
         margin-top 15px
+        display none
 
       .started
         opacity 0.4
@@ -19,6 +19,9 @@
           color #aaa !important
 
       .info
+        padding 0
+        border-bottom 1px solid $sched-border-color
+
         & *:hover
           text-decoration none
           .name
@@ -26,9 +29,7 @@
 
         a
           display block
-          text-align center
           padding 9px 0
-          border-bottom 1px solid $sched-border-color
 
           .date
             font-size $font-size-large
@@ -37,19 +38,17 @@
 
           .time
             font-weight 300
-            padding-left 15px
             color $brand-primary
+            padding-left 15px
 
           .name
             display block
             font-weight 400
-            padding-left 15px
             &:hover
               text-decoration underline
 
           .teacher
             font-weight 300
-            padding-left 15px
             color lighten($brand-primary, 70%)
 
           .audit

@@ -21,12 +21,14 @@ angular.module('app.controllers')
 
       # Some thing when error loading scedule
       processError = ->
-        console.log "cant load schedule"
+        if raw_schedule and raw_schedule.updated
+          $scope.last_update = raw_schedule.updated
 
       # Update schedule in scope
+      raw_schedule = undefined
       updateSchedule = (sched) ->
+        raw_schedule = sched
         $scope.timing = sched.timing
-        $scope.last_update = sched.updated
         $scope.sched = sched.schedule
         now = new Date()
 
@@ -68,5 +70,8 @@ angular.module('app.controllers')
           $scope.parts.push({type:'exams', name:'Экзамены'})
 
       # Load schedule from server
-      Schedule.get($routeParams.groupName, 'exam').then(updateSchedule, processError, updateSchedule)
+      Schedule.get($routeParams.groupName, 'exam').then((sched)->
+        updateSchedule(sched)
+        $scope.last_update = sched.updated
+      , processError, updateSchedule)
   ])

@@ -45,15 +45,14 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
                         h2 {{part.name}} с {{this[part.type+'_bounds'][0] | date: 'd MMM'}} по {{this[part.type+'_bounds'][1] | date: 'd MMM'}}
 
             div(ng-repeat="test in this[part.type] | orderBy: 'activity.start':false")
-                .info.container(ng-class="{'started': test.started}")
-                    .row-fluid
-                        .col-sm-12
-                            a(ng-click="showDetails(test.dow, test.number, test.index)")
-                                span.date {{test.activity.start | date: 'd MMM'}}
-                                span.time {{test.time.start | minutesToHours}}
-                                span.name {{test.subject.name}}
-                                span.teacher {{test.professor[0].name}}
-                                span.audit {{test.place[0].name}}
+                .info.container.row-fluid(ng-class="{'started': test.started}")
+                    .col-sm-12
+                        a(ng-click="showDetails(test.dow, test.number, test.index)")
+                            span.date {{test.activity.start | date: 'd MMM'}}
+                            span.time {{test.time.start | minutesToHours}}
+                            span.name {{test.subject.name}}
+                            span.teacher {{test.professor[0].name}}
+                            span.audit {{test.place[0].name}}
 
                 .lesson-details-container.height-transition(ng-if="$routeParams.weekDay == test.dow && $routeParams.classNum == test.number && $routeParams.atomClass == test.index")
                     div(ng-include, src="'app/partials/schedules/class/session-index.jade'")

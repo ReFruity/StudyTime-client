@@ -27,7 +27,6 @@ angular.module('app.controllers')
           $scope.minutes = Math.floor((diff / 1000) / 60 ) - $scope.days * 24 * 60 - $scope.hours * 60
       updateValues()
 
-
       # Periodicaly update currents
       updateTimer = undefined
       updateCurrentsPeriodicaly = ->

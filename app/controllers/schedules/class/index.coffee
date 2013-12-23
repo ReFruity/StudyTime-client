@@ -21,7 +21,7 @@ angular.module('app.controllers')
 
         # Initial set of clazz data
         if init_dow and init_clazz and init_atom
-          $scope.viewType = 'attachments'
+          $scope.viewType = 'info'
           $scope.clazz = angular.copy($scope.sched[init_dow][init_clazz][init_atom])
 
       # Initial clazz update from route

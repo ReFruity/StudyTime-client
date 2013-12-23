@@ -21,13 +21,39 @@
     div(breakpoint="min-width: 768px")
         div(ng-if="matches", class="desktop")
             .attachments
-                .file-cont(ng-repeat="att in attachments")
+                .file-cont(ng-repeat="att in uploadingFiles track by $index", name="form", ng-if="att")
+                    form.upload-info-form(role="form", ng-submit="editDone(att)", ng-if="!att.edit_done")
+                        .row
+                            .col-sm-12
+                                input.form-control(type="url", name="url", ng-if="att.just_link", ng-model="att.link", placeholder="Ссылка", required)
+                                input.form-control(type="text", name="name", ng-model="att.displayName", placeholder="Название", required)
+                                input.form-control(type="text", ng-model="att.description", placeholder="Описание")
+                        .row
+                            .col-sm-3
+                                button.form-control.btn.btn-success(type="submit", ng-disabled="form.$invalid") Готово
+                            .col-sm-3(ng-if="!att.just_link")
+                                span.progress-percents {{att.progress}}%
+                                span.progress-sizes {{att.size | redeableSize}}/{{att.loaded | redeableSize}}
+                            .col-sm-3.pull-right
+                                button.form-control.btn(type="button", ng-click="abortUpload(att)") Отмена
+                    div(ng-if="att.edit_done")
+                        .file-header
+                            a.file-name(href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}", target="_blank") {{ att.displayName }}
+                            span.file-size {{ att.size | redeableSize }}
+                            span.file-date {{ att.updated | date:'dd MMM yyyy' }}
+                            span.progress-percents {{att.progress}}%
+                            span.progress-sizes {{att.loaded | redeableSize}}/{{att.size | redeableSize}}
+                        .file-descr
+                            span.file-comment {{ att.description }}
+
+                .file-cont(ng-repeat="att in attachments track by $index")
                     .file-header
-                        a.file-name(href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}") {{ att.name }}
-                        span.file-size {{ att.size | redeableSize }}
-                        span.file-date {{ att.updated | date:'dd MMM yyyy' }}
+                        a.file-name(href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}", target="_blank") {{ att.name }}
+                        span.file-size(ng-if="att.size > 0") {{ att.size | redeableSize }}
+                        span.file-date {{ att.creation_date | date:'dd MMM yyyy' }}
                     .file-descr
                         span.file-comment {{ att.description }}
+
         div(ng-if="!matches", class="mobile")
             .attachments
                 a.file-cont(ng-repeat="att in attachments", target="_blank", href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}")
@@ -36,5 +62,7 @@
                     .file-descr
                         span.file-comment {{ att.description }}
                     .file-details
-                        span.file-size {{ att.size | redeableSize }}
-                        span.file-date {{ att.updated | date:'dd MMM yyyy' }}
+                        span.file-size(ng-if="att.size > 0") {{ att.size | redeableSize }}
+                        span.file-date {{ att.creation_date | date:'dd MMM yyyy' }}
+
+        .no-attachments(ng-if="attachments.length == 0") Нет приложений

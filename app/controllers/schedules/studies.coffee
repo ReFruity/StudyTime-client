@@ -27,7 +27,6 @@ angular.module('app.controllers')
         if raw_schedule and raw_schedule.updated
           $scope.last_update = raw_schedule.updated
       , (cached_sched) ->
-        console.log $scope
         $rootScope.scheduleLoading = no
         raw_schedule = cached_sched
         initOpenedClassDetails(cached_sched.schedule)
