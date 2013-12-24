@@ -22,10 +22,14 @@ angular.module('app.services')
           # Login callbacks
           $window.loginCallback =
             onFailed: ->
-              defer.reject(false)
+              $rootScope.$apply(->
+                defer.reject(false)
+              )
             onSuccess: (user)->
-              $rootScope.$emit('userAuthenticated', user)
-              defer.resolve(user)
+              $rootScope.$apply(->
+                $rootScope.$emit('userAuthenticated', user)
+                defer.resolve(user)
+              )
         )
         defer.promise
 
