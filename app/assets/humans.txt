@@ -3,13 +3,13 @@
 
 # TEAM
 
-    Artem Artemyev -- Developer/Designer -- @viiv_c58
-    Rostislav Kirillov -- Developer/Designer -- @TheRast1234
-    Katerina Boronina -- Developer/Designer -- @_Greenest
-    Tatiana Nadymova -- Developer/Designer -- @tnady_alive
+    Artem Artemyev -- Team Leader/Developer/FrontEnd/BackEnd -- @viiv_c58, viiv.c58[at)gmail.com
+    Rostislav Kirillov -- Developer/BackEnd -- @TheRast1234
+    Katerina Boronina -- Developer/FrontEnd -- @_Greenest
+    Tatiana Nadymova -- Developer/FrontEnd -- @tnady_alive
     Nuta Blinicheva -- PR -- @KoRghik
-    Vlad Kosovskikh -- Developer
-    Alexander Promakh -- Developer
+    Vlad Kosovskikh -- Developer/BackEnd
+    Alexander Promakh -- Developer/Frontend
     Anna Chernykh -- Designer -- @angel39310
 
 # THANKS
@@ -20,3 +20,4 @@
 
     HTML5, CSS3
     AngularJS, Twitter Bootstrap, CoffeeScript, Stylus
+    Python, MongoDB
