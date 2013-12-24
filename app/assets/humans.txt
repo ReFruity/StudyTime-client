@@ -3,7 +3,7 @@
 
 # TEAM
 
-    Artem Artemyev -- Team Leader/Developer/FrontEnd/BackEnd -- @viiv_c58
+    Artem Artemyev -- Team Leader/Developer/FrontEnd/BackEnd -- @viiv_c58, viiv.c58[at)gmail.com
     Rostislav Kirillov -- Developer/BackEnd -- @TheRast1234
     Katerina Boronina -- Developer/FrontEnd -- @_Greenest
     Tatiana Nadymova -- Developer/FrontEnd -- @tnady_alive
