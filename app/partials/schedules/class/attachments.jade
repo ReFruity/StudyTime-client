@@ -65,4 +65,4 @@
                         span.file-size(ng-if="att.size > 0") {{ att.size | redeableSize }}
                         span.file-date {{ att.creation_date | date:'dd MMM yyyy' }}
 
-        .no-attachments(ng-if="attachments.length == 0") Нет приложений
+        .no-attachments(ng-if="attachments && attachments.length == 0") Нет приложений

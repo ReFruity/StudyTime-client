@@ -15,4 +15,5 @@ footer.footer.ng-cloak(bindonce)
                     li(bo-html="'layouts.main.terms'| translate")
                     li
                         a(href='/humans.txt', target="_blank", bo-html="'layouts.main.authors'| translate")
-            .copyright.col-md-3.col-xs-6.text-right= "©2013 StudyTime.me"
+            .copyright.col-md-3.col-xs-6.text-right(ng-controller='AuthCtrl')
+                span(ng-click="authenticate()") ©2013 StudyTime.me

@@ -51,6 +51,7 @@ App = angular.module('app', [
     '$location'
     '$route'
     '$routeParams'
+    'User'
 
     ($rootScope, $location, $route, $routeParams) ->
       $rootScope.$route = $route
@@ -58,13 +59,11 @@ App = angular.module('app', [
       $rootScope.$routeParams = $routeParams
       $rootScope.in = (val, arr) ->
         return val in arr
-
-      $rootScope.$isAdmin = yes
   ])
 
 # FastClick
 window.addEventListener('load', ->
-    FastClick.attach(document.body);
+  FastClick.attach(document.body);
 , false)
 
 # Phonegap checker

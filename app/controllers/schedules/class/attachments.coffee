@@ -20,7 +20,7 @@ angular.module('app.controllers')
         $scope.uploadingFiles = uploadingFiles[$scope.clazz.subject.object]
 
         # Load attachments
-        $scope.attachments = []
+        $scope.attachments = undefined
         updateAttachments = (atts) ->
           $scope.attachments = atts.attachments
         Subject.attachments($scope.clazz.subject.object).then(updateAttachments, ->
@@ -120,5 +120,7 @@ angular.module('app.controllers')
 
       # Add new attachment object to display
       addNewAttachmentToDisplay = (att)->
+        if not $scope.attachments
+          $scope.attachments = []
         $scope.attachments.unshift(att)
   ])

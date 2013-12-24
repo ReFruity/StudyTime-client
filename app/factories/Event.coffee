@@ -10,6 +10,7 @@ angular.module('app.services')
     ($q, $http, localeStorage, config, $timeout, Cachier) ->
       update: (id, event) ->
         $http(
+          withCredentials: true
           method: 'POST'
           url: "#{config.apiUrl}/event/#{id}"
           data: event

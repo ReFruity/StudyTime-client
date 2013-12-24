@@ -1,2 +1,2 @@
 angular.module('app').value 'config',
-  apiUrl: 'http://studytime.ftp.sh/api/v2'
+  apiUrl: 'http://api.studytime.me/api/v2'
