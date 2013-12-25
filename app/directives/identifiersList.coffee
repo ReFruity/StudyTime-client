@@ -11,9 +11,9 @@ angular.module('app.directives')
 
         ctrl.$formatters.push (modelValue) ->
           if angular.isArray(modelValue)
-            return (v.name for v in modelValue).join(", ")
+            return modelValue[0].name
           else if angular.isObject(modelValue) and modelValue.name
             return modelValue.name
           else
-            return ""
+            return modelValue
   ]

@@ -61,7 +61,8 @@
               display inline-block
               font-size $font-size-base
               cursor pointer
-              padding ceil(($sched-nav-height - $font-size-base - 8)/2) 9px
+              line-height ($sched-nav-height - 1)
+              padding 0 9px
               &.active
                 background $brand-info
                 border-radius $line-height-computed

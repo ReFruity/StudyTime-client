@@ -32,9 +32,28 @@ angular.module('app.services')
       list: (faculty = 'ИМКН') ->
         Cachier("group.list.#{faculty}", (cache_value)->
           method: 'GET'
-          url: "#{config.apiUrl}/group"
+          url: "#{config.apiUrl}/group/compiled"
           params:
             faculty: faculty
             if_updated_after: if cache_value and cache_value.updated then cache_value.updated else new Date(0).toISOString()
         )
+
+      search: (term, faculty = 'ИМКН', start=0, limit=15) ->
+        # Get promise
+        last_arg = arguments[arguments.length-1]
+        if last_arg && angular.isFunction(last_arg.then)
+          timeout = last_arg
+
+        $http(
+          timeout: timeout
+          method: 'GET'
+          url: "#{config.apiUrl}/group"
+          params:
+            name: term
+            faculty: faculty
+            start: start
+            limit: limit
+            identifiers: 'true'
+        )
+
   ]

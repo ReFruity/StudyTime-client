@@ -6,15 +6,21 @@
                 .col-xs-6.form-group
                     label.sr-only(for="groupInput") Группа
                     input#groupInput.form-control(ng-model="values.event.group", placeholder="Группа", identifiers-list)
+                    typeahead(for="groupInput", finder="group", term="values.event.group")
+                        div(ng-include, src="'app/partials/common/default-typeahead.jade'")
 
                 .col-xs-6.form-group
                     label.sr-only(for="subjectInput") Предмет
-                    input#subjectInput.form-control(ng-model="values.event.subject", , placeholder="Предмет", identifiers-list)
+                    input#subjectInput.form-control(ng-model="values.event.subject", , placeholder="Предмет", identifiers-list, required)
+                    typeahead(for="subjectInput", finder="subject", term="values.event.subject")
+                        div(ng-include, src="'app/partials/common/default-typeahead.jade'")
 
             .row
                 .col-xs-6.form-group
                     label.sr-only(for="professorInput") Преподаватель
                     input#professorInput.form-control(ng-model="values.event.professor", placeholder="Преподаватель", identifiers-list)
+                    typeahead(for="professorInput", finder="user", term="values.event.professor")
+                        div(ng-include, src="'app/partials/common/default-typeahead.jade'")
 
                 .col-xs-3.form-group
                     label.sr-only(for="eventTypeInput") Тип события
@@ -29,6 +35,8 @@
                 .col-xs-3.form-group
                     label.sr-only(for="placeInput") Аудитория
                     input#placeInput.form-control(ng-model="values.event.place", placeholder="Аудитория", identifiers-list)
+                    typeahead(for="placeInput", finder="place", term="values.event.place")
+                        div(ng-include, src="'app/partials/common/default-typeahead.jade'")
                 .col-xs-3.form-group
                     label.sr-only(for="dowInput") День недели
                     select#dowInput.form-control(ng-model="values.event.dow", ng-options="t[0] as t[1] for t in [['Mon', 'Понедельник'], ['Tue', 'Вторник'], ['Wed', 'Среда'], ['Thu','Четверг'], ['Fri','Пятница'], ['Sun','Суббота']]")
@@ -70,4 +78,8 @@
                         button.btn.btn-default.form-control(type="button", ng-click="clear()") Очистить
                 .col-xs-6
                     .form-group
-                        button.btn.btn-success.form-control(type="submit") Готово
+                        button.btn.btn-success.form-control(type="submit", ng-disabled="processing") Готово
+
+            .row(ng-if="error")
+                .col-xs-12
+                    span Что-то пошло не так :( Заскриншоть форму и положи в чатик, пожалуйста

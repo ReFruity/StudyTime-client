@@ -23,10 +23,13 @@ angular.module('app.controllers')
       processError = ->
         if raw_schedule and raw_schedule.updated
           $scope.last_update = raw_schedule.updated
+        else
+          $scope.last_update = new Date()
 
       # Update schedule in scope
       raw_schedule = undefined
       updateSchedule = (sched) ->
+        $scope.parts = []
         raw_schedule = sched
         $scope.timing = sched.timing
         $scope.sched = sched.schedule

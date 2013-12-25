@@ -27,4 +27,7 @@ angular.extend(angular.element.fn,
           elem = elem.parentNode
 
       return false
+
+  focus: ->
+    return this[0].focus()
 );
