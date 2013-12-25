@@ -15,12 +15,12 @@
                             input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])")
                             span {{t[1]}}
 
-    div(breakpoint="min-width: 768px")
-        .no-attachments(ng-if="loading") Загрузка...
-        .no-attachments(ng-if="attachments && attachments.length == 0 && !loading") Нет приложений
+            span.loading-attachments(ng-if="loading") Загрузка...
 
+    div(breakpoint="min-width: 768px")
         div(ng-if="matches", class="desktop")
-            .attachments
+            .no-attachments(ng-if="attachments && attachments.length == 0 && !loading") Нет приложений
+            .attachments(ng-if="attachments && attachments.length > 0")
                 .file-cont(ng-repeat="att in uploadingFiles track by $index", name="form", ng-if="att")
                     form.upload-info-form(role="form", ng-submit="editDone(att)", ng-if="!att.edit_done")
                         .row
@@ -55,6 +55,8 @@
                         span.file-comment {{ att.description }}
 
         div(ng-if="!matches", class="mobile")
+            .no-attachments(ng-if="loading") Загрузка...
+            .no-attachments(ng-if="attachments && attachments.length == 0 && !loading") Нет приложений
             .attachments
                 a.file-cont(ng-repeat="att in attachments", target="_blank", href="{{att.s3 ? 'http://studytime-files.s3-external-3.amazonaws.com/'+att.link : att.link}}")
                     .file-header
