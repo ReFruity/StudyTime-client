@@ -1,42 +1,30 @@
 div(ng-controller='SchedulesStudiesCtrl')
+    #schedule-greed(breakpoint="min-width: 768px", class="week-{{currentParity}}", ng-init="classes=['1','2','3','4','5','6']")
+        // Three columns
+        div(ng-if="matches", class="desktop", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]", bindonce)
+            // Navigation
+            div(move-content-to="sched-nav-left")
+                .type-changer
+                    a.active Семестр
+                    a(ng-click="showScheduleType('exams')") Сессия
+            div(move-content-to="sched-nav-right")
+                .col-sm-4.text-right(ng-if="!in_feature")
+                    .next-week-btn(bindonce)
+                        a(ng-click="nextWeek()")
+                            span(bo-html="'schedules.index.next_week' | translate")
+                            i.stico-arrow-right
+                .col-sm-4.text-right(ng-if="in_feature")
+                    .next-week-btn(bindonce)
+                        a(ng-click="prevWeek()")
+                            i.stico-arrow-right.rotate-180
+                            span {{dowDates['Mon'] | date: 'dd MMM'}}
+                        span &#8211;
+                        a(ng-click="nextWeek()")
+                            span {{dowDates['Sat'] | date: 'dd MMM'}}
+                            i.stico-arrow-right
 
-    div(ng-if="sched")
-        #schedule-greed(breakpoint="min-width: 768px", class="week-{{currentParity}}", ng-init="classes=['1','2','3','4','5','6']")
-
-            // Three columns
-            div(ng-if="matches", class="desktop", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]", bindonce)
-                // Navigation
-                .schedule-header
-                    .navbar.navbar-default
-                        .container.row-fluid(bindonce)
-                            .col-sm-4
-                                a.back-btn(ng-click="showGroups()")
-                                    .back-logo-square
-                                        i.stico-groups-list
-                                    span.group-name(bo-html="$routeParams.groupName")
-                                //(ng-if="group && group.state=='exams'")
-                                .type-changer
-                                    a.active Семестр
-                                    a(ng-click="showScheduleType('exams')") Сессия
-                            .col-sm-4.text-center
-                                span.schedule-updated-text
-                                    span(ng-if="last_update", bo-html="'Обновлено ' + '{{ last_update | relativeDate}}'")
-                                    span(ng-if="!last_update") Проверка обновлений...
-                            .col-sm-4.text-right(ng-if="!in_feature")
-                                .next-week-btn
-                                    a(ng-click="nextWeek()")
-                                        span(bo-html="'schedules.index.next_week' | translate")
-                                        i.stico-arrow-right
-                            .col-sm-4.text-right(ng-if="in_feature")
-                                .next-week-btn
-                                    a(ng-click="prevWeek()")
-                                        i.stico-arrow-right.rotate-180
-                                        span {{dowDates['Mon'] | date: 'dd MMM'}}
-                                    span &#8211;
-                                    a(ng-click="nextWeek()")
-                                        span {{dowDates['Sat'] | date: 'dd MMM'}}
-                                        i.stico-arrow-right
-                // Schedule
+            // Schedule
+            div(ng-if="sched")
                 .lessons-grid(ng-repeat="line in lines")
                     .container.row-fluid
                         .col-sm-4(ng-repeat="dow in line")
@@ -61,27 +49,17 @@ div(ng-controller='SchedulesStudiesCtrl')
                             div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
 
 
-            // One column
-            div(ng-if="!matches", ng-init="lines=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']", bindonce, class="mobile")
-                // Navigation
-                .schedule-header
-                    .navbar.navbar-default
-                        .row-fluid(bindonce)
-                            .col-xs-4
-                                a.back-btn(ng-click="showGroups()")
-                                    i.stico-arrow-right.rotate-180
-                                    span Группы
-                            .col-xs-4.text-center.nav-middle
-                                span.group-name(ng-if="last_update", bo-html="$routeParams.groupName")
-                                span.schedule-updated-text
-                                    span(ng-if="!last_update") Обновление...
-                            //(ng-if="group && group.state=='exams'")
-                            .col-xs-4.text-right
-                                .type-changer
-                                    a(ng-click="showScheduleType('exams')")
-                                        span Сессия
+        // One column
+        div(ng-if="!matches", ng-init="lines=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']", bindonce, class="mobile")
+            div(move-content-to="sched-nav-left")
+            div(move-content-to="sched-nav-right")
+                .col-xs-4.text-right
+                    .type-changer
+                        a(ng-click="showScheduleType('exams')")
+                            span Сессия
 
-                // Schedule
+            // Schedule
+            div(ng-if="sched")
                 .lessons-mobile(ng-repeat="dow in lines")
                     h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
                         span.lesson-cell-title-day(bo-html="'schedules.studies.'+dow | translate")

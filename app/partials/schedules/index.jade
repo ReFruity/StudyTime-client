@@ -3,8 +3,7 @@
         .hidden-xs(ng-if="$isAdmin")
             div(ng-include, src="'app/partials/schedules/editor.jade'")
 
-        div(ng-if="scheduleLoading")
-            div(ng-include, src="'app/partials/loading.jade'")
+        div(ng-include, src="'app/partials/schedules/navigation.jade'")
 
         div(ng-switch on='showingState')
             div(ng-switch-when="studies")

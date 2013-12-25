@@ -17,7 +17,12 @@ angular.module('app.services')
         )
 
       create: (event) ->
-        $http.post("#{config.apiUrl}/event", event)
+        $http(
+          withCredentials: true
+          method: 'POST'
+          url: "#{config.apiUrl}/event"
+          data: event
+        )
 
       list: (types, group = undefined, faculty = 'ИМКН') ->
         Cachier("event.list.#{faculty}.#{group}.#{types.join('.')}", (cache_value)->

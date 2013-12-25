@@ -8,7 +8,6 @@ angular.module('app.controllers')
     '$location'
 
     ($scope, $rootScope, Schedule, $routeParams, $location) ->
-      $rootScope.scheduleLoading = no
       $scope.parts = []
 
       # Update exams bounds if needed
@@ -19,15 +18,9 @@ angular.module('app.controllers')
         if date < bounds[0]
           bounds[0] = date
 
-      # Some thing when error loading scedule
-      processError = ->
-        if raw_schedule and raw_schedule.updated
-          $scope.last_update = raw_schedule.updated
-        else
-          $scope.last_update = new Date()
-
       # Update schedule in scope
       raw_schedule = undefined
+      $scope.sched_shared.last_update = 0
       updateSchedule = (sched) ->
         $scope.parts = []
         raw_schedule = sched
@@ -72,9 +65,16 @@ angular.module('app.controllers')
           $scope.exams = exams
           $scope.parts.push({type:'exams', name:'Экзамены'})
 
+      # Some thing when error loading scedule
+      processError = ->
+        if raw_schedule and raw_schedule.updated
+          $scope.sched_shared.last_update = raw_schedule.updated
+        else
+          $scope.sched_shared.last_update = new Date()
+
       # Load schedule from server
       Schedule.get($routeParams.groupName, 'exam').then((sched)->
         updateSchedule(sched)
-        $scope.last_update = sched.updated
+        $scope.sched_shared.last_update = sched.updated
       , processError, updateSchedule)
   ])

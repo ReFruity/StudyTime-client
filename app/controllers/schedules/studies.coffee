@@ -13,21 +13,21 @@ angular.module('app.controllers')
 
       # Get schedule
       raw_schedule = undefined
+      $scope.sched_shared.last_update = 0
       Schedule.get($routeParams.groupName).then(
         (sched) ->
-          $rootScope.scheduleLoading = no
           raw_schedule = sched
           initOpenedClassDetails(sched.schedule)
           $scope.sched = sched.schedule
           $scope.timing = sched.timing
-          $scope.last_update = sched.updated
+          $scope.sched_shared.last_update = sched.updated
           updateCurrents()
       , (reason) ->
-        $rootScope.scheduleLoading = no
         if raw_schedule and raw_schedule.updated
-          $scope.last_update = raw_schedule.updated
+          $scope.sched_shared.last_update = raw_schedule.updated
+        else
+          $scope.sched_shared.last_update = new Date()
       , (cached_sched) ->
-        $rootScope.scheduleLoading = no
         raw_schedule = cached_sched
         initOpenedClassDetails(cached_sched.schedule)
         $scope.sched = cached_sched.schedule

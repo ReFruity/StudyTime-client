@@ -43,6 +43,21 @@ App = angular.module('app', [
 
       # Without server side support html5 must be disabled.
       $locationProvider.html5Mode(true)
+
+      $httpProvider.interceptors.push(['$q', '$rootScope', ($q, $rootScope) ->
+        updateGlobalCanceler = ->
+          defer = $q.defer()
+          $rootScope.$globalRequestCancel = defer
+          $rootScope.$globalRequestCancelPromise = defer.promise
+          $rootScope.$globalRequestCancelPromise.finally updateGlobalCanceler
+
+        request: (config) ->
+          if not $rootScope.$globalRequestCancel
+            updateGlobalCanceler()
+
+          config.timeout = $rootScope.$globalRequestCancelPromise
+          config
+      ])
   ])
 
 # RootScope extendings
@@ -52,8 +67,9 @@ App = angular.module('app', [
     '$route'
     '$routeParams'
     'User'
+    '$q'
 
-    ($rootScope, $location, $route, $routeParams) ->
+    ($rootScope, $location, $route, $routeParams, $q) ->
       $rootScope.$route = $route
       $rootScope.$location = $location
       $rootScope.$routeParams = $routeParams

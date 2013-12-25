@@ -1,42 +1,22 @@
 div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
     #schedule-greed(breakpoint="min-width: 768px")
         div(ng-if="matches", class="desktop")
-            // Navigation
-            .schedule-header
-                .navbar.navbar-default
-                    .container.row-fluid(bindonce)
-                        .col-sm-4
-                            a.back-btn(ng-click="showGroups()")
-                                .back-logo-square
-                                    i.stico-groups-list
-                                span.group-name(bo-html="$routeParams.groupName")
-                            .type-changer
-                                a(ng-click="showScheduleType('studies')") Семестр
-                                a.active Сессия
-                        .col-sm-4.text-center
-                            span.schedule-updated-text
-                                span(ng-if="last_update", bo-html="'Обновлено ' + '{{ last_update | relativeDate}}'")
-                                span(ng-if="!last_update") Проверка обновлений...
+            div(move-content-to="sched-nav-left")
+                .type-changer
+                    a(ng-click="showScheduleType('studies')") Семестр
+                    a.active Сессия
+            div(move-content-to="sched-nav-right")
 
         div(ng-if="!matches", class="mobile")
-            // Navigation
-            .schedule-header
-                .navbar.navbar-default
-                    .row-fluid(bindonce)
-                        .col-xs-4
-                            a.back-btn(ng-click="showGroups()")
-                                i.stico-arrow-right.rotate-180
-                                span Группы
-                        .col-xs-4.text-center.nav-middle
-                            span.group-name(ng-if="last_update", bo-html="$routeParams.groupName")
-                            span.schedule-updated-text
-                                span(ng-if="!last_update") Обновление...
-                        //(ng-if="group && group.state=='exams'")
-                        .col-xs-4.text-right
-                            .type-changer
-                                a(ng-click="showScheduleType('studies')")
-                                    span Семестр
+            div(move-content-to="sched-nav-left")
+            div(move-content-to="sched-nav-right")
+                .col-xs-4.text-right
+                    .type-changer
+                        a(ng-click="showScheduleType('studies')")
+                            span Семестр
 
+        .no-exams(ng-if="parts.length == 0 && !scheduleLoading")
+            span Расписание будет совсем скоро
 
         .session-part(ng-repeat="part in parts")
             .container

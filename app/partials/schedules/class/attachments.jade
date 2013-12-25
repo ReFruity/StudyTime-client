@@ -15,10 +15,6 @@
                             input(ng-if="type == 'file'", type="file", ng-file-select="onFileSelect($files, t[0])")
                             span {{t[1]}}
 
-        //label
-        //    select
-        //        option(value="") Любой преподаватель
-        //        option(ng-repeat="p in professors", value="{{p.object}}") {{ p.name }}
     div(breakpoint="min-width: 768px")
         div(ng-if="matches", class="desktop")
             .attachments
@@ -66,4 +62,5 @@
                         span.file-size(ng-if="att.size > 0") {{ att.size | redeableSize }}
                         span.file-date {{ att.creation_date | date:'dd MMM yyyy' }}
 
+        .no-attachments(ng-if="!attachments") Загрузка...
         .no-attachments(ng-if="attachments && attachments.length == 0") Нет приложений

@@ -49,4 +49,9 @@ angular.module('app.controllers')
       , (reason) ->
         console.log(reason)
       , $scope.updateGroups)
+
+      # Cancel all requests on exit from schedule
+      $scope.$on('$destroy', ->
+        $scope.$globalRequestCancel.resolve()
+      )
   ])

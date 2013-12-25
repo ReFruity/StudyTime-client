@@ -13,7 +13,7 @@ angular.module('app.controllers')
       # Set last opened group in cache
       Group.lastOpened.set($routeParams.groupName)
       $rootScope.lastOpenedGroup = $routeParams.groupName
-      $rootScope.scheduleLoading = yes
+      $scope.sched_shared = {last_update:0}
 
       # Remove last opened group from cache
       $scope.showGroups = ->
@@ -52,4 +52,9 @@ angular.module('app.controllers')
       , (reject_reason) ->
         console.log "group getting rejected"
       , updateGroup)
+
+      # Cancel all requests on exit from schedule
+      $scope.$on('$destroy', ->
+        $scope.$globalRequestCancel.resolve()
+      )
   ])
