@@ -20,6 +20,7 @@ angular.module('app.controllers')
         $scope.uploadingFiles = uploadingFiles[$scope.clazz.subject.object]
 
         # Load attachments
+        $scope.loading = yes
         $scope.attachments = undefined
         updateAttachments = (atts) ->
           $scope.attachments = atts.attachments
@@ -27,6 +28,8 @@ angular.module('app.controllers')
         Subject.attachments($scope.clazz.subject.object).then(updateAttachments, ->
           console.log "cant get attachments"
         , updateAttachments)
+        .finally ->
+          $scope.loading = no
 
       # Switch attachments when clazz changed
       $scope.$watch('clazz', init)

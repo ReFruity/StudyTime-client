@@ -16,6 +16,9 @@
                             span {{t[1]}}
 
     div(breakpoint="min-width: 768px")
+        .no-attachments(ng-if="loading") Загрузка...
+        .no-attachments(ng-if="attachments && attachments.length == 0 && !loading") Нет приложений
+
         div(ng-if="matches", class="desktop")
             .attachments
                 .file-cont(ng-repeat="att in uploadingFiles track by $index", name="form", ng-if="att")
@@ -61,6 +64,3 @@
                     .file-details
                         span.file-size(ng-if="att.size > 0") {{ att.size | redeableSize }}
                         span.file-date {{ att.creation_date | date:'dd MMM yyyy' }}
-
-        .no-attachments(ng-if="!attachments") Загрузка...
-        .no-attachments(ng-if="attachments && attachments.length == 0") Нет приложений
