@@ -22,7 +22,7 @@ angular.module('app.controllers')
         # Load attachments
         $scope.attachments = undefined
         updateAttachments = (atts) ->
-          $scope.attachments = atts.attachment
+          $scope.attachments = atts.attachments
 
         Subject.attachments($scope.clazz.subject.object).then(updateAttachments, ->
           console.log "cant get attachments"
