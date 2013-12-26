@@ -84,7 +84,7 @@ window.addEventListener('load', ->
 
 # Phonegap checker
 window.checkPhonegap = ->
-  return (window.cordova || window.PhoneGap || window.phonegap) && /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad|android/i.test(navigator.userAgent)
+  return (window.cordova || window.PhoneGap || window.phonegap) && /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|ipad|iphone|ipod|android/i.test(navigator.userAgent)
 
 # Detect Apple StandAlone or PhoneGap application and
 # add css class to html

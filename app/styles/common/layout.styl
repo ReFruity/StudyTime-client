@@ -113,6 +113,19 @@ label.select
 
 // Animate view changes on standalone mode
 .standalone
+  .overthrow
+    overflow auto
+    -webkit-overflow-scrolling touch
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+
+    .animated-view
+      padding-top $navbar-height + 20
+      background #fff
+
   #wrap
     position absolute
     top 0
@@ -150,25 +163,3 @@ label.select
     min-height 0 !important
     height auto !important
     padding-bottom 10px
-
-  .overthrow-enabled.standalone
-    .header
-      position absolute
-      top 0
-      left 0
-      right 0
-      opacity 0.9
-      z-index 100000
-
-    .overthrow
-      overflow auto
-      -webkit-overflow-scrolling touch
-      position absolute
-      top 0
-      left 0
-      right 0
-      bottom 0
-
-      .animated-view
-        padding-top $navbar-height + 20
-        background #fff
