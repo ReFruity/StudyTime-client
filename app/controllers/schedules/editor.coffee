@@ -31,6 +31,14 @@ angular.module('app.controllers')
         event.subject = identiifiersToObjectIds(event.subject)
         event.group = identiifiersToObjectIds(event.group)
 
+        # Update time if not set
+        if event.activity and event.activity.start
+          st_date = new Date(event.activity.start)
+          if not event.dow
+            event.dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][st_date.getDay()]
+          if (not event.time or not event.time.start) and not event.number
+            event.time = start: st_date.getHours() * 60 + st_date.getMinutes()
+
         # Update existing event
         if event._id
           id = event._id

@@ -21,6 +21,7 @@ App = angular.module('app', [
   'LocalStorageModule'
   'pasvaz.bindonce'
   'angularFileUpload'
+  'datePicker'
 ])
 .config([
     '$routeProvider'
