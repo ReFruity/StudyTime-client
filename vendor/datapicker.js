@@ -98,7 +98,7 @@ function getVisibleHours(date) {
   return hours;
 }
 
-Module.directive('datePicker', function datePickerDirective(datePickerConfig) {
+Module.directive('datePicker', ['datePickerConfig', function datePickerDirective() {
 
   //noinspection JSUnusedLocalSymbols
   return {
@@ -277,7 +277,7 @@ Module.directive('datePicker', function datePickerDirective(datePickerConfig) {
       };
     }
   };
-});
+}]);
 
 'use strict';
 
@@ -339,7 +339,7 @@ Module.directive('dateTimeAppend', function () {
   };
 });
 
-Module.directive('dateTime', function ($compile, $document, $filter, dateTimeConfig, $parse) {
+Module.directive('dateTime', ['$compile, $document, $filter, dateTimeConfig, $parse', function ($compile, $document, $filter, dateTimeConfig, $parse) {
   var body = $document.find('body');
   var dateFilter = $filter('date');
 
@@ -443,7 +443,7 @@ Module.directive('dateTime', function ($compile, $document, $filter, dateTimeCon
       element.bind('blur', clear);
     }
   };
-});
+}]);
 
 angular.module("datePicker").run(["$templateCache", function($templateCache) {
 
