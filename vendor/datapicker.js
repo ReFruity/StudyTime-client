@@ -339,7 +339,7 @@ Module.directive('dateTimeAppend', function () {
   };
 });
 
-Module.directive('dateTime', ['$compile, $document, $filter, dateTimeConfig, $parse', function ($compile, $document, $filter, dateTimeConfig, $parse) {
+Module.directive('dateTime', ['$compile', '$document', '$filter', 'dateTimeConfig', '$parse', function ($compile, $document, $filter, dateTimeConfig, $parse) {
   var body = $document.find('body');
   var dateFilter = $filter('date');
 
