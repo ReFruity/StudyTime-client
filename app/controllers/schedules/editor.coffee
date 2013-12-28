@@ -10,11 +10,6 @@ angular.module('app.controllers')
       # Set cached values
       $scope.values = eventEditorValues
 
-      # Listen on event changing request
-      $scope.$on('changeEvent', (_, evt)->
-        $scope.values.event = angular.copy(evt)
-      )
-
       # Clear any event values
       $scope.clear = ->
         $scope.values.event = undefined
@@ -30,14 +25,20 @@ angular.module('app.controllers')
         event.professor = identiifiersToObjectIds(event.professor)
         event.subject = identiifiersToObjectIds(event.subject)
         event.group = identiifiersToObjectIds(event.group)
+        event.single = yes
 
         # Update time if not set
         if event.activity and event.activity.start
+          event.activity.start = convertDateToUTC(event.activity.start)
+          event.activity.end = convertDateToUTC(event.activity.end)
+
           st_date = new Date(event.activity.start)
           if not event.dow
             event.dow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][st_date.getDay()]
           if (not event.time or not event.time.start) and not event.number
             event.time = start: st_date.getHours() * 60 + st_date.getMinutes()
+          if event._id
+            event['upd_activity'] = yes
 
         # Update existing event
         if event._id
@@ -45,6 +46,7 @@ angular.module('app.controllers')
           event._id = undefined
           Event.update(id, event).success((data)->
             $scope.processing = no
+            $rootScope.$broadcast("updateSchedule", event)
           ).error((error)->
             $scope.processing = no
             $scope.error = yes
@@ -54,6 +56,7 @@ angular.module('app.controllers')
         else
           Event.create(event).success((data)->
             $scope.processing = no
+            $rootScope.$broadcast("updateSchedule", event)
           ).error((error)->
             $scope.processing = no
             $scope.error = yes
@@ -69,4 +72,11 @@ angular.module('app.controllers')
           return idnts.object
         else
           return idnts
+
+      convertDateToUTC = (date) ->
+        if angular.isString(date)
+          date = new Date(date)
+        if date
+          return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()))
+        return undefined
   ])

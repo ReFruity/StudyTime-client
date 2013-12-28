@@ -24,7 +24,7 @@
 
                 .col-xs-3.form-group
                     label.sr-only(for="eventTypeInput") Тип события
-                    select#eventTypeInput.form-control(ng-model="values.event.type", ng-options="t[0] as t[1] for t in [['practice', 'Практика'], ['lecture', 'Лекция'], ['course', 'Спецкурс'], ['exam','Экзамен'], ['test','Зачет'], ['consult','Консультация']]")
+                    select#eventTypeInput.form-control(ng-model="values.event.type", required, ng-options="t[0] as t[1] for t in [['practice', 'Практика'], ['lecture', 'Лекция'], ['course', 'Спецкурс'], ['exam','Экзамен'], ['test','Зачет'], ['consult','Консультация']]")
                         option(value="") -- Тип события --
 
                 .col-xs-3.form-group
@@ -61,10 +61,10 @@
 
                 .col-xs-3.form-group
                     label.sr-only(for="startDateInput") Дата начала
-                    input.form-control(type="text", date-time="", ng-model="values.event.activity.start", view="date", placeholder="Дата начала")
+                    input.form-control(type="text", date-time, format="dd.MM.yyyy", min-view="date", ng-model="values.event.activity.start", view="date", placeholder="Дата начала")
                 .col-xs-3.form-group
                     label.sr-only(for="endDateInput") Дата конца
-                    input.form-control(type="text", date-time="", ng-model="values.event.activity.end", view="date", placeholder="Дата конца")
+                    input.form-control(type="text", date-time, format="dd.MM.yyyy", min-view="date", ng-model="values.event.activity.end", view="date", placeholder="Дата конца")
                     datepicker(ng-model='values.event.activity.end', id="endDateInput", placeholder="Дата конца")
 
             .row

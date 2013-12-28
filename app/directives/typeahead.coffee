@@ -42,7 +42,7 @@ angular.module('app.directives')
       # Make a query
       activeRequest = undefined
       $scope.$watch "term", (term)->
-        if term and term.length > 0
+        if term and term.length > 0 and angular.isString(term)
           # Cancel previous request
           if activeRequest
             activeRequest.resolve()
@@ -107,7 +107,6 @@ angular.module('app.directives')
 
 
       $input.on "keyup", (e) ->
-        console.log e.keyCode
         if e.keyCode is 9 or e.keyCode is 13
           scope.$apply ->
             controller.selectActive()

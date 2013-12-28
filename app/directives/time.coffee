@@ -18,5 +18,5 @@ angular.module('app.directives')
             `undefined`
 
         ctrl.$formatters.push (modelValue) ->
-          $filter('minutesToHours', modelValue) if modelValue
+          $filter('minutesToHours')(modelValue) if modelValue
   ]

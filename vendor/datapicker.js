@@ -140,7 +140,6 @@ Module.directive('datePicker', function datePickerDirective(datePickerConfig) {
         // change next view
         var nextView = scope.views[scope.views.indexOf(scope.view) + 1];
         if (!nextView || scope.model) {
-
           scope.model = new Date(scope.model || date);
 
           //noinspection FallThroughInSwitchStatementJS
@@ -375,7 +374,6 @@ Module.directive('dateTime', function ($compile, $document, $filter, dateTimeCon
 
       ngModel.$formatters.push(formatter);
       ngModel.$parsers.unshift(parser);
-
 
       var template = dateTimeConfig.template(attrs);
 

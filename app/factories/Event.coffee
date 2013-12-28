@@ -24,6 +24,17 @@ angular.module('app.services')
           data: event
         )
 
+      cancel: (id, start, end) ->
+        $http(
+          withCredentials: true
+          method: 'DELETE'
+          url: "#{config.apiUrl}/event/#{id}"
+          params:
+            start: start
+            end: end
+            archive: yes
+        )
+
       list: (types, group = undefined, faculty = 'ИМКН') ->
         Cachier("event.list.#{faculty}.#{group}.#{types.join('.')}", (cache_value)->
           method: 'GET'

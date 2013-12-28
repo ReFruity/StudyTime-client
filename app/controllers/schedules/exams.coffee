@@ -6,8 +6,10 @@ angular.module('app.controllers')
     'Schedule'
     '$routeParams'
     '$location'
+    'eventEditorValues'
+    'Event'
 
-    ($scope, $rootScope, Schedule, $routeParams, $location) ->
+    ($scope, $rootScope, Schedule, $routeParams, $location, eventEditorValues, Event) ->
       $scope.parts = []
 
       # Update exams bounds if needed
@@ -41,11 +43,16 @@ angular.module('app.controllers')
               atom.index = atom_index
               atom.dow = dow
               atom.number = clazz
+              atom.group =
+                name: $scope.group.name
+                object: $scope.group._id
               start_date = new Date(atom.activity.start)
               start_date.setHours(0)
               start_date.setSeconds(0)
               start_date.setMinutes(atom.time.start)
               atom.started = now > start_date
+              console.log now
+              console.log start_date
 
               if atom.type == 'exam' or atom.type == 'consult'
                 exams.push(atom)
@@ -73,8 +80,23 @@ angular.module('app.controllers')
           $scope.sched_shared.last_update = new Date()
 
       # Load schedule from server
-      Schedule.get($routeParams.groupName, 'exam').then((sched)->
-        updateSchedule(sched)
-        $scope.sched_shared.last_update = sched.updated
-      , processError, updateSchedule)
+      requestSchedule = ->
+        Schedule.get($routeParams.groupName, 'exam').then((sched)->
+          updateSchedule(sched)
+          $scope.sched_shared.last_update = sched.updated
+        , processError, updateSchedule)
+      requestSchedule()
+
+      # Change event
+      $scope.changeEvent = (evt) ->
+        eventEditorValues.event = angular.copy(evt)
+
+      $scope.cancelEvent = (evt, part) ->
+        part.splice(part.indexOf(evt), 1);
+        Event.cancel(evt._id, evt.activity.start, evt.activity.end)
+
+      # Update schedule on event
+      $scope.$on('updateSchedule', (_, event)->
+        requestSchedule()
+      )
   ])
