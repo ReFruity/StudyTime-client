@@ -34,7 +34,7 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
                             span.teacher {{test.professor[0].name}}
                             span.consult(ng-if="test.type == 'consult'") консультация
                             span.audit {{test.place[0].name}}
-                        span.editing
+                        span.editing(ng-if="$isAdmin")
                             a(ng-click="changeEvent(test, this[part.type])") Изм.
                             a(ng-click="cancelEvent(test, this[part.type])") Уд.
 
