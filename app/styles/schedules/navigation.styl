@@ -115,10 +115,6 @@
     .schedule-header
       user-select(none)
 
-      .row-fluid
-        > :first-child, > :last-child
-          padding 0
-
       .navbar
         border none
         min-height 0
@@ -136,7 +132,7 @@
         .back-btn
           cursor pointer
           font-size $font-size-medium
-          padding 15px
+          padding 15px 0
           line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
           margin-left -5px
           span
@@ -153,8 +149,9 @@
           display inline-block
           font-size $font-size-medium
           line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
+          margin-right -5px
           a
-            padding 15px
+            padding 15px 0
             &.active
               display none
 
