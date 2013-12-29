@@ -43,9 +43,7 @@ angular.module('app.controllers')
               atom.index = atom_index
               atom.dow = dow
               atom.number = clazz
-              atom.group =
-                name: $scope.group.name
-                object: $scope.group._id
+
               start_date = new Date(atom.activity.start)
               start_date.setHours(0)
               start_date.setSeconds(0)
