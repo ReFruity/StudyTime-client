@@ -23,7 +23,7 @@ angular.module('app.controllers')
         event = angular.copy($scope.values.event)
         event.place = identiifiersToObjectIds(event.place)
         event.professor = identiifiersToObjectIds(event.professor)
-        event.subject = identiifiersToObjectIds(event.subject)
+        event.subject = identiifiersToObjectIds(event.subject, no)
         event.group = identiifiersToObjectIds(event.group)
         event.single = yes
 
@@ -67,7 +67,9 @@ angular.module('app.controllers')
         if not idnts
           return undefined
         if angular.isArray(idnts)
-          return (idnt.object for idnt in idnts).join(", ")
+          if not is_array
+            return idnts[0].object
+          return (idnt.object for idnt in idnts)
         if angular.isObject(idnts) and idnts.object
           return idnts.object
         else
