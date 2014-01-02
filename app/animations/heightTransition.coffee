@@ -5,24 +5,26 @@ angular.module('app.animations')
 
     ($timeout, $rootScope) ->
       enter: (element, done) ->
+        elm = element[0]
+        elm.style.position = "absolute"
+        elm.style.opacity = "0"
+        elm.style.display = "block"
+
         $timeout(->
-          element[0].style.position = "absolute"
-          element[0].style.opacity = "0"
-          element[0].style.display = "block"
-          contentHeight = element[0].offsetHeight
-          element[0].style.maxHeight = "0px"
+          contentHeight = elm.offsetHeight
+          elm.style.maxHeight = "0px"
           element.removeClass('max-height-transition')
 
           $timeout(->
-            element[0].style.position = "relative"
-            element[0].style.opacity = "1"
+            elm.style.position = "relative"
+            elm.style.opacity = "1"
             element.addClass('max-height-transition')
-            element[0].style.overflow = "hidden"
-            element[0].style.maxHeight = contentHeight + "px"
+            elm.style.overflow = "hidden"
+            elm.style.maxHeight = contentHeight + "px"
 
             element.on('transitionEnd webkitTransitionEnd transitionend oTransitionEnd msTransitionEnd', ->
-              element[0].style.maxHeight = "9999px"
-              element[0].style.removeProperty('overflow')
+              elm.style.maxHeight = "9999px"
+              elm.style.removeProperty('overflow')
               done()
             )
           , 10)
