@@ -27,6 +27,3 @@
                                 .groups
                                     .line(ng-repeat='courseRow in groups[speciality]')
                                         a.group.text-center(ng-repeat='group in courseRow | orderBy:"name"', href='/{{speciality}}-{{ group.name }}') {{ group.name }}
-
-        // For better animation on mobile devices
-        .expander

@@ -67,10 +67,8 @@ App = angular.module('app', [
     '$location'
     '$route'
     '$routeParams'
-    'User'
-    '$q'
 
-    ($rootScope, $location, $route, $routeParams, $q) ->
+    ($rootScope, $location, $route, $routeParams) ->
       $rootScope.$route = $route
       $rootScope.$location = $location
       $rootScope.$routeParams = $routeParams
@@ -95,15 +93,35 @@ if checkPhonegap()
   angular.element(document.documentElement).addClass('phonegap')
 
 # Remove any :hover rule on touch screen
-if 'createTouch' of document
-  ignore = /:hover\b/
-  try
-    for stylesheet in document.styleSheets
-      idxs = []
-      # detect hover rules
-      for rule, idx in stylesheet.cssRules
-        if rule.type is CSSRule.STYLE_RULE and ignore.test(rule.selectorText)
-          idxs.unshift idx
+# TODO: not working on iphone
+angular.element(document).ready(->
+  if 'createTouch' of document
+    ignore = /(:hover)|(a:focus)|(:active)\b/
+    try
+      for stylesheet in document.styleSheets
+        if not stylesheet.cssRules
+          continue
 
-      # delete hover rules
-      stylesheet.deleteRule idx for idx in idxs
+        # detect hover rules
+        remove = []
+        reinsert = []
+        for rule, idx in stylesheet.cssRules
+          if rule.type is CSSRule.STYLE_RULE and ignore.test(rule.selectorText)
+            filteredSelector = (s for s in rule.selectorText.split(",") when not ignore.test(s)).join(", ")
+            if not filteredSelector
+              console.log rule.selectorText
+              remove.unshift idx
+            else
+              reinsert.push(
+                idx: idx,
+                cssText: filteredSelector+" "+rule.cssText.substr(rule.cssText.indexOf('{'))
+              )
+
+        # Reinsert without :hover
+        for stl in reinsert
+          stylesheet.deleteRule(stl.idx)
+          stylesheet.insertRule(stl.cssText, stl.idx)
+
+        # delete hover rules
+        stylesheet.deleteRule idx for idx in remove
+)
