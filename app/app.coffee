@@ -94,6 +94,7 @@ if checkPhonegap()
 
 # Remove any :hover rule on touch screen
 # TODO: not working on iphone
+"""
 angular.element(document).ready(->
   if 'createTouch' of document
     ignore = /(:hover)|(a:focus)|(:active)\b/
@@ -125,3 +126,4 @@ angular.element(document).ready(->
         # delete hover rules
         stylesheet.deleteRule idx for idx in remove
 )
+"""
