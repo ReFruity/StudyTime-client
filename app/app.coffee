@@ -94,36 +94,34 @@ if checkPhonegap()
 
 # Remove any :hover rule on touch screen
 # TODO: not working on iphone
-"""
 angular.element(document).ready(->
   if 'createTouch' of document
     ignore = /(:hover)|(a:focus)|(:active)\b/
     try
       for stylesheet in document.styleSheets
-        if not stylesheet.cssRules
-          continue
+        try
+          if not stylesheet.cssRules
+            continue
 
-        # detect hover rules
-        remove = []
-        reinsert = []
-        for rule, idx in stylesheet.cssRules
-          if rule.type is CSSRule.STYLE_RULE and ignore.test(rule.selectorText)
-            filteredSelector = (s for s in rule.selectorText.split(",") when not ignore.test(s)).join(", ")
-            if not filteredSelector
-              console.log rule.selectorText
-              remove.unshift idx
-            else
-              reinsert.push(
-                idx: idx,
-                cssText: filteredSelector+" "+rule.cssText.substr(rule.cssText.indexOf('{'))
-              )
+          # detect hover rules
+          remove = []
+          reinsert = []
+          for rule, idx in stylesheet.cssRules
+            if rule.type is CSSRule.STYLE_RULE and ignore.test(rule.selectorText)
+              filteredSelector = (s for s in rule.selectorText.split(",") when not ignore.test(s)).join(", ")
+              if not filteredSelector
+                remove.unshift idx
+              else
+                reinsert.push(
+                  idx: idx,
+                  cssText: filteredSelector+" "+rule.cssText.substr(rule.cssText.indexOf('{'))
+                )
 
-        # Reinsert without :hover
-        for stl in reinsert
-          stylesheet.deleteRule(stl.idx)
-          stylesheet.insertRule(stl.cssText, stl.idx)
+          # Reinsert without :hover
+          for stl in reinsert
+            stylesheet.deleteRule(stl.idx)
+            stylesheet.insertRule(stl.cssText, stl.idx)
 
-        # delete hover rules
-        stylesheet.deleteRule idx for idx in remove
+          # delete hover rules
+          stylesheet.deleteRule idx for idx in remove
 )
-"""
