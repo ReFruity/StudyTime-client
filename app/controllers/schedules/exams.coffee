@@ -23,6 +23,7 @@ angular.module('app.controllers')
       # Update schedule in scope
       raw_schedule = undefined
       $scope.sched_shared.last_update = 0
+
       updateSchedule = (sched) ->
         $scope.parts = []
         raw_schedule = sched
