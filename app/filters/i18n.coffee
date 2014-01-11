@@ -35,6 +35,10 @@ angular.module('app.filters').filter('translate', [ ->
           Thu: "Четверг"
           Fri: "Пятница"
           Sat: "Суббота"
+        exams:
+          exam: 'Экзамены'
+          test: 'Зачеты'
+          consult: 'консультация'
 
   (path) ->
     @locale = 'ru'

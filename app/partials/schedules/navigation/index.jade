@@ -4,26 +4,28 @@
         // Navigation
         .schedule-header
             .navbar.navbar-default
-                .container.row-fluid(bindonce)
-                    .col-sm-4
-                        a.back-btn(ng-click="showGroups()")
-                            .back-logo-square
-                                i.stico-groups-list
-                            span.group-name(bo-html="$routeParams.groupName")
-                        #sched-nav-left
-                    #sched-nav-center
-                    #sched-nav-right
+                .container
+                    .row(bindonce)
+                        .col-sm-4
+                            a.back-btn(ng-click="showGroups()")
+                                .back-logo-square
+                                    i.stico-groups-list
+                                span.group-name(bo-html="$routeParams.groupName")
+                            #sched-nav-left
+                        #sched-nav-center
+                        #sched-nav-right
 
     // One column
     div(ng-if="!matches", class="mobile", bindonce)
         // Navigation
         .schedule-header
             .navbar.navbar-default
-                .row-fluid(bindonce)
-                    .col-xs-4
-                        a.back-btn(ng-click="showGroups()")
-                            i.stico-arrow-right.rotate-180
-                            span(bo-html="'schedules.navigation.groups' | translate")
-                        #sched-nav-left
-                    #sched-nav-center
-                    #sched-nav-right
+                .container
+                    .row(bindonce)
+                        .col-xs-4
+                            a.back-btn(ng-click="showGroups()")
+                                i.stico-arrow-right.rotate-180
+                                span(bo-html="'schedules.navigation.groups' | translate")
+                            #sched-nav-left
+                        #sched-nav-center
+                        #sched-nav-right

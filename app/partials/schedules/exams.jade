@@ -5,28 +5,29 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
         div(ng-if="!matches", class="mobile")
             div(ng-include, src="'app/partials/schedules/navigation/mobile.jade'")
 
-        .no-exams(ng-if="parts.length == 0 && !scheduleLoading")
-            span Расписание будет совсем скоро
+        .no-exams(ng-if="exam_parts.length == 0 && updated")
+            span(bo-html="'schedules.no_schedule_with_stuff' | translate")
 
         .session-part(ng-repeat="part in exam_parts")
             .container
-                .row-fluid
+                .row
                     .col-sm-12
-                        h2 {{part.type}} с {{part.bounds[0] | date: 'd MMM'}} по {{part.bounds[1] | date: 'd MMM'}}
+                        h2 {{'schedules.exams.'+part.type | translate}} с {{part.bounds[0] | date: 'd MMM'}} по {{part.bounds[1] | date: 'd MMM'}}
 
             div(ng-repeat="test in part.events")
-                .info.container.row-fluid(ng-class="{'started': test.started}")
-                    .col-sm-12
-                        a(ng-click="showDetails(test.index)")
-                            span.date {{test.activity.start | date: 'd MMM'}}
-                            span.time {{test.activity.start | date: 'HH:mm'}}
-                            span.name {{test.subject.name}}
-                            span.teacher {{test.professor[0].name}}
-                            span.consult(ng-if="test.type == 'consult'") консультация
-                            span.audit {{test.place[0].name}}
-                        span.editing(ng-if="$isAdmin")
-                            a(ng-click="changeEvent(test, this[part.type])") Изм.
-                            a(ng-click="cancelEvent(test, this[part.type])") Уд.
+                .info.container
+                    .row(ng-class="{'started': test.started}")
+                        .col-sm-12
+                            a(ng-click="showDetails(test.index)", bindonce)
+                                span.date {{test.activity.start | date: 'd MMM'}}
+                                span.time {{test.activity.start | date: 'HH:mm'}}
+                                span.name {{test.subject.name}}
+                                span.teacher {{test.professor[0].name}}
+                                span.consult(ng-if="test.type == 'consult'", bo-html="'schedules.exams.consult' | translate")
+                                span.audit {{test.place[0].name}}
+                            span.editing(ng-if="$isAdmin")
+                                a(ng-click="changeEvent(test, this[part.type])") Изм.
+                                a(ng-click="cancelEvent(test, this[part.type])") Уд.
 
                 .lesson-details-container.height-transition(ng-if="$routeParams.weekDay == test.index")
                     div(ng-include, src="'app/partials/schedules/class/session-index.jade'")

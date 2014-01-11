@@ -11,6 +11,7 @@ angular.module('app.controllers')
     ($scope, $rootScope, $location, $routeParams, Schedule, $timeout, $q) ->
       # Initial update schedule
       updateSchedule = ->
+        $scope.updated = undefined
         Schedule.get($routeParams.groupName).then(onNewData, onNoData, onCachedData)
 
       # Init schedule from cache
