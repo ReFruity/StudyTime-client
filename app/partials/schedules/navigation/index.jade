@@ -1,6 +1,6 @@
 #schedule-greed(breakpoint="min-width: 768px")
     // Three columns
-    div(ng-if="matches", class="desktop", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]", bindonce)
+    div(ng-if="matches", class="desktop", bindonce)
         // Navigation
         .schedule-header
             .navbar.navbar-default
@@ -11,14 +11,11 @@
                                 i.stico-groups-list
                             span.group-name(bo-html="$routeParams.groupName")
                         #sched-nav-left
-                    .col-sm-4.text-center
-                        span.schedule-updated-text
-                            span(ng-if="sched_shared.last_update != 0", bo-html="'Обновлено ' + '{{ sched_shared.last_update | relativeDate}}'")
-                            span(ng-if="sched_shared.last_update == 0") Проверка обновлений...
+                    #sched-nav-center
                     #sched-nav-right
 
     // One column
-    div(ng-if="!matches", ng-init="lines=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']", bindonce, class="mobile")
+    div(ng-if="!matches", class="mobile", bindonce)
         // Navigation
         .schedule-header
             .navbar.navbar-default
@@ -28,8 +25,5 @@
                             i.stico-arrow-right.rotate-180
                             span Группы
                         #sched-nav-left
-                    .col-xs-4.text-center.nav-middle
-                        span.group-name(ng-if="sched_shared.last_update != 0", bo-html="$routeParams.groupName")
-                        span.schedule-updated-text
-                            span(ng-if="sched_shared.last_update == 0") Обновление...
+                    #sched-nav-center
                     #sched-nav-right

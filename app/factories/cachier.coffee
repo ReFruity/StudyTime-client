@@ -6,9 +6,9 @@ angular.module('app.services')
     'config'
     '$timeout'
 
-
     ($q, $http, localeStorage, config, $timeout) ->
       (cache_idnt, http_req) ->
+        # TODO: make control of size of cached data. Set limit to 2mb and remove oldest cache on out of limit
         deferred = $q.defer()
         $timeout(->
           # Load value from cache
@@ -27,6 +27,10 @@ angular.module('app.services')
               if data.length == 0
                 deferred.reject false
               else
+                # Extend cached data by new data
+                if cache_value
+                  data = _.extend(cache_value, data)
+
                 localeStorage.add cache_idnt, angular.toJson(data)
                 deferred.resolve data
           .error (data) ->

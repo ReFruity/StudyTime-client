@@ -1,2 +1,2 @@
 angular.module('app').value 'config',
-  apiUrl: 'http://api.studytime.me/api/v2'
+  apiUrl: 'http://localhost:9000/api/v2'

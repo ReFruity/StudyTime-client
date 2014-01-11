@@ -1,0 +1,11 @@
+div(move-content-to="sched-nav-left")
+div(move-content-to="sched-nav-center")
+    .col-xs-4.text-center.nav-middle(bindonce)
+        span.group-name(ng-if="updated", bo-html="$routeParams.groupName")
+        span.schedule-updated-text
+            span(ng-if="!updated") Загрузка...
+div(move-content-to="sched-nav-right")
+    .col-xs-4.text-right
+        .type-changer
+            a(ng-click="showScheduleType('exams')")
+                span Сессия

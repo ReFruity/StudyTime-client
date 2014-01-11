@@ -1,10 +1,6 @@
 .overthrow.non-bounce
     .animated-view
-        .hidden-xs(ng-if="$isAdmin")
-            div(ng-include, src="'app/partials/schedules/editor.jade'")
-
-        div(ng-include, src="'app/partials/schedules/navigation.jade'")
-
+        div(ng-include, src="'app/partials/schedules/navigation/index.jade'")
         div(ng-switch on='showingState')
             div(ng-switch-when="studies")
                 div(ng-include, src="'app/partials/schedules/studies.jade'")

@@ -6,50 +6,55 @@ angular.module('app.controllers')
     '$routeParams'
     'Schedule'
     '$timeout'
+    '$q'
 
-    ($scope, $rootScope, $location, $routeParams, Schedule, $timeout) ->
-      # Date for filtering events and others
+    ($scope, $rootScope, $location, $routeParams, Schedule, $timeout, $q) ->
+      # Init schedule from cache
+      cached_data = undefined
+      onCachedData = (data)->
+        cached_data = data
+        $scope.timing = data.timing
+        $scope.tz = data.tz
+        $scope.counts =
+          exams: data.exams
+          classes: data.classes
+        updatePrecomputed()
+
+      # Update cached values by new data
+      onNewData = (data)->
+        $scope.updated = data.updated
+        onCachedData(data)
+
+      # When no data returned
+      onNoData = (data)->
+        $scope.updated = if cached_data then cached_data.updated else new Date()
+
+      # Initial update schedule
+      updateSchedule = ->
+        Schedule.get($routeParams.groupName).then(onNewData, onNoData, onCachedData)
+      updateSchedule()
+
+      # Set classDetails by coordinates from url
+      setOpenedClass = ->
+        try
+          if $routeParams.weekDay
+            $scope.classDetails = $scope.sched[$routeParams.weekDay][$routeParams.classNum][$routeParams.atomClass]
+
+      # Update precomputed view values
       currentDate = new Date()
+      updatePrecomputed = ->
+        computeCurrentClass()
+        computeDowDates()
+        computeWeekParity()
+        filterSchedule()
 
-      # Get schedule
-      raw_schedule = undefined
-      $scope.sched_shared.last_update = 0
-      Schedule.get($routeParams.groupName).then(
-        (sched) ->
-          raw_schedule = sched
-          initOpenedClassDetails(sched.schedule)
-          $scope.sched = sched.schedule
-          $scope.timing = sched.timing
-          $scope.sched_shared.last_update = sched.updated
-          updateCurrents()
-      , (reason) ->
-        if raw_schedule and raw_schedule.updated
-          $scope.sched_shared.last_update = raw_schedule.updated
-        else
-          $scope.sched_shared.last_update = new Date()
-      , (cached_sched) ->
-        raw_schedule = cached_sched
-        initOpenedClassDetails(cached_sched.schedule)
-        $scope.sched = cached_sched.schedule
-        $scope.timing = cached_sched.timing
-        updateCurrents()
-      )
-
-      # When user goes to some class
-      initOpenedClassDetails = (sched)->
-        if $routeParams.weekDay and $routeParams.classNum
-          $scope.openedClass = sched[$routeParams.weekDay][$routeParams.classNum][$routeParams.atomClass]
-          $rootScope.$emit("openedClassUpdated")
-
-      # Set current class and dow base on faculty timing
-      updateCurrents = ->
-        mins = currentDate.getHours() * 60 + currentDate.getMinutes()
-
-        # Set current dow
+      # Compute current class value
+      computeCurrentClass = ->
         $scope.currentDow = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][currentDate.getDay()]
-
-        # Set current class num
         $scope.currentClass = "1"
+
+        # Approximate current class
+        mins = currentDate.getHours() * 60 + currentDate.getMinutes()
         greeter_count = 0
         for clazz in _.keys($scope.timing)
           if mins >= $scope.timing[clazz].start
@@ -58,48 +63,47 @@ angular.module('app.controllers')
         if greeter_count == $scope.timing.length
           $scope.currentClass = undefined
 
-      # Update dow dates and current view data
-      updateDowDates = ->
+      # Compute dates of days of week
+      computeDowDates = ->
         $scope.dowDates = {}
         dows = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         now = new Date(currentDate)
-
         for day in [0..6]
           distance = day + 1 - now.getDay()
           now.setDate(now.getDate() + distance)
           $scope.dowDates[dows[day]] = new Date(now)
-      updateDowDates()
 
-      # Week parity updater
-      updateWeekParity = ->
+      # Compute current week parity
+      computeWeekParity = ->
         d = new Date($scope.dowDates['Mon'])
         d.setHours(0, 0, 0)
         d.setDate(d.getDate() + 4 - (d.getDay() || 7))
         yearStart = new Date(d.getFullYear(), 0, 1)
         weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7)
         $scope.currentParity = if weekNo % 2 == 0 then 'even' else 'odd'
-      updateWeekParity()
 
-      # Periodicaly update currents and dates every 5 minutes
+      # Filter schedule for showing events for current week
+      filterSchedule = ->
+        updated = $scope.updated
+        $scope.updated = undefined
+        $timeout ->
+          $scope.sched = Schedule.filter(cached_data.schedule, $scope.dowDates['Mon'], $scope.dowDates['Sun'])
+          $scope.updated = updated
+          setOpenedClass()
+
+      # Periodicaly update precomputed values
       updateTimer = undefined
-      updateCurrentsPeriodicaly = ->
+      updatePrecomputedPeriodicaly = ->
         updateTimer = $timeout(->
           now = new Date()
           if now > currentDate
-            updateScheduleForDate()
-
-          updateCurrentsPeriodicaly()
+            updatePrecomputed()
+          updatePrecomputedPeriodicaly()
         , 300000)
-      updateCurrentsPeriodicaly()
+      updatePrecomputedPeriodicaly()
       $scope.$on('$destroy', ->
         $timeout.cancel(updateTimer)
       )
-
-      # Update schedule
-      updateScheduleForDate = ->
-        updateCurrents()
-        updateDowDates()
-        updateWeekParity()
 
       # Show next week
       $scope.nextWeek = ->
@@ -107,7 +111,7 @@ angular.module('app.controllers')
         now.setDate(now.getDate() + 7)
         currentDate = now
         $scope.in_feature = true
-        updateScheduleForDate()
+        updatePrecomputed()
 
       # Show previous week
       $scope.prevWeek = ->
@@ -116,8 +120,20 @@ angular.module('app.controllers')
           now = new Date(currentDate)
           now.setDate(now.getDate() - 7)
           currentDate = now
-          updateScheduleForDate()
+          updatePrecomputed()
 
           if now <= real_now
             $scope.in_feature = false
+
+      # Open/Close class details
+      $scope.classDetails = {}
+      $scope.$on('$routeChangeSuccess', setOpenedClass)
+      $scope.closeDetails = ->
+        $scope.classDetails = undefined
+        $location.path('/' + $routeParams.groupName)
+      $scope.showDetails = (dow, clazz, atom) ->
+        if $routeParams.weekDay is dow and $routeParams.classNum is clazz and $routeParams.atomClass is atom + ""
+          $scope.closeDetails()
+        else
+          $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
   ])
