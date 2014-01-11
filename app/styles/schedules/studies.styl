@@ -69,6 +69,12 @@
             bottom 0px
             margin-left -12px
 
+          .free-place
+            float left
+            font-size 12px
+            line-height 12px
+            margin-right 7px
+
           // Atom class positioning
           .lesson-atom-cell
             position absolute
@@ -77,6 +83,8 @@
             padding 0 12px
             overflow hidden
             white-space nowrap
+            background #fff
+            z-index 10000
 
             .stico-lection
               margin-left -5px
@@ -97,6 +105,7 @@
           .lesson-parity-0
             height 64px
             line-height 64px
+            z-index 10000
           .lesson-parity-1
             background #fff
             line-height 32px
@@ -104,21 +113,25 @@
             top 0
             bottom 31px
             border-bottom 1px solid $sched-border-color
+            z-index 10
           .lesson-parity-2
             line-height 32px
             font-size $font-size-base
             top 31px
             bottom 0
             border-top 1px solid $sched-border-color
+            z-index 10
           .lesson-half-0
             left - 2px
             right - 2px
           .lesson-half-1
             background #fff
             left - 2px
+            z-index 10
           .lesson-half-2
             background #fff
             right - 2px
+            z-index 10
 
         @media (min-width: 768px)
           .lesson-cell
