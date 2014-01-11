@@ -27,8 +27,8 @@ div(ng-controller='SchedulesStudiesCtrl')
                                         span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
                             div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
-            div(ng-if="!sched && updated")
-                span Расписания пока нет
+            .container(ng-if="!sched && updated")
+                span(bo-html="'schedules.no_schedule_with_stuff' | translate")
 
         // One column
         div(ng-if="!matches", ng-init="lines=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']", bindonce, class="mobile")
@@ -53,5 +53,5 @@ div(ng-controller='SchedulesStudiesCtrl')
                                 span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
                         .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
                             div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
-            div(ng-if="!sched && updated")
-                span Расписания пока нет
+            .container(ng-if="!sched && updated")
+                span(bo-html="'schedules.no_schedule_with_stuff' | translate")

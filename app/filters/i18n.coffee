@@ -16,10 +16,18 @@ angular.module('app.filters').filter('translate', [ ->
         sign_in: "Вход"
 
       schedules:
+        no_schedule_with_stuff: "Расписания пока нет"
+        no_schedule_without_stuff: "Расписания пока нет, мало того, его некому добавить, ведь в группе нет старосты :("
         index:
           choose_group: "Выберите группу"
           subscribe: "Подписаться"
           next_week: "Следующая неделя"
+        navigation:
+          session: "Сессия"
+          semestr: "Семестр"
+          updating: "Загрузка..."
+          updated: "Обновлено"
+          groups: "Группы"
         studies:
           Mon: "Понедельник"
           Tue: "Вторник"

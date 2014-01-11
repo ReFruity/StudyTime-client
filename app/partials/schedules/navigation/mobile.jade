@@ -3,9 +3,9 @@ div(move-content-to="sched-nav-center")
     .col-xs-4.text-center.nav-middle(bindonce)
         span.group-name(ng-if="updated", bo-html="$routeParams.groupName")
         span.schedule-updated-text
-            span(ng-if="!updated") Загрузка...
+            span(ng-if="!updated", bo-html="'schedules.navigation.updating' | translate")
 div(move-content-to="sched-nav-right")
     .col-xs-4.text-right
-        .type-changer
-            a(ng-click="showScheduleType('exams')")
-                span Сессия
+        .type-changer(ng-if="exams > 0 || exam_parts", bindonce)
+            a(ng-if="!exam_parts", ng-click="showScheduleType('exams')", bo-html="'schedules.navigation.session' | translate")
+            a(ng-if="exam_parts", ng-click="showScheduleType('studies')", bo-html="'schedules.navigation.semestr' | translate")
