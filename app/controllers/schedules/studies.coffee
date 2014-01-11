@@ -9,15 +9,17 @@ angular.module('app.controllers')
     '$q'
 
     ($scope, $rootScope, $location, $routeParams, Schedule, $timeout, $q) ->
+      # Initial update schedule
+      updateSchedule = ->
+        Schedule.get($routeParams.groupName).then(onNewData, onNoData, onCachedData)
+
       # Init schedule from cache
       cached_data = undefined
       onCachedData = (data)->
         cached_data = data
         $scope.timing = data.timing
         $scope.tz = data.tz
-        $scope.counts =
-          exams: data.exams
-          classes: data.classes
+        $scope.exams = data.exams
         updatePrecomputed()
 
       # Update cached values by new data
@@ -28,11 +30,6 @@ angular.module('app.controllers')
       # When no data returned
       onNoData = (data)->
         $scope.updated = if cached_data then cached_data.updated else new Date()
-
-      # Initial update schedule
-      updateSchedule = ->
-        Schedule.get($routeParams.groupName).then(onNewData, onNoData, onCachedData)
-      updateSchedule()
 
       # Set classDetails by coordinates from url
       setOpenedClass = ->
@@ -136,4 +133,7 @@ angular.module('app.controllers')
           $scope.closeDetails()
         else
           $location.path('/' + $routeParams.groupName + '/' + dow + '/' + clazz + '/' + atom)
+
+      # Start loading schedule
+      updateSchedule()
   ])

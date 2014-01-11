@@ -9,11 +9,7 @@ angular.module('app.controllers')
 
     ($scope, $timeout) ->
       # Get data
-      start_time = $scope.clazz.time.start
       start_date = new Date($scope.clazz.activity.start)
-      start_date.setHours(0)
-      start_date.setSeconds(0)
-      start_date.setMinutes(start_time)
 
       # Main update logic
       updateValues = ->

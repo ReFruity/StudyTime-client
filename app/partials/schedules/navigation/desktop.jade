@@ -1,24 +1,25 @@
 div(move-content-to="sched-nav-left")
-    .type-changer
-        a.active Семестр
-        a(ng-click="showScheduleType('exams')") Сессия
+    .type-changer(ng-if="exams > 0 || exam_parts")
+        a(ng-class="{'active': !exam_parts}", ng-click="showScheduleType('studies')") Семестр
+        a(ng-class="{'active': exam_parts}", ng-click="showScheduleType('exams')") Сессия
 div(move-content-to="sched-nav-center")
     .col-sm-4.text-center(bindonce)
         span.schedule-updated-text
             span(ng-if="updated", bo-html="'Обновлено ' + '{{ updated | relativeDate}}'")
             span(ng-if="!updated") Загрузка...
 div(move-content-to="sched-nav-right")
-    .col-sm-4.text-right(ng-if="!in_feature")
-        .next-week-btn(bindonce)
-            a(ng-click="nextWeek()")
-                span(bo-html="'schedules.index.next_week' | translate")
-                i.stico-arrow-right
-    .col-sm-4.text-right(ng-if="in_feature")
-        .next-week-btn(bindonce)
-            a(ng-click="prevWeek()")
-                i.stico-arrow-right.rotate-180
-                span {{dowDates['Mon'] | date: 'dd MMM'}}
-            span &#8211;
-            a(ng-click="nextWeek()")
-                span {{dowDates['Sat'] | date: 'dd MMM'}}
-                i.stico-arrow-right
+    div(ng-if="!exam_parts")
+        .col-sm-4.text-right(ng-if="!in_feature")
+            .next-week-btn(bindonce)
+                a(ng-click="nextWeek()")
+                    span(bo-html="'schedules.index.next_week' | translate")
+                    i.stico-arrow-right
+        .col-sm-4.text-right(ng-if="in_feature")
+            .next-week-btn(bindonce)
+                a(ng-click="prevWeek()")
+                    i.stico-arrow-right.rotate-180
+                    span {{dowDates['Mon'] | date: 'dd MMM'}}
+                span &#8211;
+                a(ng-click="nextWeek()")
+                    span {{dowDates['Sat'] | date: 'dd MMM'}}
+                    i.stico-arrow-right

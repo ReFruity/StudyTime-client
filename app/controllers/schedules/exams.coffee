@@ -3,14 +3,64 @@ angular.module('app.controllers')
 .controller('SchedulesExamsCtrl', [
     '$scope'
     '$rootScope'
-    'Schedule'
     '$routeParams'
     '$location'
     'eventEditorValues'
     'Event'
 
-    ($scope, $rootScope, Schedule, $routeParams, $location, eventEditorValues, Event) ->
-      $scope.parts = []
+    ($scope, $rootScope, $routeParams, $location, eventEditorValues, Event) ->
+      # Initial update schedule
+      updateSchedule = ->
+        Event.list(['exam', 'test', 'consult'], $routeParams.groupName).then(onNewData, onNoData, onCachedData)
+
+      # Init schedule from cache
+      cached_data = undefined
+      onCachedData = (data)->
+        cached_data = data
+        computeExamParts()
+        setOpenedClass()
+
+      # Update cached values by new data
+      onNewData = (data)->
+        $scope.updated = data.updated
+        onCachedData(data)
+
+      # When no data returned
+      onNoData = (data)->
+        $scope.updated = if cached_data then cached_data.updated else new Date()
+
+      # Set classDetails by coordinates from url
+      setOpenedClass = ->
+        try
+          if $routeParams.weekDay
+            $scope.classDetails = cached_data.events[$routeParams.weekDay]
+
+      # Separate events by type
+      computeExamParts = ->
+        $scope.exam_parts = []
+        now = new Date()
+        type_map =
+          exam: {events: [], bounds: [new Date(3000, 1, 1), new Date(0)], type: 'exam'}
+          test: {events: [], bounds: [new Date(3000, 1, 1), new Date(0)], type: 'test'}
+
+        # Separate and update bounds
+        for i in [0...cached_data.events.length]
+          e = cached_data.events[i]
+          e.started = now > new Date(e.activity.start)
+          e.index = i
+          type = if e.type == 'exam' or e.type == 'consult' then 'exam' else e.type
+          type_map[type].events.push e
+          maybeUpdateBounds type_map[type].bounds, new Date(e.activity.start)
+
+        # Sort by activity.start
+        for t of type_map
+          type_map[t].events = type_map[t].events.sort (a, b) ->
+            new Date(a.activity.start) - new Date(b.activity.start)
+
+        # Add to result array sorted
+        for t in ['test', 'exam']
+          if type_map[t].events.length > 0
+            $scope.exam_parts.push type_map[t]
 
       # Update exams bounds if needed
       maybeUpdateBounds = (bounds, date) ->
@@ -20,81 +70,18 @@ angular.module('app.controllers')
         if date < bounds[0]
           bounds[0] = date
 
-      # Update schedule in scope
-      raw_schedule = undefined
-      $scope.sched_shared.last_update = 0
-      updateSchedule = (sched) ->
-        $scope.parts = []
-        raw_schedule = sched
-        $scope.timing = sched.timing
-        $scope.sched = sched.schedule
-        now = new Date()
-
-        # Process schedule
-        exams = []
-        tests = []
-        exams_bounds = [new Date(3000, 1, 1), new Date(0)]
-        tests_bounds = [new Date(3000, 1, 1), new Date(0)]
-
-        for dow of sched.schedule
-          for clazz of sched.schedule[dow]
-            for atom_index in [0...sched.schedule[dow][clazz].length]
-              atom = sched.schedule[dow][clazz][atom_index]
-              atom.index = atom_index
-              atom.dow = dow
-              atom.number = clazz
-
-              start_date = new Date(atom.activity.start)
-              start_date.setHours(0)
-              start_date.setSeconds(0)
-              start_date.setMinutes(atom.time.start)
-              atom.started = now > start_date
-              console.log now
-              console.log start_date
-
-              if atom.type == 'exam' or atom.type == 'consult'
-                exams.push(atom)
-                maybeUpdateBounds(exams_bounds, atom.activity.start)
-              else
-                tests.push(atom)
-                maybeUpdateBounds(tests_bounds, atom.activity.start)
-
-        # Add session parts
-        if tests.length > 0
-          $scope.tests_bounds = tests_bounds
-          $scope.tests = tests
-          $scope.parts.push({type:'tests', name:'Зачеты'})
-
-        if exams.length > 0
-          $scope.exams_bounds = exams_bounds
-          $scope.exams = exams
-          $scope.parts.push({type:'exams', name:'Экзамены'})
-
-      # Some thing when error loading scedule
-      processError = ->
-        if raw_schedule and raw_schedule.updated
-          $scope.sched_shared.last_update = raw_schedule.updated
+      # Open/Close class details
+      $scope.classDetails = {}
+      $scope.$on('$routeChangeSuccess', setOpenedClass)
+      $scope.closeDetails = ->
+        $scope.classDetails = undefined
+        $location.path('/' + $routeParams.groupName)
+      $scope.showDetails = (event_index) ->
+        if $routeParams.weekDay is event_index+""
+          $scope.closeDetails()
         else
-          $scope.sched_shared.last_update = new Date()
+          $location.path('/' + $routeParams.groupName + '/' + event_index)
 
-      # Load schedule from server
-      requestSchedule = ->
-        Schedule.get($routeParams.groupName, 'exam').then((sched)->
-          updateSchedule(sched)
-          $scope.sched_shared.last_update = sched.updated
-        , processError, updateSchedule)
-      requestSchedule()
-
-      # Change event
-      $scope.changeEvent = (evt) ->
-        eventEditorValues.event = angular.copy(evt)
-
-      $scope.cancelEvent = (evt, part) ->
-        part.splice(part.indexOf(evt), 1);
-        Event.cancel(evt._id, evt.activity.start, evt.activity.end)
-
-      # Update schedule on event
-      $scope.$on('updateSchedule', (_, event)->
-        requestSchedule()
-      )
+      # Start schedule loading
+      updateSchedule()
   ])

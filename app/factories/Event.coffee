@@ -42,7 +42,7 @@ angular.module('app.services')
           params:
             faculty: faculty
             group: group
-            types: types
+            types: types.join(',')
             if_updated_after: if cache_value and cache_value.updated then cache_value.updated else new Date(0).toISOString()
         )
   ]
