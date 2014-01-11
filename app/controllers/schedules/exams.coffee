@@ -10,6 +10,7 @@ angular.module('app.controllers')
 
     ($scope, $rootScope, $routeParams, $location, eventEditorValues, Event) ->
       # Initial update schedule
+      $scope.exams = 1
       updateSchedule = ->
         $scope.updated = undefined
         Event.list(['exam', 'test', 'consult'], $routeParams.groupName).then(onNewData, onNoData, onCachedData)

@@ -25,7 +25,7 @@ angular.module('app.filters').filter('translate', [ ->
         navigation:
           session: "Сессия"
           semestr: "Семестр"
-          updating: "Загрузка..."
+          updating: "Обновление..."
           updated: "Обновлено"
           groups: "Группы"
         studies:

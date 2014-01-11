@@ -13,7 +13,6 @@ angular.module('app.controllers')
       # Set last opened group in cache
       Group.lastOpened.set($routeParams.groupName)
       $rootScope.lastOpenedGroup = $routeParams.groupName
-      $scope.sched_shared = {last_update: 0}
 
       # Show groups list (remove last opened group from cache)
       $scope.showGroups = ->

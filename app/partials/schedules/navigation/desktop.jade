@@ -1,7 +1,7 @@
 div(move-content-to="sched-nav-left")
-    .type-changer(ng-if="exams > 0 || exam_parts", bindonce)
-        a(ng-class="{'active': !exam_parts}", ng-click="showScheduleType('studies')", bo-html="'schedules.navigation.semestr' | translate")
-        a(ng-class="{'active': exam_parts}", ng-click="showScheduleType('exams')", bo-html="'schedules.navigation.session' | translate")
+    .type-changer(ng-if="exams > 0", bindonce)
+        a(ng-class="{'active': showingState == 'studies'}", ng-click="showScheduleType('studies')", bo-html="'schedules.navigation.semestr' | translate")
+        a(ng-class="{'active': showingState == 'exams'}", ng-click="showScheduleType('exams')", bo-html="'schedules.navigation.session' | translate")
 div(move-content-to="sched-nav-center")
     .col-sm-4.text-center(bindonce)
         span.schedule-updated-text
