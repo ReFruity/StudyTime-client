@@ -19,7 +19,6 @@ App = angular.module('app', [
   'app.templates'
   'app.animations'
   'LocalStorageModule'
-  'pasvaz.bindonce'
   'angularFileUpload'
   'datePicker'
 ])
@@ -77,9 +76,9 @@ App = angular.module('app', [
   ])
 
 # FastClick
-window.addEventListener('load', ->
+angular.element(window).bind('load', ->
   FastClick.attach(document.body);
-, false)
+)
 
 # Phonegap checker
 window.checkPhonegap = ->

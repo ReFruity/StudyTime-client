@@ -1,11 +1,11 @@
 div(move-content-to="sched-nav-left")
 div(move-content-to="sched-nav-center")
-    .col-xs-4.text-center.nav-middle(bindonce)
-        span.group-name(ng-if="updated", bo-html="$routeParams.groupName")
+    .col-xs-4.text-center.nav-middle
+        span.group-name(ng-if="updated") {{$routeParams.groupName}}
         span.schedule-updated-text
-            span(ng-if="!updated", bo-html="'schedules.navigation.updating' | translate")
+            span(ng-if="!updated") {{'schedules.navigation.updating' | translate}}
 div(move-content-to="sched-nav-right")
     .col-xs-4.text-right
-        .type-changer(ng-if="exams > 0", bindonce)
-            a(ng-if="showingState == 'studies'", ng-click="showScheduleType('exams')", bo-html="'schedules.navigation.session' | translate")
-            a(ng-if="showingState == 'exams'", ng-click="showScheduleType('studies')", bo-html="'schedules.navigation.semestr' | translate")
+        .type-changer(ng-if="exams > 0")
+            a(ng-if="showingState == 'studies'", ng-click="showScheduleType('exams')") {{'schedules.navigation.session' | translate}}
+            a(ng-if="showingState == 'exams'", ng-click="showScheduleType('studies')") {{'schedules.navigation.semestr' | translate}}

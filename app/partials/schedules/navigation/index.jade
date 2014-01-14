@@ -1,31 +1,31 @@
 #schedule-greed(breakpoint="min-width: 768px")
     // Three columns
-    div(ng-if="matches", class="desktop", bindonce)
+    div(ng-if="matches", class="desktop")
         // Navigation
         .schedule-header
             .navbar.navbar-default
                 .container
-                    .row(bindonce)
+                    .row
                         .col-sm-4
                             a.back-btn(ng-click="showGroups()")
                                 .back-logo-square
                                     i.stico-groups-list
-                                span.group-name(bo-html="$routeParams.groupName")
+                                span.group-name {{$routeParams.groupName}}
                             #sched-nav-left
                         #sched-nav-center
                         #sched-nav-right
 
     // One column
-    div(ng-if="!matches", class="mobile", bindonce)
+    div(ng-if="!matches", class="mobile")
         // Navigation
         .schedule-header
             .navbar.navbar-default
                 .container
-                    .row(bindonce)
+                    .row
                         .col-xs-4
                             a.back-btn(ng-click="showGroups()")
                                 i.stico-arrow-right.rotate-180
-                                span(bo-html="'schedules.navigation.groups' | translate")
+                                span {{'schedules.navigation.groups' | translate}}
                             #sched-nav-left
                         #sched-nav-center
                         #sched-nav-right

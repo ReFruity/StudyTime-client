@@ -1,4 +1,4 @@
-footer.footer.ng-cloak(bindonce)
+footer.footer.ng-cloak
     .container
         .row
             .widgets.col-md-3.col-xs-6
@@ -11,9 +11,9 @@ footer.footer.ng-cloak(bindonce)
 
             .navigation.col-md-6.text-center.visible-md.visible-lg
                 ul.list-inline
-                    li(bo-html="'layouts.main.about'| translate")
-                    li(bo-html="'layouts.main.terms'| translate")
+                    li {{'layouts.main.about'| translate}}
+                    li {{'layouts.main.terms'| translate}}
                     li
-                        a(href='/humans.txt', target="_blank", bo-html="'layouts.main.authors'| translate")
+                        a(href='/humans.txt', target="_blank") {{'layouts.main.authors'| translate}}
             .copyright.col-md-3.col-xs-6.text-right(ng-controller='AuthCtrl')
                 span(ng-click="authenticate()") ©2013 StudyTime.me

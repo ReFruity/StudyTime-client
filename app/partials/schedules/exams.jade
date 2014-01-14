@@ -6,7 +6,7 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
             div(ng-include, src="'app/partials/schedules/navigation/mobile.jade'")
 
         .no-exams(ng-if="exam_parts.length == 0 && updated")
-            span(bo-html="'schedules.no_schedule_with_stuff' | translate")
+            span {{'schedules.no_schedule_with_stuff' | translate}}
 
         .session-part(ng-repeat="part in exam_parts")
             .container
@@ -18,12 +18,12 @@ div.tests-and-exams(ng-controller='SchedulesExamsCtrl')
                 .info.container
                     .row(ng-class="{'started': test.started}")
                         .col-sm-12
-                            a(ng-click="showDetails(test.index)", bindonce)
+                            a(ng-click="showDetails(test.index)")
                                 span.date {{test.activity.start | date: 'd MMM'}}
                                 span.time {{test.activity.start | date: 'HH:mm'}}
                                 span.name {{test.subject.name}}
                                 span.teacher {{test.professor[0].name}}
-                                span.consult(ng-if="test.type == 'consult'", bo-html="'schedules.exams.consult' | translate")
+                                span.consult(ng-if="test.type == 'consult'") {{'schedules.exams.consult' | translate}}
                                 span.audit {{test.place[0].name}}
                             span.editing(ng-if="$isAdmin")
                                 a(ng-click="changeEvent(test, this[part.type])") Изм.

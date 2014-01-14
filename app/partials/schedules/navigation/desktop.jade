@@ -1,21 +1,21 @@
 div(move-content-to="sched-nav-left")
-    .type-changer(ng-if="exams > 0", bindonce)
-        a(ng-class="{'active': showingState == 'studies'}", ng-click="showScheduleType('studies')", bo-html="'schedules.navigation.semestr' | translate")
-        a(ng-class="{'active': showingState == 'exams'}", ng-click="showScheduleType('exams')", bo-html="'schedules.navigation.session' | translate")
+    .type-changer(ng-if="exams > 0")
+        a(ng-class="{'active': showingState == 'studies'}", ng-click="showScheduleType('studies')") {{'schedules.navigation.semestr' | translate}}
+        a(ng-class="{'active': showingState == 'exams'}", ng-click="showScheduleType('exams')") {{'schedules.navigation.session' | translate}}
 div(move-content-to="sched-nav-center")
-    .col-sm-4.text-center(bindonce)
+    .col-sm-4.text-center
         span.schedule-updated-text
-            span(ng-if="updated", bo-html="'{{'schedules.navigation.updated' | translate}} ' + '{{ updated | relativeDate}}'")
-            span(ng-if="!updated", bo-html="'schedules.navigation.updating' | translate")
+            span(ng-if="updated") {{'schedules.navigation.updated' | translate}} {{ updated | relativeDate}}
+            span(ng-if="!updated") {{'schedules.navigation.updating' | translate}}
 div(move-content-to="sched-nav-right")
     div(ng-if="!exam_parts")
         .col-sm-4.text-right(ng-if="!in_feature")
-            .next-week-btn(bindonce)
+            .next-week-btn
                 a(ng-click="nextWeek()")
-                    span(bo-html="'schedules.index.next_week' | translate")
+                    span {{'schedules.index.next_week' | translate}}
                     i.stico-arrow-right
         .col-sm-4.text-right(ng-if="in_feature")
-            .next-week-btn(bindonce)
+            .next-week-btn
                 a(ng-click="prevWeek()")
                     i.stico-arrow-right.rotate-180
                     span {{dowDates['Mon'] | date: 'dd MMM'}}
