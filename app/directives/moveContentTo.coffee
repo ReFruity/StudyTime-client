@@ -3,14 +3,14 @@ angular.module('app.directives')
     restrict: 'A',
     compile: (element, attrs) ->
       content = element[0].innerHTML
-      element[0].innerHTML = ""
+      element.remove()
 
       return ($scope, element, attrs) ->
-        element = $compile("<span>"+content+"</span>")($scope)
+        element = $compile("<div>"+content+"</div>")($scope)
         $timeout(->
           elem = angular.element(document.querySelector("#"+attrs.moveContentTo))
           elem.html("")
-          elem.append(element)
+          elem.append(element.contents())
         )
 
   ])

@@ -29,7 +29,7 @@ angular.module('app.directives')
 
         clearContent = ->
           if element.contents().length > 0
-            animate.leave element.contents(), element
+            animate.leave element.contents()
           destroyLastScope()
 
         update = ->
@@ -72,9 +72,6 @@ angular.module('app.directives')
             link lastScope
             lastScope.$emit "$viewContentLoaded"
             lastScope.$eval onloadExp
-
-            # $anchorScroll might listen on event...
-            $anchorScroll()
           else
             clearContent()
 
