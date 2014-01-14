@@ -1,9 +1,8 @@
 div(move-content-to="sched-nav-left")
 div(move-content-to="sched-nav-center")
     .col-xs-4.text-center.nav-middle
-        span.group-name(ng-if="updated") {{$routeParams.groupName}}
-        span.schedule-updated-text(ng-if="!updated")
-            span {{'schedules.navigation.updating' | translate}}
+        .group-name(ng-if="updated") {{$routeParams.groupName}}
+        .schedule-updated-text(ng-if="!updated") {{'schedules.navigation.updating' | translate}}
 div(move-content-to="sched-nav-right")
     .col-xs-4.text-right
         .type-changer(ng-if="exams > 0")

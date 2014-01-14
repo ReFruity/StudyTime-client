@@ -1,0 +1,78 @@
+#schedule-greed(class="week-{{currentParity}}", ng-if="timing",
+    ng-init="classes=['1','2','3','4','5','6']; lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]")
+    .desktop
+        .lessons-grid(ng-repeat="line in lines")
+            .container
+                .row
+                    .col-sm-4(ng-repeat="dow in line")
+                        h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
+                            span.lesson-cell-title-day {{'schedules.studies.'+dow | translate}}
+                            div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
+            .lessons-row(ng-repeat="class in classes")
+                .container
+                    .row
+                        .lesson-time-wrapper
+                            .lesson-time(ng-class="{'current': currentClass == class && in(currentDow, line)}")
+                                h4.lesson-time-number {{class}}
+                                h5.lesson-time-start {{timing[class].start | minutesToHours}}
+                        .lesson-cell-wrapper.col-sm-4(ng-repeat="dow in line")
+                            .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}",
+                                id="sched-cell-{{dow}}-{{class}}")
+
+//
+            #schedule-greed(breakpoint="min-width: 768px", class="week-{{currentParity}}", ng-init="classes=['1','2','3','4','5','6']")
+                div(ng-if="matches", ng-init="lines=[['Mon', 'Tue', 'Wed'], ['Thu', 'Fri', 'Sat']]", class="desktop")
+                    div(ng-include, src="'app/partials/schedules/navigation/desktop.jade'")
+                    div(ng-if="sched")
+                        .lessons-grid(ng-repeat="line in lines")
+                            .container
+                                .row
+                                    .col-sm-4(ng-repeat="dow in line")
+                                        h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
+                                            span.lesson-cell-title-day {{'schedules.studies.'+dow | translate}}
+                                            div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
+                            .lessons-row(ng-repeat="class in classes")
+                                .container
+                                    .row
+                                        .lesson-time-wrapper
+                                            .lesson-time(ng-class="{'current': currentClass == class && in(currentDow, line)}")
+                                                h4.lesson-time-number {{class}}
+                                                h5.lesson-time-start {{timing[class].start | minutesToHours}}
+                                        .lesson-cell-wrapper.col-sm-4(ng-repeat="dow in line")
+                                            .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}")
+                                                .arrow.arrow-up(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
+                                                .lesson-atom-cell(ng-repeat="atom in sched[dow][class]",
+                                                class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
+                                                ng-click="columnIndex = $index; showDetails(dow, class, $index)")
+                                                    i.stico-lection(ng-if="atom.type == 'lecture'")
+                                                    span.lesson-name {{atom.subject.name}}
+                                                    span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
+                                .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && in($routeParams.weekDay, line)")
+                                    div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
+                    .container(ng-if="!sched && updated")
+                        span {{'schedules.no_schedule_with_stuff' | translate}}
+
+                div(ng-if="!matches", ng-init="lines=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']", class="mobile")
+                    div(ng-include, src="'app/partials/schedules/navigation/mobile.jade'")
+                    div(ng-if="sched")
+                        .lessons-mobile(ng-repeat="dow in lines")
+                            h5.lesson-cell-title(ng-class="{'current': currentDow == dow}")
+                                span.lesson-cell-title-day {{'schedules.studies.'+dow | translate}}
+                                div.lesson-cell-title-date {{ dowDates[dow] | date: 'd MMM' }}
+                            .lesson-row(ng-repeat="class in classes")
+                                .lesson-cell(ng-class="{'current': currentDow == dow && currentClass == class}")
+                                    .lesson-time-wrapper
+                                        .lesson-time(ng-class="{'current': currentDow == dow && currentClass == class}")
+                                            h4.lesson-time-number {{class}}
+                                            h5.lesson-time-start {{timing[class].start | minutesToHours}}
+                                    .lesson-inside(ng-class="{'current': currentDow == dow && currentClass == class}",
+                                    ng-repeat="atom in sched[dow][class]",
+                                    class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
+                                    ng-click="columnIndex = $index; showDetails(dow, class, $index)")
+                                        i.stico-lection(ng-if="atom.type == 'lecture'")
+                                        span.lesson-name {{atom.subject.name}}
+                                        span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
+                                .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
+                                    div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
+                    .container(ng-if="!sched && updated")
+                        span {{'schedules.no_schedule_with_stuff' | translate}}
