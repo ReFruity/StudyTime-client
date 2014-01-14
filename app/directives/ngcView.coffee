@@ -1,85 +1,84 @@
 angular.module('app.directives')
-.directive "ngcView", [ "$route", "$anchorScroll", "$compile", "$controller", "$animate", "$timeout"
-    ($route, $anchorScroll, $compile, $controller, $animate, $timeout) ->
+.directive "ngcView", [
+    "$http"
+    "$templateCache"
+    "$route"
+    "$anchorScroll"
+    "$compile"
+    "$controller"
+    "$animate"
+    "$timeout"
+
+    ($http, $templateCache, $route, $anchorScroll, $compile, $controller, animate, $timeout) ->
       restrict: "ECA"
       terminal: true
-      priority: 1000
-      transclude: "element"
-      compile: (element, attr, linker) ->
-        (scope, $element, attr) ->
-          currentScope = undefined
-          currentElement = undefined
-          currentOriginalPath = undefined
-          currentParams = undefined
-          onloadExp = attr.onload or ""
-          firstCall = true
+      link: (scope, element, attr) ->
+        lastScope = undefined
+        currentOriginalPath = undefined
+        currentParams = undefined
+        firstCall = true
+        onloadExp = attr.onload or ""
 
-          cleanupLastView = ->
-            if currentScope
-              currentScope.$destroy()
-              currentScope = null
-            if currentElement
-              $animate.leave currentElement
-              currentElement = null
+        destroyLastScope = ->
+          if lastScope
+            lastScope.$destroy()
+            lastScope = null
 
-          enterAnimationDone = ->
-            currentScope.$emit "$viewContentChangeEnd"
+        enterAnimationDone = ->
+          lastScope.$emit "$viewContentChangeEnd"
 
-          update = ->
-            locals = $route.current and $route.current.locals
-            template = locals and locals.$template
+        clearContent = ->
+          if element.contents().length > 0
+            animate.leave element.contents(), element
+          destroyLastScope()
 
-            if $route.current and $route.current.$$route
-              if $route.current.$$route.preventNestedReload and currentOriginalPath is $route.current.$$route.originalPath
-                if $route.current.$$route.dependencies
-                  for d of $route.current.$$route.dependencies
-                    paramName = $route.current.$$route.dependencies[d]
-                    return  if currentParams[paramName] is $route.current.params[paramName]
-                else
-                  return
-              currentOriginalPath = $route.current.$$route.originalPath
-              currentParams = angular.copy($route.current.params)
+        update = ->
+          locals = $route.current and $route.current.locals
+          template = locals and locals.$template
 
-            if template
-              newScope = scope.$new()
-              linker newScope, (clone) ->
-                cleanupLastView()
-                clone.html template
-                link = $compile(clone.contents())
+          if $route.current and $route.current.$$route
+            if $route.current.$$route.preventNestedReload and currentOriginalPath is $route.current.$$route.originalPath
+              if $route.current.$$route.dependencies
+                for d of $route.current.$$route.dependencies
+                  paramName = $route.current.$$route.dependencies[d]
+                  return if currentParams[paramName] is $route.current.params[paramName]
+              else
+                return
+            currentOriginalPath = $route.current.$$route.originalPath
+            currentParams = angular.copy($route.current.params)
 
-                # Replace elements
-                current = $route.current
-                currentScope = current.scope = newScope
-                currentElement = clone
-                currentScope.$emit "$viewContentChangeStart"
+          if template
+            clearContent()
+            enterElements = angular.element("<div></div>").html(template).contents()
+            current = $route.current
+            controller = undefined
+            lastScope = current.scope = scope.$new()
+            lastScope.$emit "$viewContentChangeStart"
 
-                # Skip first animation
-                if firstCall
-                  afterNode = $element and $element[$element.length - 1]
-                  parentNode = afterNode && afterNode.parentNode
-                  afterNextSibling = (afterNode && afterNode.nextSibling) || null;
-                  angular.forEach(clone, (node) ->
-                    parentNode.insertBefore(node, afterNextSibling)
-                  )
-                  enterAnimationDone()
-                  firstCall = false
-                else
-                  $animate.enter clone, null, $element, enterAnimationDone
-
-                if current.controller
-                  locals.$scope = currentScope
-                  controller = $controller(current.controller, locals)
-                  currentScope[current.controllerAs] = controller  if current.controllerAs
-                  clone.data "$ngControllerController", controller
-                  clone.contents().data "$ngControllerController", controller
-
-                link currentScope
-                currentScope.$emit "$viewContentLoaded"
-                currentScope.$eval onloadExp
-                $anchorScroll()
+            # Skip first animation
+            if firstCall
+              element.append(enterElements)
+              enterAnimationDone && $timeout(enterAnimationDone, 0, false);
+              firstCall = false
             else
-              cleanupLastView()
+              animate.enter enterElements, element, null, enterAnimationDone
 
-          scope.$on "$routeChangeSuccess", update
-          update()
+            link = $compile(enterElements)
+            if current.controller
+              locals.$scope = lastScope
+              controller = $controller(current.controller, locals)
+              lastScope[current.controllerAs] = controller  if current.controllerAs
+              element.children().data "$ngControllerController", controller
+            link lastScope
+            lastScope.$emit "$viewContentLoaded"
+            lastScope.$eval onloadExp
+
+            # $anchorScroll might listen on event...
+            $anchorScroll()
+          else
+            clearContent()
+
+        # Initial update
+        scope.$on "$routeChangeSuccess", update
+        update()
   ]
