@@ -44,6 +44,9 @@ angular.module('app.controllers')
                 tmp_check[dow][clazz] = {}
               tmp_check[dow][clazz][e.object] = yes
               return yes
+            if i == 10
+              e.name = "..."
+              return yes
             return no
           )
 

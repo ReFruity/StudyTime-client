@@ -4,9 +4,14 @@ div(ng-controller='PlacesScheduleCtrl')
             schedule(desktop, timing="timing", update="filterSchedule", current-date="currentDate", dow-dates="dowDates")
             div(ng-if="sched", ng-init="classes=['1','2','3','4','5','6'];dows=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']")
                 div(ng-repeat="dow in dows")
-                    div(ng-repeat="class in classes", move-content-to="sched-cell-{{dow}}-{{class}}", delay)
+                    div(ng-repeat="class in classes", move-content-to="sched-cell-{{dow}}-{{class}}")
                         .free-place(ng-repeat="atom in sched[dow][class]")
                             span {{atom.name}}
 
         div(ng-if="!matches")
             schedule(mobile, timing="timing", update="filterSchedule", current-date="currentDate", dow-dates="dowDates")
+            div(ng-if="sched", ng-init="classes=['1','2','3','4','5','6'];dows=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']")
+                div(ng-repeat="dow in dows")
+                    div(ng-repeat="class in classes", move-content-to="sched-cell-{{dow}}-{{class}}")
+                        .free-place(ng-repeat="atom in sched[dow][class]")
+                            span {{atom.name}}

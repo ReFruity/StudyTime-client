@@ -26,6 +26,15 @@
     }
 }
 
+@keyframes fadeIn {
+    0% {
+      opacity 0
+    }
+    100% {
+      opacity 1
+    }
+}
+
 @keyframes empty {
   from {
     -webkit-transform translateX(0)
@@ -43,33 +52,6 @@
     display none
     overflow hidden
 
-@-webkit-keyframes empty {
-  from {
-    -webkit-transform translateX(0)
-  }
-  to {
-    -webkit-transform translateX(0)
-  }
-}
-
-@-moz-keyframes empty {
-  from {
-    -webkit-transform translateX(0)
-  }
-  to {
-    -webkit-transform translateX(0)
-  }
-}
-
-@-o-keyframes empty {
-  from {
-    -webkit-transform translateX(0)
-  }
-  to {
-    -webkit-transform translateX(0)
-  }
-}
-
 /**
 * Slide in from left
 */
@@ -82,70 +64,10 @@
   }
 }
 
-@-webkit-keyframes slideInLeft {
-  from {
-    -webkit-transform translateX(100%)
-  }
-  to {
-    -webkit-transform translateX(0)
-  }
-}
-
-@-moz-keyframes slideInLeft {
-  from {
-    -webkit-transform translateX(100%)
-  }
-  to {
-    -webkit-transform translateX(0)
-  }
-}
-
-@-o-keyframes slideInLeft {
-  from {
-    -webkit-transform translateX(100%)
-  }
-  to {
-    -webkit-transform translateX(0)
-  }
-}
-
 /**
 * Slide out right
 */
 @keyframes slideOutRight {
-  from {
-    opacity 1
-    -webkit-transform translateX(0)
-  }
-  to {
-    opacity 0.3
-    -webkit-transform translateX(-50%)
-  }
-}
-
-@-webkit-keyframes slideOutRight {
-  from {
-    opacity 1
-    -webkit-transform translateX(0)
-  }
-  to {
-    opacity 0.3
-    -webkit-transform translateX(-50%)
-  }
-}
-
-@-moz-keyframes slideOutRight {
-  from {
-    opacity 1
-    -webkit-transform translateX(0)
-  }
-  to {
-    opacity 0.3
-    -webkit-transform translateX(-50%)
-  }
-}
-
-@-o-keyframes slideOutRight {
   from {
     opacity 1
     -webkit-transform translateX(0)

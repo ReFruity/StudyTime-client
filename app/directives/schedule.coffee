@@ -15,7 +15,8 @@ angular.module('app.directives')
       currentDate: "="
       dowDates: "="
 
-    controller: ['$scope', ($scope) ->
+    controller: ['$scope', '$routeParams', ($scope, $routeParams) ->
+      $scope.$routeParams = $routeParams
       if not $scope.currentDate
         $scope.currentDate = new Date()
 

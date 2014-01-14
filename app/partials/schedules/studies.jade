@@ -3,16 +3,8 @@ div(ng-controller='SchedulesStudiesCtrl')
         div(ng-if="matches")
             div(ng-include, src="'app/partials/schedules/navigation/desktop.jade'")
             schedule(desktop, timing="timing", update="filterSchedule", current-date="currentDate", dow-dates="dowDates")
-            div(ng-if="sched", ng-init="classes=['1','2','3','4','5','6'];dows=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']")
-                div(ng-repeat="dow in dows")
-                    div(ng-repeat="class in classes", move-content-to="sched-cell-{{dow}}-{{class}}", delay)
-                        .lesson-atom-cell(ng-repeat="atom in sched[dow][class]",
-                            class="lesson-parity-{{ atom.parity }} lesson-half-{{ atom.half_group }}",
-                            ng-click="columnIndex = $index; showDetails(dow, class, $index)")
-                            i.stico-lection(ng-if="atom.type == 'lecture'")
-                            span.lesson-name {{atom.subject.name}}
-                            span.lesson-place(ng-repeat="p in atom.place") {{ p.name }}
-
+            div(ng-include, src="'app/partials/schedules/cell.jade'")
         div(ng-if="!matches")
             div(ng-include, src="'app/partials/schedules/navigation/mobile.jade'")
             schedule(mobile, timing="timing", update="filterSchedule", current-date="currentDate", dow-dates="dowDates")
+            div(ng-include, src="'app/partials/schedules/cell.jade'")

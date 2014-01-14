@@ -11,4 +11,7 @@
                         .lesson-time(ng-class="{'current': currentDow == dow && currentClass == class}")
                             h4.lesson-time-number {{class}}
                             h5.lesson-time-start {{timing[class].start | minutesToHours}}
-                    .lesson-inside(ng-class="{'current': currentDow == dow && currentClass == class}")
+                    .lesson-inside(ng-class="{'current': currentDow == dow && currentClass == class}"
+                        id="sched-cell-{{dow}}-{{class}}")
+                .lesson-details-container.height-transition(ng-if="$routeParams.classNum == class && $routeParams.weekDay == dow")
+                    div(ng-include, src="'app/partials/schedules/class/regular-index.jade'")
