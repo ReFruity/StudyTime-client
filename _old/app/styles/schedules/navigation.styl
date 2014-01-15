@@ -1,0 +1,172 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+
+// Schedule
+#schedule-greed
+  .desktop
+    // Navigation
+    .schedule-header
+      user-select(none)
+      .navbar
+        border none
+        height $sched-nav-height
+        min-height 0
+        margin-bottom 0
+        white-space nowrap
+
+        // Remove link decoration
+        a
+          &:active, &:hover, &.active
+            text-decoration none
+
+        // Back to groups list button
+        .back-btn
+          cursor pointer
+          padding 0 15px 0 0
+          font-size $font-size-large
+          height $sched-nav-height
+          line-height $sched-nav-height
+          font-weight 400
+          display block
+          float left
+
+          .back-logo-square
+            float left
+            background $brand-info
+            margin-top (($sched-nav-height - 32)/2)
+            padding 4px
+            color #fff
+            .stico-groups-list
+              display block
+
+          .group-name
+            margin-left 10px
+          &:hover
+            .back-logo-square
+              background darken($brand-info, 20%)
+            .group-name
+              color darken($link-color, 25%)
+
+        // Change schedule type
+        .type-changer
+          @media (min-width: 992px)
+            display inline-block
+            border 1px solid lighten($brand-info, 80%)
+            border-radius $line-height-computed
+            height $sched-nav-height
+            position relative
+            z-index 10000
+            a
+              display inline-block
+              font-size $font-size-base
+              cursor pointer
+              line-height ($sched-nav-height - 1)
+              padding 0 9px
+              &.active
+                background $brand-info
+                border-radius $line-height-computed
+                color #fff
+                margin-right: -1px
+                margin-left: -1px
+          @media (max-width: 991px)
+            display inline-block
+            height $sched-nav-height
+            a
+              font-size $font-size-medium
+              line-height $sched-nav-height
+              &.active
+                display none
+
+
+        // Update indicator
+        .schedule-updated-text
+          margin 0
+          padding 0
+          font-size $font-size-medium
+          color #aaa
+          font-weight 100
+          white-space nowrap
+          line-height $sched-nav-height
+
+        // Next week button
+        .next-week-btn
+          font-size $font-size-medium
+          font-weight 200
+          white-space nowrap
+          margin-right -10px
+          line-height $sched-nav-height
+
+          a
+            cursor pointer
+            padding 5px
+            span
+              cursor pointer
+              padding 0 7px
+          .stico-arrow-right
+            margin-top -2px
+            vertical-align middle
+
+
+
+  // Mobile
+  .mobile
+    // Navigation
+    .schedule-header
+      user-select(none)
+
+      .navbar
+        border none
+        min-height 0
+        margin (($font-size-large - $font-size-medium) - 20) 0 0 0
+        white-space nowrap
+        padding 0 0 5px 0
+        margin-top
+
+        // Remove link decoration
+        a
+          &:active, &:hover, &.active
+            text-decoration none
+
+        // Back to groups list button
+        .back-btn
+          cursor pointer
+          font-size $font-size-medium
+          padding 15px 0
+          line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
+          margin-left -10px
+          span
+            margin 0 0 0 5px
+          .stico-arrow-right
+            vertical-align middle
+            margin-top: -3px;
+
+        .group-name
+          line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
+          font-weight 500
+          font-size $font-size-medium
+
+        // Change schedule type
+        .type-changer
+          display inline-block
+          font-size $font-size-medium
+          line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
+          margin-right -5px
+          a
+            padding: 15px 8px
+            margin-right: -8px
+            &.active
+              display none
+
+
+        // Update indicator
+        .nav-middle
+          .schedule-updated-text
+            line-height ($sched-nav-mobile-height - ($font-size-large - $font-size-medium))
+            font-size $font-size-medium
+            background #fff
+            margin 0
+            padding 0
+            color #aaa
+            font-weight 100
+            white-space nowrap

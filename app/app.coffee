@@ -1,125 +1,93 @@
 'use strict'
 
-# Declare modules with requirements
-angular.module 'app.controllers', []
-angular.module 'app.filters', []
-angular.module 'app.services', []
-angular.module 'app.animations', []
-angular.module 'app.directives', ['app.services']
+{ul, li, div, h5, h4, form, input, button, span} = React.DOM
+{classSet} = React.addons
 
+###
+TodoList = React.createClass
+  render: ->
+    createItem = (itemText) ->
+      (li {}, [itemText])
+    (ul {}, [@props.items.map createItem]);
 
-# Declare app level module which depends on filters, and services
-App = angular.module('app', [
-  'ngRoute'
-  'ngAnimate'
-  'app.controllers'
-  'app.directives'
-  'app.filters'
-  'app.services'
-  'app.templates'
-  'app.animations'
-  'LocalStorageModule'
-  'angularFileUpload'
-  'datePicker'
-])
-.config([
-    '$routeProvider'
-    '$locationProvider'
-    '$httpProvider'
+TodoApp = React.createClass
+  getInitialState: ->
+    items: []
+    text: ''
 
-    ($routeProvider, $locationProvider, $httpProvider) ->
-      $routeProvider
+  handleSubmit: (e) ->
+    e.preventDefault();
+    nextItems = @state.items.concat [this.state.text]
+    nextText = ''
+    @setState items: nextItems, text: nextText
 
-      .when('/', templateUrl: 'app/partials/groups/index.jade', controller: 'GroupsIndexCtrl')
-      .when('/terms', templateUrl: 'app/partials/terms.jade')
-      .when('/places', templateUrl: 'app/partials/places/index.jade', controller: 'PlacesIndexCtrl')
-      .when('/courses', templateUrl: 'app/partials/courses/index.jade', controller: 'CoursesIndexCtrl')
-      .when('/:groupName/:weekDay?/:classNum?/:atomClass?',
-          templateUrl: 'app/partials/schedules/index.jade',
-          controller: 'SchedulesIndexCtrl',
-          preventNestedReload: true
-        )
-      .otherwise({redirectTo: '/'})
-
-      # Without server side support html5 must be disabled.
-      $locationProvider.html5Mode(true)
-
-      $httpProvider.interceptors.push(['$q', '$rootScope', ($q, $rootScope) ->
-        updateGlobalCanceler = ->
-          defer = $q.defer()
-          $rootScope.$globalRequestCancel = defer
-          $rootScope.$globalRequestCancelPromise = defer.promise
-          $rootScope.$globalRequestCancelPromise.finally updateGlobalCanceler
-
-        request: (config) ->
-          if not $rootScope.$globalRequestCancel
-            updateGlobalCanceler()
-
-          config.timeout = $rootScope.$globalRequestCancelPromise
-          config
+  render: ->
+    (div {}, [
+      (h3 {}, ['TODO']),
+      (TodoList {items: @state.items})
+      (form {onSubmit: @handleSubmit}, [
+        (input {onKeyUp: @onKey, value: @state.text}),
+        (button {}, ['Add #' + (@state.items.length + 1)])
       ])
-  ])
+    ])
+###
 
-# RootScope extendings
-.run([
-    '$rootScope'
-    '$location'
-    '$route'
-    '$routeParams'
+Schedule = React.createClass
+  getInitialState: ->
+    sched: {}
+    currentDow: 'Mon'
+    currentClass: '6'
 
-    ($rootScope, $location, $route, $routeParams) ->
-      $rootScope.$route = $route
-      $rootScope.$location = $location
-      $rootScope.$routeParams = $routeParams
-      $rootScope.in = (val, arr) ->
-        return val in arr
-  ])
+  render: ->
+    self = @
+    (div {className: 'desktop', id: 'schedule-greed'}, [
+      ([
+        ['Mon', 'Tue', 'Wed']
+        ['Thu', 'Fri', 'Sat']
+      ].map (line)->
+        (div {className: 'lessons-grid'}, [
+          # Day of weeks
+          (div {className: 'container'}, [
+            (div {className: 'row'}, [
+              (line.map (dow)->
+                (div {className: 'col-sm-4'}, [
+                  (h5 {className: classSet(current: (self.state.currentDow == dow), 'lesson-cell-title': true)}, [
+                    (span {className: 'lesson-cell-title-day'}, [dow])
+                  ])
+                ])
+              )
+            ])
+          ])
 
-# FastClick
-angular.element(window).bind('load', ->
-  FastClick.attach(document.body);
-)
+          # Classes
+          (['1', '2', '3', '4', '5', '6'].map (clazz)->
+            (div {className: 'container lessons-row'}, [
+              (div {className: 'row'}, [
 
-# Phonegap checker
-window.checkPhonegap = ->
-  return (window.cordova || window.PhoneGap || window.phonegap) && /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|ipad|iphone|ipod|android/i.test(navigator.userAgent)
+                # Class time
+                (div {className: 'lesson-time-wrapper'}, [
+                  (div {className: classSet(current: (self.state.currentClass == clazz and self.state.currentDow in line), 'lesson-time': true)}, [
+                    (h4 {className: 'lesson-time-number'}, [clazz])
+                    (h5 {className: 'lesson-time-start'}, [clazz])
+                  ])
+                ])
 
-# Detect Apple StandAlone or PhoneGap application and
-# add css class to html
-if navigator.standalone or checkPhonegap()
-  angular.element(document.documentElement).addClass('standalone')
-if checkPhonegap()
-  angular.element(document.documentElement).addClass('phonegap')
-
-# Remove any :hover rule on touch screen
-angular.element(document).ready(->
-  if 'createTouch' of document
-    ignore = /(:hover)|(a:focus)|(:active)\b/
-    try
-      for stylesheet in document.styleSheets
-        try
-          if not stylesheet.cssRules
-            continue
-
-          # detect hover rules
-          remove = []
-          reinsert = []
-          for rule, idx in stylesheet.cssRules
-            if rule.type is CSSRule.STYLE_RULE and ignore.test(rule.selectorText)
-              filteredSelector = (s for s in rule.selectorText.split(",") when not ignore.test(s)).join(", ")
-              if not filteredSelector
-                remove.unshift idx
-              else
-                reinsert.push(
-                  idx: idx,
-                  cssText: filteredSelector+" "+rule.cssText.substr(rule.cssText.indexOf('{'))
+                # Class for each dow
+                (line.map (dow)->
+                  (div {className: 'lesson-cell-wrapper col-sm-4'}, [
+                    (div {className: classSet(current: (self.state.currentClass == clazz and self.state.currentDow == dow), 'lesson-cell': true)}, [
+                      ([0..20].map (i)->
+                        (div {className: 'free-place'}, [i])
+                      )
+                    ])
+                  ])
                 )
 
-          # Reinsert without :hover
-          for stl in reinsert
-            stylesheet.deleteRule(stl.idx)
-            stylesheet.insertRule(stl.cssText, stl.idx)
+              ])
+            ])
+          )
+        ])
+      )
+    ])
 
-          # delete hover rules
-          stylesheet.deleteRule idx for idx in remove
-)
+React.renderComponent (Schedule {}), document.body

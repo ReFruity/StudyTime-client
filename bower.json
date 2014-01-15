@@ -11,9 +11,7 @@
   "dependencies": {
     "console-polyfill": "~0.1.0",
     "bootstrap-stylus": "~3.0",
-    "angular": "1.2.x",
-    "angular-route": "1.2.x",
-    "angular-animate": "1.2.x",
+    "react": "0.x.x",
     "js-base64": "~2.1.2",
     "underscore": "~1.5.2",
     "overthrow-dist": "~0.7.0"
@@ -26,6 +24,9 @@
     },
     "underscore": {
       "main": "underscore-min.js"
+    },
+    "react": {
+      "main": "react-with-addons.min.js"
     }
   }
 }

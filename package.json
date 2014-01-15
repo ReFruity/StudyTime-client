@@ -14,16 +14,14 @@
   },
   "dependencies": {
     "brunch": "=1.7.10",
-
     "coffee-script": "~1.6",
     "javascript-brunch": ">= 1.0 < 1.8",
     "coffee-script-brunch": ">= 1.0 < 1.8",
-
     "css-brunch": ">= 1.0 < 1.8",
     "stylus-brunch": "git://github.com/proAlexandr/stylus-brunch.git",
-    "jade-angularjs-brunch": "git://github.com/proAlexandr/jade-angularjs-brunch.git",
     "webapp-cache-brunch": "git://github.com/c58/webapp-cache-brunch.git",
-
+    "jade-brunch": "1.8.x",
+    "static-jade-brunch": "1.7.x",
     "auto-reload-brunch": ">= 1.0 < 1.8",
     "uglify-js-brunch": ">= 1.0 < 1.8",
     "clean-css-brunch": ">= 1.0 < 1.8",

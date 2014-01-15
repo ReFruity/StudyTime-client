@@ -1,0 +1,73 @@
+@import '../_variables'
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+#schedule-index
+  user-select(none)
+  > .title
+    margin-bottom: 40px
+
+  .speciality
+    width: 25%
+
+  .schedule-table
+    display table
+    padding 0
+    .schedule-row
+      display table-row
+      .speciality
+        display table-cell
+        border: 9px solid #fff
+        background: $brand-info-bg
+
+        .course-content
+          overflow: hidden
+          padding: 5px 15px 25px
+          .line
+            overflow: hidden
+            .group
+              @media $media-min-tablet
+                padding 3px 5px
+              @media $media-min-desktop
+                padding 3px 10px
+              float left
+              text-decoration none
+              font-size $font-size-medium
+
+  .select-group-container
+    margin-top 20px
+    margin-bottom: 30px
+
+@media $media-max-phone
+  #schedule-index
+    .schedule-table
+      display block
+      .schedule-row
+        display block
+        .speciality
+          border none
+          display block
+          width 100%
+          background #fff
+          h3
+            padding 20px 0 20px
+            margin 0
+            background darken($brand-info-bg, 7%)
+            border-top 1px solid #fff
+          .course-content
+            padding 0
+            .line
+              .group
+                padding 10px 20px
+                font-size $font-size-large
+
+
+    &.container
+      max-width 100%
+      padding 0
+      width 100%
+      &.col-md-10
+        padding 0
+
+    .select-group-container
+      margin-top 10px
+      margin-bottom 20px

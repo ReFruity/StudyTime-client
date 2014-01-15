@@ -1,0 +1,147 @@
+@import "../_variables"
+
+
+@media $media-max-phone
+  .tests-and-exams
+    font-size $font-size-medium
+
+    .no-exams
+      font-weight 300
+      padding 25px 0
+      color lighten($text-color, 50%)
+      text-align center
+
+    .session-part
+      h2
+        font-size $font-size-medium
+        font-weight 600
+        margin-top 15px
+        display none
+
+      .started
+        opacity 0.4
+        & *
+          text-decoration none !important
+          color #aaa !important
+
+      .info
+        border-bottom 1px solid $sched-border-color
+
+        & *:hover
+          text-decoration none
+          .name
+            text-decoration underline
+
+        a
+          display block
+          padding 9px 0
+
+          .date
+            font-size $font-size-large
+            font-weight 500
+            color $brand-primary
+
+          .time
+            font-weight 300
+            color $brand-primary
+            padding-left 15px
+
+          .name
+            display block
+            font-weight 400
+            text-decoration none !important
+            &:hover
+              text-decoration underline
+
+          .teacher
+            font-weight 300
+            color lighten($brand-primary, 70%)
+            margin-right 15px
+
+          .audit
+            color $brand-info
+            margin-right 15px
+            font-weight 500
+
+          .consult
+            display inline-block
+            font-size $font-size-base
+            padding 3px 8px
+            background $brand-info
+            color #fff !important
+            margin-right 10px
+
+        .editing
+          display none
+
+
+@media $media-min-tablet
+  .tests-and-exams
+    font-size $font-size-medium
+
+    .no-exams
+      padding 25px 0
+      font-weight 300
+      color lighten($text-color, 50%)
+      text-align center
+
+    .session-part
+      h2
+        font-size $font-size-large
+        font-weight 400
+        margin-top 45px
+
+      .started
+        opacity 0.4
+        & *
+          text-decoration none !important
+          color #aaa !important
+
+      .info
+        & *:hover
+          text-decoration none
+          .name
+            text-decoration underline
+
+        a
+          padding 9px 0
+          text-decoration none
+
+          .date
+            font-size $font-size-large
+            font-weight 500
+            color $brand-primary
+
+          .time
+            font-weight 300
+            padding-left 15px
+            color $brand-primary
+
+          .name
+            font-weight 400
+            padding-left 15px
+            text-decoration none !important
+            &:hover
+              text-decoration underline
+
+          .teacher
+            font-weight 300
+            padding-left 15px
+            color lighten($brand-primary, 70%)
+
+          .audit
+            color $brand-info
+            padding-left 15px
+            font-weight 500
+
+          .consult
+            margin-left 15px
+            font-size $font-size-base
+            padding 3px 8px
+            background $brand-info
+            color #fff !important
+
+        .editing
+          margin-left 10px
+          a
+            margin-left 10px

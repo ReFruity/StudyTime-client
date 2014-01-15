@@ -1,0 +1,79 @@
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+@keyframes spin {
+    0% {
+      opacity 1
+    }
+    50% {
+      opacity 0.6
+      rotate(180deg)
+    }
+    100% {
+      opacity 1
+      rotate(360deg)
+    }
+}
+
+@keyframes fadeInLong {
+    0% {
+      opacity 0
+    }
+    50% {
+      opacity 0
+    }
+    100% {
+      opacity 1
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+      opacity 0
+    }
+    100% {
+      opacity 1
+    }
+}
+
+@keyframes empty {
+  from {
+    -webkit-transform translateX(0)
+  }
+  to {
+    -webkit-transform translateX(0)
+  }
+}
+
+.max-height-transition {
+  transition(max-height 0.7s cubic-bezier(0.23, 1, 0.32, 1))
+}
+.height-transition
+  &.ng-animate
+    display none
+    overflow hidden
+
+/**
+* Slide in from left
+*/
+@keyframes slideInLeft {
+  from {
+    -webkit-transform translateX(100%)
+  }
+  to {
+    -webkit-transform translateX(0)
+  }
+}
+
+/**
+* Slide out right
+*/
+@keyframes slideOutRight {
+  from {
+    opacity 1
+    -webkit-transform translateX(0)
+  }
+  to {
+    opacity 0.3
+    -webkit-transform translateX(-50%)
+  }
+}

@@ -1,0 +1,6 @@
+div(ng-controller='PlacesScheduleCtrl')
+    div(breakpoint="min-width: 768px")
+        div(ng-if="matches")
+            schedule(desktop, timing="timing", update="filterSchedule", current-date="currentDate", dow-dates="dowDates", sched="sched")
+                .free-place
+                    span {{atom.name}}

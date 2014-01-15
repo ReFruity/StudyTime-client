@@ -1,0 +1,53 @@
+@import "../_variables"
+
+footer
+  position absolute
+  bottom - ($footer-height)
+  left 0
+  right 0
+  height $footer-height
+  background $footer-bg
+  padding ceil(($footer-height / 2)  - ($font-size-base / 2) ) 0
+
+  color $footer-color
+  a
+    color $footer-link-color
+    text-decoration underline
+    &:hover
+      color: $footer-link-hover-color
+
+  .widgets
+    .widget
+      color: #fff
+      font-size $font-size-medium
+      width $footer-widget-size
+      height $footer-widget-size
+      border-radius $footer-widget-radius
+      display inline-block
+      margin-top - ($font-size-medium / 2)
+      line-height $footer-widget-size
+      margin-left 15px
+      text-align center
+      padding 5px 0 0 0
+
+      &:first-child
+        margin-left 0
+      &.widget-twitter
+        background $brand-warning
+      &.widget-vk
+        background $brand-success
+      &.widget-facebook
+        background $brand-info
+
+  .navigation
+    ul
+      margin 0
+
+// iPad
+.standalone
+  footer
+    display none
+
+@media $media-max-phone
+  footer
+    display none

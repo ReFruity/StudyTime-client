@@ -17,8 +17,6 @@ exports.config =
         'js/vendor.js': /^(bower_components|vendor)/
       order:
         before: [
-          'vendor/angular-file-upload-html5-shim.js'
-          'app/directives/jqliteExtends.coffee'
           'app/app.coffee'
         ]
 
@@ -27,7 +25,6 @@ exports.config =
         'css/app.css': /^(app|vendor)/
       order:
         before: [
-          'app/styles/open-sans-font.styl'
           'app/styles/app.styl'
         ]
 
@@ -38,11 +35,6 @@ exports.config =
   plugins:
     jade:
       pretty: yes # Adds pretty-indentation whitespaces to output (false by default)
-    jade_angular:
-      single_file: true
-      single_file_name: 'js/partials.js'
-      static_mask: /^app,index.jade/ # static index.html
-      locals: {}
     uglify:
       mangle: yes
       compress:

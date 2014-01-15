@@ -1,0 +1,352 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.lesson-details-container
+  background $brand-info-bg
+  width 100%
+  padding 0
+  margin 0
+  z-index 10000
+  position relative
+  top - 1px
+
+@media $media-max-phone
+  .lesson-details
+    border-bottom 1px solid $sched-border-color
+
+    .container
+      margin 0
+      padding 0
+
+    // Close details button
+    .close-btn
+      display none
+
+    // Navigation icons
+    .lesson-info-icons-cont
+      ul.lesson-info-icons
+        list-style-type none
+        margin 0
+        padding 0
+        height $sched-nav-mobile-height
+        background darken($brand-info-bg, 5%)
+        li
+          width 50%
+          float left
+          padding 0
+          margin 0
+          a
+            display block
+            text-align center
+            line-height ($sched-nav-mobile-height - $font-size-base - 1)
+            i
+              margin (($sched-nav-mobile-height - 34)/2) 0 0 0
+          &.active
+            a
+              opacity 1
+              background $brand-info
+
+    // Information about class
+    .lesson-info-data
+      padding 15px 0px
+      .lesson-info-header
+        margin-bottom 5px
+        font-size $font-size-large
+        line-height ( $line-height-computed * 1.2 )
+        .lesson-name
+          margin-right 10px
+        .lesson-place
+          color $brand-info
+
+      .lesson-lecturer
+        margin-left 1px
+        cursor pointer
+
+    // Back timer
+    .back-timer
+      text-align center
+      margin 10px 0px
+      h4
+        font-size $font-size-base
+
+      .timer-container
+        background $brand-danger
+        color #fff
+        border-radius 5px
+        padding 20px
+        white-space normal
+        > span
+          display inline-block
+          font-size $font-size-large
+          font-weight 500
+          margin-right 10px
+          white-space nowrap
+          > span
+            margin-left 10px
+            font-size $font-size-medium
+            font-weight 300
+
+    .details-row
+      margin 0
+
+    // Attacments
+    .lesson-info-files
+      .no-attachments
+        font-size $font-size-medium
+        font-weight 300
+        padding 10px 0
+        color lighten($brand-primary, 70%)
+
+      .loading-attachments
+        display none
+
+      // Navigation
+      .lesson-info-files-header
+        .att-label
+          display none
+
+        .upload-cont
+          display none
+
+      .attachments
+        margin 0
+        .file-cont
+          display block
+          padding 10px 0px
+          border-bottom 1px solid #fff
+          overflow hidden
+          &:last-child
+            border-bottom none
+          &:hover
+            color $link-color
+            text-decoration none
+          .file-header
+            font-size $font-size-medium
+            .file-name
+              display block
+              text-decoration underline
+          .file-descr
+            font-size $font-size-base
+            font-weight 300
+            color lighten($brand-primary, 40%)
+            letter-spacing 1px
+          .file-details
+            font-size $font-size-small
+            color lighten($brand-primary, 70%)
+            .file-size
+              font-weight 500
+              color lighten($brand-primary, 70%)
+              margin-right 15px
+            .file-date
+              font-weight 300
+              color lighten($brand-primary, 70%)
+
+
+@media $media-min-tablet
+  .lesson-details
+    // Close details button
+    .close-btn
+      top 15px
+      right 15px
+      position absolute
+      z-index 10000
+
+    // Navigation icons
+    .lesson-info-icons-cont
+      position relative
+      z-index 10000
+      float left
+      width 50px
+      margin 8px 0 10px -50px
+
+      ul.lesson-info-icons
+        list-style-type none
+        margin 0 0 0 16px
+        padding 0
+        li
+          margin 10px 0 0 0
+          padding 0
+          a
+            border-radius 5px
+            padding 21px 4px 1px 4px
+          &.active
+            a
+              background $brand-info
+
+    // Information about class
+    .lesson-info-data
+      padding 15px 25px
+      .lesson-info-header
+        font-size $font-size-large
+        .lesson-name
+          margin-right 10px
+        .lesson-place
+          margin-left 10px
+          color $brand-info
+
+      .lesson-lecturer
+        margin-left 1px
+        cursor pointer
+        font-size $font-size-medium
+
+    // Back timer
+    .back-timer
+      text-align center
+      margin 20px 0 20px 15px
+      h4
+        font-size $font-size-base
+
+      .timer-container
+        background $brand-danger
+        color #fff
+        border-radius 5px
+        padding 20px
+        > span
+          font-size $font-size-large
+          display block
+          font-weight 500
+          > span
+            margin-left 10px
+            font-size $font-size-medium
+            font-weight 300
+
+    // Attacments
+    .details-row
+      position relative
+
+    .session
+      .lesson-info-files
+        padding 15px 0px !important
+
+
+    .lesson-info-files
+      padding 15px 25px
+
+      .no-attachments
+          font-size $font-size-medium
+          color lighten($brand-primary, 70%)
+          font-weight 300
+          margin 10px 0 0 0
+
+      .loading-attachments
+        margin-left 20px
+        margin-top 3px
+        vertical-align middle
+        display inline-block
+        color lighten($brand-primary, 50%)
+        font-weight 300
+
+      // Navigation
+      .lesson-info-files-header
+        .att-label
+          font-size $font-size-large
+          vertical-align middle
+
+        .upload-cont
+          font-size $font-size-base
+          display inline-block
+          position relative
+
+          .upload-dropdown
+            position absolute
+            top 35px
+            left 18px
+            z-index 10000
+
+            ul.att-types
+              list-style-type none
+              margin 10px 0 0 10px
+              padding 0
+              li
+                float left
+                padding 3px 10px
+                color $link-color
+                cursor pointer
+                &:hover
+                  color $link-hover-color
+                &.current
+                  background $brand-info
+                  color #fff
+
+            ul.att-sub-types
+              border 2px solid lighten($brand-primary, 80%)
+              margin -10px 0 0 0
+              padding 40px 0 5px 0
+              list-style-type none
+              background #fff
+              border-radius 5px
+              min-width 147px
+              li
+                padding 3px 15px
+                color $link-color
+                cursor pointer
+                position relative
+                overflow hidden
+                input
+                  top 0
+                  left 0
+                  opacity 0
+                  font-size 18px
+                  position absolute
+                  outline none
+                &:hover
+                  background $link-hover-color
+                  color #fff
+
+
+          .add-btn
+            display inline-block
+            margin-top 3px
+            padding 0 5px
+            margin-left 10px
+            vertical-align middle
+            &:hover
+              text-decoration none
+            i
+              vertical-align middle
+            span
+              margin-left 5px
+              vertical-align middle
+
+
+      .attachments
+        margin 10px 0 0 1px
+
+        .upload-info-form
+          white-space nowrap
+          input
+            margin-bottom 5px
+          .upload-info
+            margin-bottom 5px
+
+          .progress-percents
+            line-height 34px
+
+        .progress-percents
+          color darkgreen
+          font-weight 500
+          font-size $font-size-medium
+        .progress-sizes
+          padding-left 10px
+          color lighten($text-color, 80%)
+
+        .file-cont
+          margin 0 0 10px 0
+          .file-header
+            font-size $font-size-medium
+            .file-name
+              text-decoration underline
+            .file-size
+              font-weight 500
+              margin-left 15px
+              white-space nowrap
+            .file-date
+              white-space nowrap
+              margin-left 15px
+              font-weight 200
+              opacity 0.3
+          .file-descr
+            font-size $font-size-base
+            font-weight 300
+            color lighten($brand-primary, 40%)
+            letter-spacing 1px
