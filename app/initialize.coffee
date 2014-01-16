@@ -2,9 +2,12 @@
 require 'lib/helpers'
 
 # Initialize Router
-require 'routers/main'
+require 'routes'
 
 $ ->
+  # Remove 300ms delay on touch devices
+  FastClick.attach(document.body);
+
   # Make all links html5
   $("body").on("click", "a", (e) ->
     e.preventDefault()

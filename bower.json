@@ -15,7 +15,8 @@
         "backbone": "~1",
         "overthrow-dist": "~0.7.0",
         "react": "0.x.x",
-        "js-base64": "~2.1.2"
+        "js-base64": "~2.1.2",
+        "fastclick": "0.6.x"
     },
     "overrides": {
         "backbone": {
