@@ -26,6 +26,11 @@
     // `default_ttl`, a default time-to-live for the cache in minutes.
     var cachingSync = function (wrapped, ns, default_ttl) {
 
+        // Disable wrapping on Node.JS environment
+        if (typeof window === 'undefined') {
+            return wrapped
+        }
+
         // Create the `Burry.Store`
         var burry = new Burry.Store(ns, default_ttl);
 
