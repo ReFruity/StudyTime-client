@@ -2,7 +2,7 @@
 require 'lib/helpers'
 
 # Initialize Router
-require 'routes'
+require 'router'
 
 $ ->
   # Remove 300ms delay on touch devices

@@ -151,6 +151,4 @@
     };
 
     return cachingSync;
-
-
 }));

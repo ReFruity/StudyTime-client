@@ -13,7 +13,9 @@ class MainRouter extends Backbone.Router
   routes:
     "": "groups"
     "places": "places"
-    "courses": "courses"
+    "courses(/:dow)": "courses"
+    "students(/:user)": "students"
+    "professors(/:user)": "professors"
     ":group(/:dow/:clazz/:atom)": "schedule"
     "*error": "404"
 
@@ -21,18 +23,15 @@ class MainRouter extends Backbone.Router
   invokeComponent: (path, element, args = {}) ->
     React.renderComponent (requireComponent(path) args, []), element
 
+  # Update footer one time and initial header update
   initialize: ->
-    # Update footer one time and initial header update
     @invokeComponent "footer", footerElem
     @invokeComponent "header", headerElem
 
-    # Update header and content each time
-    # when route change
-    @on "route", (name)->
-      props = arguments[arguments.length - 1].pop()
-      props = if _.isObject then props else {}
-      @invokeComponent "header", headerElem, {path: name}
-      @invokeComponent "#{name}/index", contentElem, props
+  # Update interface with last route name and props
+  update: ->
+    @invokeComponent "header", headerElem, {path: @_lastName}
+    @invokeComponent "#{@_lastName}/index", contentElem, @_lastProps
 
 
 module.exports = new MainRouter

@@ -23,6 +23,9 @@
         // Save route part names there
         _routeParts: {},
 
+        // Update interface globally
+        update: function(){},
+
         // Manually bind a single named route to a callback. For example:
         //
         //     this.route('search/:query/p:num', 'search', function(query, num) {
@@ -40,13 +43,16 @@
             var router = this;
             Backbone.history.route(route, function (fragment) {
                 var args = router._extractParameters(route, fragment);
+
+                // Set last name and last props
+                router._lastName = name
                 if(router._routeParts[_route]) {
-                    args.push(_.object(_.map(args, function(v, i) {
+                    router._lastProps = _.object(_.map(args, function(v, i) {
                         return [router._routeParts[_route][i], v]
-                    })));
+                    }));
                 }
 
-                callback && callback.apply(router, args);
+                (callback && callback.apply(router, args)) || router.update();
                 router.trigger.apply(router, ['route:' + name].concat(args));
                 router.trigger('route', name, args);
                 Backbone.history.trigger('route', router, name, args);
