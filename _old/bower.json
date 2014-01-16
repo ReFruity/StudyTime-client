@@ -1,0 +1,40 @@
+{
+  "name": "StudyTime-client",
+  "repo": "c58/StudyTime-client",
+  "version": "2.0.0",
+  "main": "_public/js/app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "console-polyfill": "~0.1.0",
+    "bootstrap-stylus": "~3.0",
+    "react": "0.x.x",
+    "js-base64": "~2.1.2",
+    "underscore": "1.5.x",
+    "backbone": "1.1.x",
+    "overthrow-dist": "~0.7.0",
+    "zepto": "1.1.x"
+  },
+  "overrides": {
+    "bootstrap": {
+      "ignore": [
+        "*"
+      ]
+    },
+    "underscore": {
+      "main": "underscore-min.js"
+    },
+    "react": {
+      "main": "react-with-addons.min.js"
+    },
+    "backbone": {
+      "main": "backbone-min.js"
+    },
+    "zepto": {
+      "main": "zepto.min.js"
+    }
+  }
+}

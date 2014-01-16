@@ -14,175 +14,176 @@
     .lesson-parity-2
       opacity 0.2
 
-  .lessons-grid
-    .lessons-row
-      // Class number
-      .lesson-time-wrapper
-        float left
-        height: 50px
-        width: 50px
-        margin-left - 50px
-        color $brand-primary
-        text-align center
-        padding 15px 0
-
-        .lesson-time
+  .desktop
+    .lessons-grid
+      .lessons-row
+        // Class number
+        .lesson-time-wrapper
+          float left
           height: 50px
           width: 50px
-          margin-left 10px
-          opacity 0.4
-          &.current
-            color: $brand-warning
+          margin-left - 50px
+          color $brand-primary
+          text-align center
+          padding 15px 0
+
+          .lesson-time
+            height: 50px
+            width: 50px
+            margin-left 10px
+            opacity 0.4
+            &.current
+              color: $brand-warning
+              opacity 1
+
+            .lesson-time-number
+              font-weight 600
+            .lesson-time-number, .lesson-time-start
+              margin: 0
+
+        // Maker hovered row class number more visible
+        &:hover
+          .lesson-time
             opacity 1
 
-          .lesson-time-number
-            font-weight 600
-          .lesson-time-number, .lesson-time-start
-            margin: 0
+        // Main cell style
+        .lesson-cell
+          position relative
+          border-bottom: 1px solid $sched-border-color
+          border-left: 1px solid $sched-border-color
+          border-right: 1px solid $sched-border-color
+          overflow: hidden
+          height: 64px
+          text-align center
+          font-size $font-size-medium
+          &:active, &:hover, &.active
+            cursor: pointer
+          &.current
+            border: 1px solid $brand-warning !important
 
-      // Maker hovered row class number more visible
-      &:hover
-        .lesson-time
-          opacity 1
+          // Arrow when details showed
+          .arrow
+            left 50%
+            position absolute
+            z-index 10000
+            bottom 0px
+            margin-left -12px
 
-      // Main cell style
-      .lesson-cell
-        position relative
-        border-bottom: 1px solid $sched-border-color
-        border-left: 1px solid $sched-border-color
-        border-right: 1px solid $sched-border-color
-        overflow: hidden
-        height: 64px
-        text-align center
-        font-size $font-size-medium
-        &:active, &:hover, &.active
-          cursor: pointer
-        &.current
-          border: 1px solid $brand-warning !important
+          .free-place
+            float left
+            font-size 12px
+            line-height 12px
+            margin-right 7px
 
-        // Arrow when details showed
-        .arrow
-          left 50%
-          position absolute
-          z-index 10000
-          bottom 0px
-          margin-left -12px
-
-        .free-place
-          float left
-          font-size 12px
-          line-height 12px
-          margin-right 7px
-
-        // Atom class positioning
-        .lesson-atom-cell
-          position absolute
-          border-left 1px solid $sched-border-color
-          border-right 1px solid $sched-border-color
-          padding 0 12px
-          overflow hidden
-          white-space nowrap
-          background #fff
-          z-index 10000
-
-          .stico-lection
-            margin-left -5px
-            margin-right 5px
-
-          &:hover
-            background $sched-cell-hover-bg
-
-          .lesson-name
-            font-weight 300
+          // Atom class positioning
+          .lesson-atom-cell
+            position absolute
+            border-left 1px solid $sched-border-color
+            border-right 1px solid $sched-border-color
+            padding 0 12px
+            overflow hidden
             white-space nowrap
-            color #4b5456
+            background #fff
+            z-index 10000
 
-          .lesson-place
-            color #3baba1
-            margin-left 10px
+            .stico-lection
+              margin-left -5px
+              margin-right 5px
 
-        .lesson-parity-0
-          height 64px
-          line-height 64px
-          z-index 10000
-        .lesson-parity-1
-          background #fff
-          line-height 32px
-          font-size $font-size-base
-          top 0
-          bottom 31px
-          border-bottom 1px solid $sched-border-color
-          z-index 10
-        .lesson-parity-2
-          line-height 32px
-          font-size $font-size-base
-          top 31px
-          bottom 0
-          border-top 1px solid $sched-border-color
-          z-index 10
-        .lesson-half-0
-          left - 2px
-          right - 2px
-        .lesson-half-1
-          background #fff
-          left - 2px
-          z-index 10
-        .lesson-half-2
-          background #fff
-          right - 2px
-          z-index 10
+            &:hover
+              background $sched-cell-hover-bg
 
-      @media (min-width: 768px)
-        .lesson-cell
-          width 211px
+            .lesson-name
+              font-weight 300
+              white-space nowrap
+              color #4b5456
+
+            .lesson-place
+              color #3baba1
+              margin-left 10px
+
+          .lesson-parity-0
+            height 64px
+            line-height 64px
+            z-index 10000
+          .lesson-parity-1
+            background #fff
+            line-height 32px
+            font-size $font-size-base
+            top 0
+            bottom 31px
+            border-bottom 1px solid $sched-border-color
+            z-index 10
+          .lesson-parity-2
+            line-height 32px
+            font-size $font-size-base
+            top 31px
+            bottom 0
+            border-top 1px solid $sched-border-color
+            z-index 10
+          .lesson-half-0
+            left - 2px
+            right - 2px
           .lesson-half-1
-            right 104px
+            background #fff
+            left - 2px
+            z-index 10
           .lesson-half-2
-            left 104px
+            background #fff
+            right - 2px
+            z-index 10
 
-      @media (min-width: 992px)
-        .lesson-cell
-          width 281px
-          .lesson-half-1
-            right 139px
-          .lesson-half-2
-            left 139px
+        @media (min-width: 768px)
+          .lesson-cell
+            width 211px
+            .lesson-half-1
+              right 104px
+            .lesson-half-2
+              left 104px
 
-    // Day of week
-    .lesson-cell-title
-      margin 45px 0 30px 0
-      font-size $font-size-large
-      text-align: center
-      white-space nowrap
+        @media (min-width: 992px)
+          .lesson-cell
+            width 281px
+            .lesson-half-1
+              right 139px
+            .lesson-half-2
+              left 139px
 
-      .lesson-cell-title-day
+      // Day of week
+      .lesson-cell-title
+        margin 45px 0 30px 0
+        font-size $font-size-large
         text-align: center
-        padding: 5px
-        color: #4b5456
-        font-weight 600
+        white-space nowrap
 
-      .lesson-cell-title-date
-        display: inline-block;
-        width: 50px;
-        margin-right: -55px;
-        font-size $font-size-base
-        color lighten(#brand-primary, 30%)
-        font-weight 100
-
-      &.current
         .lesson-cell-title-day
-          border-radius: 5px
-          background: $brand-warning
-          color: #fff
-          padding: 7px 20px;
-        .lesson-cell-title-date
-          color: $brand-primary
-          font-weight 300
+          text-align: center
+          padding: 5px
+          color: #4b5456
+          font-weight 600
 
-    // Rounded dow corners
-    > :first-child + div.lessons-row
-      .lesson-cell
-        border-top: 1px solid $sched-border-color
+        .lesson-cell-title-date
+          display: inline-block;
+          width: 50px;
+          margin-right: -55px;
+          font-size $font-size-base
+          color lighten(#brand-primary, 30%)
+          font-weight 100
+
+        &.current
+          .lesson-cell-title-day
+            border-radius: 5px
+            background: $brand-warning
+            color: #fff
+            padding: 7px 20px;
+          .lesson-cell-title-date
+            color: $brand-primary
+            font-weight 300
+
+      // Rounded dow corners
+      > :first-child + div.lessons-row
+        .lesson-cell
+          border-top: 1px solid $sched-border-color
 
 
   .mobile

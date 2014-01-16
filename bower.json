@@ -1,32 +1,35 @@
 {
-  "name": "StudyTime-client",
-  "repo": "c58/StudyTime-client",
-  "version": "2.0.0",
-  "main": "_public/js/app.js",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "components"
-  ],
-  "dependencies": {
-    "console-polyfill": "~0.1.0",
-    "bootstrap-stylus": "~3.0",
-    "react": "0.x.x",
-    "js-base64": "~2.1.2",
-    "underscore": "~1.5.2",
-    "overthrow-dist": "~0.7.0"
-  },
-  "overrides": {
-    "bootstrap": {
-      "ignore": [
-        "*"
-      ]
+    "name": "StudyTime-client",
+    "repo": "c58/StudyTime-client",
+    "version": "2.1.0",
+    "main": "_public/js/app.js",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ],
+    "dependencies": {
+        "lodash": "~2",
+        "zepto": "~1",
+        "bootstrap-stylus": "~3.0",
+        "backbone": "~1",
+        "overthrow-dist": "~0.7.0",
+        "react": "0.x.x",
+        "js-base64": "~2.1.2"
     },
-    "underscore": {
-      "main": "underscore-min.js"
-    },
-    "react": {
-      "main": "react-with-addons.min.js"
+    "overrides": {
+        "backbone": {
+            "main": "backbone.js",
+            "dependencies": {
+                "lodash": "*",
+                "zepto": "*"
+            }
+        },
+        "lodash": {
+            "main": "dist/lodash.js"
+        },
+        "react": {
+            "main": "react-with-addons.js"
+        }
     }
-  }
 }
