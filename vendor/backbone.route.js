@@ -24,7 +24,8 @@
         _routeParts: {},
 
         // Update interface globally
-        update: function(){},
+        update: function () {
+        },
 
         // Manually bind a single named route to a callback. For example:
         //
@@ -46,17 +47,39 @@
 
                 // Set last name and last props
                 router._lastName = name
-                if(router._routeParts[_route]) {
-                    router._lastProps = _.object(_.map(args, function(v, i) {
+                if (router._routeParts[_route]) {
+                    router._lastProps = _.object(_.map(args, function (v, i) {
                         return [router._routeParts[_route][i], v]
                     }));
                 }
 
+                // Trigger force enabled. Just set last name and props (above)
+                // and exit without callback calls
+                if (router._not_trigger) {
+                    router._not_trigger = false;
+                    return;
+                }
+
+                // Invoke callbacks and triggers
                 (callback && callback.apply(router, args)) || router.update();
                 router.trigger.apply(router, ['route:' + name].concat(args));
                 router.trigger('route', name, args);
                 Backbone.history.trigger('route', router, name, args);
             });
+            return this;
+        },
+
+        // Simple proxy to `Backbone.history` to save a fragment into the history.
+        // UPDATED: set last name and last props
+        navigate: function (fragment, options) {
+            // Force enable trigger and set disabling trigger flag
+            if (!options || !options.trigger) {
+                this._not_trigger = true;
+                options = options ? _.assign(options, {trigger: true}) : {trigger: true};
+            }
+
+            // Delegate to history
+            Backbone.history.navigate(fragment, options);
             return this;
         },
 

@@ -1,7 +1,3 @@
-# Sugar for requiring components
-window.requireComponent = (path)->
-  require("components/#{path}")
-
 # Cache of placeholder elements
 contentElem = $('#content')[0]
 headerElem = $('header')[0]
@@ -17,6 +13,7 @@ class MainRouter extends Backbone.Router
     "students(/:user)": "students"
     "professors(/:user)": "professors"
     ":group(/:dow/:clazz/:atom)": "schedule"
+    ":group(/:event)": "schedule"
     "*error": "404"
 
   # Run React in element
@@ -29,6 +26,7 @@ class MainRouter extends Backbone.Router
     @invokeComponent "header", headerElem
 
   # Update interface with last route name and props
+  # Invoked when history changed and event triggered
   update: ->
     @invokeComponent "header", headerElem, {path: @_lastName}
     @invokeComponent "#{@_lastName}/index", contentElem, @_lastProps
