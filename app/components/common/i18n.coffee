@@ -16,7 +16,15 @@ data =
     buttons:
       sign_in: "Вход"
 
-    schedules:
+    schedule:
+      dow:
+        Mon: "Понедельник"
+        Tue: "Вторник"
+        Wed: "Среда"
+        Thu: "Четверг"
+        Fri: "Пятница"
+        Sat: "Суббота"
+
       no_schedule_with_stuff: "Расписания пока нет"
       no_schedule_without_stuff: "Расписания пока нет, мало того, его некому добавить, ведь в группе нет старосты :("
       index:
