@@ -1,6 +1,6 @@
 {span, div, ul, li, nav, a, i, h2, h3} = React.DOM
 {classSet} = React.addons
-{i18n, viewType, date} = requireComponents('/common', 'i18n', 'viewType', 'date')
+{i18n, viewType, dateFormatter} = requireComponents('/common', 'i18n', 'viewType', 'dateFormatter')
 
 
 SchedCell = React.createClass
@@ -53,7 +53,7 @@ SchedHeaderRow = React.createClass
             [
               (h2 {}, [
                 (i18n {}, "date.day.#{dows_name_to_num[dow]}")
-                (date {date: curr.dates[dow], format: "dd MMM"})
+                (dateFormatter {date: curr.dates[dow], format: "dd MMM"})
               ])
             ])
         )

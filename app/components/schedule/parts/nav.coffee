@@ -1,5 +1,5 @@
 {span, div, a, i} = React.DOM
-{i18n, viewType, relativeDate, date} = requireComponents('/common', 'i18n', 'viewType', 'relativeDate', 'date')
+{i18n, viewType, relativeDate, dateFormatter} = requireComponents('/common', 'i18n', 'viewType', 'relativeDate', 'dateFormatter')
 {classSet} = React.addons
 
 
@@ -52,11 +52,11 @@ module.exports =
         else [
           (a {onClick: @prevWeek}, [
             (i {className: 'stico-arrow-right rotate-180'})
-            (date {date: @state.bounds.left, format: "dd MMM"})
+            (dateFormatter {date: @state.bounds.left, format: "dd MMM"})
           ])
           (span {}, ' − ')
           (a {onClick: @nextWeek}, [
-            (date {date: @state.bounds.right, format: "dd MMM"})
+            (dateFormatter {date: @state.bounds.right, format: "dd MMM"})
             (i {className: 'stico-arrow-right'})
           ])
         ]
