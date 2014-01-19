@@ -69,9 +69,6 @@ module.exports = React.createClass
   getInitialState: ->
     locale: 'ru'
 
-  getValue: (path)->
-    getLocalizedValue('ru', path)
-
   render: ->
     path = if _.isArray(@props.children) then @props.children[0] else @props.children
-    (span {}, @getValue(path))
+    (span {}, getLocalizedValue(@state.locale, path))

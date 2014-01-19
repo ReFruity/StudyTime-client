@@ -1,7 +1,6 @@
 # Component dependencies
 {span} = React.DOM
 {i18n} = requireComponents('/common', 'i18n')
-i18n = i18n({})
 
 # Support functions
 padNumber = (num, digits, trim) ->
@@ -26,7 +25,7 @@ dateStrGetter = (name, shortForm) ->
   (date) ->
     value = date["get" + name]()
     get = (if shortForm then "short_#{name}" else name)
-    return i18n.getValue("date.#{get.toLowerCase()}.#{value}")
+    (i18n {}, "date.#{get.toLowerCase()}.#{value}")
 
 timeZoneGetter = (date) ->
   zone = -1 * date.getTimezoneOffset()
@@ -97,7 +96,7 @@ getFormattedDate = _.memoize((date, format) ->
   return (span {}, date + "")  unless _.isDate(date) or not format
 
   # Parse format
-  text = ""
+  elems = []
   parts = []
   fn = undefined
   match = undefined
@@ -113,9 +112,9 @@ getFormattedDate = _.memoize((date, format) ->
   # Create localized date
   for value in parts
     fn = DATE_FORMATS[value]
-    text += (if fn then fn(date) else value.replace(/(^'|'$)/g, "").replace(/''/g, "'"))
+    elems.push(if fn then fn(date) else (span {}, value.replace(/(^'|'$)/g, "").replace(/''/g, "'")))
 
-  text
+  elems
 , (d, f)->
   d.getTime() + f
 )
