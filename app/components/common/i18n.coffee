@@ -1,6 +1,17 @@
 # i18n values
 data =
   ru:
+    date:
+      day:
+        ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+      short_day:
+        ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+      month:
+        ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октабря', 'ноября',
+         'декабря']
+      short_month:
+        ['янв.', 'фев.', 'мар.', 'апр.', 'мая', 'июн.', 'июл.', 'авг.', 'сент.', 'окт.', 'ноя.', 'дек.']
+
     layouts:
       main:
         site_name: "StudyTime"
@@ -13,41 +24,29 @@ data =
           courses: "Спецкурсы"
           professors: "Преподы"
 
+
     buttons:
       sign_in: "Вход"
 
     schedule:
-      dow:
-        Mon: "Понедельник"
-        Tue: "Вторник"
-        Wed: "Среда"
-        Thu: "Четверг"
-        Fri: "Пятница"
-        Sat: "Суббота"
-
-      no_schedule_with_stuff: "Расписания пока нет"
-      no_schedule_without_stuff: "Расписания пока нет, мало того, его некому добавить, ведь в группе нет старосты :("
-      index:
-        choose_group: "Выберите группу"
-        subscribe: "Подписаться"
-        next_week: "Следующая неделя"
       navigation:
         session: "Сессия"
         semestr: "Семестр"
         updating: "Обновление..."
         updated: "Обновлено"
         groups: "Группы"
+        next_week: "Следующая неделя"
+
+      no_schedule_with_stuff: "Расписания пока нет"
+      no_schedule_without_stuff: "Расписания пока нет, мало того, его некому добавить, ведь в группе нет старосты :("
+      index:
+        choose_group: "Выберите группу"
+        subscribe: "Подписаться"
       studies:
-        Mon: "Понедельник"
-        Tue: "Вторник"
-        Wed: "Среда"
-        Thu: "Четверг"
-        Fri: "Пятница"
-        Sat: "Суббота"
-      exams:
-        exam: 'Экзамены'
-        test: 'Зачеты'
-        consult: 'консультация'
+        exams:
+          exam: 'Экзамены'
+          test: 'Зачеты'
+          consult: 'консультация'
 
 # Memorized localized value getter
 getLocalizedValue = _.memoize((locale, path) ->
@@ -66,11 +65,13 @@ getLocalizedValue = _.memoize((locale, path) ->
 
 # Rendering
 {span} = React.DOM
-
 module.exports = React.createClass
   getInitialState: ->
     locale: 'ru'
 
+  getValue: (path)->
+    getLocalizedValue('ru', path)
+
   render: ->
     path = if _.isArray(@props.children) then @props.children[0] else @props.children
-    (span {}, getLocalizedValue(@state.locale, path))
+    (span {}, @getValue(path))

@@ -1,6 +1,7 @@
 {span, div, ul, li, nav, a, i, h2, h3} = React.DOM
 {classSet} = React.addons
-{i18n, viewType} = requireComponents('/common', 'i18n', 'viewType')
+{i18n, viewType, date} = requireComponents('/common', 'i18n', 'viewType', 'date')
+
 
 SchedCell = React.createClass
   render: ->
@@ -9,15 +10,17 @@ SchedCell = React.createClass
       @props.children
     ])
 
+
 SchedDetails = React.createClass
   render: ->
     (div {className: 'sched-details'}, [
       @props.children
     ])
 
+
 SchedDataRow = React.createClass
   render: ->
-    {sched, number, cellElem, detailsElem, curr, dows, details, date} = @props
+    {sched, number, cellElem, detailsElem, curr, dows, details} = @props
     (div {className: 'container data-row'}, [
       (div {className: 'row'}, [
         (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
@@ -25,9 +28,9 @@ SchedDataRow = React.createClass
           (h3 {className: 'number-time'}, [number])
         ])
         (@props.dows.map (dow)->
-          data = if sched[dow] and sched[dow][number] then sched[dow][number] else {}
+          data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
           (SchedCell {dow: dow, number: number, curr: curr}, [
-            (cellElem {dow: dow, number: number, date: date, data: data})
+            (cellElem {dow: dow, number: number, data: data})
           ])
         )
         ((if details and detailsElem and details.dow in dows and details.number == number
@@ -38,21 +41,25 @@ SchedDataRow = React.createClass
       ])
     ])
 
+
+dows_name_to_num = {'Mon':1, 'Tue':2, 'Wed':3, 'Thu':4, 'Fri':5, 'Sat':6, 'Sun':0}
 SchedHeaderRow = React.createClass
   render: ->
-    {curr} = @props
+    {curr, dows} = @props
     (div {className: 'container header-row'}, [
       (div {className: 'row'}, [
-        (@props.dows.map (dow) ->
+        (dows.map (dow) ->
           (div {key: "sched.header.#{dow}", className: classSet('header-day col-sm-4': true, 'current': curr.dow == dow)},
             [
               (h2 {}, [
-                (i18n {}, "schedule.dow.#{dow}")
+                (i18n {}, "date.day.#{dows_name_to_num[dow]}")
+                (date {date: curr.dates[dow], format: "dd MMM"})
               ])
             ])
         )
       ])
     ])
+
 
 SchedBlock = React.createClass
   render: ->
@@ -63,6 +70,7 @@ SchedBlock = React.createClass
         self.transferPropsTo(SchedDataRow {number: number})
       )
     ])
+
 
 module.exports = React.createClass
   mixins: [viewType]
@@ -76,6 +84,11 @@ module.exports = React.createClass
       details = propValue[propName]
       if details and (not details.dow or not details.number or not details.data)
         throw new Error('Mallformed details prop. Must contain `dow`, `number` and `data` fields')
+
+  getDefaultProps: ->
+    date: new Date()
+    timing: {}
+    sched: {}
 
   getCurrentClass: ->
     currentClass = undefined
@@ -114,11 +127,6 @@ module.exports = React.createClass
 
   getCurrentDow: ->
     ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][@props.date.getDay()]
-
-  getDefaultProps: ->
-    date: new Date()
-    timing: {}
-    sched: {}
 
   render: ->
     # Calculate currents

@@ -12,7 +12,8 @@ $ ->
   $("body").on("click", "a", (e) ->
     e.preventDefault()
     href = $(this).attr("href")
-    Backbone.history.navigate(href, true)
+    if href and href != "#"
+      Backbone.history.navigate(href, true)
   )
 
   # Initialize Backbone History
