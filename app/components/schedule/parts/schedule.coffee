@@ -56,7 +56,7 @@ SchedDataRow = React.createClass
 SchedHeaderRow = React.createClass
   render: ->
     {curr, dows} = @props
-    (div {className: 'container header-row'}, [
+    (div {className: 'container header-row', key: "sched.header.#{dows.join('.')}"}, [
       (div {className: 'row'}, [
         (dows.map (dow) ->
           (div {key: "sched.header.#{dow}", className: classSet('header-day col-sm-4': true, 'current': curr.dow == dow)},
@@ -85,17 +85,30 @@ SchedBlock = React.createClass
     ])
 
 ##
-# Main schedule component
+# Main schedule component. Provides flexible interface
+# for showing schedule grid with what ever you want.
+#
+# One required prop is `cellElem`, that will be used
+# as element in each cell of grid. This element gets
+# from schedule `dow`, `number`, `data` and `date` params.
+#
+# You can specify `detailsElem`, if you want to show some
+# details about cells. If this param presented and presented
+# another param called `details` (with cell coordinates and data)
+# this component adds details element above given cell coordinates.
+#
+# Component is responsive to desktop and mobile versions.
+# On desktop it showes three columns of days, on mobile - one column.
 #
 module.exports = React.createClass
   mixins: [viewType]
 
   propTypes:
+    cellElem: React.PropTypes.func.isRequired,
     date: React.PropTypes.instanceOf(Date)
     sched: React.PropTypes.object
     timing: React.PropTypes.object
     detailsElem: React.PropTypes.func,
-    cellElem: React.PropTypes.func.isRequired,
     details: (propValue, propName) ->
       details = propValue[propName]
       if details and (not details.dow or not details.number or not details.data)

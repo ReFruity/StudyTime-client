@@ -85,7 +85,7 @@ DATE_FORMATS =
   a: ampmGetter
   Z: timeZoneGetter
 
-getFormattedDate = _.memoize((date, format) ->
+getFormattedDate = (date, format) ->
   # Validate date and format
   if _.isString(date)
     if NUMBER_STRING.test(date)
@@ -115,9 +115,6 @@ getFormattedDate = _.memoize((date, format) ->
     elems.push(if fn then fn(date) else (span {}, value.replace(/(^'|'$)/g, "").replace(/''/g, "'")))
 
   elems
-, (d, f)->
-  d.getTime() + f
-)
 
 # Component
 module.exports = React.createClass

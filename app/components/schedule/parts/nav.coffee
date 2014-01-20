@@ -8,8 +8,18 @@ module.exports =
   # Editor switcher. Can show/hide event editor
   #
   EditorSwitcher: React.createClass
+    propTypes:
+      switchEditorHandler: React.PropTypes.func.isRequired
+      editor: React.PropTypes.object.isRequired
+
+    toggleEditor: ->
+      if @props.editor.mode > 0
+        @props.switchEditorHandler(0)
+      else
+        @props.switchEditorHandler(1)
+
     render: ->
-      (div {}, 'editor')
+      (a {onClick: @toggleEditor}, 'editor')
 
   ##
   # Component for switching current showing schedule week
@@ -18,11 +28,12 @@ module.exports =
   #
   WeekSwitcher: React.createClass
     propTypes:
-      switchWeekHandler: React.PropTypes.func #.isRequired
+      switchWeekHandler: React.PropTypes.func.isRequired
+      startDate: React.PropTypes.instanceOf(Date)
 
     getInitialState: ->
       in_feature: false
-      start_date: new Date()
+      start_date: @props.startDate or new Date()
       bounds: @getBounds(new Date())
 
     getBounds: (date)->
@@ -38,6 +49,7 @@ module.exports =
       now = new Date(@state.bounds.right)
       now.setDate(now.getDate() + direction * 7)
       new_bounds = @getBounds(now)
+      @props.switchWeekHandler(new_bounds)
       @setState(
         in_feature: new_bounds.left > @state.start_date
         bounds: new_bounds
