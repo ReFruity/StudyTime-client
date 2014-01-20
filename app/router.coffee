@@ -12,7 +12,7 @@ class MainRouter extends Backbone.Router
     "courses(/:dow)": "courses"
     "students(/:user)": "students"
     "professors(/:user)": "professors"
-    ":group(/:dow/:clazz/:atom)": "schedule"
+    ":group(/:dow/:number/:atom)": "schedule"
     ":group(/:event)": "schedule"
     "*error": "404"
 
@@ -29,7 +29,7 @@ class MainRouter extends Backbone.Router
   # Invoked when history changed and event triggered
   update: ->
     @invokeComponent "header", headerElem, {path: @_lastName}
-    @invokeComponent "#{@_lastName}/index", contentElem, @_lastProps
+    @invokeComponent "#{@_lastName}/index", contentElem, {route: @_lastProps}
 
 
 module.exports = new MainRouter

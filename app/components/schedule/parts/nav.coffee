@@ -1,14 +1,21 @@
 {span, div, a, i} = React.DOM
-{i18n, viewType, relativeDate, dateFormatter} = requireComponents('/common', 'i18n', 'viewType', 'relativeDate', 'dateFormatter')
+{i18n, viewType, relativeDate, dateFormat} = requireComponents('/common', 'i18n', 'viewType', 'relativeDate', 'dateFormat')
 {classSet} = React.addons
 
 
 module.exports =
+  ##
+  # Editor switcher. Can show/hide event editor
+  #
   EditorSwitcher: React.createClass
     render: ->
       (div {}, 'editor')
 
-
+  ##
+  # Component for switching current showing schedule week
+  # Invoke `@props.switchWeekHandler` with new week bounds
+  # when week changed.
+  #
   WeekSwitcher: React.createClass
     propTypes:
       switchWeekHandler: React.PropTypes.func #.isRequired
@@ -52,17 +59,21 @@ module.exports =
         else [
           (a {onClick: @prevWeek}, [
             (i {className: 'stico-arrow-right rotate-180'})
-            (dateFormatter {date: @state.bounds.left, format: "dd MMM"})
+            (dateFormat {date: @state.bounds.left, format: "dd MMM"})
           ])
           (span {}, ' − ')
           (a {onClick: @nextWeek}, [
-            (dateFormatter {date: @state.bounds.right, format: "dd MMM"})
+            (dateFormat {date: @state.bounds.right, format: "dd MMM"})
             (i {className: 'stico-arrow-right'})
           ])
         ]
       ))
 
-
+  ##
+  # In other words, this is loading progress bar. It showes
+  # 'Loading...' when `@props.updated` is undefined and
+  # 'Loaded at few seconds ago' when `@props.updated` is not empty
+  #
   UpdateIndicator: React.createClass
     render: ->
       (div {className: 'sched-upd-indicator'}, (
@@ -76,7 +87,10 @@ module.exports =
           (i18n {}, 'schedule.navigation.updating')
       ))
 
-
+  ##
+  # Component for switching schedule type between 'studies'
+  # and 'exams'
+  #
   ScheduleTypeSwitcher: React.createClass
     propTypes:
       switchTypeHandler: React.PropTypes.func.isRequired
@@ -96,7 +110,9 @@ module.exports =
         ])
       ])
 
-
+  ##
+  # Back to groups button component. Nothing more.
+  #
   BackToGroupsButton: React.createClass
     propTypes:
       group: React.PropTypes.object.isRequired

@@ -46,6 +46,7 @@
                 var args = router._extractParameters(route, fragment);
 
                 // Set last name and last props
+                router._lastRoute = _route
                 router._lastName = name
                 if (router._routeParts[_route]) {
                     router._lastProps = _.object(_.map(args, function (v, i) {
@@ -67,6 +68,29 @@
                 Backbone.history.trigger('route', router, name, args);
             });
             return this;
+        },
+
+        // Replace ":param" values in given href to current route values
+        prepareHref: function (href) {
+            if (this._routeParts[this._lastRoute]) {
+                href = href.replace('^\/+', '')
+                var args = href.split("/")
+                var props = this._lastProps;
+                return '/' + (_.map(args,function (v) {
+                    if (v[0] != ':')
+                        return v
+                    else {
+                        var partVal = props[v.substr(1)];
+                        return partVal ? partVal : v;
+                    }
+                }).join('/'))
+            }
+
+            return href
+        },
+
+        getRouteParams: function () {
+            return this._lastProps
         },
 
         // Simple proxy to `Backbone.history` to save a fragment into the history.
@@ -97,8 +121,7 @@
                 .replace(splatParam, '(.*?)');
 
             return new RegExp('^' + route + '$');
-        }
-
+        },
     });
 
     return Backbone.Router;

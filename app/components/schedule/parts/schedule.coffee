@@ -1,8 +1,10 @@
 {span, div, ul, li, nav, a, i, h2, h3} = React.DOM
 {classSet} = React.addons
-{i18n, viewType, dateFormatter} = requireComponents('/common', 'i18n', 'viewType', 'dateFormatter')
+{i18n, viewType, dateFormat} = requireComponents('/common', 'i18n', 'viewType', 'dateFormat')
 
-
+##
+# Decorator component for showing cell content
+#
 SchedCell = React.createClass
   render: ->
     {number, curr, dow} = @props
@@ -10,17 +12,24 @@ SchedCell = React.createClass
       @props.children
     ])
 
-
+##
+# Decorator component for showing cell details
+# It renders inside some custom componen, pushed to
+# main schedule component
+#
 SchedDetails = React.createClass
   render: ->
     (div {className: 'sched-details'}, [
       @props.children
     ])
 
-
+##
+# Component for showing data cells (classes, or free places),
+# for each day in block for given class number
+#
 SchedDataRow = React.createClass
   render: ->
-    {sched, number, cellElem, detailsElem, curr, dows, details} = @props
+    {sched, number, cellElem, detailsElem, curr, dows, details, date} = @props
     (div {className: 'container data-row'}, [
       (div {className: 'row'}, [
         (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
@@ -30,7 +39,7 @@ SchedDataRow = React.createClass
         (@props.dows.map (dow)->
           data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
           (SchedCell {dow: dow, number: number, curr: curr}, [
-            (cellElem {dow: dow, number: number, data: data})
+            (cellElem {dow: dow, number: number, data: data, date: date})
           ])
         )
         ((if details and detailsElem and details.dow in dows and details.number == number
@@ -41,8 +50,9 @@ SchedDataRow = React.createClass
       ])
     ])
 
-
-dows_name_to_num = {'Mon':1, 'Tue':2, 'Wed':3, 'Thu':4, 'Fri':5, 'Sat':6, 'Sun':0}
+##
+# Show day of week names in block
+#
 SchedHeaderRow = React.createClass
   render: ->
     {curr, dows} = @props
@@ -52,8 +62,8 @@ SchedHeaderRow = React.createClass
           (div {key: "sched.header.#{dow}", className: classSet('header-day col-sm-4': true, 'current': curr.dow == dow)},
             [
               (h2 {}, [
-                (i18n {}, "date.day.#{dows_name_to_num[dow]}")
-                (dateFormatter {date: curr.dates[dow], format: "dd MMM"})
+                (dateFormat {date: curr.dates[dow], format: "EEEE"})
+                (dateFormat {date: curr.dates[dow], format: "dd MMM"})
               ])
             ])
         )
@@ -61,6 +71,9 @@ SchedHeaderRow = React.createClass
     ])
 
 
+##
+# Component for showing block with few days of week (block of days)
+#
 SchedBlock = React.createClass
   render: ->
     self = @
@@ -71,9 +84,12 @@ SchedBlock = React.createClass
       )
     ])
 
-
+##
+# Main schedule component
+#
 module.exports = React.createClass
   mixins: [viewType]
+
   propTypes:
     date: React.PropTypes.instanceOf(Date)
     sched: React.PropTypes.object
@@ -90,6 +106,7 @@ module.exports = React.createClass
     timing: {}
     sched: {}
 
+  # Calculate current class number based on timing and current time
   getCurrentClass: ->
     currentClass = undefined
     mins = @props.date.getHours() * 60 + @props.date.getMinutes()
@@ -104,6 +121,7 @@ module.exports = React.createClass
 
     return currentClass
 
+  # Calculate Date for each day of current week
   getWeekDates: ->
     dowDates = {}
     dows = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -117,6 +135,7 @@ module.exports = React.createClass
 
     return dowDates
 
+  # Calculate current week parity
   getWeekParity: ->
     d = new Date(@props.date)
     d.setHours(0, 0, 0)
@@ -125,9 +144,12 @@ module.exports = React.createClass
     weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1) / 7)
     return if weekNo % 2 == 0 then 'even' else 'odd'
 
+  # Calculate current day of week
   getCurrentDow: ->
     ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][@props.date.getDay()]
 
+  # Renders the schedule based on view type (mobile or desktop),
+  # provided from mixin `viewType`
   render: ->
     # Calculate currents
     curr =
