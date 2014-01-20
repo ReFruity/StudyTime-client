@@ -38,20 +38,16 @@ module.exports = React.createClass
     route: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    scheduleType: 'studies'
     group: {name: @props.route.group}
-
-  onSwitchScheduleType: (type)->
-    @setState(scheduleType: type)
 
   render: ->
     (div {className: 'group-sched'}, [
       (if @state.group.name
-        attrs = {switchTypeHandler: @onSwitchScheduleType, group: @state.group}
-        switch @state.scheduleType
-          when 'studies' then @transferPropsTo(studies attrs)
-          when 'exams' then @transferPropsTo(exams attrs)
-          when 'vacation' then @transferPropsTo(vacation attrs)
+        switch @props.route.scheduleType
+          when 'studies' then @transferPropsTo(studies {group: @state.group})
+          when 'exams' then @transferPropsTo(exams {group: @state.group})
+          when 'vacation' then @transferPropsTo(vacation {group: @state.group})
+          else @transferPropsTo(studies {group: @state.group})
       )
       (GroupStar {group: @state.group})
     ])

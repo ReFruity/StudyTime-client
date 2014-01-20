@@ -12,8 +12,8 @@ class MainRouter extends Backbone.Router
     "courses(/:dow)": "courses"
     "students(/:user)": "students"
     "professors(/:user)": "professors"
-    ":group(/:dow/:number/:atom)": "schedule"
-    ":group(/:event)": "schedule"
+    ":group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule"
+    ":group(/:scheduleType(/:event(/:detailsView)))": "schedule"
     "*error": "404"
 
   # Run React in element
@@ -28,8 +28,8 @@ class MainRouter extends Backbone.Router
   # Update interface with last route name and props
   # Invoked when history changed and event triggered
   update: ->
-    @invokeComponent "header", headerElem, {path: @_lastName}
-    @invokeComponent "#{@_lastName}/index", contentElem, {route: @_lastProps}
+    @invokeComponent "header", headerElem, {path: @getRouteName()}
+    @invokeComponent "#{@_lastName}/index", contentElem, {route: @getParams()}
 
 
 module.exports = new MainRouter

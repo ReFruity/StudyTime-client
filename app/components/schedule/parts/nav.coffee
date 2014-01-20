@@ -72,7 +72,7 @@ module.exports =
   ##
   # In other words, this is loading progress bar. It showes
   # 'Loading...' when `@props.updated` is undefined and
-  # 'Loaded at few seconds ago' when `@props.updated` is not empty
+  # 'Loaded at <relative date>' when `@props.updated` is not empty
   #
   UpdateIndicator: React.createClass
     render: ->
@@ -93,19 +93,15 @@ module.exports =
   #
   ScheduleTypeSwitcher: React.createClass
     propTypes:
-      switchTypeHandler: React.PropTypes.func.isRequired
+      group: React.PropTypes.object.isRequired
       currentType: React.PropTypes.string.isRequired
 
-    switchType: (e)->
-      console.log e.dispatchConfig
-
     render: ->
-      self = @
       (div {className: 'sched-type-switcher'}, [
-        (a {className: classSet('current': @props.currentType == 'studies'), onClick: -> self.props.switchTypeHandler('studies')}, [
+        (a {href: "/#{@props.group.name}/studies", className: classSet('current': @props.currentType == 'studies')}, [
           (i18n {}, 'schedule.navigation.semestr')
         ])
-        (a {className: classSet('current': @props.currentType == 'exams'), onClick: -> self.props.switchTypeHandler('exams')}, [
+        (a {href: "/#{@props.group.name}/exams", className: classSet('current': @props.currentType == 'exams')}, [
           (i18n {}, 'schedule.navigation.session')
         ])
       ])

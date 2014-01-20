@@ -14,15 +14,13 @@
 }(function (_, Backbone) {
     // Cached regular expressions for matching named param parts and splatted
     // parts of route strings.
-    var optionalParam = /\((.*?)\)/g;
+    var optionalParamOpen = /\(/g;
+    var optionalParamClose = /\)/g;
     var namedParam = /(\(\?)?:\w+/g;
     var splatParam = /\*\w+/g;
     var escapeRegExp = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
     Backbone.Router = Backbone.Router.extend({
-        // Save route part names there
-        _routeParts: {},
-
         // Update interface globally
         update: function () {
         },
@@ -33,26 +31,27 @@
         //       ...
         //     });
         //
-        route: function (_route, name, callback) {
-            var route = _route;
-            if (!_.isRegExp(route)) route = this._routeToRegExp(route);
+        route: function (route, name, callback) {
+            // RegEx route not supported. Create regex from string
+            if (_.isRegExp(route))
+                throw new Error('RegEx route not supported!')
+            route = this._routeToRegExp(route);
+
+            // Create callback function
             if (_.isFunction(name)) {
                 callback = name;
                 name = '';
             }
             if (!callback) callback = this[name];
-            var router = this;
-            Backbone.history.route(route, function (fragment) {
-                var args = router._extractParameters(route, fragment);
 
-                // Set last name and last props
-                router._lastRoute = _route
+            // Bind to history
+            var router = this;
+            Backbone.history.route(route.regex, function (fragment) {
+                var args = router._extractParameters(route.regex, fragment);
+                router._lastParams = _.object(_.map(args, function (v, i) {
+                    return [route.names[i], v]
+                }));
                 router._lastName = name
-                if (router._routeParts[_route]) {
-                    router._lastProps = _.object(_.map(args, function (v, i) {
-                        return [router._routeParts[_route][i], v]
-                    }));
-                }
 
                 // Trigger force enabled. Just set last name and props (above)
                 // and exit without callback calls
@@ -70,27 +69,14 @@
             return this;
         },
 
-        // Replace ":param" values in given href to current route values
-        prepareHref: function (href) {
-            if (this._routeParts[this._lastRoute]) {
-                href = href.replace('^\/+', '')
-                var args = href.split("/")
-                var props = this._lastProps;
-                return '/' + (_.map(args,function (v) {
-                    if (v[0] != ':')
-                        return v
-                    else {
-                        var partVal = props[v.substr(1)];
-                        return partVal ? partVal : v;
-                    }
-                }).join('/'))
-            }
-
-            return href
+        // Return last route params object
+        getParams: function () {
+            return this._lastParams
         },
 
-        getRouteParams: function () {
-            return this._lastProps
+        // Return last route name string
+        getRouteName: function () {
+            return this._lastName
         },
 
         // Simple proxy to `Backbone.history` to save a fragment into the history.
@@ -110,18 +96,31 @@
         // Convert a route string into a regular expression, suitable for matching
         // against the current location hash.
         _routeToRegExp: function (route) {
-            var self = this;
-            self._routeParts[route] = [];
+            var names = []
             route = route.replace(escapeRegExp, '\\$&')
-                .replace(optionalParam, '(?:$1)?')
+                .replace(optionalParamOpen, '(?:')
+                .replace(optionalParamClose, ')?')
                 .replace(namedParam, function (match, optional) {
-                    self._routeParts[route].push(match.substr(1))
+                    names.push(match.substr(1))
                     return optional ? match : '([^\/]+)';
                 })
-                .replace(splatParam, '(.*?)');
+                .replace(splatParam, '(.*?)')
 
-            return new RegExp('^' + route + '$');
+            return {
+                regex: new RegExp('^' + route + '$'),
+                names: names
+            };
         },
+
+        // Given a route, and a URL fragment that it matches, return the array of
+        // extracted decoded parameters. Empty or unmatched parameters will be
+        // treated as `null` to normalize cross-browser behavior.
+        _extractParameters: function (route, fragment) {
+            var params = route.exec(fragment).slice(1);
+            return _.map(params, function (param) {
+                return param ? decodeURIComponent(param) : null;
+            });
+        }
     });
 
     return Backbone.Router;

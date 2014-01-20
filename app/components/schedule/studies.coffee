@@ -9,7 +9,6 @@
 Navigation = React.createClass
   propTypes:
     group: React.PropTypes.object.isRequired
-    switchTypeHandler: React.PropTypes.func.isRequired
     sched: React.PropTypes.object.isRequired
 
   render: ->
@@ -17,7 +16,7 @@ Navigation = React.createClass
       (div {className: 'row'}, [
         (nav.EditorSwitcher {})
         (nav.BackToGroupsButton {group: @props.group})
-        (nav.ScheduleTypeSwitcher {currentType:'studies', switchTypeHandler: @props.switchTypeHandler})
+        (nav.ScheduleTypeSwitcher {currentType:'studies', group: @props.group})
         (nav.UpdateIndicator {updated: new Date()})
         (nav.WeekSwitcher {})
       ])
@@ -31,7 +30,6 @@ Navigation = React.createClass
 module.exports = React.createClass
   propTypes:
     group: React.PropTypes.object.isRequired
-    switchTypeHandler: React.PropTypes.func.isRequired
     route: React.PropTypes.object.isRequired
 
   getInitialState: ->
@@ -42,18 +40,19 @@ module.exports = React.createClass
         ]
 
   render: ->
+    # Maybe show details
     if @props.route.dow and @props.route.number
       details =
         dow: @props.route.dow
         number: @props.route.number
         data: {}
 
+    # Show navigation and schedule
     (div {className: 'studies'}, [
       @transferPropsTo(Navigation {sched: @state.sched})
       @transferPropsTo(schedule {
-        cellElem: classCell
+        cellElem: classCell("/#{@props.route.group}/studies")
         detailsElem: classDetails
         details: details
-        switchTypeHandler: @props.switchTypeHandler
         sched: @state.sched})
     ])
