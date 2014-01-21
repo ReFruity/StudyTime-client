@@ -27,14 +27,7 @@ exports.config =
           'app/styles/app.styl'
         ]
 
-    templates:
-      joinTo:
-        'js/dontUseMe': /^app/
-
   plugins:
-    jade:
-      pretty: no
-
     uglify:
       mangle: yes
       compress:

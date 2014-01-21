@@ -1,5 +1,5 @@
-{span, div, a, h2, i, ul, li, input} = React.DOM
-{i18n, clickOutside, upload} = requireComponents('/common', 'i18n', 'clickOutside', 'upload')
+{span, div, a, h2, i, ul, li, input, form, button} = React.DOM
+{i18n, clickOutside, uploadInput} = requireComponents('/common', 'i18n', 'clickOutside', 'uploadInput')
 
 ##
 # Component for header of attachments. There is header text
@@ -8,13 +8,14 @@
 AttHeader = React.createClass
   propTypes:
     uploadFileHandler: React.PropTypes.func.isRequired
+    data: React.PropTypes.object.isRequired
 
   render: ->
     (div {className: 'att-header'}, [
       (h2 {}, [
         (i18n {}, 'attachments.header')
       ])
-      (AddAttachemtnBtn {uploadFileHandler: @props.uploadFileHandler})
+      (AddAttachemtnBtn {uploadFileHandler: @props.uploadFileHandler, data: @props.data})
     ])
 
 
@@ -27,6 +28,7 @@ AddAttachemtnBtn = React.createClass
   mixins: [clickOutside]
   propTypes:
     uploadFileHandler: React.PropTypes.func.isRequired
+    data: React.PropTypes.object.isRequired
 
   getDefaultProps: ->
     categories: ['note', 'book', 'tasks', 'practice', 'quiz', 'other']
@@ -70,39 +72,102 @@ AddAttachemtnBtn = React.createClass
           (ul {className: 'att-type-switcher'},
             @props.categories.map (cat) ->
               (li {}, [
+                # Upload file
                 (if self.state.attType == 'file'
-                  (upload {uploadFileHandler: self.props.uploadFileHandler, className: 'att-file-input', properties: {category: cat}})
+                  (uploadInput {
+                    uploadFileHandler: self.props.uploadFileHandler
+                    className: 'att-file-input'
+                    category: cat
+                    subject: self.props.data.subject.object
+                  })
                 )
-                (i18n {}, "attachments.types.#{cat}")
+                # Add a link
+                (i18n {
+                  onClick: ->
+                    self.props.uploadFileHandler({
+                      editor: yes
+                      category: cat
+                      subject: self.props.data.subject.object
+                    })
+                }, "attachments.types.#{cat}")
               ])
           )
         ])
       )
     ])
 
-
-##
-# Container for in progress attachments
-#
-AttProgressContainer = React.createClass
-  render: ->
-    (span {}, 'attachments')
-
-
 ##
 # Container for currently uploaded attachments
 #
 AttContainer = React.createClass
   render: ->
-    (span {}, 'attachments')
+    (div {className: 'att-cont'},
+      @props.files.map (file) ->
+        (AttItem {file: file})
+    )
 
 ##
 # Represents attachment item (uploading or already uploaded).
 # Can handle uploading progress and has editing mode.
 #
 AttItem = React.createClass
+  getInitialState: ->
+    uploader:
+      percents: 0
+      size: 0
+      uploaded: 0
+
+  onSubmitEditor: ->
+
+  onCancelEditor: ->
+
   render: ->
-    (span {}, 'attachments')
+    (div {className: 'att-item'}, (
+      if @props.file.editor
+        (form {role: "form", onSubmit: @onSubmitEditor}, [
+          (div {className: 'row'}, [
+            (div {className: 'att-inputs'}, [
+              (if not @props.file.s3
+                (input {className: 'form-control', type: "url", name: "link", placeholder: "Ссылка", required: yes})
+              )
+              (input {className: 'form-control', type: "text", name: "name", placeholder: "Название", required: yes})
+              (input {className: 'form-control', type: "text", name: "description", placeholder: "Описание"})
+            ])
+          ])
+          (div {className: 'row'}, [
+            (div {className: 'done-btn-cont'}, [
+              (button {className: 'form-control btn btn-success', type: "submit"}, 'Готово')
+            ])
+            (if @props.file.uploader
+              (div {className: 'progress-cont'}, [
+                (span {className: 'percents'}, "#{@state.uploader.percents}%")
+                (span {className: 'sizes'}, "#{@state.uploader.size}/#{@state.uploader.uploaded}")
+              ])
+            )
+            (div {className: 'cancel-btn-cont'}, [
+              (button {className: 'form-control btn', onClick: @onCancelEditor, type: "button"}, 'Отмена')
+            ])
+          ])
+        ])
+      else
+        [
+          (div {className: 'att-header'}, [
+            (a {className: 'name', href: ''}, 'конспекты.pdf')
+            (if @props.file.uploader
+              (div {className: 'progress-cont'}, [
+                (span {className: 'percents'}, "#{@state.uploader.percents}%")
+                (span {className: 'sizes'}, "#{@state.uploader.size}/#{@state.uploader.uploaded}")
+              ])
+            else
+              (div {className: 'att-details'},
+                (span {className: 'size'}, "#{@props.file.size}")
+                (dateFormat {className: 'date', date: @props.file.updated, format: 'dd MMM yyyy'})
+              )
+            )
+          ])
+          (div {className: 'att-descr'}, @props.file.description)
+        ]
+    ))
 
 
 ##
@@ -123,10 +188,10 @@ module.exports = React.createClass
     @forceUpdate()
 
   render: ->
-    (div {className: 'container class-att'}, [
-      (AttHeader {uploadFileHandler: @onUploadFile})
+    (div {className: 'class-att'}, [
+      (AttHeader {uploadFileHandler: @onUploadFile, data: @props.data})
       (if @state.uploaders.length > 0
-        (AttProgressContainer {uploaders: @state.uploaders})
+        (AttContainer {files: @state.uploaders})
       )
       (if @state.files.length > 0
         (AttContainer {files: @state.files})

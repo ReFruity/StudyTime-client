@@ -2,12 +2,17 @@
 
 
 class FileUploader
-  constructor: (@file) ->
+  constructor: (@file, @category, @subject) ->
+    @name = @file.name
+    @size = @file.size
+    @errors = @file.errors
+    @s3 = yes
+    @uploader = yes
+    @editor = yes
 
   start: ->
-    if @file.errors
+    if @errors
       throw new Error('Cant start file uploading until it has errors')
-
     $.ajax
       xhr: ->
         xhr = new XMLHttpRequest();
@@ -56,19 +61,19 @@ class FileUploader
     return this
 
 ##
-# HTML5 upload input form
-# Uploads by $.ajax to Amazon S3
+# HTML5 upload input form for uploading attachments to some subject
+# in some category. Uploads by $.ajax to Amazon S3.
 #
 module.exports = React.createClass
   propTypes:
     allowedFileTypes: React.PropTypes.string
     maxSizeInBytes: React.PropTypes.number
     uploadFileHandler: React.PropTypes.func.isRequired
-    properties: React.PropTypes.object
+    category: React.PropTypes.string.isRequired
+    subject: React.PropTypes.string.isRequired
 
   getDefaultProps: ->
     maxSizeInBytes: 104857600
-    properties: {}
 
   validateFiles: ->
     errors = false
@@ -91,7 +96,7 @@ module.exports = React.createClass
     self = @
     @validateFiles()
     @getDOMNode().files.map (file) ->
-      self.props.uploadFileHandler(new FileUploader(_.assign(file, self.props.properties)))
+      self.props.uploadFileHandler(new FileUploader(file, self.props.category, self.props.subject))
 
   render: ->
     @transferPropsTo(input {type: "file", onChange: @onFileSelected})

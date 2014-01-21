@@ -78,4 +78,4 @@ module.exports = React.createClass
 
   render: ->
     path = if _.isArray(@props.children) then @props.children[0] else @props.children
-    (span {}, getLocalizedValue(@state.locale, path))
+    @transferPropsTo(span {}, getLocalizedValue(@state.locale, path))

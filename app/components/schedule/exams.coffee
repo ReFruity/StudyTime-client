@@ -26,14 +26,14 @@ module.exports = React.createClass
   componentWillUnmount: ->
     clearInterval(@interval)
 
-  updateSchedule: (bounds) ->
-    ""
-
   onSwitchEditor: (mode, data) ->
     @setState
       editor:
         mode: mode
         data: data
+
+  updateSchedule: ->
+    ""
 
   render: ->
     {route, group} = @props
@@ -55,6 +55,7 @@ module.exports = React.createClass
 
       # Events list
       (eventsList {
+        separateBy: 'type'
         rowElem: classRow("/#{route.group}/exams", @state.editor, @onSwitchEditor)
         detailsElem: examDetails("/#{route.group}/exams/#{route.event}", "/#{route.group}/exams")
         events: @state.events

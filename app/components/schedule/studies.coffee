@@ -22,10 +22,10 @@ module.exports = React.createClass
     sched:
       Mon:
         '1': [
-          {subject:{name:'Мат. ан.'}, place:[{name:'623'}]}
+          {subject:{name:'Мат. ан.', object:'123'}, place:[{name:'623'}]}
         ]
         '2': [
-          {subject:{name:'Алгебра'}, place:[{name:'515'}]}
+          {subject:{name:'Алгебра', object:'456'}, place:[{name:'515'}]}
         ]
 
   componentDidMount: ->
