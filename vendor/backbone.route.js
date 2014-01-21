@@ -124,5 +124,4 @@
     });
 
     return Backbone.Router;
-}))
-;
+}));

@@ -1,5 +1,6 @@
 {span, div} = React.DOM
-{i18n, viewType} = requireComponents('/common', 'i18n', 'viewType')
+{i18n, viewType, modelMixin} = requireComponents('/common', 'i18n', 'viewType', 'modelMixin')
+{Schedule} = requireModels('Schedule')
 {schedule, classCell, classDetails, nav, editor} = requireComponents('/schedule/parts', 'schedule', 'classCell',
   'classDetails', 'nav', 'editor')
 
@@ -10,6 +11,7 @@
 # Provides editor support
 #
 module.exports = React.createClass
+  mixins: [modelMixin]
   propTypes:
     group: React.PropTypes.object.isRequired
     route: React.PropTypes.object.isRequired
@@ -19,14 +21,10 @@ module.exports = React.createClass
       mode: 0
       data: undefined
     bounds: undefined
-    sched:
-      Mon:
-        '1': [
-          {subject:{name:'Мат. ан.', object:'123'}, place:[{name:'623'}]}
-        ]
-        '2': [
-          {subject:{name:'Алгебра', object:'456'}, place:[{name:'515'}]}
-        ]
+    sched: new Schedule({type:'study', group: @props.group.get('name'), faculty: 'ИМКН'}).fetchThis()
+
+  getBackboneModels: ->
+    [@state.sched]
 
   componentDidMount: ->
     @interval = setInterval(@updateSchedule, 300000)
@@ -69,15 +67,13 @@ module.exports = React.createClass
       (schedule {
         cellElem: classCell("/#{route.group}/studies", @state.editor, @onSwitchEditor)
         detailsElem: classDetails("/#{route.group}/studies/#{route.dow}-#{route.number}-#{route.atom}", "/#{route.group}/studies")
-        sched: @state.sched
+        sched: @state.sched.get('schedule') or {}
+        timing: @state.sched.get('timing') or {}
         details: (
-          try
-            if @state.sched[route.dow][route.number][route.atom]
-              dow: route.dow
-              number: route.number
-              data: @state.sched[route.dow][route.number][route.atom]
-          catch
-            undefined
+          if @state.sched.has("schedule.#{route.dow}.#{route.number}.#{route.atom}")
+            dow: route.dow
+            number: route.number
+            data: @state.sched.get("schedule.#{route.dow}.#{route.number}.#{route.atom}")
         )}
       )
     ])

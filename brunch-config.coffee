@@ -17,6 +17,9 @@ exports.config =
           'vendor/zepto.min.js'
           'bower_components/lodash/dist/lodash.js'
           'bower_components/backbone/backbone.js'
+          'vendor/backbone.fetchthis.js'
+          'vendor/backbone.route.js'
+          'vendor/burry.js'
         ]
 
     stylesheets:

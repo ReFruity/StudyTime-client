@@ -1,12 +1,19 @@
-# Sugar for requiring components
 @requireComponent = (path)->
   require("components/#{path}")
 
-# Sugar for getting set of components
+@requireModels = (models...)->
+  _requireList("models", models)
+
+@requireCollections = (collections...)->
+  _requireList("collections", collections)
+
 @requireComponents = (path, components...)->
+  _requireList("components/#{path}", components)
+
+_requireList = (path, components)->
   # Remove trailing slashes
   path = path.replace(/\/+$/, "")
   path = path.replace(/^\/+/, "")
 
   # Get components
-  _.object([a, require("components/#{path}/#{a}")] for a in components)
+  _.object([a, require("#{path}/#{a}")] for a in components)

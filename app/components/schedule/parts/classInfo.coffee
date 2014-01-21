@@ -13,7 +13,7 @@ module.exports = React.createClass
       (if @props.data.subject
         (div {className: 'info-header'}, [
           (span {className: 'hedaer-name'}, @props.data.subject.name)
-          (@props.data.place.map (place)->
+          ((@props.data.place or []).map (place)->
             (span {className: 'hedaer-place'}, place.name)
           )
         ])

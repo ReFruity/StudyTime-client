@@ -1,6 +1,8 @@
 cache = new Burry.Store('schedule');
 {span, div, a} = React.DOM
 {studies, exams, vacation} = requireComponents('/schedule', 'studies', 'exams', 'vacation')
+{modelMixin} = requireComponents('/common', 'modelMixin')
+{Group} = requireModels('Group')
 
 ##
 # Component for manipulating with group star and their proxies
@@ -34,15 +36,19 @@ GroupStar = React.createClass
 # (group star and so on)
 #
 module.exports = React.createClass
+  mixins: [modelMixin]
   propTypes:
     route: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    group: {name: @props.route.group}
+    group: new Group({name: @props.route.group}).fetchThis()
+
+  getBackboneModels: ->
+    [@state.group]
 
   render: ->
     (div {className: 'group-sched'}, [
-      (if @state.group.name
+      (if @state.group.get('name')
         switch @props.route.scheduleType
           when 'studies' then @transferPropsTo(studies {group: @state.group})
           when 'exams' then @transferPropsTo(exams {group: @state.group})

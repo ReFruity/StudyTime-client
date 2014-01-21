@@ -110,10 +110,10 @@ module.exports =
 
     render: ->
       (div {className: 'sched-type-switcher'}, [
-        (a {href: "/#{@props.group.name}/studies", className: classSet('current': @props.currentType == 'studies')}, [
+        (a {href: "/#{@props.group.get('name')}/studies", className: classSet('current': @props.currentType == 'studies')}, [
           (i18n {}, 'schedule.navigation.semestr')
         ])
-        (a {href: "/#{@props.group.name}/exams", className: classSet('current': @props.currentType == 'exams')}, [
+        (a {href: "/#{@props.group.get('name')}/exams", className: classSet('current': @props.currentType == 'exams')}, [
           (i18n {}, 'schedule.navigation.session')
         ])
       ])

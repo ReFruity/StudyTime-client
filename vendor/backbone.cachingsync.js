@@ -34,6 +34,16 @@
         // Create the `Burry.Store`
         var burry = new Burry.Store(ns, default_ttl);
 
+        // If item has `updated` field add to options
+        // `if_updated_after` field
+        function if_updated_after (item, options) {
+            if(typeof item !== 'undefined' && typeof item.updated !== 'undefined') {
+                if(typeof options.data === 'undefined')
+                    options.data = {}
+                options.data.if_updated_after = item.updated
+            }
+        }
+
         // **get** caches *read* operations on a model. If the model is cached,
         // it will resolve immediately with the updated attributes, triggering a `change`
         // event when the server *read* gets resolved. If no cache exists, the operation resolves
@@ -44,6 +54,7 @@
                 updated = {},
                 wp;
 
+            if_updated_after(item, options);
             wp = wrapped('read', model, options).done(function (attrs) {
                 model.set(attrs);
                 burry.set(model.id, model.toJSON());
