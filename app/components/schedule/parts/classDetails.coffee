@@ -1,4 +1,5 @@
 {span, div, ul, li, a, i, nav} = React.DOM
+{clickOutside, i18n} = requireComponents('/common', 'clickOutside', 'i18n')
 {classInfo, classAttachments} = requireComponents('/schedule/parts', 'classInfo', 'classAttachments')
 {classSet} = React.addons
 router = require 'router'
@@ -14,6 +15,8 @@ router = require 'router'
 #
 module.exports = (baseUrl, closeUrl) ->
   React.createClass
+    mixins: [clickOutside]
+
     propTypes:
       data: React.PropTypes.object.isRequired
 
@@ -29,13 +32,13 @@ module.exports = (baseUrl, closeUrl) ->
             (li {className: classSet('current': @props.detailsView == 'info')}, [
               (a {href: "#{baseUrl}/info"}, [
                 (i {className: 'stico-info'})
-                (span {}, ['Информация'])
+                (i18n {}, 'schedule.details.info')
               ])
             ])
             (li {className: classSet('current': @props.detailsView == 'attachments')}, [
               (a {href: "#{baseUrl}/attachments"}, [
                 (i {className: 'stico-files'})
-                (span {}, ['Приложения'])
+                (i18n {}, 'schedule.details.attachments')
               ])
             ])
           ])
@@ -53,7 +56,7 @@ module.exports = (baseUrl, closeUrl) ->
         (div {className: 'details-close'}, [
           (a {href: "#{closeUrl}"}, [
             (i {className: 'stico-cross'})
-            (span {}, ['Закрыть'])
+            (i18n {}, 'schedule.details.close')
           ])
         ])
       ])

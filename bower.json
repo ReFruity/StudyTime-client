@@ -10,7 +10,6 @@
     ],
     "dependencies": {
         "lodash": "~2",
-        "zepto": "~1",
         "bootstrap-stylus": "~3.0",
         "backbone": "~1",
         "overthrow-dist": "~0.7.0",
@@ -22,8 +21,7 @@
         "backbone": {
             "main": "backbone.js",
             "dependencies": {
-                "lodash": "*",
-                "zepto": "*"
+                "lodash": "*"
             }
         },
         "lodash": {

@@ -12,12 +12,12 @@ exports.config =
         'js/vendor.js': /^(bower_components|vendor)/
 
       pluginHelpers: 'js/app.js'
-
-      before: [
-        'bower_components/zepto/zepto.js'
-        'bower_components/backbone/backbone.js'
-        'bower_components/lodash/dist/lodash.js'
-      ]
+      order:
+        before: [
+          'vendor/zepto.min.js'
+          'bower_components/lodash/dist/lodash.js'
+          'bower_components/backbone/backbone.js'
+        ]
 
     stylesheets:
       joinTo:
