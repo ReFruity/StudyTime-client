@@ -2,4 +2,4 @@
 
 module.exports = React.createClass
   render: ->
-    (span {}, ['Groups list'])
+    (span {}, ['Universities list'])

@@ -1,5 +1,7 @@
-{span} = React.DOM
+{span, footer} = React.DOM
 
 module.exports = React.createClass
   render: ->
-    (span {}, ['Footer'])
+    (footer {}, [
+      (span {}, ['Footer'])
+    ])
