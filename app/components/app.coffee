@@ -7,7 +7,7 @@ module.exports = React.createClass
     params: React.PropTypes.object.isRequired
 
   render: ->
-    (div {}, [
+    (div {id: "application"}, [
       (header {path: @props.route})
       (section {},
         (requireComponent("#{@props.route}/index") {route: @props.params})
