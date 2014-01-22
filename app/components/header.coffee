@@ -4,6 +4,9 @@
 {i18n} = requireComponents('/common', 'i18n')
 
 module.exports = React.createClass
+  shouldComponentUpdate: (newProps)->
+    newProps.path != @props.path
+
   render: ->
     (header {}, [
       (nav {className: "container", role: "navigation"}, [

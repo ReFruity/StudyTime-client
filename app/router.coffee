@@ -1,5 +1,5 @@
 # Get main app component
-{app} = requireComponents('/', 'app')
+app = requireComponent('app')
 
 # Cross-environment route definition
 class MainRouter extends Backbone.Router
@@ -15,6 +15,8 @@ class MainRouter extends Backbone.Router
     ":uni/:facaulty/:group(/:scheduleType(/:event(/:detailsView)))": "schedule"
     "*error": "404"
 
+  # Delegate rendering to some predefined function
+  # (may be different in broser or node.js version)
   update: ->
     React.appRenderer (app {route: @getRouteName(), params: @getParams()})
 

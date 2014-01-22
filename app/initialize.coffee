@@ -11,7 +11,7 @@ $ ->
   # Define React renderer function
   contentElem = $('#content')[0]
   React.appRenderer = (app) ->
-      React.renderComponent app, contentElem
+    React.renderComponent app, contentElem
 
   # Initialize Backbone History
   Backbone.history.start pushState: yes

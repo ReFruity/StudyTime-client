@@ -10,7 +10,7 @@ module.exports = React.createClass
     (div {}, [
       (header {path: @props.route})
       (section {},
-        (requireComponent(@props.route) {route: @props.params})
+        (requireComponent("#{@props.route}/index") {route: @props.params})
       )
       (footer {})
     ])
