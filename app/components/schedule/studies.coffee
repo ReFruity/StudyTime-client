@@ -68,6 +68,7 @@ module.exports = React.createClass
 
       # Schedule
       (schedule {
+        weekDate: @state.bounds[0]
         cellElem: classCell
         detailsElem: classDetails
         sched: @state.sched.get('schedule') or {}

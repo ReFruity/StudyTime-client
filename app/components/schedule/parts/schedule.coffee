@@ -107,7 +107,7 @@ module.exports = React.createClass
 
   propTypes:
     cellElem: React.PropTypes.func.isRequired,
-    date: React.PropTypes.instanceOf(Date)
+    weekDate: React.PropTypes.instanceOf(Date)
     sched: React.PropTypes.object
     timing: React.PropTypes.object
     detailsElem: React.PropTypes.func,
@@ -118,14 +118,15 @@ module.exports = React.createClass
         throw new Error('Mallformed details prop. Must contain `dow`, `number` and `data` fields')
 
   getDefaultProps: ->
-    date: new Date()
+    weekDate: new Date()
     timing: {}
     sched: {}
 
   # Calculate current class number based on timing and current time
   getCurrentClass: ->
     currentClass = undefined
-    mins = @props.date.getHours() * 60 + @props.date.getMinutes()
+    date = new Date()
+    mins = date.getHours() * 60 + date.getMinutes()
     greeter_count = 0
 
     for clazz of @props.timing
@@ -142,7 +143,7 @@ module.exports = React.createClass
     dowDates = {}
     dows = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     bw = {0: 6, 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5}
-    now = new Date(@props.date)
+    now = new Date(@props.weekDate)
 
     for day in [0..6]
       distance = day - bw[now.getDay()]
@@ -162,7 +163,7 @@ module.exports = React.createClass
 
   # Calculate current day of week
   getCurrentDow: ->
-    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][@props.date.getDay()]
+    ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date().getDay()]
 
   # Renders the schedule based on view type (mobile or desktop),
   # provided from mixin `viewType`
