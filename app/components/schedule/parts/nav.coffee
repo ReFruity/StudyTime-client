@@ -19,7 +19,9 @@ module.exports =
         @props.switchEditorHandler(1)
 
     render: ->
-      (a {onClick: @toggleEditor}, 'editor')
+      (div {className: 'editor-btn'},
+        (a {onClick: @toggleEditor}, 'edit')
+      )
 
   ##
   # Component for switching current showing schedule week
@@ -115,6 +117,6 @@ module.exports =
           (div {className: 'back-logo-square'}, [
             (i {className: 'stico-groups-list'})
           ])
-          (span {}, @props.group.name)
+          (span {}, @props.group.get('name'))
         ])
       ])
