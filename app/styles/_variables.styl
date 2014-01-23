@@ -249,13 +249,8 @@ $grid-float-breakpoint ?=     $screen-tablet;
 
 // Basics of a navbar
 $navbar-height ?=                    50px;
-$navbar-margin-bottom ?=             $line-height-computed;
-$navbar-default-color ?=             $text-color;
-$navbar-default-bg ?=                #fff;
-$navbar-default-border ?=            transparent;
-$navbar-border-radius ?=             $border-radius-base;
-$navbar-padding-horizontal ?=        floor($grid-gutter-width / 2);
-$navbar-padding-vertical ?=          (($navbar-height - $line-height-computed) / 4);
+$nav-link-padding ?=                 10px 5px;
+$nav-link-hover-bg ?=                darken($brand-info-bg, 60%);
 
 // Navbar links
 $navbar-default-link-color ?=                $link-color;
@@ -280,8 +275,8 @@ $navbar-default-toggle-border-color ?=       #ddd;
 // Navs
 // -------------------------
 
-$nav-link-padding ?=                          10px 25px;
-$nav-link-hover-bg ?=                         darken($brand-info-bg, 60%);
+//$nav-link-padding ?=                          10px 10px;
+//$nav-link-hover-bg ?=                         darken($brand-info-bg, 60%);
 
 $nav-disabled-link-color ?=                   $gray-light;
 $nav-disabled-link-hover-color ?=             $gray-light;

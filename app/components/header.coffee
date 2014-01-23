@@ -10,7 +10,6 @@ module.exports = React.createClass
   render: ->
     (header {}, [
       (nav {className: "container", role: "navigation"}, [
-
         # Brand
         (div {className: "brand"}, [
           (a {href: "#"}, [
@@ -24,29 +23,29 @@ module.exports = React.createClass
           (ul {}, [
             (li {className: classSet("active": @props.path in ["groups", "schedule"])}, [
               (a {href: "/"}, [
-                (i {className: "stico-schedule visible-xs"}, [])
+                (div {}, (i {className: "stico-schedule"}, []))
                 (i18n {}, 'layouts.main.navigation.schedule')
               ])
             ])
             (li {className: classSet("active": @props.path == "places")}, [
               (a {href: "/places"}, [
-                (i {className: "stico-map visible-xs"}, [])
+                (div {}, (i {className: "stico-map"}, []))
                 (i18n {}, 'layouts.main.navigation.places')
               ])
             ])
             (li {className: classSet("active": @props.path == "courses")}, [
               (a {href: "/courses"}, [
-                (i {className: "stico-spec-courses visible-xs"}, [])
+                (div {}, (i {className: "stico-spec-courses"}, []))
                 (i18n {}, 'layouts.main.navigation.courses')
               ])
             ])
             (li {className: classSet("active": @props.path == "professors")}, [
               (a {href: "/professors"}, [
-                (i {className: "stico-spec-courses visible-xs"}, [])
+                (div {}, (i {className: "stico-spec-courses"}, []))
                 (i18n {}, 'layouts.main.navigation.professors')
               ])
             ])
-            (li {}, [
+            (li {className: 'login-wrap'}, [
               (userNavControl {}, [])
             ])
           ])

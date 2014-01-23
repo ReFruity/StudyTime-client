@@ -184,8 +184,7 @@ module.exports = React.createClass
     files: []
 
   onUploadFile: (fileUploader) ->
-    @state.uploaders.push(fileUploader)
-    @forceUpdate()
+    @setState uploaders: @state.uploaders.concat([fileUploader])
 
   render: ->
     (div {className: 'class-att'}, [

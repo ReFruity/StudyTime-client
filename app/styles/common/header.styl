@@ -7,22 +7,61 @@ header
   padding-top: 10px
   nav
     border 0 !important
-    .navbar-brand
-      cursor default
-      padding 2px
-      white-space nowrap
-      div
-        float left
-        vertical-align inherit
-        margin-left 10px
-      span
-        display inline-block
-        margin-top -4px
-        margin-left 10px
-        line-height $navbar-height
+    height $navbar-height
+    overflow hidden
+    white-space nowrap
+    .brand
+      float left
+      a
+        display block
+        cursor default
+        text-decoration none !important
+        font-size $font-size-large
+        i
+          vertical-align middle
+        span
+          color $text-color
+          vertical-align middle
+          margin-left 15px
 
-    ul.nav
-      background $brand-info-bg
+    .navbar
+      float right
+      ul
+        float right
+        overflow hidden
+        background $brand-info-bg
+        list-style-type none
+        margin 0
+        padding 0
+        li
+          float left
+          position relative
+          text-align center
+          a
+            text-align center
+            position relative
+            display block
+            padding (($navbar-height - $line-height-computed)/2) 25px
+            &:hover
+              background $navbar-default-link-hover-bg
+            i
+              display none
+
+          &.login-wrap > span
+              position relative
+              display block
+              background lighten($brand-warning, 15%)
+              padding (($navbar-height - $line-height-computed)/2) 9px
+              color #fff
+              cursor pointer
+              &:hover
+                text-decoration underline
+
+          &.active
+            a
+              background $navbar-default-link-active-bg
+              color $navbar-default-link-active-color
+              text-decoration none
 
     .spin-logo
       vertical-align middle
@@ -34,20 +73,14 @@ header
       -o-animation: spin s infinite linear;
       animation: spin 2s infinite linear;
 
-
-// iPad/iPhone standalone header
-.standalone
-  .header
-    padding 0
-    position absolute
-    top 0
-    left 0
-    right 0
-    opacity 0.85
-    z-index 100000
-  @media $media-min-tablet
-    .navbar-brand
-      padding 0
+@media $media-max-tablet
+  header
+    nav
+      .navbar
+        ul
+          li
+            a
+              padding (($navbar-height - $line-height-computed)/2) 18px
 
 // iOS like navigation on mobile
 @media $media-max-phone
@@ -55,31 +88,28 @@ header
     padding-top 0
 
     nav
-      .navbar-brand
-        padding-left 6px
-        padding-right 10px
+      padding 0 !important
+      .brand
         span
           display none
-        div
-          margin-left 0px
+        i
+          margin-left 7px
+          margin-top 2px
 
-      ul.nav
+      ul
         margin 0
         position absolute
         left 57px
         right 0
         top 0
+
         li
-          text-align center
-          float left
-          width 33.333333%
+          width 25%
+          &.login-wrap
+            display none
           a
             margin 0
-            padding 6px 0 0 0
-            font-size $font-size-small
-            div
-              margin 0
-              line-height 0
-            span
-              margin 0
-              display inline-block
+            padding 6px 0 0 0 !important
+            font-size $font-size-small*0.9
+            i
+              display inline-block !important
