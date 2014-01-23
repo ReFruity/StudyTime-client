@@ -11,6 +11,7 @@
         factory(_, Backbone);
     }
 }(function (_, Backbone) {
+    var old_model = Backbone.Model
     Backbone.Model = Backbone.Model.extend({
         fetchThis: function (options) {
             this.fetchActive = true;
@@ -23,6 +24,17 @@
 
             this.fetch(options);
             return this;
+        },
+
+        fetch: function (options) {
+            var fetch = old_model.prototype.fetch.apply(this, arguments);
+            var model = this;
+            if (fetch.fail)
+                fetch.fail(function() {
+                    console.log(model);
+                    model.fetchActive = false;
+                    model.trigger('fetchError');
+                });
         }
     });
 

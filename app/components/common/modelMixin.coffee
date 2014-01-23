@@ -16,7 +16,7 @@ module.exports =
     if !~this.__syncedModels.indexOf(model)
       updater = this.forceUpdate.bind(this, null);
       model.__updater = updater;
-      model.on('add change remove', updater, this);
+      model.on('add change remove fetchError', updater, this);
 
   bindTo: (model, key) ->
     value: model.get(key)

@@ -56,7 +56,7 @@ module.exports = React.createClass
           (nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor})
           (nav.BackToGroupsButton {group: @props.group})
           (nav.ScheduleTypeSwitcher {currentType:'studies', route: @props.route})
-          (nav.UpdateIndicator {updated: (if @state.sched.fetchActive then null else @state.sched.get('updated'))})
+          (nav.UpdateIndicator {updated: (if @state.sched.fetchActive then null else @state.sched.get('updated') or new Date())})
           (nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds})
         ])
       ])
