@@ -22,6 +22,10 @@ module.exports = React.createClass
       baseUrl: React.PropTypes.string.isRequired
       route: React.PropTypes.object.isRequired
 
+    excludeClickOutside: '.exclude-co'
+    onClickOutside: ->
+      router.navigate(@props.baseUrl, {trigger: true})
+
     render: ->
       detailsView = @props.route.detailsView or 'info'
 

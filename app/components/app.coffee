@@ -8,9 +8,9 @@ module.exports = React.createClass
 
   render: ->
     (div {id: "application"}, [
-      (header {path: @props.route})
+      (header {path: @props.route, route: @props.params})
       (section {},
         (requireComponent("#{@props.route}/index") {route: @props.params})
       )
-      (footer {})
+      (footer {path: @props.route, route: @props.params})
     ])

@@ -30,7 +30,7 @@ SchedDetails = React.createClass
 SchedDataRow = React.createClass
   render: ->
     {sched, number, cellElem, detailsElem, curr, dows, details, date, cellProps} = @props
-    (div {className: 'container data-row'}, [
+    (div {className: classSet('container data-row':yes, 'exclude-co': details and details.dow in dows and details.number == number)}, [
       (div {className: 'row'}, [
         (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
           (h2 {className: 'number-id'}, [number])
