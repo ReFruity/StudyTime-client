@@ -18,7 +18,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     bounds: new Date().getWeekBounds()
-    sched: new Schedule({type:'study', group: @props.group.get('name'), faculty: 'ИМКН'}).fetchThis()
+    sched: new Schedule({type:'study', group: @props.route.group, faculty: @props.route.faculty, uni:@props.route.uni}).fetchThis()
     editor:
       mode: 0
       data: undefined
@@ -55,8 +55,8 @@ module.exports = React.createClass
         (div {className: 'row'}, [
           (nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor})
           (nav.BackToGroupsButton {group: @props.group})
-          (nav.ScheduleTypeSwitcher {currentType:'studies', group: @props.group})
-          (nav.UpdateIndicator {updated: new Date()})
+          (nav.ScheduleTypeSwitcher {currentType:'studies', route: @props.route})
+          (nav.UpdateIndicator {updated: (if @state.sched.fetchActive then null else @state.sched.get('updated'))})
           (nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds})
         ])
       ])

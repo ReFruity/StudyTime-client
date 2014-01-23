@@ -43,7 +43,7 @@ module.exports = React.createClass
         (div {className: 'row'}, [
           (nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor})
           (nav.BackToGroupsButton {group: @props.group})
-          (nav.ScheduleTypeSwitcher {currentType:'exams', group: @props.group})
+          (nav.ScheduleTypeSwitcher {currentType:'exams', route: @props.route})
           (nav.UpdateIndicator {updated: new Date()})
         ])
       ])

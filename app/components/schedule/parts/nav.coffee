@@ -89,15 +89,15 @@ module.exports =
   #
   ScheduleTypeSwitcher: React.createClass
     propTypes:
-      group: React.PropTypes.object.isRequired
+      route: React.PropTypes.object.isRequired
       currentType: React.PropTypes.string.isRequired
 
     render: ->
       (div {className: 'sched-type-switcher'}, [
-        (a {href: "/#{@props.group.get('name')}/studies", className: classSet('current': @props.currentType == 'studies')}, [
+        (a {href: "/#{@props.route.uni}/#{@props.route.faculty}/#{@props.route.group}/studies", className: classSet('current': @props.currentType == 'studies')}, [
           (i18n {}, 'schedule.navigation.semestr')
         ])
-        (a {href: "/#{@props.group.get('name')}/exams", className: classSet('current': @props.currentType == 'exams')}, [
+        (a {href: "/#{@props.route.uni}/#{@props.route.faculty}/#{@props.route.group}/exams", className: classSet('current': @props.currentType == 'exams')}, [
           (i18n {}, 'schedule.navigation.session')
         ])
       ])

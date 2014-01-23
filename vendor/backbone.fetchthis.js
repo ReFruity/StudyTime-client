@@ -13,7 +13,15 @@
 }(function (_, Backbone) {
     Backbone.Model = Backbone.Model.extend({
         fetchThis: function (options) {
-            this.fetch(options)
+            this.fetchActive = true;
+            if (!options) options = {};
+            var success = options.success;
+            options.success = function (model, resp, options) {
+                model.fetchActive = false;
+                if (success) success(model, resp, options);
+            };
+
+            this.fetch(options);
             return this;
         }
     });
