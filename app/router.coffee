@@ -10,9 +10,9 @@ class MainRouter extends Backbone.Router
     "students(/:user)": "students"
     "professors(/:user)": "professors"
     ":uni": "faculties"
-    ":uni/:facaulty": "groups"
-    ":uni/:facaulty/:group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule"
-    ":uni/:facaulty/:group(/:scheduleType(/:event(/:detailsView)))": "schedule"
+    ":uni/:faculty": "groups"
+    ":uni/:faculty/:group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule"
+    ":uni/:faculty/:group(/:scheduleType(/:event(/:detailsView)))": "schedule"
     "*error": "404"
 
   # Delegate rendering to some predefined function

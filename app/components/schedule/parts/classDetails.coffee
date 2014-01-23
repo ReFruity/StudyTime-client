@@ -13,30 +13,30 @@ router = require 'router'
 #   * Class detailed information
 #   * Attachments to subject of the class
 #
-module.exports = (baseUrl, closeUrl) ->
-  React.createClass
+module.exports = React.createClass
     mixins: [clickOutside]
 
     propTypes:
       data: React.PropTypes.object.isRequired
-
-    getDefaultProps: ->
-      params = router.getParams()
-      detailsView: params.detailsView or 'info'
+      cellUrl: React.PropTypes.string.isRequired
+      baseUrl: React.PropTypes.string.isRequired
+      route: React.PropTypes.object.isRequired
 
     render: ->
+      detailsView = @props.route.detailsView or 'info'
+
       (div {className: 'container class-details'}, [
         # Navigation
         (nav {className: 'details-nav'}, [
           (ul {}, [
-            (li {className: classSet('current': @props.detailsView == 'info')}, [
-              (a {href: "#{baseUrl}/info"}, [
+            (li {className: classSet('current': detailsView == 'info')}, [
+              (a {href: "#{@props.cellUrl}/info"}, [
                 (i {className: 'stico-info'})
                 (i18n {}, 'schedule.details.info')
               ])
             ])
-            (li {className: classSet('current': @props.detailsView == 'attachments')}, [
-              (a {href: "#{baseUrl}/attachments"}, [
+            (li {className: classSet('current': detailsView == 'attachments')}, [
+              (a {href: "#{@props.cellUrl}/attachments"}, [
                 (i {className: 'stico-files'})
                 (i18n {}, 'schedule.details.attachments')
               ])
@@ -46,7 +46,7 @@ module.exports = (baseUrl, closeUrl) ->
 
         # View container
         (div {className: 'details-view'}, (
-          switch  @props.detailsView
+          switch  detailsView
             when 'info' then @transferPropsTo(classInfo {})
             when 'attachments' then @transferPropsTo(classAttachments {})
             else @transferPropsTo(classInfo {})
@@ -54,7 +54,7 @@ module.exports = (baseUrl, closeUrl) ->
 
         # Closing cross
         (div {className: 'details-close'}, [
-          (a {href: "#{closeUrl}"}, [
+          (a {href: "#{@props.baseUrl}"}, [
             (i {className: 'stico-cross'})
             (i18n {}, 'schedule.details.close')
           ])

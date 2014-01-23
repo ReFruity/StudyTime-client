@@ -29,7 +29,7 @@ SchedDetails = React.createClass
 #
 SchedDataRow = React.createClass
   render: ->
-    {sched, number, cellElem, detailsElem, curr, dows, details, date} = @props
+    {sched, number, cellElem, detailsElem, curr, dows, details, date, cellProps} = @props
     (div {className: 'container data-row'}, [
       (div {className: 'row'}, [
         (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
@@ -39,11 +39,13 @@ SchedDataRow = React.createClass
         (@props.dows.map (dow)->
           data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
           (SchedCell {dow: dow, number: number, curr: curr}, [
-            (cellElem {dow: dow, number: number, data: data, date: date})
+            (cellElem _.assign({dow: dow, number: number, data: data, date: date}, cellProps or {}))
           ])
         )
         ((if details and detailsElem and details.dow in dows and details.number == number
-          (SchedDetails {}, [(detailsElem {data: details.data})])
+          (SchedDetails {}, [
+            (detailsElem _.assign({data: details.data}, cellProps or {}))
+          ])
         else
           undefined
         ))
@@ -109,6 +111,7 @@ module.exports = React.createClass
     sched: React.PropTypes.object
     timing: React.PropTypes.object
     detailsElem: React.PropTypes.func,
+    cellProps: React.PropTypes.object
     details: (propValue, propName) ->
       details = propValue[propName]
       if details and (not details.dow or not details.number or not details.data)

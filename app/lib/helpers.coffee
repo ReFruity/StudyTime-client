@@ -1,3 +1,6 @@
+##
+# Require sugar
+#
 @requireComponent = (path)->
   require("components/#{path}")
 
@@ -17,3 +20,16 @@ _requireList = (path, components)->
 
   # Get components
   _.object([a, require("#{path}/#{a}")] for a in components)
+
+##
+# Date helpers
+#
+Date::getWeekBounds = ->
+  bw = {0: 6, 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5}
+  left = new Date(@)
+  left.setDate(left.getDate() - bw[left.getDay()])
+  right = new Date(left)
+  right.setDate(left.getDate() + 6)
+  left.setHours(0,0,0,0,0)
+  right.setHours(0,0,0,0,0)
+  [left, right]

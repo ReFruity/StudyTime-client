@@ -17,14 +17,24 @@ module.exports = React.createClass
     route: React.PropTypes.object.isRequired
 
   getInitialState: ->
+    bounds: new Date().getWeekBounds()
+    sched: new Schedule({type:'study', group: @props.group.get('name'), faculty: 'ИМКН'}).fetchThis()
     editor:
       mode: 0
       data: undefined
-    bounds: undefined
-    sched: new Schedule({type:'study', group: @props.group.get('name'), faculty: 'ИМКН'}).fetchThis()
 
   getBackboneModels: ->
     [@state.sched]
+
+  onSwitchWeek: (bounds) ->
+    @setState
+      bounds: bounds
+
+  onSwitchEditor: (mode, data) ->
+    @setState
+      editor:
+        mode: mode
+        data: data
 
   componentDidMount: ->
     @interval = setInterval(@updateSchedule, 300000)
@@ -32,17 +42,10 @@ module.exports = React.createClass
   componentWillUnmount: ->
     clearInterval(@interval)
 
-  updateSchedule: (bounds) ->
-    bounds = @state.bounds unless bounds
-
-  onSwitchWeek: (bounds) ->
-    @updateSchedule(bounds)
-
-  onSwitchEditor: (mode, data) ->
-    @setState
-      editor:
-        mode: mode
-        data: data
+  updateSchedule: ->
+    new_bounds = new Date().getWeekBounds()
+    if new_bounds[0].getTime() > @state.bounds[0].getTime()
+      @onSwitchWeek(new_bounds)
 
   render: ->
     {route, group} = @props
@@ -54,7 +57,7 @@ module.exports = React.createClass
           (nav.BackToGroupsButton {group: @props.group})
           (nav.ScheduleTypeSwitcher {currentType:'studies', group: @props.group})
           (nav.UpdateIndicator {updated: new Date()})
-          (nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek})
+          (nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds})
         ])
       ])
 
@@ -65,8 +68,8 @@ module.exports = React.createClass
 
       # Schedule
       (schedule {
-        cellElem: classCell("/#{route.group}/studies", @state.editor, @onSwitchEditor)
-        detailsElem: classDetails("/#{route.group}/studies/#{route.dow}-#{route.number}-#{route.atom}", "/#{route.group}/studies")
+        cellElem: classCell
+        detailsElem: classDetails
         sched: @state.sched.get('schedule') or {}
         timing: @state.sched.get('timing') or {}
         details: (
@@ -74,6 +77,13 @@ module.exports = React.createClass
             dow: route.dow
             number: route.number
             data: @state.sched.get("schedule.#{route.dow}.#{route.number}.#{route.atom}")
-        )}
-      )
+        )
+        cellProps:
+          baseUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies"
+          cellUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies/#{route.dow}-#{route.number}-#{route.atom}"
+          editor: @state.editor
+          bounds: @state.bounds
+          switchEditorHandler: @onSwitchEditor
+          route: @props.route
+      })
     ])
