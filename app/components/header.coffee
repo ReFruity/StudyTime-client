@@ -34,7 +34,7 @@ module.exports = React.createClass
                   (i18n {}, 'layouts.main.navigation.places')
                 ])
               ])
-              (li {className: classSet("active": @props.path == "courses")}, [
+              (li {className: classSet("active": @props.path == "courses", 'courses':yes)}, [
                 (a {href: "/courses"}, [
                   (div {}, (i {className: "stico-spec-courses"}, []))
                   (i18n {}, 'layouts.main.navigation.courses')
