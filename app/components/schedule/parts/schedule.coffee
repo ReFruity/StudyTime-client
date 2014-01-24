@@ -8,8 +8,8 @@
 SchedCell = React.createClass
   render: ->
     {number, curr, dow} = @props
-    (div {className: classSet('sched-cell': true, 'current': curr.number == number and curr.dow == dow)}, [
-      @props.children
+    (div {className: classSet('sched-cell-wrap': true, 'current': curr.number == number and curr.dow == dow)}, [
+      (div {className: 'sched-cell'}, @props.children)
     ])
 
 ##
@@ -28,13 +28,19 @@ SchedDetails = React.createClass
 # for each day in block for given class number
 #
 SchedDataRow = React.createClass
+  minutesToHours: (input) ->
+    value = parseInt(input)
+    hours = Math.floor(value / 60)
+    minutes = value - hours * 60
+    return (if hours < 10 then "0"+hours else hours) + ":" + (if minutes < 10 then "0"+minutes else minutes)
+
   render: ->
-    {sched, number, cellElem, detailsElem, curr, dows, details, date, cellProps} = @props
+    {sched, timing, number, cellElem, detailsElem, curr, dows, details, date, cellProps} = @props
     (div {className: classSet('container data-row':yes, 'exclude-co': details and details.dow in dows and details.number == number)}, [
       (div {className: 'row'}, [
         (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
           (h2 {className: 'number-id'}, [number])
-          (h3 {className: 'number-time'}, [number])
+          (h3 {className: 'number-time'}, @minutesToHours(timing[number].start))
         ])
         (@props.dows.map (dow)->
           data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
@@ -61,11 +67,11 @@ SchedHeaderRow = React.createClass
     (div {className: 'container header-row', key: "sched.header.#{dows.join('.')}"}, [
       (div {className: 'row'}, [
         (dows.map (dow) ->
-          (div {key: "sched.header.#{dow}", className: classSet('header-day col-sm-4': true, 'current': curr.dow == dow)},
+          (div {key: "sched.header.#{dow}", className: classSet('header-day': true, 'current': curr.dow == dow)},
             [
               (h2 {}, [
-                (dateFormat {date: curr.dates[dow], format: "EEEE"})
-                (dateFormat {date: curr.dates[dow], format: "dd MMM"})
+                (dateFormat {className: 'dow', date: curr.dates[dow], format: "EEEE"})
+                (dateFormat {className: 'date', date: curr.dates[dow], format: "dd MMM"})
               ])
             ])
         )
@@ -190,7 +196,7 @@ module.exports = React.createClass
 
     # Render schedule
     self = @
-    (div {id: 'schedule', className: @viewType}, [
+    (div {className: "schedule #{@viewType} week-#{curr.parity}"}, [
       (blocks.map (block)->
         self.transferPropsTo(SchedBlock {dows: block, curr: curr})
       )

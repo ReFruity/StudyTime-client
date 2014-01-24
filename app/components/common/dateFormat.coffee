@@ -123,4 +123,4 @@ module.exports = React.createClass
     format: React.PropTypes.string
 
   render: ->
-    (span {}, getFormattedDate(@props.date, @props.format))
+    @transferPropsTo(span {}, getFormattedDate(@props.date, @props.format))

@@ -48,7 +48,7 @@ module.exports =
     render: ->
       in_feature = @props.bounds[0] > new Date()
 
-      (div {className: 'sched-week-switcher'}, (
+      (div {className: classSet('sched-week-switcher':yes, 'feature':in_feature)}, (
         if not in_feature
           (a {onClick: @nextWeek}, [
             (i18n {}, 'schedule.navigation.next_week')
@@ -114,6 +114,7 @@ module.exports =
     render: ->
       (div {className: 'back-groups-btn'}, [
         (a {}, [
+          (i {className: 'stico-arrow-right rotate-180'})
           (div {className: 'back-logo-square'}, [
             (i {className: 'stico-groups-list'})
           ])

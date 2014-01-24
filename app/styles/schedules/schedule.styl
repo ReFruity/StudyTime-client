@@ -1,0 +1,111 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.schedule
+  @media $media-min-tablet
+    .sched-block:last-child
+      .header-row
+        margin-top 25px
+  @media $media-max-phone
+    .sched-block:first-child
+      .header-day
+        margin-top 15px !important
+
+  .header-row
+    .header-day
+      make-sm-column(4)
+
+      @media $media-min-tablet
+        margin-bottom 10px
+      @media $media-max-phone
+        margin-bottom 15px
+        margin-top 40px
+
+      h2
+        text-align center
+        .date
+          font-size $font-size-base
+          font-weight 200
+          display inline-block
+          width 50px
+          margin-right -50px
+          margin-left 15px
+        .dow
+          font-size $font-size-large
+          font-weight 700
+      &.current
+        .dow
+          color #fff
+          background $brand-warning
+          padding 5px 15px
+          border-radius 5px
+        .date
+          margin-left 0 5px
+
+
+  .data-row
+    &:hover
+      .row-number
+        color $text-color
+
+    .row-number
+      display inline-block
+      float left
+      width 40px
+      text-align center
+      margin-top (($sched-data-height - ($line-height-computed*2))/2)
+      color lighten($text-color, 50%)
+
+      @media $media-max-phone
+        position absolute
+        left 5px
+        z-index 1000000
+
+      @media $media-min-tablet
+        margin-left -50px
+
+      h2, h3
+        margin 0
+        padding 0
+        line-height $line-height-computed
+      h2
+        font-weight 500
+        font-size $font-size-medium
+      h3
+        font-weight 400
+        font-size $font-size-base
+
+      &.current
+        color $brand-warning
+
+    .sched-cell-wrap
+      make-sm-column(4)
+      padding 0
+
+      @media $media-min-tablet
+        &:nth-child(2)
+          padding 0 10px 0 0
+        &:nth-child(3)
+          padding 0 10px
+        &:nth-child(4)
+          padding 0 0 0 10px
+
+      .sched-cell
+        position relative
+        height $sched-data-height
+        border-left: 1px solid $sched-border-color
+        border-right: 1px solid $sched-border-color
+        border-top: 1px solid $sched-border-color
+        overflow hidden
+
+      &.current
+        .sched-cell
+          border-top: 1px solid $brand-warning
+          border-bottom: 1px solid $brand-warning
+          @media $media-min-tablet
+            border-left: 1px solid $brand-warning
+            border-right: 1px solid $brand-warning
+
+    &:last-child
+      .sched-cell
+        border-bottom: 1px solid $sched-border-color
