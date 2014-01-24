@@ -1,4 +1,4 @@
-{span, div, a} = React.DOM
+{span, div, a, i} = React.DOM
 {classSet} = React.addons
 router = require 'router'
 
@@ -37,39 +37,42 @@ module.exports = React.createClass
   shouldComponentUpdate: (newProps)->
     @getCellUniqueId(@props) != @getCellUniqueId(newProps)
 
+  filterCellAtoms: (atom)->
+    bounds = @props.bounds
+    act =
+      start: new Date(atom.activity.start)
+      end: new Date(atom.activity.end)
+
+    if act.start <= bounds[0] < act.end or act.start < bounds[1] <= act.end or (bounds[0] <= act.start and bounds[1] >= act.end)
+      yes
+    else
+      no
+
+  getAtomPlaces: (atom) ->
+    if atom.place and atom.place.length > 3
+      places = atom.place.slice(0, 3)
+      places.push(name: '...')
+      places
+    else
+      atom.place or []
+
+  getAtomHref: (atom, i) ->
+    if @props.route.dow == @props.dow and @props.route.number == @props.number and @props.route.atom == (i + "")
+      @props.baseUrl
+    else
+      "#{@props.baseUrl}/#{@props.dow}-#{@props.number}-#{i}"
+
   render: ->
-    {dow, number, data, route, baseUrl, editor, bounds, switchEditorHandler} = @props
+    self = @
     (div {className: 'class-cell'}, (
-      if data
-        # Filter schedule not in given bounds
-        data.filter (atom) ->
-          act =
-            start: new Date(atom.activity.start)
-            end: new Date(atom.activity.end)
-
-          if act.start <= bounds[0] < act.end or act.start < bounds[1] <= act.end or (bounds[0] <= act.start and bounds[1] >= act.end)
-            yes
-          else
-            no
-
-        # Show each filtered atom
-        .map (atom, i) ->
-            # Get link
-            href = (if route.dow == dow and route.number == number and route.atom == i + "" then baseUrl else "#{baseUrl}/#{dow}-#{number}-#{i}")
-
-            # Get cut places
-            if atom.place and atom.place.length > 3
-              places = atom.place.slice(0, 3)
-              places.push(name: '...')
-            else
-              places = atom.place
-
-            # Render
-            (a {href: href, className: "cell-atom parity-#{atom.parity} hg-#{atom.half_group}"},
-              [
-                (span {className: 'atom-name'}, atom.subject.name)
-                (div {className: 'atom-places'}, (places or []).map (place) ->
-                  (span {}, place.name)
-                )
-              ])
+      if @props.data
+        @props.data.filter(@filterCellAtoms).map (atom, index) ->
+          (a {href: self.getAtomHref(atom, index), className: "cell-atom parity-#{atom.parity} hg-#{atom.half_group}"},
+            [
+              (i {className: 'stico-lection'}) if atom.type == 'lecture'
+              (span {className: 'atom-name'}, atom.subject.name)
+              (div {className: 'atom-places'}, self.getAtomPlaces(atom).map (place) ->
+                (span {}, place.name)
+              )
+            ])
     ))

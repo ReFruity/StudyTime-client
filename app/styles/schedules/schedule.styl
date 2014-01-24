@@ -2,6 +2,8 @@
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 .schedule
+  user-select(none)
+
   @media $media-min-tablet
     .sched-block:last-child
       .header-row
@@ -60,6 +62,9 @@
         position absolute
         left 5px
         z-index 1000000
+        background rgba(255,255,255,0.9)
+        box-shadow 0 0 10px 10px rgba(255,255,255,0.9)
+
 
       @media $media-min-tablet
         margin-left -50px
