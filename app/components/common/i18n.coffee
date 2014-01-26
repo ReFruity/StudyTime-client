@@ -41,6 +41,13 @@ data =
         other: 'Другое'
 
     schedule:
+      editor:
+        add_event: 'Добавить'
+        change_event: 'Изменить'
+        cancel_event: 'Отменить'
+        select_cancel_cell: 'Выберите пару в расписании для отмены'
+        select_cell: 'Выберите ячейку в расписанни, чтобы добавить в нее пару'
+
       details:
         info: 'Информация'
         attachments: 'Приложения'

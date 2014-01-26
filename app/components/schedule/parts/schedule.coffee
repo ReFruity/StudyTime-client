@@ -35,7 +35,7 @@ SchedDataRow = React.createClass
     return (if hours < 10 then "0"+hours else hours) + ":" + (if minutes < 10 then "0"+minutes else minutes)
 
   render: ->
-    {sched, timing, number, cellElem, detailsElem, curr, dows, details, date, cellProps} = @props
+    {sched, timing, number, cellElem, detailsElem, curr, dows, details, cellProps} = @props
     (div {className: classSet('container data-row':yes, 'exclude-co': details and details.dow in dows and details.number == number)}, [
       (div {className: 'row'}, [
         (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
@@ -45,7 +45,7 @@ SchedDataRow = React.createClass
         (@props.dows.map (dow)->
           data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
           (SchedCell {dow: dow, number: number, curr: curr}, [
-            (cellElem _.assign({dow: dow, number: number, data: data, date: date}, cellProps or {}))
+            (cellElem _.assign({dow: dow, number: number, data: data, date: curr.dates[dow]}, cellProps or {}))
           ])
         )
         ((if details and detailsElem and details.dow in dows and details.number == number
@@ -94,7 +94,7 @@ SchedBlock = React.createClass
 
 ##
 # Main schedule component. Provides flexible interface
-# for showing schedule grid with what ever you want.
+# for showing schedule grid with what ever you want in cells.
 #
 # One required prop is `cellElem`, that will be used
 # as element in each cell of grid. This element gets
@@ -160,7 +160,7 @@ module.exports = React.createClass
 
   # Calculate current week parity
   getWeekParity: ->
-    d = new Date(@props.date)
+    d = new Date(@props.weekDate)
     d.setHours(0, 0, 0)
     d.setDate(d.getDate() + 4 - (d.getDay() || 7))
     yearStart = new Date(d.getFullYear(), 0, 1)

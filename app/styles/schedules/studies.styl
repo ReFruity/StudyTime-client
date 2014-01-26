@@ -50,12 +50,12 @@
     &.hg-1
       background #fff
       left - 2px
-      right 48%
+      right 48.9%
       z-index 10
     &.hg-2
       background #fff
       right - 2px
-      left 48%
+      left 48.9%
       z-index 10
 
     &:hover
@@ -72,3 +72,17 @@
       font-weight 400
       span
         margin-left 5px
+
+  .class-cell
+    .editor-cell
+      z-index 100000
+      opacity 0
+      line-height $line-height-computed
+      padding 5px 10px
+      text-align left
+      transition(0.1s opacity)
+      background $brand-info
+      color #fff
+
+      &:hover, &.current
+        opacity 0.8
