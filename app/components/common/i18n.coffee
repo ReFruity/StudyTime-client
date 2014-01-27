@@ -46,7 +46,7 @@ data =
         change_event: 'Изменить'
         cancel_event: 'Отменить'
         select_cancel_cell: 'Выберите пару в расписании для отмены'
-        select_cell: 'Выберите ячейку в расписанни, чтобы добавить в нее пару'
+        select_cell: '<b>Выберите ячейку в расписанни,</b><br /> чтобы добавить в нее пару'
 
       details:
         info: 'Информация'
@@ -63,7 +63,8 @@ data =
 
 
 # Memorized localized value getter
-getLocalizedValue = _.memoize((locale, path) ->
+@locale = 'ru'
+@getLocalizedValue = _.memoize((path, locale=@locale) ->
   pointsPath = path
   path = "[\"" + path.split(".").join("\"][\"") + "\"]"
 
@@ -85,4 +86,4 @@ module.exports = React.createClass
 
   render: ->
     path = if _.isArray(@props.children) then @props.children[0] else @props.children
-    @transferPropsTo(span {}, getLocalizedValue(@state.locale, path))
+    @transferPropsTo(span {dangerouslySetInnerHTML: {__html: getLocalizedValue(path, @state.locale)}})

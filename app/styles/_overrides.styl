@@ -1,0 +1,17 @@
+@import "_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.sr-only
+  opacity 0
+
+form
+  .form-group
+    margin-top 3px
+  label
+    color lighten($text-color, 40%)
+    position: absolute;
+    margin: -16px 1px;
+    font-size $font-size-small
+    font-weight 500
+    opacity 1
+    transition(0.3s opacity)

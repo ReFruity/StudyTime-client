@@ -1,8 +1,9 @@
 {span, div} = React.DOM
 {i18n, viewType, modelMixin} = requireComponents('/common', 'i18n', 'viewType', 'modelMixin')
 {Schedule} = requireModels('Schedule')
-{schedule, classCell, classDetails, nav, editor} = requireComponents('/schedule/parts', 'schedule', 'classCell',
-  'classDetails', 'nav', 'editor')
+{schedule, classCell, classDetails, nav} = requireComponents('/schedule/parts', 'schedule', 'classCell',
+  'classDetails', 'nav')
+{editor} = requireComponents('/schedule/editor', 'editor')
 
 ##
 # Studies schedule component
@@ -50,6 +51,11 @@ module.exports = React.createClass
   render: ->
     {route, group} = @props
     (div {className: 'studies'}, [
+      # Editor
+      (if @state.editor.mode > 0
+        (editor {mode: @state.editor.mode, data: @state.editor.data, switchEditorHandler: @onSwitchEditor, timing: @state.sched.get('timing') or {}})
+      )
+
       # Navigation
       (div {className: 'container sched-nav'}, [
         (div {className: 'row'}, [
@@ -60,11 +66,6 @@ module.exports = React.createClass
           (nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds})
         ])
       ])
-
-      # Editor
-      (if @state.editor.mode > 0
-        (editor {mode: @state.editor.mode, data: @state.editor.data, switchEditorHandler: @onSwitchEditor})
-      )
 
       # Schedule
       (schedule {

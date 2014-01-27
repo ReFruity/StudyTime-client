@@ -25,7 +25,7 @@ dateStrGetter = (name, shortForm) ->
   (date) ->
     value = date["get" + name]()
     get = (if shortForm then "short_#{name}" else name)
-    (i18n {}, "date.#{get.toLowerCase()}.#{value}")
+    getLocalizedValue("date.#{get.toLowerCase()}.#{value}")
 
 timeZoneGetter = (date) ->
   zone = -1 * date.getTimezoneOffset()
@@ -85,7 +85,7 @@ DATE_FORMATS =
   a: ampmGetter
   Z: timeZoneGetter
 
-getFormattedDate = (date, format) ->
+@getFormattedDate = (date, format) ->
   # Validate date and format
   if _.isString(date)
     if NUMBER_STRING.test(date)
@@ -93,7 +93,7 @@ getFormattedDate = (date, format) ->
     else
       date = jsonStringToDate(date)
   date = new Date(date) if _.isNumber(date)
-  return (span {}, date + "")  unless _.isDate(date) or not format
+  return date + ""  unless _.isDate(date) or not format
 
   # Parse format
   elems = []
@@ -110,11 +110,12 @@ getFormattedDate = (date, format) ->
       format = null
 
   # Create localized date
+  result = ""
   for value in parts
     fn = DATE_FORMATS[value]
-    elems.push(if fn then fn(date) else (span {}, value.replace(/(^'|'$)/g, "").replace(/''/g, "'")))
+    result += (if fn then fn(date) else value.replace(/(^'|'$)/g, "").replace(/''/g, "'"))
 
-  elems
+  result
 
 # Component
 module.exports = React.createClass

@@ -1,7 +1,55 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
-.schedule-editor
+$info-nav-bg ?= darken($brand-info-bg, 10%)
+$info-nav-height ?= 35px
+
+
+.event-editor
   background $brand-info-bg
   margin-bottom 15px
-  padding-top 15px
+  height 340px
+
+  .select-cell
+    text-align center
+    &>span
+      margin-top 80px
+      margin-bottom 30px
+      display block
+      text-align center
+      font-size $font-size-medium
+
+  .editor-switcher
+    margin-bottom 18px
+    ul
+      height $info-nav-height
+      overflow hidden
+      background $info-nav-bg
+      list-style-type none
+      margin 0
+      padding 0
+
+      li:first-child + li
+        border-left 1px solid $brand-info-bg
+        border-right 1px solid $brand-info-bg
+
+      li
+        float left
+        text-align center
+        width 33.3333%
+        height $info-nav-height
+        line-height $info-nav-height
+        a
+          text-decoration none
+          display block
+          i
+            vertical-align middle
+          span
+            margin-left 5px
+            vertical-align middle
+
+        &.current
+          a
+            color #fff
+            background $brand-info
+

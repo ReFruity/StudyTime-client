@@ -1,7 +1,8 @@
 {span, div} = React.DOM
 {i18n, viewType} = requireComponents('/common', 'i18n', 'viewType')
-{eventsList, classRow, examDetails, nav, editor} = requireComponents('/schedule/parts', 'eventsList', 'classRow',
-  'examDetails', 'nav', 'editor')
+{editor} = requireComponents('/schedule/editor', 'editor')
+{eventsList, classRow, examDetails, nav} = requireComponents('/schedule/parts', 'eventsList', 'classRow',
+  'examDetails', 'nav')
 
 ##
 # Exams schedule component

@@ -60,32 +60,47 @@ module.exports = React.createClass
     else
       "#{@props.baseUrl}/#{@props.dow}-#{@props.number}-#{i}"
 
+  scrollToTop: ->
+    scrollHeight = $(window).scrollTop()
+    if scrollHeight > 0
+      $('#content').animate(translateY: "-#{scrollHeight}px", 0, 'ease', ->
+        $(window).scrollTop(0)
+        $('#content').animate(translateY: "0px", 300, 'ease', ->
+          $('#content').attr('style', '')
+        )
+      )
+
   setEditorDate: ->
     @props.switchEditorHandler(@props.editor.mode,
       date: @props.date
       number: @props.number
     )
+    @scrollToTop()
 
   setEditorEvent: (event) ->
     @props.switchEditorHandler(@props.editor.mode,
       event: event
       date: @props.date
     )
+    @scrollToTop()
 
   isCurrentEditorCell: ->
     return no if not @props.editor.data
     switch @props.editor.mode
-      when 1 then @props.editor.data.date.getTime() == @props.date.getTime() and @props.editor.data.number == @props.number
-      when 2 then @props.editor.data.event._id == arguments[0]._id and @props.editor.data.date.getTime() == @props.date.getTime()
+      when 1 then @props.editor.data.number == @props.number and @isSameDate(@props.editor.data.date, @props.date)
+      when 2 then @props.editor.data.event._id == arguments[0]._id and @isSameDate(@props.editor.data.date, @props.date)
       else no
 
+  isSameDate: (nd, cd) ->
+    nd.getFullYear() == cd.getFullYear() and nd.getMonth() == cd.getMonth() and nd.getDate() == cd.getDate()
 
   render: ->
     self = @
     (div {className: 'class-cell'}, [
       (if @props.editor.mode == 1
         (a {className: "editor-cell cell-atom parity-0 hg-0 #{'current' if @isCurrentEditorCell()}", onClick: @setEditorDate},
-          (dateFormat {date: @props.date, format:"EEE, dd MMM, #{@props.number} пара"})
+          #'добавить'
+          (dateFormat {date: @props.date, format:"dd MMM EEE, #{@props.number} пара"})
         )
       )
       (@props.data or []).filter(@filterCellAtoms).map (atom, index) -> [
