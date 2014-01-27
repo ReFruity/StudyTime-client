@@ -63,10 +63,10 @@ module.exports = React.createClass
   scrollToTop: ->
     scrollHeight = $(window).scrollTop()
     if scrollHeight > 0
-      $('#content').animate(translateY: "-#{scrollHeight}px", 0, 'ease', ->
+      $('#application').animate(translateY: "-#{scrollHeight}px", 0, 'ease', ->
         $(window).scrollTop(0)
-        $('#content').animate(translateY: "0px", 300, 'ease', ->
-          $('#content').attr('style', '')
+        $('#application').animate(translateY: "0px", 300, 'ease', ->
+          $('#application').attr('style', '')
         )
       )
 
