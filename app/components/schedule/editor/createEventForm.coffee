@@ -1,5 +1,5 @@
 {span, div, a, ul, li, i, form, input, label, select, option, textarea, button} = React.DOM
-{i18n, dateTimePicker} = requireComponents('/common', 'i18n', 'dateTimePicker')
+{i18n, dateTimePicker, taggedInput} = requireComponents('/common', 'i18n', 'dateTimePicker', 'taggedInput')
 {classSet} = React.addons
 
 ##
@@ -30,17 +30,18 @@ module.exports = React.createClass
   setSubject: (e)->
     @setState subject: e.target.value
 
-  setProfessor: (e)->
-    @setState professor: e.target.value
+  setProfessor: (prof)->
+    @setState professor: prof
 
-  setPlace: (e)->
-    @setState place: e.target.value
+  setPlace: (places)->
+    @setState place: places
 
   setEventType: (e)->
     @setState type: e.target.value
 
   setParity: (e)->
-    @setState parity: e.target.value
+    if e.target.value
+      @setState parity: e.target.value
 
   setHalfGroup: (e)->
     @setState half_group: e.target.value
@@ -175,7 +176,7 @@ module.exports = React.createClass
           ])
           (div {className: 'col-xs-6 form-group'}, [
             (label {className: classSet('sr-only': not @state.professor), htmlFor: 'proffInput'}, 'Преподаватель')
-            (input {id: 'proffInput', className: 'form-control', placeholder: 'Преподаватель', value: @state.professor, onChange: @setProfessor})
+            (taggedInput {id: 'proffInput', className: 'form-control', allowSpace: yes, placeholder: 'Преподаватель', value: @state.professor, onChange: @setProfessor})
           ])
         ])
 
@@ -183,7 +184,7 @@ module.exports = React.createClass
         (div {className: 'row'}, [
           (div {className: 'col-xs-3 form-group'}, [
             (label {className: classSet('sr-only': not @state.place), htmlFor: 'placeInput'}, 'Аудитория')
-            (input {id: 'placeInput', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace})
+            (taggedInput {id: 'placeInput', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace})
           ])
           (div {className: 'col-xs-3 form-group'}, [
             (label {className: classSet('sr-only': not @state.type), htmlFor: 'typeInput'}, 'Тип события')
@@ -237,6 +238,7 @@ module.exports = React.createClass
             (label {className: classSet('sr-only': not @state.parity), htmlFor: 'parityInput'}, 'Повторяемость')
             (select {id: 'parityInput', className: 'form-control', value: @state.parity, onChange: @setParity}, [
               (option {value: undefined}, '-- Повторяемость --')
+              (option {value: -1}, 'Один раз')
               (option {value: 0}, 'Каждую неделю')
               (option {value: 2}, 'По четным')
               (option {value: 1}, 'По нечетным')

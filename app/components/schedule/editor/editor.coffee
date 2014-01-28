@@ -61,7 +61,7 @@ module.exports = React.createClass
       (div {className: 'container'}, [
         (div {className: 'row'}, [
           @transferPropsTo(EditorSwitcher {})
-          (if not data.date
+          (if not data.date and no == yes
             (div {className: 'select-cell'},
               (i18n {}, 'schedule.editor.select_cell')
               (i {className: 'stico-cell-mouse'})

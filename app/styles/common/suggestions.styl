@@ -1,0 +1,31 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.suggestions
+  position absolute
+  left 15px
+  right 15px
+
+  .wrapper
+    background #fff
+    border-radius 5px
+    border 2px solid lighten($brand-primary, 80%)
+    z-index 10000
+    position absolute
+    left 0px
+    right 0px
+    top 8px
+
+    &.invisible
+      display none
+
+    &>div
+      a
+        text-decoration none
+        display block
+        color $link-color
+        padding 3px 5px
+      &.current
+        a
+          background $brand-info
+          color #fff !important

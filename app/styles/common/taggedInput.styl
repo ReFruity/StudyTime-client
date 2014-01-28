@@ -1,0 +1,56 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.tagged-input
+  height auto
+  min-height $input-height-base
+  padding-top 2px
+  padding-bottom 4px
+  cursor text
+
+  ul
+    list-style-type none
+    margin 0
+    padding 0
+    height auto
+    overflow hidden
+
+    li
+      float left
+      margin-top 3px
+
+      &.item-li
+        background $brand-success
+        color #fff
+        line-height 23px
+        margin-right 3px
+        padding 0 4px 0 7px
+        cursor pointer
+        .close
+          display inline
+          font-size 16px
+          color darken($brand-success, 20%)
+          margin-left 4px
+        &:hover
+          background darken($brand-success, 10%)
+          .close
+            color darken($brand-success, 40%)
+
+      &.input-li
+        width 100%
+        overflow hidden
+        input
+          height 22px
+          margin-top 1px
+          margin-bottom 1px
+          -moz-box-sizing border-box
+          -webkit-box-sizing border-box
+          box-sizing border-box
+          -moz-box-shadow none
+          -webkit-box-shadow none
+          box-shadow none
+          border none
+          padding 0
+          width 100%
+          background-color inherit
+          outline none

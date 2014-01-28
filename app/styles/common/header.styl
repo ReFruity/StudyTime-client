@@ -46,8 +46,12 @@ header
             position relative
             display block
             padding (($navbar-height - $line-height-computed)/2) 25px
+            color lighten($text-color, 50%)
+            text-decoration none
+            transition(all 0.2s ease-out)
             &:hover
               background $navbar-default-link-hover-bg
+              color lighten($link-color, 20%)
             i
               display none
 
@@ -64,7 +68,7 @@ header
           &.active
             a
               background $navbar-default-link-active-bg
-              color $navbar-default-link-active-color
+              color $navbar-default-link-active-color !important
               text-decoration none
 
 // Smaller left/right padding of the nav items

@@ -33,3 +33,10 @@ Date::getWeekBounds = ->
   left.setHours(0,0,0,0,0)
   right.setHours(0,0,0,0,0)
   [left, right]
+
+##
+# String helpers
+#
+if not String::trim
+  String::trim = ->
+    @replace(/^\s+|\s+$/g, '')
