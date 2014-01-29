@@ -45,19 +45,20 @@ InputItem = React.createClass
     if e.keyCode is 8 and not @state.value.length and not @removeTagTimer
       self = @
       @props.removeLastTagHandler()
+      @approximateInputWidth()
       @removeTagTimer = setTimeout(->
         self.removeTagTimer = undefined
       , 200)
 
     else if (e.keyCode in [13, 9] or (not @props.allowSpace and e.keyCode is 32)) and @state.value.trim().length > 0
       e.preventDefault() unless e.keyCode == 9
-      if e.keyCode not in [13, 9] or not @refs['sugg'].getActiveItem()
+      if e.keyCode not in [13, 9] or not @props.suggestions or not @refs['sugg'].getActiveItem()
         @addTag({name: @state.value.trim(), object: ''})
 
   # Create new tag if input is not empty
-  onBlur: (e)->
+  onBlur: ->
     if @state.value.trim().length > 0
-      sugg = @refs['sugg'].getActiveItem()
+      sugg = @refs['sugg'].getActiveItem() if @props.suggestions
       @addTag(if sugg then sugg else {name: @state.value.trim(), object: ''})
 
   # When user select some suggection
