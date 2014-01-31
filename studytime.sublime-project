@@ -1,0 +1,40 @@
+{
+    "folders":
+    [
+        {
+            "path": "app",
+            "name": "Application",
+        },
+        {
+            "path": "vendor",
+            "name": "Vendor",
+        },
+        {
+            "path": "bower_components",
+            "name": "Bower Components",
+        },
+        {
+            "path": "node_modules",
+            "name": "Node Modules",
+        },
+        {
+            "path": "_old",
+            "name": "_old",
+        },
+        {
+            "path": ".",
+            "folder_exclude_patterns": ["*"],
+            "name": "_root",
+        }
+    ],
+    "settings":
+    {
+        "tab_size": 2,
+        "save_on_focus_lost": true,
+        "trim_trailing_white_space_on_save": true,
+        "CoffeeScript": {
+            "noWrapper": true,
+            "compileOnSave": false
+        }
+    }
+}

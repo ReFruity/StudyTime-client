@@ -1,8 +1,8 @@
-cache = new Burry.Store('schedule');
+React = require 'react'
 {span, div, a} = React.DOM
-{studies, exams, vacation} = requireComponents('/schedule', 'studies', 'exams', 'vacation')
-{modelMixin} = requireComponents('/common', 'modelMixin')
-{Group} = requireModels('Group')
+{studies, exams, vacation} = require '/components/schedule', 'studies', 'exams', 'vacation'
+{modelMixin} = require '/components/common', 'modelMixin'
+{Group} = require '/models', 'Group'
 
 ##
 # Component for manipulating with group star and their proxies

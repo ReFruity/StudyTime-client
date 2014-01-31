@@ -9,12 +9,15 @@
         define(['react'], function (react) {
             return (factory(react));
         });
-    } else {
+    }  else if (typeof exports !== 'undefined') {
+        factory(require('react'), require('backbone'));
+    }
+    else {
         factory(root.React);
     }
-}(this, function (react) {
+}(this, function (react, Backbone) {
     var aa = react.DOM.a
-    react.DOM.a = React.createClass({
+    react.DOM.a = react.createClass({
         render: function () {
             var href, onClick, _ref;
             _ref = this.props, onClick = _ref.onClick, href = _ref.href;

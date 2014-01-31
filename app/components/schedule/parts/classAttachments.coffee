@@ -1,5 +1,6 @@
+React = require 'react'
 {span, div, a, h2, i, ul, li, input, form, button} = React.DOM
-{i18n, clickOutside, uploadInput} = requireComponents('/common', 'i18n', 'clickOutside', 'uploadInput')
+{i18n, clickOutside, uploadInput} = require '/components/common', 'i18n', 'clickOutside', 'uploadInput'
 
 ##
 # Component for header of attachments. There is header text

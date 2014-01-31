@@ -75,14 +75,23 @@
 
   .class-cell
     .editor-cell
+      position absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
       z-index 100000
-      opacity 0
-      line-height $line-height-computed
-      padding 5px 10px
-      text-align left
-      transition(0.1s opacity)
-      background $brand-info
-      color #fff
 
-      &:hover, &.current
-        opacity 0.8
+      .editor-atom
+        z-index 100000
+        opacity 0
+        line-height $line-height-computed
+        padding 5px 10px
+        text-align left
+        transition(0.1s opacity)
+        background $brand-info
+        color #fff
+        white-space pre-wrap
+
+        &:hover, &.current
+          opacity 0.8

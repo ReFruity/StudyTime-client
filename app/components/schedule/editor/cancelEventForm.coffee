@@ -1,3 +1,6 @@
+React = require 'react'
+{span} = React.DOM
+
 ##
 # Provides functionality for canceling events
 # On submit it cancels selected in schedule event
@@ -11,12 +14,4 @@ module.exports = React.createClass
     event: {}
 
   render: ->
-    (div {className: 'ccl-event'}, [
-      (if not @props.date
-        (div {},
-          (i18n {}, 'schedule.editor.select_cancel_cell')
-        )
-      else
-        (div {}, 'ok')
-      )
-    ])
+    (span {}, 'cancel')

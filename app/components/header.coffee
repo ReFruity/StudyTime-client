@@ -1,7 +1,8 @@
+React = require 'react'
 {span, div, ul, li, nav, a, i, header} = React.DOM
 {classSet} = React.addons
-{userNavControl} = requireComponents('/user', 'userNavControl')
-{i18n} = requireComponents('/common', 'i18n')
+{userNavControl} = require '/components/user', 'userNavControl'
+{i18n} = require '/components/common', 'i18n'
 
 module.exports = React.createClass
   shouldComponentUpdate: (newProps)->

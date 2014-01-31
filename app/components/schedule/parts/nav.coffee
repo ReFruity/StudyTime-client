@@ -1,5 +1,6 @@
+React = require 'react'
 {span, div, a, i} = React.DOM
-{i18n, viewType, relativeDate, dateFormat} = requireComponents('/common', 'i18n', 'viewType', 'relativeDate', 'dateFormat')
+{i18n, viewType, relativeDate, dateFormat} = require '/components/common', 'i18n', 'viewType', 'relativeDate', 'dateFormat'
 {classSet} = React.addons
 
 

@@ -1,3 +1,6 @@
+React = require 'react'
+{div, span} = React.DOM
+
 ##
 # The same that creator but provides posibility
 # of selection any event in schedule for auto fill
@@ -9,5 +12,5 @@ module.exports = React.createClass
 
   render: ->
     (div {className: 'ch-event'}, [
-
+      (span {}, 'test')
     ])

@@ -5,7 +5,16 @@
 # View type can be set globally by setting 'global.viewType' property to
 # 'mobile' or 'desktop'
 #
+Gator = require 'gator'
 forceViewType = @viewType
+
+windowWidth = ->
+  w = window
+  d = document
+  e = d.documentElement
+  g = d.getElementsByTagName('body')[0]
+  return w.innerWidth or e.clientWidth or g.clientWidth
+
 module.exports =
   componentWillMount: ->
     if forceViewType
@@ -15,7 +24,7 @@ module.exports =
       self = @
       updateViewType = ->
         oldViewType = self.viewType
-        if $(window).width() >= 768
+        if windowWidth() >= 768
           self.viewType = "desktop"
         else
           self.viewType = "mobile"
@@ -26,6 +35,6 @@ module.exports =
           self.forceUpdate()
       updateViewType()
 
-      $(window).on 'resize', updateViewType
+      Gator(window).on 'resize', updateViewType
     else
       @viewType = "desktop"

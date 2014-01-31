@@ -1,13 +1,18 @@
+React = require 'react'
 {div, ul, li, a, i} = React.DOM
-{i18n} = requireComponents('/common', 'i18n')
+{i18n} = require '/components/common', 'i18n'
 {classSet} = React.addons
-{createEventForm, cancelEventForm, changeEventForm} = requireComponents('/schedule/editor', 'createEventForm',
-  'cancelEventForm', 'changeEventForm')
+{createEventForm, cancelEventForm, changeEventForm} = require '/components/schedule/editor', 'createEventForm',
+  'cancelEventForm', 'changeEventForm'
 
 ##
 # Switcher between editor modes
 #
 EditorSwitcher = React.createClass
+  propTypes:
+    mode: React.PropTypes.number.isRequired
+    switchEditorHandler: React.PropTypes.func.isRequired
+
   onSwitchAdder: ->
     @props.switchEditorHandler(1) if @props.mode != 1
 
@@ -48,7 +53,7 @@ EditorSwitcher = React.createClass
 module.exports = React.createClass
   propTypes:
     mode: React.PropTypes.number.isRequired
-    data: React.PropTypes.object
+    state: React.PropTypes.object
     timing: React.PropTypes.object.isRequired
     switchEditorHandler: React.PropTypes.func.isRequired
 
@@ -56,23 +61,21 @@ module.exports = React.createClass
     console.log state
 
   render: ->
-    data = @props.data or {}
     (div {className: 'event-editor'}, [
       (div {className: 'container'}, [
         (div {className: 'row'}, [
-          @transferPropsTo(EditorSwitcher {})
-          (if not data.date and no == yes
+          (EditorSwitcher {mode: @props.mode, switchEditorHandler: @props.switchEditorHandler})
+          (if not @props.state and no == yes
             (div {className: 'select-cell'},
               (i18n {}, 'schedule.editor.select_cell')
               (i {className: 'stico-cell-mouse'})
             )
           else
             (switch @props.mode
-              when 1 then @transferPropsTo(createEventForm {date: data.date, number: data.number, submitHandler: @onEventSubmit})
-              when 2 then @transferPropsTo(cancelEventForm {date: data.date, event: data.event})
-              when 3 then @transferPropsTo(changeEventForm {})
-              else
-                @transferPropsTo(createEventForm {date: data.date, number: data.number})
+              when 1 then (createEventForm {state: @props.state, switchEditorHandler: @props.switchEditorHandler, submitHandler: @onEventSubmit})
+              when 2 then (cancelEventForm {state: @props.state, switchEditorHandler: @props.switchEditorHandler})
+              when 3 then (changeEventForm {state: @props.state, switchEditorHandler: @props.switchEditorHandler})
+              else (createEventForm {state: @props.state, switchEditorHandler: @props.switchEditorHandler})
             )
           )
         ])

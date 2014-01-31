@@ -1,9 +1,10 @@
+React = require 'react'
 {span, div} = React.DOM
-{i18n, viewType, modelMixin} = requireComponents('/common', 'i18n', 'viewType', 'modelMixin')
-{Schedule} = requireModels('Schedule')
-{schedule, classCell, classDetails, nav} = requireComponents('/schedule/parts', 'schedule', 'classCell',
-  'classDetails', 'nav')
-{editor} = requireComponents('/schedule/editor', 'editor')
+{i18n, viewType, modelMixin} = require '/components/common', 'i18n', 'viewType', 'modelMixin'
+{Schedule} = require '/models', 'Schedule'
+{schedule, classCell, classDetails, nav} = require '/components/schedule/parts', 'schedule', 'classCell',
+  'classDetails', 'nav'
+{editor} = require '/components/schedule/editor', 'editor'
 
 ##
 # Studies schedule component
@@ -22,7 +23,7 @@ module.exports = React.createClass
     sched: new Schedule({type:'study', group: @props.route.group, faculty: @props.route.faculty, uni:@props.route.uni}).fetchThis()
     editor:
       mode: 0
-      data: undefined
+      state: undefined
 
   getBackboneModels: ->
     [@state.sched]
@@ -31,11 +32,11 @@ module.exports = React.createClass
     @setState
       bounds: bounds
 
-  onSwitchEditor: (mode, data) ->
+  onSwitchEditor: (mode, state) ->
     @setState
       editor:
         mode: mode
-        data: data
+        state: state
 
   componentDidMount: ->
     @interval = setInterval(@updateSchedule, 300000)
@@ -53,7 +54,12 @@ module.exports = React.createClass
     (div {className: 'studies'}, [
       # Editor
       (if @state.editor.mode > 0
-        (editor {mode: @state.editor.mode, data: @state.editor.data, switchEditorHandler: @onSwitchEditor, timing: @state.sched.get('timing') or {}})
+        (editor {
+          mode: @state.editor.mode,
+          state: @state.editor.state,
+          switchEditorHandler: @onSwitchEditor,
+          timing: @state.sched.get('timing') or {}
+        })
       )
 
       # Navigation
@@ -75,10 +81,13 @@ module.exports = React.createClass
         sched: @state.sched.get('schedule') or {}
         timing: @state.sched.get('timing') or {}
         details: (
-          if @state.sched.has("schedule.#{route.dow}.#{route.number}.#{route.atom}")
-            dow: route.dow
-            number: route.number
-            data: @state.sched.get("schedule.#{route.dow}.#{route.number}.#{route.atom}")
+          try
+            if @state.sched.get("schedule")[route.dow][route.number][route.atom]
+              dow: route.dow
+              number: route.number
+              data: @state.sched.get("schedule")[route.dow][route.number][route.atom]
+          catch e
+            undefined
         )
         cellProps:
           baseUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies"

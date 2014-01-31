@@ -1,5 +1,7 @@
+_ = require 'underscore'
+React = require 'react'
 {ul, li, input, div, span} = React.DOM
-{suggestions} = requireComponents('/common', 'suggestions')
+{suggestions} = require '/components/common', 'suggestions'
 
 ##
 # Tag item element
@@ -75,14 +77,17 @@ InputItem = React.createClass
   # with last tag item
   approximateInputWidth: ->
     self = @
-    $(self.getDOMNode()).width(0)
+    elm = @getDOMNode()
+    elm.style.width = '0'
     setTimeout(->
-      prevItem = $(self.getDOMNode()).prev()
-      if prevItem.length > 0
-        container = prevItem.parent()
-        wrapper = container.parent()
-        width = wrapper.width() - prevItem.width() - (wrapper.width() - container.width())/2 + wrapper.position().left - 5 - prevItem.position().left
-        $(self.getDOMNode()).width(if width > 50 then width else '100%')
+      prevItem = elm.previousSibling
+      if prevItem
+        container = prevItem.parentNode
+        wrapper = container.parentNode
+        width = wrapper.offsetWidth - prevItem.offsetWidth - (wrapper.offsetWidth - container.offsetWidth)/2 + wrapper.offsetLeft - 10 - prevItem.offsetLeft
+        elm.style.width = (if width > 50 then width+'px' else '100%')
+      else
+        elm.style.width = '100%'
     , 0)
 
   render: ->
@@ -154,5 +159,7 @@ module.exports = React.createClass
           allowComma: @props.allowComma
           suggestions: @props.suggestions
         })
+
+        (div {className: 'clearfix'})
       ])
     ])

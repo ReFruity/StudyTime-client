@@ -1,3 +1,6 @@
+React = require 'react'
+_ = require 'underscore'
+
 # i18n values
 data =
   ru:
@@ -47,6 +50,14 @@ data =
         cancel_event: 'Отменить'
         select_cancel_cell: 'Выберите пару в расписании для отмены'
         select_cell: '<b>Выберите ячейку в расписанни,</b><br /> чтобы добавить в нее пару'
+
+      event:
+        types:
+          lecture: 'лекция'
+          practice: 'практика'
+          exam: 'экзамен'
+          test: 'зачет'
+          consult: 'консультация'
 
       details:
         info: 'Информация'

@@ -1,6 +1,7 @@
+React = require 'react'
 {span, div, ul, li, a, i, nav} = React.DOM
-{clickOutside, i18n} = requireComponents('/common', 'clickOutside', 'i18n')
-{classInfo, classAttachments} = requireComponents('/schedule/parts', 'classInfo', 'classAttachments')
+{clickOutside, i18n} = require '/components/common', 'clickOutside', 'i18n'
+{classInfo, classAttachments} = require '/components/schedule/parts', 'classInfo', 'classAttachments'
 {classSet} = React.addons
 router = require 'router'
 

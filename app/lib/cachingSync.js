@@ -11,6 +11,13 @@
         define(['zepto', 'underscore', 'backbone', 'burry'], function ($, _, Backbone, Burry) {
             return (root.Backbone.cachingSync = factory($, _, Backbone, Burry));
         });
+    } else if (typeof exports !== 'undefined') {
+        var _, $, burry, backbone;
+        try { _ = require('underscore'); } catch(e) { }
+        try { $ = require('jquery'); } catch(e) { }
+        try { burry = require('burry'); } catch(e) { }
+        try { backbone = require('backbone'); } catch(e) { }
+        module.exports = factory($, _, backbone, burry);
     } else {
         // Browser globals
         root.Backbone.cachingSync = factory(root.$, root._, root.Backbone, root.Burry);
@@ -50,7 +57,7 @@
         // normally (i.e. when the server *read* resolves).
         function get (model, options) {
             var item = burry.get(model.id),
-                d = $.Deferred(),
+                d = Backbone.Deferred(),
                 updated = {},
                 wp;
 
@@ -75,7 +82,7 @@
         // **gets** behaves similarly to **get** except it applies to collections.
         function gets (collection, options) {
             var ids = burry.get('__ids__'),
-                d = $.Deferred(),
+                d = Backbone.Deferred(),
                 wp;
 
             wp = wrapped('read', collection, options).done(function (models) {

@@ -1,3 +1,4 @@
+React = require 'react'
 {span, div, a} = React.DOM
 
 ##

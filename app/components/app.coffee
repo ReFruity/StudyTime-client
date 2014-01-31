@@ -1,5 +1,6 @@
+React = require 'react'
 {span, div, section} = React.DOM
-{footer, header} = requireComponents('/', 'footer', 'header')
+{footer, header} = require 'components', 'footer', 'header'
 
 module.exports = React.createClass
   propTypes:
@@ -10,7 +11,7 @@ module.exports = React.createClass
     (div {id: "application"}, [
       (header {path: @props.route, route: @props.params})
       (section {},
-        (requireComponent("#{@props.route}/index") {route: @props.params})
+        (require("components/#{@props.route}/index") {route: @props.params})
       )
       (footer {path: @props.route, route: @props.params})
     ])

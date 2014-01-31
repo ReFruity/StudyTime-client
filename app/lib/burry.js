@@ -11,6 +11,8 @@
         define([], function () {
             return factory();
         });
+    } else if (typeof exports !== 'undefined') {
+        module.exports = factory();
     } else {
         // Browser globals
         root.Burry = factory();

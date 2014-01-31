@@ -6,6 +6,11 @@
     if (typeof define === 'function' && define.amd) {
         // Register as an AMD module if available...
         define(['underscore', 'backbone'], factory);
+    } else if (typeof exports !== 'undefined') {
+        var _, backbone;
+        try { _ = require('underscore'); } catch(e) { }
+        try { backbone = require('backbone'); } catch(e) { }
+        module.exports = factory(_, backbone);
     } else {
         // Browser globals for the unenlightened...
         factory(_, Backbone);
@@ -29,9 +34,11 @@
         fetch: function (options) {
             var fetch = old_model.prototype.fetch.apply(this, arguments);
             var model = this;
+            fetch.always(function() {
+
+            })
             if (fetch.fail)
                 fetch.fail(function() {
-                    console.log(model);
                     model.fetchActive = false;
                     model.trigger('fetchError');
                 });

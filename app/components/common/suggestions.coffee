@@ -1,5 +1,6 @@
+React = require 'react'
 {div, input, a} = React.DOM
-{Suggestions} = requireModels('Suggestions')
+{Suggestions} = require '/models/Suggestions'
 {classSet} = React.addons
 
 DefaultItemElement = React.createClass

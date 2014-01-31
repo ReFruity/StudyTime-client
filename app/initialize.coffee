@@ -1,17 +1,15 @@
-# Load App Helpers
-require 'lib/helpers'
+# Init the app
+require 'helpers'
+require 'routes'
+require 'html5links'
+require 'fetchThisModel'
 
-# Initialize Router
-require 'router'
+# Run history on the client
+if typeof window != 'undefined'
+	require('ready')(->
+	  # Remove 300ms delay on touch devices
+	  require('fastclick')(document.body)
 
-$ ->
-  # Remove 300ms delay on touch devices
-  FastClick.attach(document.body);
-
-  # Define React renderer function
-  contentElem = $('#content')[0]
-  React.appRenderer = (app) ->
-    React.renderComponent app, contentElem
-
-  # Initialize Backbone History
-  Backbone.history.start pushState: yes
+	  # Initialize Backbone History
+	  require('backbone').history.start pushState: yes
+	)

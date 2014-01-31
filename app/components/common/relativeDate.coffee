@@ -1,3 +1,4 @@
+React = require 'react'
 {span} = React.DOM
 
 declOfNum = (number, titles) ->

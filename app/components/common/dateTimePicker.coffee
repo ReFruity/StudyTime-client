@@ -1,3 +1,4 @@
+React = require 'react'
 {span, div, h3, input, a, i} = React.DOM
 {classSet} = React.addons
 

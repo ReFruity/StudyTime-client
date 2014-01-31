@@ -1,3 +1,4 @@
+React = require 'react'
 {span, footer} = React.DOM
 
 module.exports = React.createClass

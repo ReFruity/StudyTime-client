@@ -1,6 +1,8 @@
+_ = require 'underscore'
+React = require 'react'
 {span, div, ul, li, nav, a, i, h2, h3} = React.DOM
 {classSet} = React.addons
-{i18n, viewType, dateFormat} = requireComponents('/common', 'i18n', 'viewType', 'dateFormat')
+{i18n, viewType, dateFormat} = require '/components/common', 'i18n', 'viewType', 'dateFormat'
 
 ##
 # Decorator component for showing cell content

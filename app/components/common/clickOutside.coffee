@@ -4,12 +4,15 @@
 #
 
 elementsList = []
-$(window.document).click((evt) ->
-  for e in elementsList when e
-    target = $(evt.target)
-    if not target.closest(e[0]).length and (not e[1].excludeClickOutside or not target.closest(e[1].excludeClickOutside).length )
-      e[1].onClickOutside()
-)
+if window
+  $ = require 'traversty'
+  Gator = require('gator')
+  Gator(window.document).on('click', (evt) ->
+    for e in elementsList when e
+      target = $(evt.target)
+      if not target.closest(e[0]).length and (not e[1].excludeClickOutside or not target.closest(e[1].excludeClickOutside).length )
+        e[1].onClickOutside()
+  )
 
 module.exports = {
   componentDidMount: (element) ->

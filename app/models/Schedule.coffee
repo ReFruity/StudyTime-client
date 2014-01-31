@@ -1,7 +1,8 @@
 config = require 'config'
+Backbone = require 'backbone'
 
-ScheduleModel = Backbone.DeepModel.extend
-  sync: Backbone.cachingSync(Backbone.sync, 'schedule')
+ScheduleModel = Backbone.Model.extend
+  sync: require('cachingSync')(Backbone.sync, 'schedule')
 
   initialize: ->
     @id = "#{@get('type')}#{@get('uni')}#{@get('faculty')}#{@get('group')}"

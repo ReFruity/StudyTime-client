@@ -1,6 +1,7 @@
-# Component dependencies
+_ = require 'underscore'
+React = require 'react'
 {span} = React.DOM
-{i18n} = requireComponents('/common', 'i18n')
+{i18n} = require '/components/common', 'i18n'
 
 # Support functions
 padNumber = (num, digits, trim) ->
