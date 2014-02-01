@@ -37,6 +37,7 @@ SchedDataRow = React.createClass
     return (if hours < 10 then "0"+hours else hours) + ":" + (if minutes < 10 then "0"+minutes else minutes)
 
   render: ->
+    self = @
     {sched, timing, number, cellElem, detailsElem, curr, dows, details, cellProps} = @props
     (div {className: classSet('container data-row':yes, 'exclude-co': details and details.dow in dows and details.number == number)}, [
       (div {className: 'row'}, [
@@ -47,7 +48,12 @@ SchedDataRow = React.createClass
         (@props.dows.map (dow)->
           data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
           (SchedCell {dow: dow, number: number, curr: curr}, [
-            (cellElem _.assign({dow: dow, number: number, data: data, date: curr.dates[dow]}, cellProps or {}))
+            (cellElem _.assign({
+              dow: dow,
+              number: number,
+              data: data,
+              date: curr.dates[dow]}, cellProps or {}
+            ))
           ])
         )
         ((if details and detailsElem and details.dow in dows and details.number == number

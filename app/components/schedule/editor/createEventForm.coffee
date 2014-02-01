@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 {span, div, a, ul, li, i, form, input, label, select, option, textarea, button, h3} = React.DOM
-{i18n, dateTimePicker, taggedInput, dateFormat, switcher} = require '/components/common', 'i18n', 'dateTimePicker', 'taggedInput', 'dateFormat', 'switcher'
+{i18n, dateTimePicker, taggedInput, dateFormat, switcher, suggestions} = require '/components/common', 'i18n', 'dateTimePicker', 'taggedInput', 'dateFormat', 'switcher', 'suggestions'
 {classSet} = React.addons
 
 ##
@@ -21,26 +21,37 @@ module.exports = React.createClass
     eventTypes: ['lecture', 'practice', 'exam', 'test', 'consult']
 
   getInitialState: ->
-    _.assign({infinity: yes, cactivity_start: new Date()}, (@props.state or {}))
+    _.assign({
+      infinity: yes
+      activity_start: new Date()
+      subject: {name: ''}
+      place: []
+      professor: []
+    }, (@props.state or {}))
 
   componentWillReceiveProps: (props) ->
     @setState _.assign(@state, (props.state or {}))
 
   setSubject: (e)->
-    @setState subject: e.target.value
+    @setState
+      subject: (if e.target then {name: e.target.value} else e)
+
   setProfessor: (prof)->
     @setState professor: prof
+
   setPlace: (place) ->
     @setState place: place
+
   setEventType: (e)->
     if e.target.value
       @setState type: e.target.value
 
   onSwitchLength: (item)->
     @setState infinity: item.value
+
   onSubmitForm: (e)->
     e.preventDefault()
-    console.log "submit"
+    @props.submitHandler(_.clone(@state))
 
   render: ->
     (div {className: 'cr-event'}, [
@@ -50,27 +61,28 @@ module.exports = React.createClass
           (div {className: 'col-xs-6 form-group'}, [
             (div {className: 'row'}, [
               (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.subject), htmlFor: 'subjectInput'}, 'Предмет')
-                (input {id: 'subjectInput', className: 'form-control', placeholder: 'Предмет', value: @state.subject, onChange: @setSubject})
+                (label {className: classSet('sr-only': not @state.subject.name.length), htmlFor: 'subjectInput'}, 'Предмет')
+                (input {id: 'subjectInput', className: 'form-control', placeholder: 'Предмет', value: @state.subject.name, onChange: @setSubject})
+                (suggestions {inputId: 'subjectInput', value: @state.subject.name, selectItemHandler: @setSubject, model: 'subject'})
               ])
             ])
             (div {className: 'row'}, [
               (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.professor), htmlFor: 'proffInput'}, 'Преподаватели')
-                (taggedInput {id: 'proffInput', className: 'form-control', allowSpace: yes, placeholder: 'Преподаватели', value: @state.professor, onChange: @setProfessor})
+                (label {className: classSet('sr-only': not @state.professor.length), htmlFor: 'proffInput'}, 'Преподаватели')
+                (taggedInput {id: 'proffInput', suggestions: 'professor', className: 'form-control', allowSpace: yes, placeholder: 'Преподаватели', value: @state.professor, onChange: @setProfessor})
               ])
             ])
             (div {className: 'row'}, [
               (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.place), htmlFor: 'placeInput'}, 'Аудитория')
-                (taggedInput {id: 'placeInput', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace})
+                (label {className: classSet('sr-only': not @state.place.length), htmlFor: 'placeInput'}, 'Аудитория')
+                (taggedInput {id: 'placeInput', suggestions: 'place', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace})
               ])
             ])
             (div {className: 'row'}, [
               (div {className: 'col-xs-6 form-group'}, [
                 (label {className: classSet('sr-only': not @state.type), htmlFor: 'typeInput'}, 'Тип события')
                 (select {id: 'typeInput', className: 'form-control', value: @state.type, onChange: @setEventType}, [
-                  (option {value: undefined}, '-- Тип события --')
+                  (option {value: ''}, '-- Тип события --')
                   (@props.eventTypes.map (type) ->
                     (option {value: type}, getLocalizedValue("schedule.event.types.#{type}"))
                   )
@@ -95,9 +107,9 @@ module.exports = React.createClass
           (div {className: 'col-xs-6 form-group preview'}, [
             ((div {className: 'row'},
               (div {className: 'col-xs-12'},
-                (h3 {className: 'subject'}, @state.subject)
+                (h3 {className: 'subject'}, @state.subject.name)
               )
-            ) if @state.subject)
+            ) if @state.subject.name)
             (div {className: 'row enter-line'},
               (div {className: 'col-xs-12'},
                 ((span {className: 'value single'},

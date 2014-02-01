@@ -38,7 +38,7 @@ module.exports = React.createClass
       #{not p.route.dow or not p.route.number or p.route.dow != p.dow or p.route.number != p.number}
       #{((p.data or []).map (a)-> a.subject.name+((a.place or []).map (p)->p.name).join('.')+a.parity+a.half_group+a.type).join('.')}
       #{p.bounds[0].getTime()}.#{p.bounds[1].getTime()}
-      #{JSON.stringify(p.editor)}
+      #{if p.editor and p.editor.state and p.editor.state.number == p.number and p.editor.state.dow == p.dow then JSON.stringify(p.editor) else p.editor.mode}
       #{p.route.atom if p.route.dow == p.dow and p.route.number == p.number}
       #{s.actEdAtom.join() if s.actEdAtom}
     """
@@ -94,10 +94,11 @@ module.exports = React.createClass
         parity: atom.parity
         half_group: atom.half_group
         place: atom.place
+        type: atom.type
         subject: atom.subject
         professor: atom.professor
-        activity_start: atom.activity.start
-        activity_end: atom.activity.end
+        activity_start: (if @props.editor.mode == 2 then @props.date else new Date(atom.activity.start))
+        activity_end: new Date(atom.activity.end)
         description: atom.description
         _id: atom._id
       )
@@ -169,7 +170,7 @@ module.exports = React.createClass
           (if @state.actEdAtom
             (a {
               className: "editor-atom cell-atom parity-#{@state.actEdAtom[0]} hg-#{@state.actEdAtom[1]}",
-              onClick: self.updateEditorState
+              onMouseDown: self.updateEditorState
             }, (
               switch @state.actEdAtom[0]
                 when 0 then 'Кажд. нед., '
@@ -190,7 +191,7 @@ module.exports = React.createClass
         # Show atom editor cell part for canceling/changin
         (if self.props.editor.mode in [2,3]
           (a {
-            className: "editor-atom cell-atom parity-#{atom.parity} hg-#{atom.half_group} #{'current' if self.isCurrentEditorCell(atom)}"
+            className: "editor-atom cell-atom parity-#{atom.parity} hg-#{atom.half_group}"
             onClick: (->self.updateEditorState(atom))
           }, (if self.props.editor.mode == 2 then 'отменить' else 'изменить'))
         )

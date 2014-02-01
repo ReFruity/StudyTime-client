@@ -7,7 +7,7 @@ elementsList = []
 if window
   $ = require 'traversty'
   Gator = require('gator')
-  Gator(window.document).on('click', (evt) ->
+  Gator(document).on('click', (evt) ->
     for e in elementsList when e
       target = $(evt.target)
       if not target.closest(e[0]).length and (not e[1].excludeClickOutside or not target.closest(e[1].excludeClickOutside).length )

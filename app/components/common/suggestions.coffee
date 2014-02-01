@@ -1,6 +1,10 @@
 React = require 'react'
+Gator = require 'gator'
+_ = require 'underscore'
+
 {div, input, a} = React.DOM
-{Suggestions} = require '/models/Suggestions'
+{Suggestions} = require '/models', 'Suggestions'
+{modelMixin} = require '/components/common', 'modelMixin'
 {classSet} = React.addons
 
 DefaultItemElement = React.createClass
@@ -17,36 +21,34 @@ DefaultItemElement = React.createClass
 # propery.
 #
 module.exports = React.createClass
+  mixins: [modelMixin]
   propTypes:
     model: React.PropTypes.string.isRequired
-    value: React.PropTypes.string.isRequired
     selectItemHandler: React.PropTypes.func.isRequired
     itemElem: React.PropTypes.func
+    inputId: React.PropTypes.string.isRequired
+
+  getBackboneModels: ->
+    [@state.items]
 
   getDefaultProps: ->
     itemElem: DefaultItemElement
 
   getInitialState: ->
     showed: no
-    items: []
+    items: new Suggestions().modelType(@props.model)
     activeIndex: 0
 
   # Controller logic
   requestSuggestions: (text)->
-    if not text or not text.trim().length
-      @setState showed: no
+    if _.isString(text) and @lastValue != text.trim() and text.trim().length > 0
+      @state.items.find(text)
+      @setState activeIndex: 0
     else
-      @setState
-        showed: yes
-        activeIndex: 0
-        items: [
-          {name:'tetst', object:'123'}
-          {name:'tetst 2', object:'123'}
-          {name:'tetst 4', object:'123'}
-        ]
+      @state.items.reset()
 
   getActiveItem: ->
-    @state.items[@state.activeIndex] if @state.items.length > 0
+    _.clone(@state.items.at(@state.activeIndex).attributes) if @state.items.length > 0
 
   activateNextItem: ->
     if @state.activeIndex + 1 < @state.items.length
@@ -64,23 +66,21 @@ module.exports = React.createClass
     @setState activeIndex: indx
 
   select: (indx)->
-    if @state.items.length > 0
-      @props.selectItemHandler(@state.items[indx])
-      @setState
-        showed: no
-        items: []
+    if @state.items.length and @state.showed
+      value = _.clone(@state.items.at(indx).attributes)
+      @lastValue = value.name
+      @props.selectItemHandler(value)
+      @state.items.reset()
 
   onKeyUp: (e)->
-    if @state.items.length
+    if @state.items.length and @state.showed
       if e.keyCode is 13
         @select(@state.activeIndex)
       if e.keyCode is 27
-        @setState
-          showed: no
-          items: []
+        @state.items.reset()
 
   onKeyDown: (e)->
-    if @state.items.length > 0
+    if @state.items.length and @state.showed
       if e.keyCode is 9
         @select(@state.activeIndex)
 
@@ -94,21 +94,29 @@ module.exports = React.createClass
     @select(i)
 
   onMouseEnter: (e, i)->
-    self.activate(i)
+    @activate(i)
+
+  onFocus: ->
+    @setState showed: yes
+
+  onBlur: ->
+    @setState showed: no
 
   componentWillReceiveProps: (props)->
     @requestSuggestions(props.value)
 
   componentDidMount: ->
     @requestSuggestions(@props.value)
-    $(window).on
-      keyup: @onKeyUp
-      keydown: @onKeyDown
+    Gator(document.getElementById(@props.inputId)).on 'focus', @onFocus
+    Gator(document.getElementById(@props.inputId)).on 'blur', @onBlur
+    Gator(window).on 'keyup', @onKeyUp
+    Gator(window).on 'keydown', @onKeyDown
 
   componentWillUnmount: ->
-    $(window).off
-      keyup: @onKeyUp
-      keydown: @onKeyDown
+    Gator(document.getElementById(@props.inputId)).off 'focus', @onFocus
+    Gator(document.getElementById(@props.inputId)).off 'blur', @onBlur
+    Gator(window).off 'keyup', @onKeyUp
+    Gator(window).off 'keydown', @onKeyDown
 
   render: ->
     self = @
@@ -119,7 +127,7 @@ module.exports = React.createClass
             onMouseEnter: ((e)->self.onMouseEnter(e, i)),
             onMouseDown: ((e)->self.onMouseDown(e, i)),
             className: classSet('current': self.state.activeIndex == i)},
-            (self.props.itemElem {item: item})
+            (self.props.itemElem {item: item.attributes})
           )
       )
     )

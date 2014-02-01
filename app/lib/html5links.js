@@ -6,32 +6,21 @@
 
     // AMD. Register as an anonymous module.
     if (typeof define === 'function' && define.amd) {
-        define(['react'], function (react) {
-            return (factory(react));
+        define(['gator'], function (gator) {
+            return (factory(gator));
         });
     }  else if (typeof exports !== 'undefined') {
-        factory(require('react'), require('backbone'));
+        factory(require('gator'), require('backbone'));
     }
     else {
-        factory(root.React);
+        factory(root.Gator);
     }
-}(this, function (react, Backbone) {
-    var aa = react.DOM.a
-    react.DOM.a = react.createClass({
-        render: function () {
-            var href, onClick, _ref;
-            _ref = this.props, onClick = _ref.onClick, href = _ref.href;
-            return this.transferPropsTo(aa({
-                onClick: function (e) {
-                    e.preventDefault();
-                    if (href && href !== "#") {
-                        Backbone.history.navigate(href, true);
-                    }
-                    if (onClick) {
-                        return onClick(e);
-                    }
-                }
-            }, this.props.children));
+}(this, function (Gator, Backbone) {
+    Gator(document).on('click', 'a', function(e) {
+        e.preventDefault();
+        var href = this.getAttribute('href')
+        if(href && href !== '#') {
+            Backbone.history.navigate(href, true);
         }
-    });
+    })
 }));

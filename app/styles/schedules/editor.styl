@@ -8,18 +8,27 @@ $info-nav-height ?= 35px
 .event-editor
   background $brand-info-bg
   margin-bottom 15px
+  position relative
+  height 320px
+
+  .editor-row
+    padding 0 15px
+
+  textarea#descr
+    height 138px
+    resize none
 
   .select-cell
     text-align center
     &>span
-      margin-top 80px
+      margin-top 60px
       margin-bottom 30px
       display block
       text-align center
       font-size $font-size-medium
 
   .add-btn-col
-    margin-top -46px
+    margin-top -64px
 
   .preview
     text-align center
@@ -44,6 +53,50 @@ $info-nav-height ?= 35px
 
     .enter-line
       margin-bottom 10px
+
+  .thanks-wnd
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background $brand-info-bg
+    text-align center
+    .wrapper
+      margin-top -130px
+      top 50%
+      margin-left -175px
+      left 50%
+      text-align center
+      position absolute
+      width 350px
+      height 250px
+
+      h2
+        font-size $font-size-large*2
+
+      p
+        margin 30px 0
+
+      .notify
+        background $brand-primary
+        color #fff
+        padding 10px 20px
+
+    .buttons
+      position absolute
+      left 0
+      right 0
+      bottom 0
+      height 54px
+      border-top 2px solid darken($brand-info-bg, 12%)
+      background darken($brand-info-bg, 5%)
+      padding 15px
+      a
+        padding 10px 20px
+        margin-left 20px
+        background $brand-info
+        color #fff
 
 
   .editor-switcher

@@ -37,7 +37,7 @@ InputItem = React.createClass
   onChange: (e)->
     value = e.target.value.trim()
     if value.length > 1 and value[value.length - 1] == ',' and not @props.allowComma
-      @addTag({name: value.substr(0, value.length - 1), object: ''})
+      @addTag({name: value.substr(0, value.length - 1)})
     else
       @setState value: e.target.value
 
@@ -55,13 +55,13 @@ InputItem = React.createClass
     else if (e.keyCode in [13, 9] or (not @props.allowSpace and e.keyCode is 32)) and @state.value.trim().length > 0
       e.preventDefault() unless e.keyCode == 9
       if e.keyCode not in [13, 9] or not @props.suggestions or not @refs['sugg'].getActiveItem()
-        @addTag({name: @state.value.trim(), object: ''})
+        @addTag({name: @state.value.trim()})
 
   # Create new tag if input is not empty
   onBlur: ->
     if @state.value.trim().length > 0
       sugg = @refs['sugg'].getActiveItem() if @props.suggestions
-      @addTag(if sugg then sugg else {name: @state.value.trim(), object: ''})
+      @addTag(if sugg then sugg else {name: @state.value.trim()})
 
   # When user select some suggection
   onSelectSuggestion: (item)->
@@ -94,6 +94,7 @@ InputItem = React.createClass
     (li {className: 'input-li'}, [
       (input {
         ref: 'tagInput',
+        id: @props.id
         value: @state.value
         onBlur: @onBlur,
         onChange: @onChange,
@@ -101,7 +102,7 @@ InputItem = React.createClass
         placeholder: @props.placeholder
       })
       (if @props.suggestions
-        (suggestions {ref: 'sugg', value: @state.value, model: @props.suggestions, selectItemHandler: @onSelectSuggestion})
+        (suggestions {ref: 'sugg', inputId: @props.id, value: @state.value, model: @props.suggestions, selectItemHandler: @onSelectSuggestion})
       )
     ])
 
@@ -112,12 +113,12 @@ InputItem = React.createClass
 #
 module.exports = React.createClass
   propTypes:
+    onChange: React.PropTypes.func.isRequired
+    id: React.PropTypes.string.isRequired
     suggestions: React.PropTypes.string
-    onChange: React.PropTypes.func
     value: React.PropTypes.array
     allowSpace: React.PropTypes.boolean
     allowComma: React.PropTypes.boolean
-    id: React.PropTypes.string
     className: React.PropTypes.string
 
   focusToInput: ->
@@ -143,7 +144,7 @@ module.exports = React.createClass
 
   render: ->
     self = @
-    (div {id: @props.id, className: "tagged-input #{@props.className}", onClick: @focusToInput}, [
+    (div {className: "tagged-input #{@props.className}", onClick: @focusToInput}, [
       (ul {}, [
         # Existing events
         (@props.value or []).map (tag, i) ->
@@ -154,10 +155,11 @@ module.exports = React.createClass
           ref: 'tagInput',
           removeLastTagHandler: @onRemoveLastTag,
           addTagHandler: @onAddTag,
-          placeholder: (@props.placeholder if not @props.value)
+          placeholder: (@props.placeholder if not @props.value or not @props.value.length)
           allowSpace: @props.allowSpace
           allowComma: @props.allowComma
           suggestions: @props.suggestions
+          id: @props.id
         })
 
         (div {className: 'clearfix'})

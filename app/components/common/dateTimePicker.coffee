@@ -257,6 +257,7 @@ module.exports = React.createClass
   propTypes:
     minView: React.PropTypes.string
     maxView: React.PropTypes.string
+    disabled: React.PropTypes.boolean
     view: React.PropTypes.string
     value: React.PropTypes.object
     after: React.PropTypes.instanceOf(Date)
@@ -273,6 +274,7 @@ module.exports = React.createClass
     minView: 'year'
     maxView: 'minutes'
     view: 'date'
+    format: 'dd.MM.yyyy, HH:mm'
     value: new Date()
 
   getInitialState: ->
@@ -311,7 +313,7 @@ module.exports = React.createClass
 
   formattedDateValue: ->
     if @state.value
-      getFormattedDate(@state.value, 'dd.MM.yyyy, HH:mm')
+      getFormattedDate(@state.value, @props.format)
     else
       ''
 
