@@ -27,6 +27,10 @@ data =
           courses: "Спецкурсы"
           professors: "Преподы"
 
+    professors:
+      index:
+        search: 'Поиск преподавателя'
+
     buttons:
       sign_in: "Вход"
 
@@ -75,7 +79,7 @@ data =
 
 # Memorized localized value getter
 @locale = 'ru'
-@getLocalizedValue = _.memoize((path, locale=@locale) ->
+@t = @getLocalizedValue = _.memoize((path, locale=@locale) ->
   pointsPath = path
   path = "[\"" + path.split(".").join("\"][\"") + "\"]"
 

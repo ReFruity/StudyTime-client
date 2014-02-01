@@ -30,7 +30,7 @@
         "auto-reload-brunch": ">= 1.0 < 1.8"
     },
     "devDependencies": {
-        "karma": "~0.10",
+        "karma": ">= 0.10",
         "karma-mocha": "~0.1",
         "karma-safari-launcher": "~0.1",
         "karma-chrome-launcher": "~0.1",
