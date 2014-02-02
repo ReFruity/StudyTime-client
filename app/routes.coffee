@@ -5,16 +5,17 @@ app = require 'components/app'
 # Cross-environment route definition
 class MainRouter extends Router
   routes:
-    "/": "universities"
-    "/places": "places"
-    "/courses(/:dow)": "courses"
-    "/students(/:user)": "students"
-    "/professors(/:user)": "professors"
-    "/:uni": "faculties"
-    "/:uni/:faculty": "groups"
-    "/:uni/:faculty/:group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule"
-    "/:uni/:faculty/:group(/:scheduleType(/:event(/:detailsView)))": "schedule"
-    "/*error": "404"
+    "/": "universities/index"
+    "/places": "places/index"
+    "/courses(/:dow)": "courses/index"
+    "/students(/:user)": "students/index"
+    "/professors": "professors/index"
+    "/professors(/:user)": "professors/show"
+    "/:uni": "faculties/index"
+    "/:uni/:faculty": "groups/index"
+    "/:uni/:faculty/:group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule/index"
+    "/:uni/:faculty/:group(/:scheduleType(/:event(/:detailsView)))": "schedule/index"
+    "/*error": "404/index"
 
   # Delegate rendering to some predefined function
   # (may be different in broser or node.js version)

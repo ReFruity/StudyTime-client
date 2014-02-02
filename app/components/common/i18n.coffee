@@ -31,6 +31,12 @@ data =
       index:
         search: 'Поиск преподавателя'
 
+    attributes:
+      professor:
+        address: 'Адрес'
+        email: 'Почта'
+        phone: 'Телефон'
+
     buttons:
       sign_in: "Вход"
 

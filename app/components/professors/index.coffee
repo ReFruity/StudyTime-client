@@ -17,7 +17,8 @@ module.exports = React.createClass
       {firstName: 'Александр', secondName: 'Промах', middleName: 'Иванович', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
+      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: ''}
+      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич'}
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
     ]
@@ -74,9 +75,10 @@ ProfessorItem = React.createClass
 
   render: ->
     {item} = @props
+    imageUrl = if !!item.image then item.image else '/images/professor-no-image.png'
 
     div {className: 'professor col-sm-3'}, [
-      img src: item.image
+      img src: imageUrl
       div {className: 'second-name'}, item.secondName
       div {className: 'first-name'}, "#{item.firstName} #{item.middleName}"
     ]
