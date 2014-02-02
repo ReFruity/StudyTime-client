@@ -1,7 +1,14 @@
+_ = require 'underscore'
 React = require 'react'
 {div, input, img, span} = React.DOM
 
 module.exports = React.createClass
+  getInitialState: ->
+    filterQuery: ''
+
+  handleUserInput: (filterQuery) ->
+    @setState filterQuery: filterQuery
+
   render: ->
 
     #fake collection
@@ -13,23 +20,35 @@ module.exports = React.createClass
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
     ]
 
     div {id: 'professors-index', className: 'container'}, [
-      ProfessorsFilter()
-      ProfessorsList collection: collection
+      ProfessorsFilter filterQuery: @state.filterQuery, onUserInput: @handleUserInput
+      ProfessorsList collection: collection, filterQuery: @state.filterQuery
     ]
 
 ##########
 
 ProfessorsFilter = React.createClass
+  propTypes:
+    filterQuery: React.PropTypes.string
+
+  handleChange: ->
+#    console.log(@props)
+#    console.log(@)
+    @props.onUserInput(
+      @refs.filterQueryInput.getDOMNode().value,
+    )
+
   render: ->
     div {className: 'filter'}, [
       img src: '/images/professors-search.png'
-      input type: 'text', placeholder: t('professors.index.search')
+      input
+        type: 'text',
+        placeholder: t('professors.index.search'),
+        value: @props.filterQuery,
+        onChange: @handleChange
+        ref: "filterQueryInput"
     ]
 
 ##########
@@ -37,11 +56,15 @@ ProfessorsFilter = React.createClass
 ProfessorsList = React.createClass
   propTypes:
     collection: React.PropTypes.array.isRequired
+    filterQuery: React.PropTypes.string
 
   render: ->
     div {className: 'professors'},
-      @props.collection.map (item) ->
+      _.filter(@props.collection,(item) =>
+        "#{item.firstName} #{item.secondName} #{item.middleName}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
+      ).map (item) ->
         ProfessorItem item: item
+      div className: 'clearfix'
 
 ##########
 
