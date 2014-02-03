@@ -70,22 +70,22 @@ module.exports = React.createClass
             ])
             (div {className: 'row'}, [
               (div {className: 'col-xs-12 form-group'}, [
-              	(label {className: classSet('sr-only': not @state.description), htmlFor: 'descr'}, 'Комментарий')
-                (textarea {id: 'descr', placeholder: 'Комментарий', className: 'form-control',value: @state.description, onChange: @setDescription})
+                (switcher {
+                  values: [
+                    {name: 'Одну пару', value: 0}
+                    {name: 'Несколько', value: 1}
+                    {name: 'Полностью', value: 2}
+                  ],
+                  className: 'form-control'
+                  value: @state.cancelType
+                  onChange: @onSwitchCancelType
+                })
               ])
             ])
             (div {className: 'row'}, [
               (div {className: 'col-xs-12 form-group'}, [
-              	(switcher {
-              		values: [
-              			{name: 'Одну пару', value: 0}
-              			{name: 'Несколько', value: 1}
-              			{name: 'Полностью', value: 2}
-              		],
-              		className: 'form-control'
-              		value: @state.cancelType
-              		onChange: @onSwitchCancelType
-              	})
+              	(label {className: classSet('sr-only': not @state.description), htmlFor: 'descr'}, 'Комментарий')
+                (textarea {id: 'descr', placeholder: 'Комментарий', className: 'form-control',value: @state.description, onChange: @setDescription})
               ])
             ])
           ])
