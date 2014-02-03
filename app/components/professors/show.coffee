@@ -81,7 +81,7 @@ BackButton = React.createClass
     window.history.back()
 
   render: ->
-    a {className: 'back-btn', href: '#', onClick: @back}, [
+    a {className: 'back-btn', onClick: @back}, [
       i {className: 'stico-arrow-right rotate-180'}
       span {}, t('buttons.back')
     ]

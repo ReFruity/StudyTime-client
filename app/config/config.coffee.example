@@ -1,6 +1,0 @@
-defaultConfig = require "config/default-config"
-_ = require 'underscore'
-
-module.exports = _.extend defaultConfig,
-  apiUrl: 'http://api.studytime.me/api/v2'
-  serverPort: 3000
