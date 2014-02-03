@@ -39,6 +39,7 @@ data =
 
     buttons:
       sign_in: "Вход"
+      back: 'Назад'
 
     attachments:
       header: 'Приложения'

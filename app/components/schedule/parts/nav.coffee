@@ -37,8 +37,8 @@ module.exports =
     changeWeek: (direction)->
       now = new Date(@props.bounds[1])
       now.setDate(now.getDate() + direction * 7)
-      new_bounds = now.getWeekBounds()
-      @props.switchWeekHandler(new_bounds)
+      newBounds = now.getWeekBounds()
+      @props.switchWeekHandler(newBounds)
 
     nextWeek: ->
       @changeWeek(1)
@@ -47,10 +47,10 @@ module.exports =
       @changeWeek(-1)
 
     render: ->
-      in_feature = @props.bounds[0] > new Date()
+      inFeature = @props.bounds[0] > new Date()
 
-      (div {className: classSet('sched-week-switcher':yes, 'feature':in_feature)}, (
-        if not in_feature
+      (div {className: classSet('sched-week-switcher':yes, 'feature':inFeature)}, (
+        if not inFeature
           (a {onClick: @nextWeek}, [
             (i18n {}, 'schedule.navigation.next_week')
             (i {className: 'stico-arrow-right'})
@@ -75,7 +75,7 @@ module.exports =
   #
   UpdateIndicator: React.createClass
     render: ->
-      (div {className: 'sched-upd-indicator'}, (
+      (div {className: 'sched-update-indicator'}, (
         if @props.updated
           [
             (i18n {}, 'schedule.navigation.updated')

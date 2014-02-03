@@ -1,6 +1,8 @@
 #_ = require 'underscore'
 React = require 'react'
-{div, img, span, strong, table, tr, td} = React.DOM
+{div, img, span, strong, table, tr, td, i, a} = React.DOM
+nav = require '/components/schedule/parts/nav'
+
 
 #fake resource
 resource =
@@ -19,6 +21,7 @@ module.exports = React.createClass
   render: ->
     div {id: 'professors-show'}, [
       ProfessorCard resource: resource
+      ProfessorSchedule resource: resource
     ]
 
 ##########
@@ -53,3 +56,35 @@ ProfessorCard = React.createClass
         ]
       ]
     ]
+
+##########
+
+ProfessorSchedule = React.createClass
+  propTypes:
+    resource: React.PropTypes.object.isRequired
+
+  getInitialState: ->
+    bounds: new Date().getWeekBounds()
+
+  render: ->
+    div {className: 'professor-shedule container'}, [
+      div {className: 'sched-nav'}, [
+        nav.WeekSwitcher bounds: @state.bounds, switchWeekHandler: (->)
+        nav.UpdateIndicator updated: true
+        BackButton()
+      ]
+    ]
+
+
+BackButton = React.createClass
+  back: ->
+    window.history.back()
+
+  render: ->
+    a {className: 'back-btn', href: '#', onClick: @back}, [
+      i {className: 'stico-arrow-right rotate-180'}
+      span {}, t('buttons.back')
+    ]
+
+
+

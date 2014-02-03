@@ -97,46 +97,46 @@
           @media $media-max-tablet
             display none
 
+.sched-nav
+  .sched-update-indicator
+    float left
+    font-size $font-size-medium
+    color #aaa
+    font-weight 100
+    position absolute
+    left 0
+    right 0
+    text-align center
+    z-index -1
+    line-height $sched-nav-height
 
-    .sched-upd-indicator
-      float left
-      font-size $font-size-medium
-      color #aaa
-      font-weight 100
-      position absolute
-      left 0
-      right 0
-      text-align center
-      z-index -1
-      line-height $sched-nav-height
 
+  .sched-week-switcher
+    float right
+    font-size $font-size-medium
+    font-weight 200
 
-    .sched-week-switcher
-      float right
-      font-size $font-size-medium
-      font-weight 200
+    @media $media-max-phone
+      display none
 
-      @media $media-max-phone
-        display none
-
-      &.feature a
-        width 85px
-      a
-        display inline-block
+    &.feature a
+      width 85px
+    a
+      display inline-block
+      cursor pointer
+      padding 5px 0
+      text-decoration none
+      height $sched-nav-height
+      span
         cursor pointer
-        padding 5px 0
-        text-decoration none
-        height $sched-nav-height
-        span
-          cursor pointer
-        &:first-child
-          text-align left
-          &>span
-            margin-left 5px
-        &:last-child
-          text-align right
-          &>span
-            margin-right 5px
-      .stico-arrow-right
-        margin-top -2px
-        vertical-align middle
+      &:first-child
+        text-align left
+        &>span
+          margin-left 5px
+      &:last-child
+        text-align right
+        &>span
+          margin-right 5px
+    .stico-arrow-right
+      margin-top -2px
+      vertical-align middle
