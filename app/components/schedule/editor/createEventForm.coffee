@@ -62,7 +62,7 @@ module.exports = React.createClass
             (div {className: 'row'}, [
               (div {className: 'col-xs-12 form-group'}, [
                 (label {className: classSet('sr-only': not @state.subject.name.length), htmlFor: 'subjectInput'}, 'Предмет')
-                (input {id: 'subjectInput', className: 'form-control', placeholder: 'Предмет', value: @state.subject.name, onChange: @setSubject})
+                (input {ref: 'subjectInput', id: 'subjectInput', className: 'form-control', placeholder: 'Предмет', value: @state.subject.name, onChange: @setSubject})
                 (suggestions {inputId: 'subjectInput', value: @state.subject.name, selectItemHandler: @setSubject, model: 'subject'})
               ])
             ])

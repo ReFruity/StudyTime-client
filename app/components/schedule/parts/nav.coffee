@@ -20,8 +20,10 @@ module.exports =
         @props.switchEditorHandler(1)
 
     render: ->
-      (div {className: 'editor-btn'},
-        (a {onClick: @toggleEditor}, 'edit')
+      (div {className: classSet('editor-btn': yes, 'current': @props.editor.mode > 0)},
+        (a {onClick: @toggleEditor},
+          (i {className: 'stico-edit'})
+        )
       )
 
   ##

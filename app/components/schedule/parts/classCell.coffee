@@ -111,11 +111,10 @@ module.exports = React.createClass
   isCurrentEditorCell: (atom)->
     return no if not @props.editor.state
     switch @props.editor.mode
-      when 1 then @props.editor.state and
-        @props.editor.state.number == @props.number and
+      when 1 then @props.editor.state.number == @props.number and
         @isSameDate(@props.editor.state.activity_start, @props.date)
       when 2, 3 then @props.editor.state._id == atom._id and
-        @isSameDate(@props.editor.state.selectedDate, @props.date)
+        @isSameDate(@props.editor.state.activity_start, @props.date)
       else no
 
   # Check that given two dates (without time) are equal
@@ -191,7 +190,7 @@ module.exports = React.createClass
         # Show atom editor cell part for canceling/changin
         (if self.props.editor.mode in [2,3]
           (a {
-            className: "editor-atom cell-atom parity-#{atom.parity} hg-#{atom.half_group}"
+            className: "editor-atom cell-atom parity-#{atom.parity} hg-#{atom.half_group} "+classSet('current': self.isCurrentEditorCell(atom)),
             onClick: (->self.updateEditorState(atom))
           }, (if self.props.editor.mode == 2 then 'отменить' else 'изменить'))
         )
