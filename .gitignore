@@ -16,3 +16,4 @@ test/test-results.xml
 # Bower stuff.
 bower_components/
 node_modules
+app/config/config.coffee

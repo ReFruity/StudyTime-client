@@ -4,7 +4,7 @@
 # environment (browser or node.js)
 #
 _ = require 'underscore'
-config = require 'config'
+config = require 'config/config'
 Backbone = require 'backbone'
 React = require 'react'
 

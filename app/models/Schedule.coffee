@@ -1,4 +1,4 @@
-config = require 'config'
+config = require 'config/config'
 Backbone = require 'backbone'
 
 ScheduleModel = Backbone.Model.extend
