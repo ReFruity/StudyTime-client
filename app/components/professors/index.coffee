@@ -23,7 +23,7 @@ module.exports = React.createClass
       {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
     ]
 
-    div {id: 'professors-index', className: 'container'}, [
+    div {id: 'professors-index'}, [
       ProfessorsFilter filterQuery: @state.filterQuery, onUserInput: @handleUserInput
       ProfessorsList collection: collection, filterQuery: @state.filterQuery
     ]
@@ -35,21 +35,22 @@ ProfessorsFilter = React.createClass
     filterQuery: React.PropTypes.string
 
   handleChange: ->
-#    console.log(@props)
-#    console.log(@)
     @props.onUserInput(
       @refs.filterQueryInput.getDOMNode().value,
     )
 
   render: ->
-    div {className: 'filter'}, [
-      img src: '/images/professors-search.png'
-      input
-        type: 'text',
-        placeholder: t('professors.index.search'),
-        value: @props.filterQuery,
-        onChange: @handleChange
-        ref: "filterQueryInput"
+    div {className: 'container'}, [
+      div {className: 'filter'}, [
+        img src: '/images/professors-search.png'
+        input
+          className: 'form-control'
+          type: 'text',
+          placeholder: t('professors.index.search'),
+          value: @props.filterQuery,
+          onChange: @handleChange
+          ref: "filterQueryInput"
+      ]
     ]
 
 ##########
@@ -60,11 +61,13 @@ ProfessorsList = React.createClass
     filterQuery: React.PropTypes.string
 
   render: ->
-    div {className: 'professors'},
+    i = 0
+    div {className: 'professors container'},
       _.filter(@props.collection,(item) =>
         "#{item.firstName} #{item.secondName} #{item.middleName}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
       ).map (item) ->
-        ProfessorItem item: item
+        i += 1
+        if i % 4 is 0 then [ProfessorItem(item: item), div {className: 'clearfix'}] else ProfessorItem(item: item)
       div className: 'clearfix'
 
 ##########
@@ -79,6 +82,8 @@ ProfessorItem = React.createClass
 
     div {className: 'professor col-sm-3'}, [
       img src: imageUrl
-      div {className: 'second-name'}, item.secondName
-      div {className: 'first-name'}, "#{item.firstName} #{item.middleName}"
+      div {className: 'name'}, [
+        div {className: 'second-name'}, item.secondName
+        div {className: 'first-name'}, "#{item.firstName} #{item.middleName}"
+      ]
     ]
