@@ -41,7 +41,7 @@ module.exports = React.createClass
     route: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    group: new Group({name: @props.route.group}).fetchThis()
+    group: new Group(name: @props.route.group).fetchThis()
 
   getBackboneModels: ->
     [@state.group]
