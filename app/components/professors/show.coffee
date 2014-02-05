@@ -2,6 +2,8 @@
 React = require 'react'
 {div, img, span, strong, table, tr, td, i, a} = React.DOM
 nav = require '/components/schedule/parts/nav'
+Professor = require 'models/professor'
+
 
 
 #fake resource
@@ -15,13 +17,19 @@ resource =
   phone: '+7-123-45-67-890'
 
 module.exports = React.createClass
-#  getInitialState: ->
-#    filterQuery: ''
+  propTypes:
+    route: React.PropTypes.object.isRequired
+
+  getInitialState: ->
+    resource: resource
+#    resource: new Professor(id: @props.route.id).fetchThis
+#      success: @forceUpdate.bind(@, null)
 
   render: ->
+    console.log @state.resource
     div {id: 'professors-show'}, [
-      ProfessorCard resource: resource
-      ProfessorSchedule resource: resource
+      ProfessorCard resource: @state.resource
+      ProfessorSchedule resource: @state.resource
     ]
 
 ##########

@@ -3,43 +3,85 @@
 #professors-index
   margin-top: 30px
   .filter
-    /*margin-bottom 34px*/
+    @media $media-max-phone
+      margin-bottom 8px
     img
       width 60px
       margin 0 30px
+      @media $media-max-phone
+        display none
     input
-      width 728px
+      display inline-block
       border 3px solid $brand-info
       border-radius 3px
       height 41px
-      line-height 41px
       font-size 16px
-      padding 0 5px
-      color: #373d3f
+      color: $brand-primary
+      &:focus
+        outline none
+      @media $media-min-desktop
+        width 728px
+      @media $media-tablet
+        width 528px
+      @media $media-max-phone
+        background url('/images/magnifier.png') no-repeat 97% center
+
 
   .professors
     margin-bottom 40px
+    @media $media-max-phone
+      padding 0
     .professor
-      color: #c0c2c1
-      text-align center
-      margin-top: 50px
-      img
-        width 136px
-        height 136px
-        border-radius 68px
-        margin-bottom 15px
-      .second-name
-        font-size 18px
-      .first-name
-        font-size 14px
-
-      &:hover
-        color: $brand-info
-        margin-top: 33px
+      display block
+      text-decoration none
+      @media $media-min-tablet
+        color: #c0c2c1
+        text-align center
+        margin-top: 50px
         img
-          border 5px solid $brand-info
-          border-radius 76px
-          width 153px
-          height 153px
+          width 136px
+          height 136px
+          border-radius 68px
+          margin-bottom 15px
+        .second-name
+          font-size 18px
+        .first-name
+          font-size 14px
+
+        &:hover
+          color: $brand-info
+          margin-top: 33px
+          img
+            border 5px solid $brand-info
+            border-radius 76px
+            width 153px
+            height 153px
+
+      @media $media-max-phone
+        overflow hidden
+        color: $brand-primary
+        border-bottom 1px solid #ebf1f5
+        padding-top 8px
+        padding-bottom 8px
+        img
+          width 68px
+          height 68px
+          border-radius 34px
+          float left
+          margin-right 14px
+        .name
+          margin-top: 20px
+          white-space nowrap
+          .second-name
+            display inline-block
+            margin-right 5px
+            font-size 18px
+            font-weight bold
+          .first-name
+            display inline-block
+            font-size 18px
+
+
+
 
 

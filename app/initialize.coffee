@@ -2,7 +2,7 @@
 require 'helpers'
 require 'routes'
 require 'html5links'
-require 'fetchThisModel'
+require 'fetchThis'
 
 # Run history on the client
 if typeof window != 'undefined'

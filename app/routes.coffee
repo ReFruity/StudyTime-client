@@ -10,7 +10,7 @@ class MainRouter extends Router
     "/courses(/:dow)": "courses/index"
     "/students(/:user)": "students/index"
     "/professors": "professors/index"
-    "/professors(/:user)": "professors/show"
+    "/professors(/:id)": "professors/show"
     "/:uni": "faculties/index"
     "/:uni/:faculty": "groups/index"
     "/:uni/:faculty/:group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule/index"
