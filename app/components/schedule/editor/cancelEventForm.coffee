@@ -60,10 +60,10 @@ module.exports = React.createClass
       (form {onSubmit: @onSubmitForm, role: 'form'}, [
         (div {className: 'row'}, [
           # Form column
-          (div {className: 'col-xs-6 form-group'}, [
+          (div {className: 'col-xs-7 form-group'}, [
             (div {className: 'row'}, [
               (div {className: 'col-xs-6 form-group'}, [
-              	(label {className: classSet('sr-only': not @state.activity_start), htmlFor: 'actStart'}, 'Дата начала отмены')
+              	(label {className: classSet('sr-only': not @state.activity_start), htmlFor: 'actStart'}, 'Дата первой отмены')
                 (dateTimePicker {id: 'actStart', className: 'form-control', maxView: 'date', format: 'dd.MM.yyyy', value: @state.activity_start, onChange: @setCancelStartDate})
               ])
               (if @state.cancelType == 1
@@ -101,7 +101,7 @@ module.exports = React.createClass
           ])
 
           # Preview column
-          (div {className: 'col-xs-6 form-group preview'}, [
+          (div {className: 'col-xs-5 form-group preview'}, [
             (eventPreview {state: @state})
           ])
         ])

@@ -1,5 +1,5 @@
 React = require 'react'
-{span, div, a, i} = React.DOM
+{span, div, a, i, ul, li} = React.DOM
 {i18n, viewType, relativeDate, dateFormat} = require '/components/common', 'i18n', 'viewType', 'relativeDate', 'dateFormat'
 {classSet} = React.addons
 
@@ -13,18 +13,36 @@ module.exports =
       switchEditorHandler: React.PropTypes.func.isRequired
       editor: React.PropTypes.object.isRequired
 
+    getInitialState: ->
+      showDropDown: no
+
     toggleEditor: ->
       if @props.editor.mode > 0
         @props.switchEditorHandler(0)
       else
         @props.switchEditorHandler(1)
 
+    showDropDown: ->
+      @setState showDropDown: yes
+
+    hideDropDown: ->
+      @setState showDropDown: no
+
     render: ->
-      (div {className: classSet('editor-btn': yes, 'current': @props.editor.mode > 0)},
-        (a {onClick: @toggleEditor},
-          (i {className: 'stico-edit'})
-        )
-      )
+      self = @
+      div {onMouseEnter: @showDropDown, onMouseLeave: @hideDropDown, className: classSet('editor-btn': yes, 'current': @props.editor.mode > 0 or @state.showDropDown)},
+        a {onClick: @toggleEditor},
+          i {className: 'stico-edit'}
+
+        if @state.showDropDown
+          div {className: 'drop-down'}, [
+            div {className: 'menu-wrapper'},
+              ul {className: 'menu'},
+                li {onClick: (->self.props.switchEditorHandler(1);self.hideDropDown())}, 'Добавить пару'
+                li {onClick: (->self.props.switchEditorHandler(2);self.hideDropDown())}, 'Отменить пару'
+                li {onClick: (->self.props.switchEditorHandler(3);self.hideDropDown())}, 'Изменить пару'
+          ]
+
 
   ##
   # Component for switching current showing schedule week

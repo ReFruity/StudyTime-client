@@ -42,7 +42,7 @@
     fetch: (options) ->
       fetch = old_model::fetch.apply(this, arguments)
       model = this
-      fetch.always ->
+
       if fetch.fail
         fetch.fail ->
           model.fetchActive = false

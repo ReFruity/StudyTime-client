@@ -97,6 +97,7 @@ module.exports = React.createClass
 
   # Update event based on editor state
   updateEvent: (state)->
+    @showFinalStage(state)
 
   render: ->
     (div {className: 'event-editor'}, [

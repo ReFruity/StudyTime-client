@@ -1,6 +1,6 @@
 React = require 'react'
 _ = require 'underscore'
-{span, div, a, ul, li, i, form, input, label, select, option, textarea, button, h3} = React.DOM
+{span, div, a, ul, li, i, form, input, label, select, option, textarea, button, h3, p} = React.DOM
 {i18n, dateTimePicker, taggedInput, dateFormat, switcher, suggestions} = require '/components/common', 'i18n', 'dateTimePicker', 'taggedInput', 'dateFormat', 'switcher', 'suggestions'
 {eventPreview} = require '/components/schedule/editor', 'eventPreview'
 {classSet} = React.addons
@@ -34,12 +34,13 @@ module.exports = React.createClass
     @focusOnSubject()
 
   componentWillReceiveProps: (props) ->
-    @focusOnSubject()
     @setState _.assign(@state, (props.state or {}))
 
   setSubject: (e)->
-    @setState
-      subject: (if e.target then {name: e.target.value} else e)
+    if (e.target and e.target.value.length <=10) or not e.target
+      @setState
+        subject: (if e.target then {name: e.target.value} else e)
+        _enterSubjError: no
 
   setProfessor: (prof)->
     @setState professor: prof
@@ -49,7 +50,9 @@ module.exports = React.createClass
 
   setEventType: (e)->
     if e.target.value
-      @setState type: e.target.value
+      @setState
+        type: e.target.value
+        _enterTypeError: no
 
   setHalfGroup: (e)->
     if e.target.value
@@ -64,7 +67,19 @@ module.exports = React.createClass
 
   onSubmitForm: (e)->
     e.preventDefault()
-    @props.submitHandler(_.clone(@state))
+    if @state.subject and @state.subject.name and @state.type
+      @props.submitHandler(_.clone(@state))
+    else
+
+    @setState
+      _enterSubjError: (
+        if not @state.subject or not @state.subject.name
+          @focusOnSubject()
+          yes
+        else
+          no
+      )
+      _enterTypeError: not @state.type
 
   focusOnSubject: ->
     self = @
@@ -77,11 +92,11 @@ module.exports = React.createClass
       (form {onSubmit: @onSubmitForm, role: 'form'}, [
         (div {className: 'row'}, [
           # Form column
-          (div {className: 'col-xs-6 form-group'}, [
+          (div {className: 'col-xs-7 form-group'}, [
             (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.subject.name.length), htmlFor: 'subjectInput'}, 'Предмет')
-                (input {ref: 'subjectInput', id: 'subjectInput', className: 'form-control', placeholder: 'Предмет', value: @state.subject.name, onChange: @setSubject})
+              (div {className: classSet('col-xs-12 form-group':yes, 'has-error': @state._enterSubjError)}, [
+                (label {className: classSet('sr-only': not @state.subject.name.length), htmlFor: 'subjectInput'}, 'Предмет (макс. 10 символов)')
+                (input {ref: 'subjectInput', id: 'subjectInput', className: 'form-control', placeholder: 'Предмет (макс. 10 символов)', value: @state.subject.name, onChange: @setSubject, require: yes})
                 (suggestions {inputId: 'subjectInput', value: @state.subject.name, selectItemHandler: @setSubject, model: 'subject'})
               ])
             ])
@@ -96,7 +111,7 @@ module.exports = React.createClass
                 (label {className: classSet('sr-only': not @state.place.length), htmlFor: 'placeInput'}, 'Аудитория')
                 (taggedInput {id: 'placeInput', suggestions: 'place', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace})
               ])
-              (div {className: 'col-xs-6 form-group'}, [
+              (div {className: classSet('col-xs-6 form-group':yes, 'has-error': @state._enterTypeError)}, [
                 (label {className: classSet('sr-only': not @state.type), htmlFor: 'typeInput'}, 'Тип события')
                 (select {id: 'typeInput', className: 'form-control', value: @state.type, onChange: @setEventType}, [
                   (option {value: '', disabled:'disabled'}, '– Тип события –')
@@ -131,7 +146,7 @@ module.exports = React.createClass
                 (switcher {
                   values: [
                     {name: 'Весь семестр', value: yes}
-                    {name: getFormattedDate(@state.activity_start, 'Только dd MMMM'), value: no} if @state.activity_start
+                    {name: getFormattedDate(@state.selectedDate, 'Только dd MMMM'), value: no} if @state.activity_start
                   ]
                   value: @state.infinity
                   onChange: @onSwitchLength
@@ -146,7 +161,7 @@ module.exports = React.createClass
           ])
 
           # Preview column
-          (div {className: 'col-xs-6 form-group preview'}, [
+          (div {className: 'col-xs-5 form-group preview'}, [
             (eventPreview {state: @state})
           ])
         ])

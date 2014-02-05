@@ -1,14 +1,15 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
-$info-nav-bg ?= darken($brand-info-bg, 10%)
+$info-nav-bg ?= darken($brand-info-bg, 5%)
 $info-nav-height ?= 40px
 
 
 .event-editor
   background $brand-info-bg
-  margin-bottom 15px
+  margin-bottom 20px
   position relative
+  border-bottom 2px solid darken($brand-info-bg, 5%)
 
   .editor-row
     //padding 0 15px
@@ -58,6 +59,7 @@ $info-nav-height ?= 40px
       .enter
         font-size $font-size-large
         font-weight 500
+        margin-left -70px
 
       h3
         margin 6px 0 10px -40px
