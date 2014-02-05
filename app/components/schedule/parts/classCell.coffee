@@ -26,11 +26,6 @@ module.exports = React.createClass
     switchEditorHandler: React.PropTypes.func.isRequired
     route: React.PropTypes.object.isRequired
 
-  # State only for tracking mouse over
-  # part of the cell (see `onEditorCellMouseOver`)
-  getInitialState: ->
-    actEdAtom: undefined
-
   # Fast(realy?) unique cell id generator, that creates string
   # contains any variable things of the cell
   getCellUniqueId: (p, s)->
@@ -40,7 +35,6 @@ module.exports = React.createClass
       #{p.bounds[0].getTime()}.#{p.bounds[1].getTime()}
       #{if p.editor and p.editor.state and p.editor.state.number == p.number and p.editor.state.dow == p.dow then JSON.stringify(p.editor) else p.editor.mode}
       #{p.route.atom if p.route.dow == p.dow and p.route.number == p.number}
-      #{s.actEdAtom.join() if s.actEdAtom}
     """
 
   # Just compare prev unique cell id and new
@@ -86,8 +80,8 @@ module.exports = React.createClass
     # Set data depends on editor mode
     switch @props.editor.mode
       when 1 then _.assign(newEditorState,
-        parity: @state.actEdAtom[0]
-        half_group: @state.actEdAtom[1]
+        parity: 0
+        half_group: 0
         activity_start: @props.date
       )
       when 2, 3 then _.assign(newEditorState,
@@ -112,96 +106,33 @@ module.exports = React.createClass
     return no if not @props.editor.state
     switch @props.editor.mode
       when 1 then @props.editor.state.number == @props.number and
-        @isSameDate(@props.editor.state.activity_start, @props.date)
+        @props.date.isSameDate(@props.editor.state.activity_start)
       when 2, 3 then @props.editor.state._id == atom._id and
-        @isSameDate(@props.editor.state.activity_start, @props.date)
+        @props.date.isSameDate(@props.editor.state.activity_start)
       else no
-
-  # Check that given two dates (without time) are equal
-  isSameDate: (nd, cd) ->
-    nd.getFullYear() == cd.getFullYear() and nd.getMonth() == cd.getMonth() and nd.getDate() == cd.getDate()
-
-  # Enable some part of editor cell, that user select by
-  # the mouse
-  onEditorCellMouseOver: (e) ->
-    cellElem = @getDOMNode()
-    widthPart = cellElem.offsetWidth / 7
-    heightPart = cellElem.parentNode.clientHeight / 13
-    position = helpers.findPos(cellElem)
-    x = e.pageX - position[0]
-    y = e.pageY - position[1]
-
-    # Get half group
-    if x <= widthPart*2
-      hg = 1
-    else if x >= widthPart*5
-      hg = 2
-    else
-      hg = 0
-
-    # Get parity
-    if y <= heightPart*4
-      parity = 1
-    else if y >= heightPart*9
-      parity = 2
-    else
-      parity = 0
-
-    # Set state
-    @setState actEdAtom: [parity, hg]
-
-  # Disable any editor atom when mouse leave out from
-  # editor cell
-  onEditorCellMouseLeave: (e)->
-    @setState actEdAtom: undefined
 
   # View renderer
   render: ->
     self = @
-    (div {className: 'class-cell'}, [
-      # Show editor cell part selector for making new event
-      (if @props.editor.mode == 1
-        (div {ref: 'editorCell', className: 'editor-cell', onMouseMove: @onEditorCellMouseOver, onMouseLeave: @onEditorCellMouseLeave},
-          (if @props.editor and @props.editor.state and self.isCurrentEditorCell()
-            st = @props.editor.state
-            (a {className: "editor-atom cell-atom parity-#{st.parity or 0} hg-#{st.half_group or 0} current"})
-          )
-          (if @state.actEdAtom
-            (a {
-              className: "editor-atom cell-atom parity-#{@state.actEdAtom[0]} hg-#{@state.actEdAtom[1]}",
-              onMouseDown: self.updateEditorState
-            }, (
-              switch @state.actEdAtom[0]
-                when 0 then 'Кажд. нед., '
-                when 1 then 'По нечет., '
-                when 2 then 'По чет., '
-            ) + (
-              switch @state.actEdAtom[1]
-                when 0 then 'вся группа'
-                when 1 then '1 подгр.'
-                when 2 then '2 подгр.'
-            ))
-          )
-        )
-      )
+    div {className: 'cell-wrapper'}, [
+      if @props.editor.mode == 1
+        div {ref: 'editorCell', className: 'editor-cell'},
+          a {onMouseDown: @updateEditorState, className: "editor-atom cell-atom parity-0 hg-0 #{if @isCurrentEditorCell() then 'current' else ''}"}, 'добавить'
 
-      # Existing atoms view
-      (@props.data or []).filter(@filterCellAtoms).map (atom, index) -> [
-        # Show atom editor cell part for canceling/changin
-        (if self.props.editor.mode in [2,3]
-          (a {
-            className: "editor-atom cell-atom parity-#{atom.parity} hg-#{atom.half_group} "+classSet('current': self.isCurrentEditorCell(atom)),
-            onClick: (->self.updateEditorState(atom))
-          }, (if self.props.editor.mode == 2 then 'отменить' else 'изменить'))
-        )
+      div {className: 'class-cell'}, [
+        _.map _.filter(@props.data or [], @filterCellAtoms), (atom, index) -> [
+          if self.props.editor.mode in [2,3]
+            a {onMouseDown: (->self.updateEditorState(atom)), className: "editor-atom cell-atom parity-#{atom.parity} hg-#{atom.half_group} #{if self.isCurrentEditorCell(atom) then 'current' else ''}"},
+              switch self.props.editor.mode
+                when 2 then 'отменить'
+                when 3 then 'изменить'
 
-        # Actual cell atom
-        (a {href: self.getDetailsHref(atom, index), className: "cell-atom parity-#{atom.parity} hg-#{atom.half_group}"}, [
-          (i {className: 'stico-lection'}) if atom.type == 'lecture'
-          (span {className: 'atom-name'}, atom.subject.name)
-          (div {className: 'atom-places'}, self.getAtomPlaces(atom).map (place) ->
-            (span {}, place.name)
-          )
-        ])
+          a {href: self.getDetailsHref(atom, index), className: "cell-atom parity-#{atom.parity} hg-#{atom.half_group}"}, [
+            i {className: 'stico-lection'} if atom.type == 'lecture'
+            span {className: 'atom-name'}, atom.subject.name
+            div {className: 'atom-places'}, self.getAtomPlaces(atom).map (place) ->
+              span {}, place.name
+          ]
+        ]
       ]
-    ])
+    ]

@@ -2,6 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 {span, div, a, ul, li, i, form, input, label, select, option, textarea, button, h3} = React.DOM
 {i18n, dateTimePicker, taggedInput, dateFormat, switcher, suggestions} = require '/components/common', 'i18n', 'dateTimePicker', 'taggedInput', 'dateFormat', 'switcher', 'suggestions'
+{eventPreview} = require '/components/schedule/editor', 'eventPreview'
 {classSet} = React.addons
 
 ##
@@ -19,6 +20,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     _.assign({
+      modifyType: 0
       cancelType: 0
       cancelCount: 1
       activity_start: new Date()
@@ -36,7 +38,8 @@ module.exports = React.createClass
   		if not _.isNaN(parseInt(e.target.value))
   			value = parseInt(e.target.value)
   		if value >= 1 and value < 500
-  			@setState cancelCount: value
+  			@setState
+          cancelCount: value
   	else
   		@setState cancelCount: ''
 
@@ -44,7 +47,9 @@ module.exports = React.createClass
     @setState description: e.target.value
 
   onSwitchCancelType: (item)->
-    @setState cancelType: item.value
+    @setState
+      cancelType: item.value
+      cancelCount: if item.value == 0 then 1 else @state.cancelCount
 
   onSubmitForm: (e)->
     e.preventDefault()
@@ -88,75 +93,17 @@ module.exports = React.createClass
                 (textarea {id: 'descr', placeholder: 'Комментарий', className: 'form-control',value: @state.description, onChange: @setDescription})
               ])
             ])
+            (div {className: 'row'}, [
+              (div {className: 'col-xs-12 form-group'}, [
+                (button {className: 'btn btn-success form-control'}, 'Все верно, отменить!')
+              ])
+            ])
           ])
 
           # Preview column
           (div {className: 'col-xs-6 form-group preview'}, [
-            ((div {className: 'row'},
-              (div {className: 'col-xs-12'},
-                (h3 {className: 'subject'}, @state.subject.name)
-              )
-            ) if @state.subject.name)
-            (div {className: 'row enter-line'},
-              (div {className: 'col-xs-12'},
-                ((span {className: 'value single'},
-                  (span {}, 'преподаватель ')
-                  (@state.professor or []).map (prof, i) ->
-                    (span {className:'value-itm'}, "#{if i > 0 then ', ' else ''}#{prof.name}")
-                ) if @state.professor and @state.professor.length > 0)
-                ((span {className: 'value'}, [
-                  (span {}, 'в ')
-                  (@state.place or []).map (place) ->
-                    (span {className: 'value-itm'}, place.name+' ')
-                  (span {}, 'аудитории')
-                ]) if @state.place and @state.place.length > 0)
-                ((span {className: 'value'}, [
-                  (span {}, ', ')
-                  (span {className: 'value-itm'}, getLocalizedValue("schedule.event.types.#{@state.type}"))
-                ]) if @state.type)
-              )
-            )
-            (div {className: 'row coord-line'}, [
-              (div {className: 'col-xs-12'}, [
-
-                ((span {className: 'value'}, [
-                  (span {className:'value-itm'}, "#{@state.number} парой")
-                ]) if @state.number)
-                ((span {className: 'value'}, [
-                  (span {}, ', ')
-                  (switch @state.half_group
-                    when 0 then (span {className: 'value-itm'}, 'у всей')
-                    when 1 then (span {className: 'value-itm'}, 'у первой')
-                    when 2 then (span {className: 'value-itm'}, 'у второй')
-                  )
-                  (switch @state.half_group
-                    when 0 then (span {}, ' группы')
-                    when 1,2 then (span {}, ' подгруппы')
-                  )
-                ]) if @state.half_group >= 0)
-                ((span {className: 'value'}, [
-                  (span {}, ', ')
-                  (switch @state.parity
-                    when 0 then (span {className:'value-itm'}, 'каждую')
-                    when 1 then (span {className:'value-itm'}, 'по нечетным')
-                    when 2 then (span {className:'value-itm'}, 'по четным')
-                  )
-                  (switch @state.parity
-                    when 0 then (span {}, ' неделю')
-                    when 1, 2 then (span {}, ' неделям')
-                  )
-                ]) if @state.parity >= 0)
-              ])
-            ])
+            (eventPreview {state: @state})
           ])
-          (div {className:'clearfix'})
-          (div {className: 'col-xs-12'},
-            (div {className: 'row'},
-              (div {className: 'col-xs-6 col-sm-offset-6 add-btn-col'},
-                  (button {className: 'btn btn-success form-control'}, 'Все верно, отменить!')
-              )
-            )
-          )
         ])
       ])
     ])

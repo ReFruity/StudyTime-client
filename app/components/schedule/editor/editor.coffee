@@ -34,13 +34,13 @@ EditorSwitcher = React.createClass
         ])
         (li {className: classSet('current': @props.mode == 2)}, [
           (a {onClick: @onSwitchCanceler}, [
-            (i {className: "stico-plus"}, [])
+            (i {className: "stico-cancel"}, [])
             (i18n {}, 'schedule.editor.cancel_event')
           ])
         ])
         (li {className: classSet('current': @props.mode == 3)}, [
           (a {onClick: @onSwitchChanger}, [
-            (i {className: "stico-plus"}, [])
+            (i {className: "stico-edit-pen"}, [])
             (i18n {}, 'schedule.editor.change_event')
           ])
         ])
@@ -105,8 +105,12 @@ module.exports = React.createClass
           (EditorSwitcher {mode: @props.mode, switchEditorHandler: @props.switchEditorHandler})
           (if not @props.state
             (div {className: 'select-cell'},
-              (i18n {}, 'schedule.editor.select_cell')
-              (i {className: 'stico-cell-mouse'})
+              i18n {}, 'schedule.editor.select_cell'
+              i {className: 'stico-cell-mouse'},
+                switch @props.mode
+                  when 1 then 'добавить'
+                  when 2 then 'отменить'
+                  when 3 then 'изменить'
             )
           else
             (div {className: 'editor-row'},

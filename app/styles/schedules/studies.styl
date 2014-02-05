@@ -45,17 +45,17 @@
       border-top 1px solid $sched-border-color
       z-index 10
     &.hg-0
-      left - 2px
-      right - 2px
+      left -2px
+      right -2px
     &.hg-1
       background #fff
-      left - 2px
-      right 48.9%
+      left -2px
+      right 50%
       z-index 10
     &.hg-2
       background #fff
-      right - 2px
-      left 48.9%
+      right -2px
+      left 50%
       z-index 10
 
     &:hover
@@ -73,7 +73,11 @@
       span
         margin-left 5px
 
-  .class-cell
+  .cell-wrapper
+    position relative
+    height 100%
+    width 100%
+
     .editor-cell
       position absolute
       top 0

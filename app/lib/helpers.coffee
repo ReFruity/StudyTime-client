@@ -11,6 +11,9 @@ Date::getWeekBounds = ->
   right.setHours(0,0,0,0,0)
   [left, right]
 
+Date::isSameDate = (cd) ->
+  @getFullYear() == cd.getFullYear() and @getMonth() == cd.getMonth() and @getDate() == cd.getDate()
+
 ##
 # String helpers
 #
