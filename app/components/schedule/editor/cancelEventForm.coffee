@@ -21,7 +21,7 @@ module.exports = React.createClass
   getInitialState: ->
     _.assign({
       modifyType: 0
-      cancelType: 0
+      cancelType: 1
       cancelCount: 1
       activity_start: new Date()
     }, (@props.state or {}))
@@ -40,70 +40,69 @@ module.exports = React.createClass
   		if value >= 1 and value < 500
   			@setState
           cancelCount: value
+          _enterCancelCountError: no
   	else
   		@setState cancelCount: ''
 
   setDescription: (e)->
     @setState description: e.target.value
 
-  onSwitchCancelType: (item)->
+  onSwitchCancelType: (e)->
     @setState
-      cancelType: item.value
-      cancelCount: if item.value == 0 then 1 else @state.cancelCount
+      cancelType: parseInt(e.target.value)
+      cancelCount: if e.target.value == '1' then 1 else @state.cancelCount
 
   onSubmitForm: (e)->
     e.preventDefault()
-    @props.submitHandler(_.clone(@state))
+    if @state.cancelCount > 0
+      @props.submitHandler(_.clone(@state))
+    else
+      @setState _enterCancelCountError: yes
 
   render: ->
-    (div {className: 'cr-event'}, [
-      (form {onSubmit: @onSubmitForm, role: 'form'}, [
-        (div {className: 'row'}, [
-          # Form column
-          (div {className: 'col-xs-7 form-group'}, [
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-6 form-group'}, [
-              	(label {className: classSet('sr-only': not @state.activity_start), htmlFor: 'actStart'}, 'Дата первой отмены')
-                (dateTimePicker {id: 'actStart', className: 'form-control', maxView: 'date', format: 'dd.MM.yyyy', value: @state.activity_start, onChange: @setCancelStartDate})
-              ])
-              (if @state.cancelType == 1
-              	(div {className: 'col-xs-6 form-group'}, [
-              		(label {className: classSet('sr-only': not @state.cancelCount), htmlFor: 'actEnd'}, 'Количество отм. пар')
-                	(input {id: 'actEnd', placeholder: 'Количество отм. пар', className: 'form-control', value: @state.cancelCount, onChange: @setCancelCount})
-              	])
-              )
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-                (switcher {
-                  values: [
-                    {name: 'Одну пару', value: 0}
-                    {name: 'Несколько', value: 1}
-                    {name: 'Полностью', value: 2}
-                  ],
-                  className: 'form-control'
-                  value: @state.cancelType
-                  onChange: @onSwitchCancelType
-                })
-              ])
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-              	(label {className: classSet('sr-only': not @state.description), htmlFor: 'descr'}, 'Комментарий')
-                (textarea {id: 'descr', placeholder: 'Комментарий', className: 'form-control',value: @state.description, onChange: @setDescription})
-              ])
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-                (button {className: 'btn btn-success form-control'}, 'Все верно, отменить!')
-              ])
-            ])
-          ])
+    div {className: 'cr-event'}, [
+      form {onSubmit: @onSubmitForm, role: 'form'}, [
+        div {className: 'row'}, [
+          div {className: 'col-xs-7 form-group'}, [
+            div {className: 'row'}, [
+              div {className: 'col-xs-6 form-group'}, [
+                label {className: classSet('sr-only': not @state.cancelType), htmlFor: 'canTypeInput'}, 'Тип отмены'
+                select {id: 'canTypeInput', className: 'form-control', value: @state.cancelType, onChange: @onSwitchCancelType}, [
+                  option {value: '', disabled:'disabled'}, '– Тип отмены –'
+                  option {value: 1}, 'Однократная отмена'
+                  option {value: 2}, 'Отмена на несколько недель'
+                  option {value: 3}, 'Полная отмена'
+                ]
+              ]
+              div {className: 'col-xs-6 form-group'}, [
+              	label {className: classSet('sr-only': not @state.activity_start), htmlFor: 'actStart'}, 'Дата первой отмены'
+                dateTimePicker {id: 'actStart', className: 'form-control', maxView: 'date', format: 'dd.MM.yyyy', value: @state.activity_start, onChange: @setCancelStartDate}
+              ]
+            ]
+            if @state.cancelType == 2
+              div {className: 'row'}, [
+                div {className: classSet('col-xs-6 form-group': yes, 'has-error': @state._enterCancelCountError)}, [
+                  label {className: classSet('sr-only': not @state.cancelCount), htmlFor: 'cnacelCountInput'}, 'Кол-во недель'
+                  input {id: 'cnacelCountInput', placeholder: 'Кол-во недель', className: 'form-control',value: @state.cancelCount, onChange: @setCancelCount}
+                ]
+              ]
+            div {className: 'row'}, [
+              div {className: 'col-xs-12 form-group'}, [
+              	label {className: classSet('sr-only': not @state.description), htmlFor: 'descr'}, 'Комментарий'
+                textarea {id: 'descr', placeholder: 'Комментарий', className: 'form-control',value: @state.description, onChange: @setDescription}
+              ]
+            ]
+            div {className: 'row'}, [
+              div {className: 'col-xs-12 form-group'}, [
+                button {className: 'btn btn-success form-control'}, 'Все верно, отменить!'
+              ]
+            ]
+          ]
 
           # Preview column
-          (div {className: 'col-xs-5 form-group preview'}, [
-            (eventPreview {state: @state})
-          ])
-        ])
-      ])
-    ])
+          div {className: 'col-xs-5 form-group preview'}, [
+            eventPreview {state: @state}
+          ]
+        ]
+      ]
+    ]

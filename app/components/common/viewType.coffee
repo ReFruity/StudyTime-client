@@ -32,7 +32,8 @@ module.exports =
         if init
           init = false
         else if oldViewType != self.viewType
-          self.forceUpdate()
+          if not self.onViewTypeChange or self.onViewTypeChange()
+            self.forceUpdate()
       updateViewType()
 
       Gator(window).on 'resize', updateViewType

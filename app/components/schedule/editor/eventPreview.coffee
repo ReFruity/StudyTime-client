@@ -50,19 +50,18 @@ module.exports = React.createClass
       div {className: 'when'}, [
         i {className: 'stico-clock stico-large'}
 
-        if @state.number then [
+        if @state.type in ['lecture', 'practice'] then [
           span {className: 'value-itm'}, @state.number
           span {className: 'text'}, ' парой'
-        ]
-
-        if not @state.number and @state.activity_start then [
+          span {className: 'comma'}, ','
+        ] else if @state.type and @state._time_start and @state._time_end then [
           span {className: 'value-itm'}, getFormattedDate(@state.activity_start, 'HH:mm')
           span {className: 'text'}, ' – '
           span {className: 'value-itm'}, getFormattedDate(@state.activity_end, 'HH:mm')
+          span {className: 'comma'}, ','
         ]
 
         if @state.half_group >= 0 then [
-          span {className: 'comma'}, ','
           switch @state.half_group
             when 0 then span {className: 'value-itm'}, 'у всей'
             when 1 then span {className: 'value-itm'}, 'у первой'
@@ -72,7 +71,7 @@ module.exports = React.createClass
             when 1,2 then span {className: 'text'}, ' подгруппы'
         ]
 
-        if @state.parity >= 0 then [
+        if 0 <= @state.parity <= 2 and @state.type in ['lecture', 'practice'] then [
           span {className: 'comma'}, ','
           switch @state.parity
             when 0 then span {className:'value-itm'}, 'каждую'
@@ -83,28 +82,42 @@ module.exports = React.createClass
             when 1, 2 then (span {className: 'text'}, ' неделям')
         ]
       ]
+      if @state.type
+        div {className: 'period'}, [
+          i {className: 'stico-crosshair stico-large'}
 
-      div {className: 'period'}, [
-        i {className: 'stico-crosshair stico-large'}
+          if @state.modifyType >= 0
+            span {className: 'text'}, 'будет '
 
-        if @state.modifyType >= 0
-          span {className: 'text'}, 'будет '
+          if @state.cancelType == 3
+            span {className: 'value-itm'}, 'полностью '
 
-        if @state.cancelType == 2
-          span {className: 'value-itm'}, 'полностью '
+          switch @state.modifyType
+            when 0 then span {className: 'value-itm'}, 'отменен '
+            when 1 then span {className: 'value-itm'}, 'изменен '
 
-        switch @state.modifyType
-          when 0 then span {className: 'value-itm'}, 'отменен '
-          when 1 then span {className: 'value-itm'}, 'изменен '
+          if @state.activity_start then [
+            if @state.parity < 3 and @state.type in ['lecture', 'practice'] then [
+              if not @state.cancelType then [
+                span {className: 'text'}, 'по '
+                span {className: 'value-itm'}, getFormattedDate(@state.activity_start, 'EEE')
+              ]
+              span {className: 'text'}, ' с '
+            ] else
+              span {className: 'text'}, 'только '
 
-        if @state.activity_start and @state.cancelType != 2 then [
-          span {className: 'text'}, 'с '
-          span {className: 'value-itm'}, getFormattedDate(@state.activity_start, 'dd.MM.yyyy')
+            span {className: 'value-itm'}, getFormattedDate(@state.activity_start, 'dd.MM.yyyy')
+          ]
+
+          if @state.cancelCount and @state.cancelType != 3 then [
+            span {className: 'text'}, " на "
+            span {className: 'value-itm'}, "#{@state.cancelCount} "
+            span {className: 'value-itm'}, nt(@state.cancelCount, 'on_week')
+          ]
+
+          if @state.activity_end and @state.cancelType != 2 and @state.activity_end < new Date(1,1,2500) then [
+            span {className: 'text'}, ' до '
+            span {className: 'value-itm'}, getFormattedDate(@state.activity_end, 'dd.MM.yyyy')
+          ]
         ]
-
-        if @state.activity_end and @state.cancelType != 2 then [
-          span {className: 'text'}, ' до '
-          span {className: 'value-itm'}, getFormattedDate(@state.activity_end, 'dd.MM.yyyy')
-        ]
-      ]
     ]

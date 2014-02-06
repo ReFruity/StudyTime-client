@@ -1,0 +1,22 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+@keyframes heartbeat
+  0%  { scale(1)   }
+  14% { scale(1.1) }
+  28% { scale(1)   }
+  42% { scale(1.08) }
+  70% { scale(1)   }
+
+.stico-heart
+  display inline-block
+  background-image url(../images/heart.png)
+  background-size 35px 35px
+  width 35px
+  height 35px
+  &.heartbeat
+    -webkit-animation: heartbeat 1300ms ease 0s infinite normal
+    -moz-animation: heartbeat 1300ms ease 0s infinite normal
+    -ms-animation: heartbeat 1300ms ease 0s infinite normal
+    -o-animation: heartbeat 1300ms ease 0s infinite normal
+    animation: heartbeat 1300ms ease 0s infinite normal

@@ -87,10 +87,10 @@ module.exports = React.createClass
       when 2, 3 then _.assign(newEditorState,
         parity: atom.parity
         half_group: atom.half_group
-        place: atom.place
+        place: atom.place or []
         type: atom.type
         subject: atom.subject
-        professor: atom.professor
+        professor: atom.professor or []
         activity_start: (if @props.editor.mode == 2 then @props.date else new Date(atom.activity.start))
         activity_end: new Date(atom.activity.end)
         description: atom.description

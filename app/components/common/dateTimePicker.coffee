@@ -36,6 +36,7 @@ SelectorMixin = {
     value: React.PropTypes.instanceOf(Date).isRequired
     after: React.PropTypes.instanceOf(Date)
     before: React.PropTypes.instanceOf(Date)
+    onlyDow: React.PropTypes.integer
 
   getInitialState: ->
     current: new Date(@props.value)
@@ -72,10 +73,13 @@ SelectorMixin = {
     iss
 
   isBefore: (date)->
-    if @props.after and date.getTime() <= @props.after.getTime() then yes else no
+    @props.after and date.getTime() <= @props.after.getTime()
 
   isAfter: (date)->
-    if @props.before and date.getTime() >= @props.before.getTime() then yes else no
+    @props.before and date.getTime() >= @props.before.getTime()
+
+  isNotGivenDow: (date)->
+    @props.onlyDow and date.getDay() != @props.onlyDow
 
   render: ->
     visible = @getVisibleValues()
@@ -91,7 +95,7 @@ SelectorMixin = {
       (div {className: 'values'},
         visible.map (val) ->
           (a {
-            className: classSet('current': self.isCurrentValue(val), 'before': self.isBefore(val), 'after': self.isAfter(val))
+            className: classSet('current': self.isCurrentValue(val), 'disabled': self.isBefore(val) or self.isAfter(val) or self.isNotGivenDow(val))
             onClick: (->self.props.nextView(val) unless self.isBefore(val) or self.isAfter(val))
           }, self.getCellValue(val))
       )
@@ -258,6 +262,7 @@ module.exports = React.createClass
     minView: React.PropTypes.string
     maxView: React.PropTypes.string
     disabled: React.PropTypes.boolean
+    onlyDow: React.PropTypes.integer
     view: React.PropTypes.string
     value: React.PropTypes.object
     after: React.PropTypes.instanceOf(Date)
