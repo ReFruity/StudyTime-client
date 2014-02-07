@@ -5,12 +5,19 @@ module.exports = React.createClass
   shouldComponentUpdate: ->
     no
 
+  showFeedback: ->
+    (window.UserVoice or []).push [
+      'showLightbox'
+      'classic_widget'
+      {mode: 'feedback', primary_color: '#373d3f', link_color: '#2c8079', forum_id: 199181}
+    ]
+
   render: ->
     footer {},
       div {className: 'container'},
         div {className: 'row first-row'},
           div {className: 'left-foot'},
-            a {className: 'feedback'}, 'Отзывы и предложения'
+            a {className: 'feedback', onClick: @showFeedback}, 'Отзывы и предложения'
           div {className: 'right-foot'},
             a {}, 'О проекте'
             a {}, 'Соглашение'
