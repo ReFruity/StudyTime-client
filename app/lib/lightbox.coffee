@@ -10,15 +10,13 @@ bodyElem = document.body
 
 # Add handler of closing lightbox by click
 # on the glow
-Gator(lightboxCont.children[0]).on('click', ->
+Gator(lightboxCont.children[0]).on 'click', ->
   closeLastLightbox()
-)
 
 # Close on escape
-Gator(bodyElem).on('keydown', (e)->
+Gator(bodyElem).on 'keydown', (e)->
   if e.keyCode == 27
     closeLastLightbox()
-)
 
 # Close last opened lightbox
 closeLastLightbox = ->
