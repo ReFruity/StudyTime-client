@@ -20,6 +20,11 @@ module.exports = React.createClass
             ])
           ])
 
+          # Login button
+          (div {className: 'login-wrap'}, [
+            (userNavControl {}, [])
+          ])
+
           # Navigation buttons
           (div {className: "navbar"}, [
             (ul {}, [
@@ -46,9 +51,6 @@ module.exports = React.createClass
                   (div {}, (i {className: "stico-spec-courses"}, []))
                   (i18n {}, 'layouts.main.navigation.professors')
                 ])
-              ])
-              (li {className: 'login-wrap'}, [
-                (userNavControl {}, [])
               ])
             ])
           ])

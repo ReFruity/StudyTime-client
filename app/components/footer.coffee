@@ -19,6 +19,7 @@ module.exports = React.createClass
           div {className: 'left-foot'},
             span {}, '©2013 StudyTime.me'
             span {}, 'Дизайн – Анна Черных'
+          div {className: 'st-clock'}
           div {className: 'right-foot'},
             div {className: 'widgets'},
               a {href: 'https://twitter.com/StudyTimeMe', target: "_blank", className:'widget widget-twitter'},
