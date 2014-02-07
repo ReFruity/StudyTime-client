@@ -1,5 +1,6 @@
 React = require 'react'
 Gator = require 'gator'
+_ = require 'underscore'
 
 # Stack for showed lightboxes
 lbStack = []
@@ -30,13 +31,20 @@ onCloseLightbox = ->
   lbStack.pop()
   if not lbStack.length
     bodyElem.className = ''
+  else
+    React.renderComponent lbStack[lbStack.length-1], lbElement
 
-module.exports = (component) ->
+
+##
+# Module for showing lightboxes
+# It support showing "lightbox in lightbox" with stack
+#
+module.exports = (component, props={}) ->
   # Disable lightboxes on Node.js
   return if typeof window == 'undefined'
 
   # Create component element
-  compInstance = component({onClose: onCloseLightbox})
+  compInstance = component(_.assign({onClose: onCloseLightbox}, props))
   lbStack.push compInstance
   bodyElem.className = 'lightbox-showed'
 

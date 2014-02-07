@@ -29,12 +29,14 @@
 
 
     .editor-btn
-      margin-top (($sched-nav-height - 30)/2)
+      margin-top (($sched-nav-height - 30) / 2)
       float left
       margin-left 15px
       position relative
       cursor pointer
       text-align center
+      @media $media-max-phone
+        display none
 
     .back-groups-btn
       float left

@@ -4,6 +4,10 @@ React = require 'react'
 {classSet} = React.addons
 
 module.exports = React.createClass
+  propTypes:
+    onClose: React.PropTypes.func.isRequired
+    withContinue: React.PropTypes.boolean
+
   onClose: ->
     @props.onClose()
 
