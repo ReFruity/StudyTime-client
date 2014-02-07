@@ -2,6 +2,7 @@ React = require 'react'
 config = require 'config/config'
 lightbox = require 'lightbox'
 {currentUserMixin} = require '/components/common', 'currentUserMixin'
+{loginLightbox} = require '/components/user', 'loginLightbox'
 {span, div, a} = React.DOM
 {classSet} = React.addons
 
@@ -44,9 +45,7 @@ module.exports = React.createClass
     console.log 'banned'
 
   showAuthLightbox: ->
-    document.domain = config.domain
-    wnd = window.open('https://oauth.vk.com/authorize?client_id=3509560&redirect_uri=http://api.studytime.me/api/v2/auth/vk&display=popup&scope=&v=5.5&response_type=code', 'VK Auth', 'height=400,width=600')
-    if window.focus then wnd.focus()
+    lightbox loginLightbox
 
   render: ->
     @transferPropsTo(@props.elem {onClick: @onClick}, @props.children)

@@ -1,0 +1,37 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+#lightbox
+  position fixed
+  left 0
+  right 0
+  top 0
+  bottom 0
+  opacity 0
+  visibility hidden
+  overflow hidden
+  z-index 1000000
+  transition(all 0.2s ease-out)
+
+  .glow
+    background-color $brand-primary
+    position absolute
+    opacity 0.7
+    left 0
+    right 0
+    top 0
+    bottom 0
+
+  .wrap
+    background-color #fff
+    padding 10px
+    position absolute
+    left 50%
+    top 50%
+
+.lightbox-showed
+  overflow hidden
+
+  #lightbox
+    visibility visible
+    opacity 1
