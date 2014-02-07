@@ -2,8 +2,8 @@ React = require 'react'
 {span, div, p, button} = React.DOM
 {i18n, viewType, modelMixin} = require '/components/common', 'i18n', 'viewType', 'modelMixin'
 {Schedule} = require '/models', 'Schedule'
-{schedule, classCell, classDetails, nav, noStaff} = require '/components/schedule/parts', 'schedule', 'classCell',
-  'classDetails', 'nav', 'noStaff'
+{schedule, classCell, classDetails, nav, noStaff, welcomeStaff} = require '/components/schedule/parts', 'schedule', 'classCell',
+  'classDetails', 'nav', 'noStaff', 'welcomeStaff'
 {editor} = require '/components/schedule/editor', 'editor'
 
 
@@ -84,7 +84,8 @@ module.exports = React.createClass
 
       # Show "no staff" message
       if @viewType == 'desktop'
-        noStaff {}
+        #noStaff {}
+        welcomeStaff {}
 
       # Schedule
       schedule {

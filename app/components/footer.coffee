@@ -17,7 +17,7 @@ module.exports = React.createClass
             a {}, 'Кто авторы?'
         div {className: 'row'},
           div {className: 'left-foot'},
-            span {}, '©2013 StudyTime.me'
+            span {}, '© 2014 StudyTime.me'
             span {}, 'Дизайн – Анна Черных'
           div {className: 'st-clock'}
           div {className: 'right-foot'},
