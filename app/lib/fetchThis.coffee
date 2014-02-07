@@ -23,9 +23,7 @@
     factory _, Backbone
   return
 ) (_, Backbone) ->
-
   old_model = Backbone.Model
-
 
   methods =
     fetchThis: (options) ->

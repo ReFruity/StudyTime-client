@@ -73,10 +73,10 @@ module.exports = React.createClass
       # Navigation
       div {className: 'container sched-nav'}, [
         div {className: 'row'}, [
-          nav.MyGroup {}
-          nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor}
           nav.BackToGroupsButton {group: @props.group}
           nav.ScheduleTypeSwitcher {currentType:'studies', route: @props.route}
+          nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor}
+          nav.MyGroup {}
           nav.UpdateIndicator {updated: (if @state.sched.fetchActive then null else @state.sched.get('updated') or new Date())}
           nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds}
         ]

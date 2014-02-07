@@ -16,7 +16,6 @@ module.exports =
 
   injectModel: (model) ->
     if !~this.__syncedModels.indexOf(model) and this._lifeCycleState == 'MOUNTED'
-      console.log(this)
       updater = this.forceUpdate.bind(this, null);
       model.__updater = updater;
       model.on('add change remove fetchError', updater, this);

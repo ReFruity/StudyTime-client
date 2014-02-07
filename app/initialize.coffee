@@ -1,8 +1,8 @@
 # Init the app
+require 'fetchThis'
 require 'helpers'
 require 'routes'
 require 'html5links'
-require 'fetchThis'
 
 # Run history on the client
 if typeof window != 'undefined'

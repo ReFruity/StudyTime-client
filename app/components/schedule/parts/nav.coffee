@@ -1,7 +1,7 @@
 React = require 'react'
 helpers = require 'helpers'
 {span, div, a, i, ul, li} = React.DOM
-{i18n, viewType, relativeDate, dateFormat} = require '/components/common', 'i18n', 'viewType', 'relativeDate', 'dateFormat'
+{i18n, viewType, relativeDate, dateFormat, authorized} = require '/components/common', 'i18n', 'viewType', 'relativeDate', 'dateFormat', 'authorized'
 {classSet} = React.addons
 
 
@@ -20,8 +20,11 @@ module.exports =
     toggleTooltipOff: ->
       @setState tooltipShowed: no
 
+    onClick: ->
+      console.log 'my group'
+
     render: ->
-      div {className: 'heart-btn', onMouseEnter: @toggleTooltipOn, onMouseLeave: @toggleTooltipOff},
+      authorized {onClick: @onClick, elem: div, className: 'heart-btn', onMouseEnter: @toggleTooltipOn, onMouseLeave: @toggleTooltipOff},
         i {className: 'stico-heart heartbeat'}
         span {}, 'Моя группа' if @state.tooltipShowed
 
@@ -180,12 +183,8 @@ module.exports =
       group: React.PropTypes.object.isRequired
 
     render: ->
-      (div {className: 'back-groups-btn'}, [
-        (a {}, [
-          (i {className: 'stico-arrow-right rotate-180'})
-          (div {className: 'back-logo-square'}, [
-            (i {className: 'stico-groups-list'})
-          ])
-          (span {}, @props.group.get('name'))
-        ])
-      ])
+      div {className: 'back-groups-btn'},
+        a {},
+          i {className: 'stico-arrow-right rotate-180'}
+          span {className: 'back-txt'}, 'Группы'
+          span {className: 'group-txt'}, @props.group.get('name')

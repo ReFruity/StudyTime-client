@@ -26,6 +26,7 @@ data =
         about: "О проекте"
         terms: "Соглашение"
         authors: "Кто авторы?"
+        login: 'Вход'
         navigation:
           schedule: "Расписание"
           places: "Аудитории"
