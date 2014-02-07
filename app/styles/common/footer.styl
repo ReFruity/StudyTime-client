@@ -2,19 +2,45 @@
 
 footer
   position absolute
-  bottom - ($footer-height)
+  //bottom -100%
   left 0
   right 0
-  height $footer-height
+  //height $footer-height
   background $footer-bg
-  padding ceil(($footer-height / 2)  - ($font-size-base / 2) ) 0
+  padding 38px 0
+  //padding ceil(($footer-height / 2)  - ($font-size-base / 2) ) 0
 
   color $footer-color
   a
+    font-weight 300
+    font-size $font-size-base
     color $footer-link-color
-    text-decoration underline
+    text-decoration none
     &:hover
       color: $footer-link-hover-color
+
+  .feedback
+    color $brand-success
+    border 2px solid $brand-success
+    padding 5px 10px
+    border-radius 20px
+    text-decoration none
+    &:hover
+      border 2px solid $brand-warning
+
+  .right-foot
+    float right
+    a
+      display block
+      margin-bottom 5px
+
+  .left-foot
+    float left
+    a, span
+      display block
+
+  .first-row
+    margin-bottom 18px
 
   .widgets
     .widget
@@ -24,7 +50,7 @@ footer
       height $footer-widget-size
       border-radius $footer-widget-radius
       display inline-block
-      margin-top - ($font-size-medium / 2)
+      margin-top 2px
       line-height $footer-widget-size
       margin-left 15px
       text-align center

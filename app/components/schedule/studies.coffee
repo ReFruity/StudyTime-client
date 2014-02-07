@@ -2,8 +2,8 @@ React = require 'react'
 {span, div, p, button} = React.DOM
 {i18n, viewType, modelMixin} = require '/components/common', 'i18n', 'viewType', 'modelMixin'
 {Schedule} = require '/models', 'Schedule'
-{schedule, classCell, classDetails, nav} = require '/components/schedule/parts', 'schedule', 'classCell',
-  'classDetails', 'nav'
+{schedule, classCell, classDetails, nav, noStaff} = require '/components/schedule/parts', 'schedule', 'classCell',
+  'classDetails', 'nav', 'noStaff'
 {editor} = require '/components/schedule/editor', 'editor'
 
 
@@ -81,6 +81,10 @@ module.exports = React.createClass
           nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds}
         ]
       ]
+
+      # Show "no staff" message
+      if @viewType == 'desktop'
+        noStaff {}
 
       # Schedule
       schedule {

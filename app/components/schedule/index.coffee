@@ -26,18 +26,6 @@ GroupStar = React.createClass
         ]
 
 
-
-NoStaff = React.createClass
-  render: ->
-    div {className: 'no-staff'},
-      div {className: 'container'},
-        p {dangerouslySetInnerHTML: __html: t('schedule.texts.no_staff')}
-          div {}, [
-            button {className: 'btn btn-success'}, 'Я староста'
-            button {className: 'btn btn-success'}, 'Пригласить старосту'
-          ]
-
-
 ##
 # Main group schedule component. Contains group schedule
 # of some type ('studies' by default) and group star info
@@ -57,7 +45,6 @@ module.exports = React.createClass
 
   render: ->
     div {className: 'group-sched'}, [
-      NoStaff {}
       if @state.group.get('name')
         switch @props.route.scheduleType
           when 'studies' then @transferPropsTo(studies {group: @state.group})

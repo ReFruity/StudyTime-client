@@ -24,7 +24,7 @@ module.exports =
       self = @
       updateViewType = ->
         oldViewType = self.viewType
-        if windowWidth() >= 768
+        if windowWidth() >= 868
           self.viewType = "desktop"
         else
           self.viewType = "mobile"

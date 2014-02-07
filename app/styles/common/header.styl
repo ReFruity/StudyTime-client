@@ -11,9 +11,11 @@ header
   nav
     border 0 !important
     height $navbar-height
-    overflow hidden
     white-space nowrap
     .brand
+      overflow hidden
+      height $navbar-height
+      margin-left -5px
       float left
       a
         display block
@@ -25,7 +27,7 @@ header
         span
           color $text-color
           vertical-align middle
-          margin-left 15px
+          margin-left 10px
 
     .navbar
       float right
@@ -48,7 +50,8 @@ header
             padding (($navbar-height - $line-height-computed)/2) 25px
             color lighten($text-color, 50%)
             text-decoration none
-            transition(all 0.2s ease-out)
+
+            transition(background 0.2s ease-out)
             &:hover
               background $navbar-default-link-hover-bg
               color lighten($link-color, 20%)
@@ -79,7 +82,7 @@ header
         ul
           li
             a
-              padding (($navbar-height - $line-height-computed)/2) 18px
+              padding (($navbar-height - $line-height-computed)/2) 14px
 
 // iOS like navigation on mobile
 @media $media-max-phone
@@ -89,6 +92,7 @@ header
     nav
       padding 0 !important
       .brand
+        margin-left 0
         span
           display none
         i
@@ -108,7 +112,9 @@ header
             display none
           a
             margin 0
-            padding 4px 0 0 0 !important
+            padding 0 !important
             font-size $font-size-small*0.9
             i
+              margin-top 4px
+              margin-bottom -4px
               display inline-block !important

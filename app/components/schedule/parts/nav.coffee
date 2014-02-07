@@ -7,15 +7,21 @@ helpers = require 'helpers'
 
 module.exports =
 
+  ##
+  # Control for making setting home group
+  #
   MyGroup: React.createClass
     getInitialState: ->
-      tooltipShowed: yes
+      tooltipShowed: no
 
-    toggleTooltip: ->
-      @setState tooltipShowed: not @state.tooltipShowed
+    toggleTooltipOn: ->
+      @setState tooltipShowed: yes
+
+    toggleTooltipOff: ->
+      @setState tooltipShowed: no
 
     render: ->
-      div {className: 'heart-btn', onMouseEnter: @toggleTooltip, onMouseLeave: @toggleTooltip},
+      div {className: 'heart-btn', onMouseEnter: @toggleTooltipOn, onMouseLeave: @toggleTooltipOff},
         i {className: 'stico-heart heartbeat'}
         span {}, 'Моя группа' if @state.tooltipShowed
 
