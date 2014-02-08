@@ -5,7 +5,6 @@ nav = require '/components/schedule/parts/nav'
 Professor = require 'models/professor'
 
 
-
 #fake resource
 resource =
   firstName: 'Александр',
@@ -75,14 +74,16 @@ ProfessorSchedule = React.createClass
     bounds: new Date().getWeekBounds()
 
   render: ->
-    div {className: 'professor-shedule container'}, [
+    div {className: 'professor-schedule container'}, [
       div {className: 'sched-nav'}, [
         nav.WeekSwitcher bounds: @state.bounds, switchWeekHandler: (->)
         nav.UpdateIndicator updated: true
         BackButton()
       ]
+      PersonalSchedule()
     ]
 
+##########
 
 BackButton = React.createClass
   back: ->
@@ -92,6 +93,55 @@ BackButton = React.createClass
     a {className: 'back-btn', onClick: @back}, [
       i {className: 'stico-arrow-right rotate-180'}
       span {}, t('buttons.back')
+    ]
+
+##########
+
+PersonalSchedule = React.createClass
+  render: ->
+    div {}, [
+      div {className: 'day'}, [
+        div {className: 'circle'}
+        div {className: 'content'}, [
+          div {className: 'header'}, [
+            div {className: 'day-of-week'}, 'Понедельник'
+            div {className: 'date'}, '18 фев'
+          ]
+          div {className: 'events'}, [
+            div {className: 'event'}, [
+              div {className: 'time'}, '9:00 - 10:30'
+              div {className: 'subject'}, 'Математический анализ'
+              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, '632'
+            ]
+          ]
+          div {className: 'events'}, [
+            div {className: 'event'}, [
+              div {className: 'time'}, '9:00 - 10:30'
+              div {className: 'subject'}, 'Математический анализ'
+              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, '632'
+            ]
+          ]
+        ]
+      ]
+      div {className: 'day current'}, [
+        div {className: 'circle'}
+        div {className: 'content'}, [
+          div {className: 'header'}, [
+            div {className: 'day-of-week'}, 'Понедельник'
+            div {className: 'date'}, '18 фев'
+          ]
+          div {className: 'events'}, [
+            div {className: 'event current'}, [
+              div {className: 'time'}, '9:00 - 10:30'
+              div {className: 'subject'}, 'Математический анализ'
+              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, '632'
+            ]
+          ]
+        ]
+      ]
     ]
 
 

@@ -30,5 +30,51 @@
             font-weight bold
             padding-right: 25px
 
-  /*.professor-schedule*/
+  .professor-schedule
+    margin-bottom 40px
+    .day
+      position relative
+      &.current
+        .circle
+          background: $brand-warning
+        .day-of-week
+          color: $brand-warning
+      .circle
+        width 23px
+        height 23px
+        background $brand-info-bg
+        border-radius 12px
+        position absolute
+      .content
+        padding-left 25px
+        margin-left 10px
+        border-left: 3px solid $brand-info-bg
+        padding-bottom 10px
+        .header
+          margin-bottom 13px
+          font-size 18px
+          color: $brand-primary
+          .day-of-week
+            display inline-block
+            font-weight bold
+            margin-right 20px
+          .date
+            display inline-block
+            font-weight 200
+        .events
+          .event
+            font-size 16px
+            font-weight 300
+            margin-bottom 10px
+            &.current
+            div
+              display inline-block
+              margin-right 10px
+            .subject
+              color: #aaa
+            .room
+              color: $brand-info
+              font-weight 500
+
+
 
