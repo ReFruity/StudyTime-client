@@ -17,7 +17,6 @@
       padding 30px 0 18px
       .full-name
         margin-left 220px
-
     .card
       background $brand-info-bg
       table
@@ -29,6 +28,22 @@
           td:first-child
             font-weight bold
             padding-right: 25px
+
+    @media $media-max-phone
+      img
+        top 0
+        width: 54px
+        height: 54px
+      .full-name-wrap
+        font-size 18px
+        background none
+        padding 8px 0
+        .full-name
+          margin-left: 70px
+          font-weight 300
+      .card
+        table
+          margin 30px 0 25px 10px
 
   .professor-schedule
     margin-bottom 40px
@@ -66,7 +81,6 @@
             font-size 16px
             font-weight 300
             margin-bottom 10px
-            &.current
             div
               display inline-block
               margin-right 10px
@@ -76,5 +90,26 @@
               color: $brand-info
               font-weight 500
 
-
+    @media $media-max-phone
+      .sched-nav
+        display none
+      .day
+        .circle
+          top 5px
+        .content
+          .header
+            margin-bottom 5px
+            .day-of-week
+              font-size 24px
+              font-weight bold
+          .events
+            .event
+              div
+                display block
+                font-weight normal
+              .address, .room
+                display inline-block
+              .time
+                font-size 24px
+                font-weight 500
 

@@ -1,8 +1,9 @@
-#_ = require 'underscore'
 React = require 'react'
 {div, img, span, strong, table, tr, td, i, a} = React.DOM
 nav = require '/components/schedule/parts/nav'
 Professor = require 'models/professor'
+MobileTitle = require '/components/helpers/mobileTitle'
+BackButton =  require '/components/helpers/backButton'
 
 
 #fake resource
@@ -10,7 +11,7 @@ resource =
   firstName: 'Александр',
   secondName: 'Промах',
   middleName: 'Иванович',
-  image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg',
+  image: 'http://www.vokrugsveta.ru/img/ann/news/main/2009/09/11/7391.jpg',
   address: 'Тургенева 4, ауд. 628',
   email: 's-promakh@ya.ru',
   phone: '+7-123-45-67-890'
@@ -25,8 +26,8 @@ module.exports = React.createClass
 #      success: @forceUpdate.bind(@, null)
 
   render: ->
-    console.log @state.resource
     div {id: 'professors-show'}, [
+      MobileTitle title: 'Преподаватель'
       ProfessorCard resource: @state.resource
       ProfessorSchedule resource: @state.resource
     ]
@@ -81,18 +82,6 @@ ProfessorSchedule = React.createClass
         BackButton()
       ]
       PersonalSchedule()
-    ]
-
-##########
-
-BackButton = React.createClass
-  back: ->
-    window.history.back()
-
-  render: ->
-    a {className: 'back-btn', onClick: @back}, [
-      i {className: 'stico-arrow-right rotate-180'}
-      span {}, t('buttons.back')
     ]
 
 ##########
