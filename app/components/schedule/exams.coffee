@@ -35,7 +35,6 @@ module.exports = React.createClass
         data: data
 
   updateSchedule: ->
-    ""
 
   render: ->
     {route, group} = @props
@@ -52,7 +51,15 @@ module.exports = React.createClass
 
       # Editor
       (if @state.editor.mode > 0
-        (editor {mode: @state.editor.mode, data: @state.editor.data, switchEditorHandler: @onSwitchEditor})
+        (editor {
+          mode: @state.editor.mode,
+          data: @state.editor.data,
+          switchEditorHandler: @onSwitchEditor
+          updateSchedHandler: @updateSchedule
+          timing: {}
+          eventTypes: ['exam', 'test', 'consult']
+          cellSelector: no
+        })
       )
 
       # Events list

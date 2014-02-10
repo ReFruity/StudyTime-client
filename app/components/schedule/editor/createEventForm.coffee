@@ -1,7 +1,8 @@
 React = require 'react'
 _ = require 'underscore'
-{span, div, a, ul, li, i, form, input, label, select, option, textarea, button, h3} = React.DOM
+{span, div, a, ul, li, i, form, input, label, select, option, textarea, button, h3, p} = React.DOM
 {i18n, dateTimePicker, taggedInput, dateFormat, switcher, suggestions} = require '/components/common', 'i18n', 'dateTimePicker', 'taggedInput', 'dateFormat', 'switcher', 'suggestions'
+{eventPreview} = require '/components/schedule/editor', 'eventPreview'
 {classSet} = React.addons
 
 ##
@@ -29,12 +30,17 @@ module.exports = React.createClass
       professor: []
     }, (@props.state or {}))
 
+  componentDidMount: ->
+    @focusOnSubject()
+
   componentWillReceiveProps: (props) ->
     @setState _.assign(@state, (props.state or {}))
 
   setSubject: (e)->
-    @setState
-      subject: (if e.target then {name: e.target.value} else e)
+    if (e.target and e.target.value.length <=10) or not e.target
+      @setState
+        subject: (if e.target then {name: e.target.value} else e)
+        _enterSubjError: no
 
   setProfessor: (prof)->
     @setState professor: prof
@@ -44,132 +50,153 @@ module.exports = React.createClass
 
   setEventType: (e)->
     if e.target.value
-      @setState type: e.target.value
+      @setState
+        type: e.target.value
+        _enterTypeError: no
 
-  onSwitchLength: (item)->
-    @setState infinity: item.value
+  setHalfGroup: (e)->
+    if e.target.value
+      @setState half_group: parseInt(e.target.value)
+
+  setParity: (e)->
+    if e.target.value
+      @setState parity: parseInt(e.target.value)
+
+  setActivityStart: (item)->
+    @setState activity_start: item if item
+
+  setTimeStart: (item)->
+    if item
+      @setState
+        _time_start: item
+        _enterTimeStartError: no
+        activity_start: (
+          new_act = new Date(@state.activity_start)
+          new_act.setHours(item.getHours(), item.getMinutes())
+          new_act
+        )
+
+  setTimeEnd: (item)->
+    if item
+      @setState
+        _time_end: item
+        _enterTimeEndError: no
+        activity_end: (
+          new_act = new Date(@state.activity_end or @state.activity_start)
+          new_act.setHours(item.getHours(), item.getMinutes())
+          new_act
+        )
 
   onSubmitForm: (e)->
     e.preventDefault()
-    @props.submitHandler(_.clone(@state))
+    if @state.subject and @state.subject.name and @state.type
+      @props.submitHandler(_.clone(@state))
+    else
+
+    @setState
+      _enterSubjError: (
+        if not @state.subject or not @state.subject.name
+          @focusOnSubject()
+          yes
+        else
+          no
+      )
+      _enterTypeError: not @state.type
+      _enterTimeEndError: not @state._time_end and @state.type not in ['lecture', 'practice']
+      _enterTimeStartError: not @state._time_start and @state.type not in ['lecture', 'practice']
+
+  focusOnSubject: ->
+    self = @
+    setTimeout(->
+      self.refs['subjectInput'].getDOMNode().focus()
+    , 300)
 
   render: ->
-    (div {className: 'cr-event'}, [
-      (form {onSubmit: @onSubmitForm, role: 'form'}, [
-        (div {className: 'row'}, [
+    div {className: 'cr-event'}, [
+      form {onSubmit: @onSubmitForm, role: 'form'}, [
+        div {className: 'row'}, [
           # Form column
-          (div {className: 'col-xs-6 form-group'}, [
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.subject.name.length), htmlFor: 'subjectInput'}, 'Предмет')
-                (input {ref: 'subjectInput', id: 'subjectInput', className: 'form-control', placeholder: 'Предмет', value: @state.subject.name, onChange: @setSubject})
-                (suggestions {inputId: 'subjectInput', value: @state.subject.name, selectItemHandler: @setSubject, model: 'subject'})
-              ])
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.professor.length), htmlFor: 'proffInput'}, 'Преподаватели')
-                (taggedInput {id: 'proffInput', suggestions: 'professor', className: 'form-control', allowSpace: yes, placeholder: 'Преподаватели', value: @state.professor, onChange: @setProfessor})
-              ])
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'}, [
-                (label {className: classSet('sr-only': not @state.place.length), htmlFor: 'placeInput'}, 'Аудитория')
-                (taggedInput {id: 'placeInput', suggestions: 'place', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace})
-              ])
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-6 form-group'}, [
-                (label {className: classSet('sr-only': not @state.type), htmlFor: 'typeInput'}, 'Тип события')
-                (select {id: 'typeInput', className: 'form-control', value: @state.type, onChange: @setEventType}, [
-                  (option {value: ''}, '-- Тип события --')
-                  (@props.eventTypes.map (type) ->
-                    (option {value: type}, getLocalizedValue("schedule.event.types.#{type}"))
-                  )
-                ])
-              ])
-            ])
-            (div {className: 'row'}, [
-              (div {className: 'col-xs-12 form-group'},
-                (switcher {
-                  values: [
-                    {name: 'Весь семестр', value: yes}
-                    {name: getFormattedDate(@state.activity_start, 'Только dd MMMM'), value: no} if @state.activity_start
+          div {className: 'col-xs-7 form-group'}, [
+            div {className: 'row'}, [
+              div {className: classSet('col-xs-6 form-group':yes, 'has-error': @state._enterSubjError)}, [
+                label {className: classSet('sr-only': not @state.subject.name.length), htmlFor: 'subjectInput'}, 'Предмет (макс. 10 символов)'
+                input {ref: 'subjectInput', id: 'subjectInput', className: 'form-control', placeholder: 'Предмет (макс. 10 сим.)', value: @state.subject.name, onChange: @setSubject, require: yes}
+                suggestions {inputId: 'subjectInput', value: @state.subject.name, selectItemHandler: @setSubject, model: 'subject'}
+              ]
+              div {className: classSet('col-xs-6 form-group':yes, 'has-error': @state._enterTypeError)}, [
+                label {className: classSet('sr-only': not @state.type), htmlFor: 'typeInput'}, 'Тип события'
+                select {id: 'typeInput', className: 'form-control', value: @state.type, onChange: @setEventType}, [
+                  option {value: '', disabled:'disabled'}, '– Тип события –'
+                  _.map @props.eventTypes, (type) ->
+                    option {value: type}, t("schedule.event.types.#{type}")
+                ]
+              ]
+            ]
+            div {className: 'row'}, [
+              div {className: 'col-xs-12 form-group'}, [
+                label {className: classSet('sr-only': not @state.professor.length), htmlFor: 'proffInput'}, 'Преподаватель'
+                taggedInput {id: 'proffInput', suggestions: 'professor', className: 'form-control', allowSpace: yes, placeholder: 'Преподаватель', value: @state.professor, onChange: @setProfessor}
+              ]
+            ]
+            div {className: 'row'}, [
+              div {className: 'col-xs-6 form-group'}, [
+                label {className: classSet('sr-only': not @state.place.length), htmlFor: 'placeInput'}, 'Аудитория'
+                taggedInput {id: 'placeInput', suggestions: 'place', className: 'form-control', placeholder: 'Аудитория', value: @state.place, onChange: @setPlace}
+              ]
+              div {className: 'col-xs-6 form-group'}, [
+                label {className: classSet('sr-only': !(@state.half_group >= 0)), htmlFor: 'hgInput'}, 'Часть группы'
+                select {id: 'hgInput', className: 'form-control', value: @state.half_group, onChange: @setHalfGroup}, [
+                  option {value: '', disabled:'disabled'}, '– Часть группы –'
+                  option {value: 0}, t("schedule.event.hg.0")
+                  option {value: 1}, t("schedule.event.hg.1")
+                  option {value: 2}, t("schedule.event.hg.2")
+                ]
+              ]
+            ]
+            if @state.type in ['lecture', 'practice']
+              div {className: 'row'}, [
+                div {className: 'col-xs-6 form-group'}, [
+                  label {className: classSet('sr-only': !(@state.parity >= 0)), htmlFor: 'parityInput'}, 'Период'
+                  select {id: 'parityInput', className: 'form-control', value: @state.parity, onChange: @setParity}, [
+                    option {value: '', disabled:'disabled'}, '– Период –'
+                    option {value: 0}, t("schedule.event.parity.0")
+                    option {value: 1}, t("schedule.event.parity.1")
+                    option {value: 2}, t("schedule.event.parity.2")
+                    option {value: 3}, 'Один раз'
                   ]
-                  value: @state.infinity
-                  onChange: @onSwitchLength
-                })
-              )
-            ])
-          ])
+                ]
+                div {className: 'col-xs-6 form-group'}, [
+                  label {className: classSet('sr-only': not @state.activity_start), htmlFor: 'actStart'}, 'Дата первой пары'
+                  dateTimePicker {key: 'actStart', id: 'actStart', className: 'form-control', maxView: 'date', after: new Date(), format: 'dd.MM.yyyy', value: @state.activity_start, onChange: @setActivityStart}
+                ]
+              ]
+            else if @state.type
+              div {className: 'row'}, [
+                div {className: 'col-xs-6 form-group'}, [
+                  label {className: classSet('sr-only': not @state.activity_start), htmlFor: 'actStart'}, 'Дата'
+                  dateTimePicker {key: 'actStart', id: 'actStart', className: 'form-control', maxView: 'date', after: new Date(), format: 'dd.MM.yyyy', value: @state.activity_start, onChange: @setActivityStart}
+                ]
+                div {className: classSet('col-xs-3 form-group':yes, 'has-error': @state._enterTimeStartError)}, [
+                  label {className: classSet('sr-only': not @state._time_start), htmlFor: 'actTimeStart'}, 'Начало'
+                  dateTimePicker {key: 'actTimeStart',id: 'actTimeStart', className: 'form-control', placeholder: 'Начало', minView: 'hours', view: 'hours', format: 'HH:mm', value: @state._time_start, onChange: @setTimeStart}
+                ]
+                div {className: classSet('col-xs-3 form-group':yes, 'has-error': @state._enterTimeEndError)}, [
+                  label {className: classSet('sr-only': not @state._time_end), htmlFor: 'actTimeEnd'}, 'Конец'
+                  dateTimePicker {key: 'actTimeEnd', id: 'actTimeEnd', className: 'form-control', placeholder: 'Конец', minView: 'hours', view: 'hours', after: @state._time_start, format: 'HH:mm', value: @state._time_end, onChange: @setTimeEnd}
+                ]
+              ]
+
+
+            div {className: 'row'}, [
+              div {className: 'col-xs-12 form-group'},
+                button {className: 'btn btn-success form-control'}, 'Готово'
+            ]
+          ]
 
           # Preview column
-          (div {className: 'col-xs-6 form-group preview'}, [
-            ((div {className: 'row'},
-              (div {className: 'col-xs-12'},
-                (h3 {className: 'subject'}, @state.subject.name)
-              )
-            ) if @state.subject.name)
-            (div {className: 'row enter-line'},
-              (div {className: 'col-xs-12'},
-                ((span {className: 'value single'},
-                  (span {}, 'преподаватель ')
-                  (@state.professor or []).map (prof, i) ->
-                    (span {className:'value-itm'}, "#{if i > 0 then ', ' else ''}#{prof.name}")
-                ) if @state.professor and @state.professor.length > 0)
-                ((span {className: 'value'}, [
-                  (span {}, 'в ')
-                  (@state.place or []).map (place) ->
-                    (span {className: 'value-itm'}, place.name+' ')
-                  (span {}, 'аудитории')
-                ]) if @state.place and @state.place.length > 0)
-                ((span {className: 'value'}, [
-                  (span {}, ', ')
-                  (span {className: 'value-itm'}, getLocalizedValue("schedule.event.types.#{@state.type}"))
-                ]) if @state.type)
-              )
-            )
-            (div {className: 'row coord-line'}, [
-              (div {className: 'col-xs-12'}, [
-
-                ((span {className: 'value'}, [
-                  (span {className:'value-itm'}, "#{@state.number} парой")
-                ]) if @state.number)
-                ((span {className: 'value'}, [
-                  (span {}, ', ')
-                  (switch @state.half_group
-                    when 0 then (span {className: 'value-itm'}, 'у всей')
-                    when 1 then (span {className: 'value-itm'}, 'у первой')
-                    when 2 then (span {className: 'value-itm'}, 'у второй')
-                  )
-                  (switch @state.half_group
-                    when 0 then (span {}, ' группы')
-                    when 1,2 then (span {}, ' подгруппы')
-                  )
-                ]) if @state.half_group >= 0)
-                ((span {className: 'value'}, [
-                  (span {}, ', ')
-                  (switch @state.parity
-                    when 0 then (span {className:'value-itm'}, 'каждую')
-                    when 1 then (span {className:'value-itm'}, 'по нечетным')
-                    when 2 then (span {className:'value-itm'}, 'по четным')
-                  )
-                  (switch @state.parity
-                    when 0 then (span {}, ' неделю')
-                    when 1, 2 then (span {}, ' неделям')
-                  )
-                ]) if @state.parity >= 0)
-              ])
-            ])
-          ])
-          (div {className:'clearfix'})
-          (div {className: 'col-xs-12'},
-            (div {className: 'row'},
-              (div {className: 'col-xs-6 col-sm-offset-6 add-btn-col'},
-                  (button {className: 'btn btn-success form-control'}, 'Добавить')
-              )
-            )
-          )
-        ])
-      ])
-    ])
+          div {className: 'col-xs-5 form-group preview'}, [
+            eventPreview {state: @state}
+          ]
+        ]
+      ]
+    ]

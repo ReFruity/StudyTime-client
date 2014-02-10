@@ -41,9 +41,13 @@ module.exports = React.createClass
 
   # Controller logic
   requestSuggestions: (text)->
+    self = @
     if _.isString(text) and @lastValue != text.trim() and text.trim().length > 0
-      @state.items.find(text)
-      @setState activeIndex: 0
+      clearTimeout(@reqTimeOut) if @reqTimeOut
+      @reqTimeOut = setTimeout(->
+        self.state.items.find(text)
+        self.setState activeIndex: 0
+      , 60)
     else
       @state.items.reset()
 

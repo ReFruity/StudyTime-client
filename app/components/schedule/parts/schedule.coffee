@@ -58,7 +58,12 @@ SchedDataRow = React.createClass
         )
         ((if details and detailsElem and details.dow in dows and details.number == number
           (SchedDetails {}, [
-            (detailsElem _.assign({data: details.data}, cellProps or {}))
+            (detailsElem _.assign({
+              data: details.data
+              dow: details.dow,
+              number: number,
+              date: curr.dates[details.dow]
+            }, cellProps or {}))
           ])
         else
           undefined

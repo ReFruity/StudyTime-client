@@ -1,7 +1,9 @@
-#_ = require 'underscore'
 React = require 'react'
 {div, img, span, strong, table, tr, td, i, a} = React.DOM
 nav = require '/components/schedule/parts/nav'
+Professor = require 'models/professor'
+MobileTitle = require '/components/helpers/mobileTitle'
+BackButton =  require '/components/helpers/backButton'
 
 
 #fake resource
@@ -9,19 +11,25 @@ resource =
   firstName: 'Александр',
   secondName: 'Промах',
   middleName: 'Иванович',
-  image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg',
+  image: 'http://www.vokrugsveta.ru/img/ann/news/main/2009/09/11/7391.jpg',
   address: 'Тургенева 4, ауд. 628',
   email: 's-promakh@ya.ru',
   phone: '+7-123-45-67-890'
 
 module.exports = React.createClass
-#  getInitialState: ->
-#    filterQuery: ''
+  propTypes:
+    route: React.PropTypes.object.isRequired
+
+  getInitialState: ->
+    resource: resource
+#    resource: new Professor(id: @props.route.id).fetchThis
+#      success: @forceUpdate.bind(@, null)
 
   render: ->
     div {id: 'professors-show'}, [
-      ProfessorCard resource: resource
-      ProfessorSchedule resource: resource
+      MobileTitle title: 'Преподаватель'
+      ProfessorCard resource: @state.resource
+      ProfessorSchedule resource: @state.resource
     ]
 
 ##########
@@ -67,23 +75,62 @@ ProfessorSchedule = React.createClass
     bounds: new Date().getWeekBounds()
 
   render: ->
-    div {className: 'professor-shedule container'}, [
+    div {className: 'professor-schedule container'}, [
       div {className: 'sched-nav'}, [
         nav.WeekSwitcher bounds: @state.bounds, switchWeekHandler: (->)
         nav.UpdateIndicator updated: true
         BackButton()
       ]
+      PersonalSchedule()
     ]
 
+##########
 
-BackButton = React.createClass
-  back: ->
-    window.history.back()
-
+PersonalSchedule = React.createClass
   render: ->
-    a {className: 'back-btn', onClick: @back}, [
-      i {className: 'stico-arrow-right rotate-180'}
-      span {}, t('buttons.back')
+    div {}, [
+      div {className: 'day'}, [
+        div {className: 'circle'}
+        div {className: 'content'}, [
+          div {className: 'header'}, [
+            div {className: 'day-of-week'}, 'Понедельник'
+            div {className: 'date'}, '18 фев'
+          ]
+          div {className: 'events'}, [
+            div {className: 'event'}, [
+              div {className: 'time'}, '9:00 - 10:30'
+              div {className: 'subject'}, 'Математический анализ'
+              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, '632'
+            ]
+          ]
+          div {className: 'events'}, [
+            div {className: 'event'}, [
+              div {className: 'time'}, '9:00 - 10:30'
+              div {className: 'subject'}, 'Математический анализ'
+              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, '632'
+            ]
+          ]
+        ]
+      ]
+      div {className: 'day current'}, [
+        div {className: 'circle'}
+        div {className: 'content'}, [
+          div {className: 'header'}, [
+            div {className: 'day-of-week'}, 'Понедельник'
+            div {className: 'date'}, '18 фев'
+          ]
+          div {className: 'events'}, [
+            div {className: 'event current'}, [
+              div {className: 'time'}, '9:00 - 10:30'
+              div {className: 'subject'}, 'Математический анализ'
+              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, '632'
+            ]
+          ]
+        ]
+      ]
     ]
 
 

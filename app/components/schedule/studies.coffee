@@ -1,10 +1,11 @@
 React = require 'react'
-{span, div} = React.DOM
+{span, div, p, button} = React.DOM
 {i18n, viewType, modelMixin} = require '/components/common', 'i18n', 'viewType', 'modelMixin'
 {Schedule} = require '/models', 'Schedule'
-{schedule, classCell, classDetails, nav} = require '/components/schedule/parts', 'schedule', 'classCell',
-  'classDetails', 'nav'
+{schedule, classCell, classDetails, nav, noStaff, welcomeStaff} = require '/components/schedule/parts', 'schedule', 'classCell',
+  'classDetails', 'nav', 'noStaff', 'welcomeStaff'
 {editor} = require '/components/schedule/editor', 'editor'
+
 
 ##
 # Studies schedule component
@@ -13,7 +14,7 @@ React = require 'react'
 # Provides editor support
 #
 module.exports = React.createClass
-  mixins: [modelMixin]
+  mixins: [modelMixin, viewType]
   propTypes:
     group: React.PropTypes.object.isRequired
     route: React.PropTypes.object.isRequired
@@ -38,6 +39,10 @@ module.exports = React.createClass
         mode: mode
         state: state
 
+  onViewTypeChange: ->
+    @onSwitchEditor(0)
+    no
+
   componentDidMount: ->
     @interval = setInterval(@updateSchedule, 300000)
 
@@ -48,33 +53,42 @@ module.exports = React.createClass
     new_bounds = new Date().getWeekBounds()
     if new_bounds[0].getTime() > @state.bounds[0].getTime()
       @onSwitchWeek(new_bounds)
+      @state.sched.fetch()
 
   render: ->
     {route, group} = @props
-    (div {className: 'studies'}, [
+    div {className: 'studies'}, [
       # Editor
-      (if @state.editor.mode > 0
-        (editor {
+      if @state.editor.mode > 0 and @viewType != 'mobile'
+        editor {
           mode: @state.editor.mode,
           state: @state.editor.state,
           switchEditorHandler: @onSwitchEditor,
           timing: @state.sched.get('timing') or {}
-        })
-      )
+          eventTypes: ['lecture', 'practice']
+          updateSchedHandler: @updateSchedule
+          cellSelector: yes
+        }
 
       # Navigation
-      (div {className: 'container sched-nav'}, [
-        (div {className: 'row'}, [
-          (nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor})
-          (nav.BackToGroupsButton {group: @props.group})
-          (nav.ScheduleTypeSwitcher {currentType:'studies', route: @props.route})
-          (nav.UpdateIndicator {updated: (if @state.sched.fetchActive then null else @state.sched.get('updated') or new Date())})
-          (nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds})
-        ])
-      ])
+      div {className: 'container sched-nav'}, [
+        div {className: 'row'}, [
+          nav.BackToGroupsButton {group: @props.group}
+          nav.ScheduleTypeSwitcher {currentType:'studies', route: @props.route}
+          nav.EditorSwitcher {editor: @state.editor, switchEditorHandler: @onSwitchEditor}
+          nav.MyGroup {}
+          nav.UpdateIndicator {updated: (if @state.sched.fetchActive then null else @state.sched.get('updated') or new Date())}
+          nav.WeekSwitcher {switchWeekHandler: @onSwitchWeek, bounds: @state.bounds}
+        ]
+      ]
+
+      # Show "no staff" message
+      if @viewType == 'desktop'
+        #noStaff {}
+        welcomeStaff {}
 
       # Schedule
-      (schedule {
+      schedule {
         weekDate: @state.bounds[0]
         cellElem: classCell
         detailsElem: classDetails
@@ -96,5 +110,5 @@ module.exports = React.createClass
           bounds: @state.bounds
           switchEditorHandler: @onSwitchEditor
           route: @props.route
-      })
-    ])
+      }
+    ]

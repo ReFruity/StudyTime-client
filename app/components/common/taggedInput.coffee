@@ -73,6 +73,12 @@ InputItem = React.createClass
     @setState value: ''
     @approximateInputWidth()
 
+  componentDidMount: ->
+    @approximateInputWidth()
+
+  componentWillReceiveProps: ->
+    @approximateInputWidth()
+
   # Approximate width of the input for being in one line
   # with last tag item
   approximateInputWidth: ->

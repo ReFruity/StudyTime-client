@@ -1,31 +1,26 @@
 _ = require 'underscore'
 React = require 'react'
-{div, input, img, span} = React.DOM
+{div, input, img, span, a} = React.DOM
+modelMixin = require '/components/common/modelMixin'
+Professors = require 'collections/professors'
 
 module.exports = React.createClass
+#  mixins: [modelMixin]
   getInitialState: ->
     filterQuery: ''
+    collection: new Professors().fetchThis
+      success: @forceUpdate.bind(@, null)
+
+#  getBackboneModels: ->
+#    [@state.collection]
 
   handleUserInput: (filterQuery) ->
     @setState filterQuery: filterQuery
 
   render: ->
-
-    #fake collection
-    collection = [
-      {firstName: 'Магаз', secondName: 'Асанов', middleName: 'Араскимович', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Александр', secondName: 'Промах', middleName: 'Иванович', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: ''}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-      {firstName: 'Петров', secondName: 'Илья', middleName: 'Валерьевич', image: 'http://www.vokrugsveta.ru/img/ann/news/main//2009/09/11/7391.jpg'}
-    ]
-
     div {id: 'professors-index'}, [
       ProfessorsFilter filterQuery: @state.filterQuery, onUserInput: @handleUserInput
-      ProfessorsList collection: collection, filterQuery: @state.filterQuery
+      ProfessorsList collection: @state.collection, filterQuery: @state.filterQuery
     ]
 
 ##########
@@ -57,14 +52,14 @@ ProfessorsFilter = React.createClass
 
 ProfessorsList = React.createClass
   propTypes:
-    collection: React.PropTypes.array.isRequired
+    collection: React.PropTypes.object.isRequired
     filterQuery: React.PropTypes.string
 
   render: ->
     i = 0
     div {className: 'professors container'},
-      _.filter(@props.collection,(item) =>
-        "#{item.firstName} #{item.secondName} #{item.middleName}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
+      (@props.collection.filter (item) =>
+        "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
       ).map (item) ->
         i += 1
         if i % 4 is 0 then [ProfessorItem(item: item), div {className: 'clearfix'}] else ProfessorItem(item: item)
@@ -78,12 +73,11 @@ ProfessorItem = React.createClass
 
   render: ->
     {item} = @props
-    imageUrl = if !!item.image then item.image else '/images/professor-no-image.png'
 
-    div {className: 'professor col-sm-3'}, [
-      img src: imageUrl
+    a {className: 'professor col-sm-3', href: "professors/#{item.get('_id')}"}, [
+      img src: item.imageUrl()
       div {className: 'name'}, [
-        div {className: 'second-name'}, item.secondName
-        div {className: 'first-name'}, "#{item.firstName} #{item.middleName}"
+        div {className: 'second-name'}, item.secondName()
+        div {className: 'first-name'}, "#{item.firstName()} #{item.middleName()}"
       ]
     ]

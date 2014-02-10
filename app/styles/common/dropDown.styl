@@ -1,0 +1,34 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.drop-down
+  position relative
+
+  .menu-wrapper
+    position absolute
+    z-index 10000000
+
+    ul
+      border 2px solid lighten($brand-primary, 80%)
+      margin -3px 0 0 1px
+      padding 5px 0 5px 0
+      list-style-type none
+      background #fff
+      border-radius 5px
+      li
+        line-height $line-height-computed !important
+        padding 3px 15px
+        color $link-color
+        cursor pointer
+        position relative
+        overflow hidden
+        input
+          top 0
+          left 0
+          opacity 0
+          font-size 18px
+          position absolute
+          outline none
+        &:hover
+          background $link-hover-color
+          color #fff

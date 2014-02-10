@@ -1,7 +1,36 @@
 @import "../_variables"
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
+
 .group-sched
+  .no-staff, .welcome-staff
+    background-color $brand-info-bg
+    //background-image url(../images/ballons.png)
+    text-align center
+    padding 20px
+    margin 10px 0
+
+    button
+      margin 10px
+
+  .group-star
+    padding 40px 0 20px 0
+    h4
+      display inline
+      margin-right 10px
+    .main-staff, .supp-staff
+      vertical-align middle
+      display inline-block
+      border 1px solid #ddd
+      background #eee
+      margin-right 5px
+      width 40px
+      height 40px
+    .supp-staff
+      opacity 0.5
+    .btn
+      margin-left 5px
+
   .week-even
     .parity-1
       opacity 0.2
@@ -45,17 +74,17 @@
       border-top 1px solid $sched-border-color
       z-index 10
     &.hg-0
-      left - 2px
-      right - 2px
+      left -2px
+      right -2px
     &.hg-1
       background #fff
-      left - 2px
-      right 48.9%
+      left -2px
+      right 50%
       z-index 10
     &.hg-2
       background #fff
-      right - 2px
-      left 48.9%
+      right -2px
+      left 50%
       z-index 10
 
     &:hover
@@ -73,7 +102,11 @@
       span
         margin-left 5px
 
-  .class-cell
+  .cell-wrapper
+    position relative
+    height 100%
+    width 100%
+
     .editor-cell
       position absolute
       top 0

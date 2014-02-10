@@ -24,7 +24,7 @@ module.exports =
       self = @
       updateViewType = ->
         oldViewType = self.viewType
-        if windowWidth() >= 768
+        if windowWidth() >= 868
           self.viewType = "desktop"
         else
           self.viewType = "mobile"
@@ -32,7 +32,8 @@ module.exports =
         if init
           init = false
         else if oldViewType != self.viewType
-          self.forceUpdate()
+          if not self.onViewTypeChange or self.onViewTypeChange()
+            self.forceUpdate()
       updateViewType()
 
       Gator(window).on 'resize', updateViewType
