@@ -18,9 +18,9 @@ UniInfoRow = React.createClass
     div {className: 'uni-info'},
       div {className: 'container'},
         div {className: 'row'},
-          div {className: 'col-md-3 uni-img'},
+          div {className: 'col-md-12 uni-img'},
             img {src: ''}
-          div {className: 'col-md-9 uni-info'},
+          div {className: 'col-md-12 uni-info'},
             span {}
 
 

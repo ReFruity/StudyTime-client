@@ -1,49 +1,52 @@
+# Require neded stuff
 React = require 'react'
 Gator = require 'gator'
 _ = require 'underscore'
 
-# Stack for showed lightboxes
-lbStack = []
-lightboxCont = document.getElementById('lightbox')
-lbElement = lightboxCont.children[1].children[0].children[1]
-bodyElem = document.body
+# Disable lightboxes on Node.js
+if typeof window != 'undefined'
+  # Stack for showed lightboxes
+  lbStack = []
+  lightboxCont = document.getElementById('lightbox')
+  lbElement = lightboxCont.children[1].children[0].children[1]
+  bodyElem = document.body
 
-# Add handler of closing lightbox by click
-# on the glow
-Gator(lightboxCont.children[1].children[0].children[0]).on 'click', ->
-  closeLastLightbox()
-
-# Close on escape
-Gator(bodyElem).on 'keydown', (e)->
-  if e.keyCode == 27
+  # Add handler of closing lightbox by click
+  # on the glow
+  Gator(lightboxCont.children[1].children[0].children[0]).on 'click', ->
     closeLastLightbox()
 
-# Close last opened lightbox
-closeLastLightbox = ->
-  if lbStack.length
-    lastCom = lbStack.pop()
-    lastCom.onClose()
+  # Close on escape
+  Gator(bodyElem).on 'keydown', (e)->
+    if e.keyCode == 27
+      closeLastLightbox()
 
-# Handler for closing lightbox
-onCloseLightbox = ->
-  lbStack.pop()
-  if not lbStack.length
-    bodyElem.className = ''
-  else
-    renderLightboxComponent(lbStack[lbStack.length-1])
+  # Close last opened lightbox
+  closeLastLightbox = ->
+    if lbStack.length
+      lastCom = lbStack.pop()
+      lastCom.onClose()
 
-# Render lightbox and centring it
-renderLightboxComponent = (compInstance)->
-  # Render component to lightbox element
-  React.renderComponent compInstance, lbElement
+  # Handler for closing lightbox
+  onCloseLightbox = ->
+    lbStack.pop()
+    if not lbStack.length
+      bodyElem.className = ''
+    else
+      renderLightboxComponent(lbStack[lbStack.length-1])
 
-  # Centrize wrap element
-  setTimeout(->
-    width = lbElement.offsetWidth
-    height = lbElement.offsetHeight
-    lbElement.style.marginLeft = "-#{width/2}px"
-    lbElement.style.marginTop = "-#{height/2}px"
-  , 0)
+  # Render lightbox and centring it
+  renderLightboxComponent = (compInstance)->
+    # Render component to lightbox element
+    React.renderComponent compInstance, lbElement
+
+    # Centrize wrap element
+    setTimeout(->
+      width = lbElement.offsetWidth
+      height = lbElement.offsetHeight
+      lbElement.style.marginLeft = "-#{width/2}px"
+      lbElement.style.marginTop = "-#{height/2}px"
+    , 0)
 
 ##
 # Module for showing lightboxes
