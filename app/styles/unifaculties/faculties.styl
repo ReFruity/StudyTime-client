@@ -1,0 +1,54 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.faculties
+  .back-btn
+    background rgba(255,255,255, 0.7)
+    position absolute
+    z-index 1000
+    top 0
+    left 0
+    padding 10px 20px 10px 10px
+
+  .uni-img
+    padding 0
+    overflow hidden
+    img
+      min-width 450px
+      @media (max-width:450px)
+        position relative
+        left 50%
+        margin-left -225px
+
+  .uni-info
+    position relative
+    padding 0 0 20px 0
+
+    .info
+      padding 30px
+      background rgba(255,255,255, 0.7)
+      position absolute
+      bottom 0
+      left 0
+      right 0
+      height auto
+
+      h2, h3
+        margin 0
+        padding 0
+
+      .city
+         font-size $font-size-base
+         font-weight 300
+         margin-left 10px
+
+      .name
+        font-weight 400
+        font-size $font-size-large * 1.5
+
+      h3
+        font-size $font-size-base
+        font-weight 300
+        padding 5px 0 0 0
+        @media $media-min-tablet
+          width 50%
