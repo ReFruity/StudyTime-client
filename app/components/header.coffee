@@ -20,7 +20,7 @@ module.exports = React.createClass
         div {className: 'row'},
           # Brand
           div {className: "brand"},
-            a {href: "#"},
+            a {href: "/"},
               i {className: "stico-logo"}
               i18n {}, 'layouts.main.site_name'
 
