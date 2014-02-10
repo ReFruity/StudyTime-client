@@ -4,4 +4,4 @@ Professor = require 'models/professor'
 
 module.exports = Backbone.Collection.extend
   model: Professor
-  url: "#{config.apiUrl}/user?fields=identidy&role=professor"
+  url: "#{config.apiUrl}/user?fields=identity&role=professor&university=УрФУ&faculty=ИМКН"
