@@ -1,0 +1,186 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.home
+  h3
+    font-size $font-size-large*1.2
+  p
+    color lighten($text-color, 40%)
+    font-size $font-size-medium
+    font-weight 300
+
+
+  .search-bar
+    h2
+      text-align center
+      font-size $font-size-large*1.5
+      padding 40px 0 10px 0
+    input
+      border 3px solid $brand-info
+      font-size $font-size-large
+      font-weight 300
+      height 55px
+      color: $brand-primary
+      &:focus
+        outline none
+
+  .unis
+    padding 10px 0 80px 0
+    .uni-item
+      display block
+      color #fff
+      text-decoration none
+      padding 15px
+      background-color $brand-success
+
+      h3, h4
+        margin 0
+        padding 0
+
+      .city
+         font-size $font-size-base
+         font-weight 300
+         margin-left 10px
+
+      .name
+        font-weight 400
+
+      h4
+        font-size $font-size-base
+        font-weight 300
+        padding 5px 0 0 0
+
+      @media $media-max-phone
+        margin 0 0 10px 0
+
+
+  .other-features-row
+    margin-top 40px
+    background-color $brand-info-bg
+    padding 40px 0
+    text-align center
+    h3
+      padding 5px 0 10px 0
+      font-size $font-size-large
+
+    @media $media-max-phone
+      padding 0 0
+      img
+        display block
+        float left
+        width 50px
+        margin 20px 10px 10px 0
+      p
+        padding 0 0 10px 0
+      h3
+        margin 0
+        padding 20px 0
+        border-top 1px solid darken($brand-info-bg, 10%)
+      .row > div:first-child
+        h3
+          border-top none
+
+
+  .points-row
+    text-align center
+
+  @media $media-min-desktop
+    .vert-dots
+      height 60px
+    .hor-dots
+      width 500px
+
+  @media $media-max-tablet
+    .vert-dots
+      height 45px
+    .hor-dots
+      width 385px
+
+  @media $media-max-phone
+    .vert-dots
+      display none
+    .hor-dots
+      width 100%
+      max-width 500px
+
+  .main-feature-row
+    .img-col
+      text-align center
+      margin 10px 0 10px 0
+      .img-responsive
+        margin 20px 0
+        @media $media-max-phone
+          display inline-block
+
+    .text-col
+      padding-left 40px
+      padding-right 40px
+      h3
+        @media $media-min-desktop
+          padding 180px 0 0 0
+        @media $media-max-tablet
+          padding 100px 0 0 0
+        @media $media-max-phone
+          padding 10px 0 0 0
+      @media $media-max-phone
+        p
+          padding 0 0 20px 0
+
+  .header-row
+    padding 100px 0 20px 0
+    @media $media-max-phone
+      padding 30px 0 20px 0
+
+    .head-text
+      .wrap
+        padding 55px 0
+        @media $media-max-phone
+          padding 0
+          text-align center
+
+      h2, h3
+        margin 0
+        padding 0
+        font-weight 700
+      h2
+        font-size 60px
+        line-height 40px
+      h3
+        font-size 44px
+
+      p
+        display inline-block
+        padding 15px 60px 25px 0
+
+      button
+        margin 10px 0 0 0
+        font-size $font-size-large
+        font-weight 300
+        padding 5px 70px
+
+      @media $media-max-tablet
+        h2
+          font-size 45px
+          line-height 33px
+        h3
+          font-size 33px
+        p
+          padding 10px 60px 15px 0
+        button
+          padding 5px 50px
+      @media $media-max-phone
+        h2
+          font-size 35px
+          line-height 26px
+        h3
+          font-size 26px
+        p
+          padding 15px 0 25px 0
+        button
+          font-size $font-size-medium
+
+
+    .head-img
+      text-align center
+      @media $media-max-phone
+        display none
