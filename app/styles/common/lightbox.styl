@@ -2,12 +2,14 @@
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
 #lightbox
-  position: relative
-  visibility: hidden
-  z-index: 10000000
-  display: block
+  position relative
+  visibility hidden
+  z-index 10000000
+  display block
   opacity 0
-  transition(all 0.2s ease-out)
+
+  &.enable-animation
+    transition(all 0.2s ease-out)
 
   @media $media-max-phone
     display none

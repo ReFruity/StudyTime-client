@@ -32,6 +32,9 @@ data =
           places: "Аудитории"
           courses: "Спецкурсы"
           professors: "Преподы"
+          index: 'Главаня'
+          about: 'О нас'
+          tour: 'Тур по сайту'
 
     professors:
       index:
