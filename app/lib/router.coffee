@@ -11,13 +11,30 @@ React = require 'react'
 # Server-side implementation using Express.js
 if typeof window == 'undefined'
   app = nativeRequire('express')()
+  fs = nativeRequire('fs')
 
 serverRoute = (route, name, callback) ->
   route = @_routeToRegExp(route)
+  if _.isFunction(name)
+    callback = name
+    name = ""
+  callback = this[name]  unless callback
+  router = this
   app.get(route.regex, (req, res)->
-    res.send(name);
+    args = router._extractParameters(route.regex, req.url)
+    router._lastParams = {}
+    _.map(args, (v, i) ->
+      router._lastParams[route.names[i]] = v
+    )
+    router._lastName = name
+    React.renderComponentToString(router.getAppComponent(), (a)->
+      fs.readFile('app/assets/index.html', (err, b)->
+        if err
+          throw err
+        res.send(b.toString().replace(/id="content">/, 'id="content">'+a))
+      )
+    )
   )
-	# TODO
 
 
 # Client-seide implementation of route binding
