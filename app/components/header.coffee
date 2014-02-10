@@ -16,7 +16,7 @@ module.exports = React.createClass
 
   render: ->
     header {},
-      nav {className: "container", role: "navigation"},
+      nav {className: classSet('container': yes, 'only-index': !@props.route.faculty), role: "navigation"},
         div {className: 'row'},
           # Brand
           div {className: "brand"},
@@ -29,7 +29,7 @@ module.exports = React.createClass
             userNavControl {}
 
           # Navigation buttons
-          div {className: "navbar"},
+          div {className: 'navbar'},
             ul {},
               if @props.route.faculty then [
                 li {className: classSet("active": @isCurrent("groups", "schedule"))},
