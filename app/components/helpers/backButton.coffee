@@ -3,7 +3,7 @@ React = require 'react'
 
 module.exports = React.createClass
   back: ->
-    window.history.back()
+    window.location = window.location.href.match(/(.*)\//)[1]
 
   render: ->
     a {className: 'back-btn', onClick: @back}, [

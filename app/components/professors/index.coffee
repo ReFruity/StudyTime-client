@@ -22,7 +22,7 @@ module.exports = React.createClass
   render: ->
     div {id: 'professors-index'}, [
       ProfessorsFilter filterQuery: @state.filterQuery, onUserInput: @handleUserInput
-      ProfessorsList collection: @state.collection, filterQuery: @state.filterQuery
+      ProfessorsList collection: @state.collection, filterQuery: @state.filterQuery, route: @props.route
     ]
 
 ##########
@@ -56,15 +56,19 @@ ProfessorsList = React.createClass
   propTypes:
     collection: React.PropTypes.object.isRequired
     filterQuery: React.PropTypes.string
+    route: React.PropTypes.object.isRequired
 
   render: ->
     i = 0
     div {className: 'professors container'},
       (@props.collection.filter (item) =>
         "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
-      ).map (item) ->
+      ).map (item) =>
         i += 1
-        if i % 4 is 0 then [ProfessorItem(item: item), div {className: 'clearfix'}] else ProfessorItem(item: item)
+        if i % 4 is 0
+          [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]
+        else
+          ProfessorItem(item: item, route: @props.route)
       div className: 'clearfix'
 
 ##########
@@ -72,11 +76,12 @@ ProfessorsList = React.createClass
 ProfessorItem = React.createClass
   propTypes:
     item: React.PropTypes.object.isRequired
+    route: React.PropTypes.object.isRequired
 
   render: ->
     {item} = @props
 
-    a {className: 'professor col-sm-3', href: "professors/#{item.get('_id')}"}, [
+    a {className: 'professor col-sm-3', href: "#{@props.route.uni}/#{@props.route.faculty}/professors/#{item.get('_id')}"}, [
       img src: item.imageUrl()
       div {className: 'name'}, [
         div {className: 'second-name'}, item.secondName()
