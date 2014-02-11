@@ -13,12 +13,11 @@ class MainRouter extends Router
     "/professors(/:id)": "professors/show"
     "/:uni": "faculties/index"
     "/:uni/:faculty": "groups/index"
+    "/:uni/:faculty/editor": "groups/editor"
     "/:uni/:faculty/:group(/:scheduleType(/:dow-:number-:atom(/:detailsView)))": "schedule/index"
     "/:uni/:faculty/:group(/:scheduleType(/:event(/:detailsView)))": "schedule/index"
     "/*error": "404/index"
 
-  # Delegate rendering to some predefined function
-  # (may be different in broser or node.js version)
   getAppComponent: ->
     (app {route: @getRouteName(), params: @getParams()})
 

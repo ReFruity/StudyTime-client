@@ -26,7 +26,7 @@ UniInfoRow = React.createClass
         div {className: 'row'},
           div {className: 'col-sm-12 uni-img'},
             BackButton()
-            img {src: './images/uni-ph.jpg', className:'img-responsive'}
+            img {src: './images/uni-ph.png', className:'img-responsive'}
             div {className: 'info'},
               h2 {},
                 span {className: 'name'}, @props.uni.name
