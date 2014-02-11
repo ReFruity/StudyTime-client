@@ -32,6 +32,9 @@ data =
           places: "Аудитории"
           courses: "Спецкурсы"
           professors: "Преподы"
+          index: 'Главная'
+          about: 'О нас'
+          tour: 'Тур по сайту'
 
     professors:
       index:
@@ -63,6 +66,7 @@ data =
     messages:
       not_indicate: 'Не указано'
       schedule_is_blank: 'В рассписании ничего нет'
+      loading: 'Загружается...'
 
     schedule:
       texts:

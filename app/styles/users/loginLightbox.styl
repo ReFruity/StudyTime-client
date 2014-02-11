@@ -1,0 +1,48 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.login-lightbox
+  min-width 350px
+  text-align center
+
+  h2
+    text-align center
+    margin 0
+    font-size $font-size-large
+
+  p
+    font-size $font-size-medium
+    color lighten($text-color, 40%)
+    max-width 300px
+    text-align center
+    padding 10px 0 10px 0
+    display inline-block
+
+
+  a
+    .sbtn
+      vertical-align middle
+      display inline-block
+      text-align center
+      border-radius 100px
+      height 50px
+      width 50px
+      line-height 65px
+      cursor pointer
+
+    span
+      margin 0 10px
+      vertical-align middle
+      display inline-block
+      font-size $font-size-medium
+
+    .vk
+      background $brand-success
+    .fb
+      background $brand-info
+
+    &:hover
+      .vk
+        background darken($brand-success, 20%)
+      .fb
+        background darken($brand-info, 20%)

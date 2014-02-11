@@ -40,10 +40,14 @@ ProfessorCard = React.createClass
       ]
       div {className: 'full-name-wrap'}, [
         div {className: 'container'}, [
-          div {className: 'full-name'}, [
-            strong {}, resource.secondName()
-            " #{resource.firstName()} #{resource.middleName()}"
-          ]
+          div {className: 'full-name'},
+            if resource.fetchActive
+              [t('messages.loading')]
+            else
+              [
+                strong {}, resource.secondName()
+                " #{resource.firstName()} #{resource.middleName()}"
+              ]
         ]
       ]
       div {className: 'card'}, [
@@ -93,7 +97,7 @@ PersonalSchedule = React.createClass
 
   render: ->
     schedule = {}
-#    @props.events.each (event) ->
+    #    @props.events.each (event) ->
     _.each @props.events.byBounds(@props.bounds), (event) ->
       day = event.getStart().getDay()
       schedule[day] ||= []
@@ -132,7 +136,7 @@ PersonalSchedule = React.createClass
   byHours: (a, b) ->
     a.getStart().getHours() - b.getStart().getHours()
 
-  # в bounds[0] должен быть понедельник
+# в bounds[0] должен быть понедельник
   getWeekDate: (dayOfWeek) ->
     now = new Date(@props.bounds[0])
     new Date now.setDate(now.getDate() + parseInt(dayOfWeek) - 1)

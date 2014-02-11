@@ -10,6 +10,7 @@ if typeof window != 'undefined'
   lightboxCont = document.getElementById('lightbox')
   lbElement = lightboxCont.children[1].children[0].children[1]
   bodyElem = document.body
+  lightboxCont.className = 'enable-animation'
 
   # Add handler of closing lightbox by click
   # on the glow

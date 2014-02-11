@@ -19,7 +19,6 @@ header
       float left
       a
         display block
-        cursor default
         text-decoration none !important
         font-size $font-size-large
         i
@@ -96,17 +95,38 @@ header
 @media $media-max-phone
   header
     padding-top 0
+    margin-bottom 4px
 
     nav
       padding 0 !important
+
+      .row
+        margin 0
+        padding 0
+
       .brand
         display none
         margin-left 0
         span
           display none
         i
-          margin-left 21px
+          margin-left 5px
           margin-top 2px
+
+      &.only-index
+        .brand
+          display block
+          span
+            display inline
+
+        .login-wrap
+          margin-top 2px
+          display block
+          &>span
+            margin-right 2px
+
+        ul
+          display none
 
       ul
         margin 0

@@ -15,51 +15,56 @@ module.exports = React.createClass
     no
 
   render: ->
-    (header {}, [
-      (nav {className: "container", role: "navigation"}, [
-        (div {className: 'row'}, [
+    header {},
+      nav {className: classSet('container': yes, 'only-index': !@props.route.faculty), role: "navigation"},
+        div {className: 'row'},
           # Brand
-          (div {className: "brand"}, [
-            (a {href: "#"}, [
-              (i {className: "stico-logo"}, [])
-              (i18n {}, 'layouts.main.site_name')
-            ])
-          ])
+          div {className: "brand"},
+            a {href: "/"},
+              i {className: "stico-logo"}
+              i18n {}, 'layouts.main.site_name'
 
           # Login button
-          (div {className: 'login-wrap'}, [
-            (userNavControl {}, [])
-          ])
+          div {className: 'login-wrap'},
+            userNavControl {}
 
           # Navigation buttons
-          (div {className: "navbar"}, [
-            (ul {}, [
-              (li {className: classSet("active": @isCurrent("groups", "schedule"))}, [
-                (a {href: "/"}, [
-                  (div {}, (i {className: "stico-schedule"}, []))
-                  (i18n {}, 'layouts.main.navigation.schedule')
-                ])
-              ])
-              (li {className: classSet("active": @isCurrent("places"))}, [
-                (a {href: "/places"}, [
-                  (div {}, (i {className: "stico-map"}, []))
-                  (i18n {}, 'layouts.main.navigation.places')
-                ])
-              ])
-              (li {className: classSet("active": @isCurrent("courses"), 'courses':yes)}, [
-                (a {href: "/courses"}, [
-                  (div {}, (i {className: "stico-spec-courses"}, []))
-                  (i18n {}, 'layouts.main.navigation.courses')
-                ])
-              ])
-              (li {className: classSet("active": @isCurrent("professors"))}, [
-                (a {href: "/professors"}, [
-                  (div {}, (i {className: "stico-spec-courses"}, []))
-                  (i18n {}, 'layouts.main.navigation.professors')
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
+          div {className: 'navbar'},
+            ul {},
+              if @props.route.faculty then [
+                li {className: classSet("active": @isCurrent("groups", "schedule"))},
+                  a {href: "/"},
+                    div {}, (i {className: "stico-schedule"})
+                    i18n {}, 'layouts.main.navigation.schedule'
+
+                li {className: classSet("active": @isCurrent("places"))},
+                  a {href: "/places"},
+                    div {}, (i {className: "stico-map"})
+                    i18n {}, 'layouts.main.navigation.places'
+
+                li {className: classSet("active": @isCurrent("courses"), 'courses':yes)},
+                  a {href: "/courses"},
+                    div {}, (i {className: "stico-spec-courses"})
+                    i18n {}, 'layouts.main.navigation.courses'
+
+                li {className: classSet("active": @isCurrent("professors"))},
+                  a {href: "#{@props.route.uni}/#{@props.route.faculty}/professors"},
+                    div {}, (i {className: "stico-spec-courses"})
+                    i18n {}, 'layouts.main.navigation.professors'
+              ]
+              else [
+                li {className: classSet("active": @isCurrent("universities", 'faculties'))},
+                  a {href: "/"},
+                    div {}, (i {className: "stico-schedule"})
+                    i18n {}, 'layouts.main.navigation.index'
+
+                li {className: classSet("active": @isCurrent('about'))},
+                  a {href: "/"},
+                    div {}, (i {className: "stico-schedule"})
+                    i18n {}, 'layouts.main.navigation.tour'
+
+                li {className: classSet("active": @isCurrent('about'))},
+                  a {href: "/"},
+                    div {}, (i {className: "stico-schedule"})
+                    i18n {}, 'layouts.main.navigation.about'
+              ]
