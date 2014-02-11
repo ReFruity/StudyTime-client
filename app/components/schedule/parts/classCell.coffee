@@ -49,8 +49,7 @@ module.exports = React.createClass
       start: new Date(atom.activity.start)
       end: new Date(atom.activity.end)
 
-    if act.start <= bounds[0] < act.end or act.start < bounds[1] <= act.end or
-      (bounds[0] <= act.start and bounds[1] >= act.end) then yes else no
+    act.start <= bounds[0] < act.end or act.start < bounds[1] <= act.end or (bounds[0] <= act.start and bounds[1] >= act.end)
 
   # Cut atom places to be lte 3. Last filtered place
   # replaced to `...`

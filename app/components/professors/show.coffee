@@ -1,29 +1,22 @@
+_ = require 'underscore'
 React = require 'react'
+{classSet} = React.addons
 {div, img, span, strong, table, tr, td, i, a} = React.DOM
 nav = require '/components/schedule/parts/nav'
 Professor = require 'models/professor'
+Events = require 'collections/events'
 MobileTitle = require '/components/helpers/mobileTitle'
-BackButton =  require '/components/helpers/backButton'
+BackButton = require '/components/helpers/backButton'
+DateFormat = require '/components/common/dateFormat'
 
-
-#fake resource
-resource =
-  firstName: 'Александр',
-  secondName: 'Промах',
-  middleName: 'Иванович',
-  image: 'http://www.vokrugsveta.ru/img/ann/news/main/2009/09/11/7391.jpg',
-  address: 'Тургенева 4, ауд. 628',
-  email: 's-promakh@ya.ru',
-  phone: '+7-123-45-67-890'
 
 module.exports = React.createClass
   propTypes:
     route: React.PropTypes.object.isRequired
 
   getInitialState: ->
-    resource: resource
-#    resource: new Professor(id: @props.route.id).fetchThis
-#      success: @forceUpdate.bind(@, null)
+    resource: new Professor(id: @props.route.id).fetchThis
+      success: @forceUpdate.bind(@, null)
 
   render: ->
     div {id: 'professors-show'}, [
@@ -40,17 +33,16 @@ ProfessorCard = React.createClass
 
   render: ->
     {resource} = @props
-    imageUrl = if !!resource.image then resource.image else '/images/professor-no-image.png'
 
     div {className: 'professor'}, [
       div {className: 'container'}, [
-        img src: imageUrl
+        img src: resource.imageUrl()
       ]
       div {className: 'full-name-wrap'}, [
         div {className: 'container'}, [
           div {className: 'full-name'}, [
-            strong {}, resource.secondName
-            " #{resource.firstName} #{resource.middleName}"
+            strong {}, resource.secondName()
+            " #{resource.firstName()} #{resource.middleName()}"
           ]
         ]
       ]
@@ -59,7 +51,7 @@ ProfessorCard = React.createClass
           table {}, ['address', 'email', 'phone'].map (attribute) ->
             tr {}, [
               td {}, t("attributes.professor.#{attribute}")
-              td {}, resource[attribute]
+              td {}, resource[attribute]()
             ]
         ]
       ]
@@ -73,65 +65,74 @@ ProfessorSchedule = React.createClass
 
   getInitialState: ->
     bounds: new Date().getWeekBounds()
+    events: new Events().fetchThis
+      data:
+        professor: @props.resource.id
+      success: @forceUpdate.bind(@, null)
+
+  updateBounds: (bounds) ->
+    @setState
+      bounds: bounds
 
   render: ->
     div {className: 'professor-schedule container'}, [
       div {className: 'sched-nav'}, [
-        nav.WeekSwitcher bounds: @state.bounds, switchWeekHandler: (->)
+        nav.WeekSwitcher bounds: @state.bounds, switchWeekHandler: @updateBounds
         nav.UpdateIndicator updated: true
         BackButton()
       ]
-      PersonalSchedule()
+      PersonalSchedule events: @state.events, bounds: @state.bounds
     ]
 
 ##########
 
 PersonalSchedule = React.createClass
+  propTypes:
+    events: React.PropTypes.object.isRequired
+    bounds: React.PropTypes.array.isRequired
+
   render: ->
-    div {}, [
-      div {className: 'day'}, [
+    schedule = {}
+#    @props.events.each (event) ->
+    _.each @props.events.byBounds(@props.bounds), (event) ->
+      day = event.getStart().getDay()
+      schedule[day] ||= []
+      schedule[day].push event
+    if schedule[0]
+      schedule[7] = schedule[0]
+      delete schedule[0]
+
+    if _.isEqual schedule, {}
+      return span {}, t('messages.schedule_is_blank')
+
+    div {}, (_.map _.keys(schedule).sort(), (dayOfWeek) =>
+      div {className: classSet(day: true, current: new Date().getDay().toString() is dayOfWeek)}, [
         div {className: 'circle'}
         div {className: 'content'}, [
           div {className: 'header'}, [
-            div {className: 'day-of-week'}, 'Понедельник'
-            div {className: 'date'}, '18 фев'
+            DateFormat {className: 'day-of-week', date: schedule[dayOfWeek][0].getStart(), format: "EEEE"}
+            DateFormat {className: 'date', date: @getWeekDate(dayOfWeek), format: "dd MMM"}
           ]
-          div {className: 'events'}, [
+          div {className: 'events'}, _.map(schedule[dayOfWeek].sort(@byHours), (event) ->
             div {className: 'event'}, [
-              div {className: 'time'}, '9:00 - 10:30'
-              div {className: 'subject'}, 'Математический анализ'
-              div {className: 'address'}, 'Тургенева 4,'
-              div {className: 'room'}, '632'
+              div {className: 'time'}, [
+                DateFormat {date: event.getStart(), format: "HH:mm"}
+                ' - '
+                DateFormat {date: event.getEnd(), format: "HH:mm"}
+              ]
+              div {className: 'subject'}, event.subjectName()
+#              div {className: 'address'}, 'Тургенева 4,'
+              div {className: 'room'}, event.rooms()
             ]
-          ]
-          div {className: 'events'}, [
-            div {className: 'event'}, [
-              div {className: 'time'}, '9:00 - 10:30'
-              div {className: 'subject'}, 'Математический анализ'
-              div {className: 'address'}, 'Тургенева 4,'
-              div {className: 'room'}, '632'
-            ]
-          ]
+          )
         ]
       ]
-      div {className: 'day current'}, [
-        div {className: 'circle'}
-        div {className: 'content'}, [
-          div {className: 'header'}, [
-            div {className: 'day-of-week'}, 'Понедельник'
-            div {className: 'date'}, '18 фев'
-          ]
-          div {className: 'events'}, [
-            div {className: 'event current'}, [
-              div {className: 'time'}, '9:00 - 10:30'
-              div {className: 'subject'}, 'Математический анализ'
-              div {className: 'address'}, 'Тургенева 4,'
-              div {className: 'room'}, '632'
-            ]
-          ]
-        ]
-      ]
-    ]
+    )
 
+  byHours: (a, b) ->
+    a.getStart().getHours() - b.getStart().getHours()
 
-
+  # в bounds[0] должен быть понедельник
+  getWeekDate: (dayOfWeek) ->
+    now = new Date(@props.bounds[0])
+    new Date now.setDate(now.getDate() + parseInt(dayOfWeek) - 1)

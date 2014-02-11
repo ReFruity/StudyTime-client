@@ -5,14 +5,16 @@ modelMixin = require '/components/common/modelMixin'
 Professors = require 'collections/professors'
 
 module.exports = React.createClass
-#  mixins: [modelMixin]
+  propTypes:
+    route: React.PropTypes.object.isRequired
+
   getInitialState: ->
     filterQuery: ''
     collection: new Professors().fetchThis
+      data:
+        university: @props.route.uni
+        faculty: @props.route.faculty
       success: @forceUpdate.bind(@, null)
-
-#  getBackboneModels: ->
-#    [@state.collection]
 
   handleUserInput: (filterQuery) ->
     @setState filterQuery: filterQuery
