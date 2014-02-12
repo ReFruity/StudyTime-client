@@ -54,6 +54,8 @@
           background: $brand-warning
         .day-of-week
           color: $brand-warning
+        img.current-event
+          display block
       .circle
         width 23px
         height 23px
@@ -81,6 +83,12 @@
             font-size 16px
             font-weight 300
             margin-bottom 10px
+            position relative
+            img.current-event
+              display none
+              position absolute
+              top: 4px
+              left -32px
             div
               display inline-block
               margin-right 10px
@@ -104,6 +112,8 @@
               font-weight bold
           .events
             .event
+              img.current-event
+                top 10px
               div
                 display block
                 font-weight normal
