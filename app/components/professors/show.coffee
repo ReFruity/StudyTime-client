@@ -97,9 +97,8 @@ PersonalSchedule = React.createClass
 
   render: ->
     schedule = {}
-
-    @props.events.each (event) ->
-#    _.each @props.events.byBounds(@props.bounds), (event) ->
+#    @props.events.each (event) ->
+    _.each @props.events.byBounds(@props.bounds), (event) ->
       day = event.getStart().getDay()
       schedule[day] ||= []
       schedule[day].push event
