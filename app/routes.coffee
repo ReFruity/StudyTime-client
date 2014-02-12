@@ -6,10 +6,10 @@ app = require 'components/app'
 class MainRouter extends Router
   routes:
     "/": "universities/index"
-    "/professors(/:id)": "professors/show"
     "/:uni": "faculties/index"
     "/:uni/:faculty": "groups/index"
     "/:uni/:faculty/professors": "professors/index"
+    "/:uni/:faculty/professors(/:id)": "professors/show"
     "/:uni/:faculty/editor": "groups/editor"
     "/:uni/:faculty/places": "places/index"
     "/:uni/:faculty/courses(/:dow)": "courses/index"

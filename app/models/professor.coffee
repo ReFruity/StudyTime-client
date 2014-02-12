@@ -2,7 +2,7 @@ config = require 'config/config'
 Backbone = require 'backbone'
 
 module.exports = Backbone.Model.extend
-#  sync: require('cachingSync')(Backbone.sync, 'group')
+  sync: require('cachingSync')(Backbone.sync, 'professor')
   urlRoot: "#{config.apiUrl}/user/"
 
   firstName: ->
