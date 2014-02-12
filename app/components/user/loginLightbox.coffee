@@ -36,11 +36,11 @@ module.exports = React.createClass
       h2 {}, 'Войдите'+@props.reason
       p {}, 'с помощью аккаунта в одной из социальных сетей'
       div {className: 'row'},
-        a {className: 'col-xs-6 text-right'},
+        a {className: 'col-xs-6 text-right', onClick: @loginVk},
           span {}, 'ВКонтакте'
-          div {onClick: @loginVk, className: 'vk sbtn'},
+          div {className: 'vk sbtn'},
             i {className: 'stico-vk'}
-        a {className: 'col-xs-6 text-left'},
-          div {onClick: @loginFacebook, className: 'fb sbtn'},
+        a {className: 'col-xs-6 text-left', onClick: @loginFacebook},
+          div {className: 'fb sbtn'},
             i {className: 'stico-fb'}
           span {}, 'Facebook'

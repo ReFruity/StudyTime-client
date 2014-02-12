@@ -5,6 +5,7 @@ defrd = require 'deferred'
 crossPlatformAjax = if typeof window == 'undefined'
   (options) ->
     console.log "make 'ajax' call via http"
+    {}
 
 # Client side $.ajax implementation
 else
