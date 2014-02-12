@@ -1,7 +1,7 @@
 /**
  * @license
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash exports="commonjs,node" include="map,object,keys,memoize,result,defaults,extend,escape,assign,sortBy,uniqueId,isEqual,isFunction,isObject,isNaN,isArray,isRegExp,each,isDate,clone,filter,defer,indexOf,lastIndexOf"`
+ * Build: `lodash exports="commonjs,node" include="map,object,keys,memoize,result,defaults,extend,escape,assign,sortBy,uniqueId,isEqual,isFunction,isObject,isNaN,isArray,isRegExp,each,isDate,clone,filter,defer,indexOf,lastIndexOf,pluck"`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1963,6 +1963,28 @@
   }
 
   /**
+   * Retrieves the value of a specified property from all elements in the collection.
+   *
+   * @static
+   * @memberOf _
+   * @type Function
+   * @category Collections
+   * @param {Array|Object|string} collection The collection to iterate over.
+   * @param {string} property The name of the property to pluck.
+   * @returns {Array} Returns a new array of property values.
+   * @example
+   *
+   * var characters = [
+   *   { 'name': 'barney', 'age': 36 },
+   *   { 'name': 'fred',   'age': 40 }
+   * ];
+   *
+   * _.pluck(characters, 'name');
+   * // => ['barney', 'fred']
+   */
+  var pluck = map;
+
+  /**
    * Creates an array of elements, sorted in ascending order by the results of
    * running each element in a collection through the callback. This method
    * performs a stable sort, that is, it will preserve the original sort order
@@ -2548,6 +2570,7 @@
   lodash.keys = keys;
   lodash.map = map;
   lodash.memoize = memoize;
+  lodash.pluck = pluck;
   lodash.property = property;
   lodash.sortBy = sortBy;
   lodash.zipObject = zipObject;

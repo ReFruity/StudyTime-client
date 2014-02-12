@@ -1,0 +1,10 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+.photo-wrap
+  opacity 0
+  display inline-block
+  transition(all 1s cubic-bezier(0.23, 1, 0.32, 1))
+
+  &.loaded
+    opacity 1

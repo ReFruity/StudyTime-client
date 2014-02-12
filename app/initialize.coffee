@@ -1,4 +1,5 @@
 # Init the app
+require 'fetchCache' if typeof window != 'undefined'
 require 'fetchThis'
 require 'helpers'
 require 'routes'

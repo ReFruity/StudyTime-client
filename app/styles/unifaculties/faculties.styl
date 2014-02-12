@@ -13,12 +13,22 @@
   .uni-img
     padding 0
     overflow hidden
+    @media $media-min-tablet
+      min-height 425px
+    @media $media-min-desktop
+      min-height 555px
     img
       min-width 450px
       @media (max-width:450px)
         position relative
         left 50%
         margin-left -225px
+
+  .loading
+    display block
+    font-size $font-size-large
+    padding 0 0 40px 0
+    color lighten($text-color, 50%)
 
   .uni-info
     position relative
