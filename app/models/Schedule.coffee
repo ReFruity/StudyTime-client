@@ -6,6 +6,6 @@ ScheduleModel = Backbone.Model.extend
     @id = "#{@get('type')}#{@get('uni')}#{@get('faculty')}#{@get('group')}"
 
   url: ->
-      "#{config.apiUrl}/schedule/#{@get('type')}/#{@get('faculty')}" + (if @has('group') then "/#{@get('group')}" else "")
+    "#{config.apiUrl}/schedule/#{@get('type')}/#{@get('faculty')}" + (if @has('group') then "/#{@get('group')}" else "")
 
 module.exports = ScheduleModel

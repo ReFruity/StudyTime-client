@@ -97,7 +97,7 @@ PersonalSchedule = React.createClass
 
   render: ->
     schedule = {}
-    #    @props.events.each (event) ->
+#    @props.events.each (event) ->
     _.each @props.events.byBounds(@props.bounds), (event) ->
       day = event.getStart().getDay()
       schedule[day] ||= []
@@ -110,15 +110,16 @@ PersonalSchedule = React.createClass
       return span {}, t('messages.schedule_is_blank')
 
     div {}, (_.map _.keys(schedule).sort(), (dayOfWeek) =>
-      div {className: classSet(day: true, current: new Date().getDay().toString() is dayOfWeek)}, [
+      div {className: classSet(day: true, current: @isCurrentDay(dayOfWeek))}, [
         div {className: 'circle'}
         div {className: 'content'}, [
           div {className: 'header'}, [
             DateFormat {className: 'day-of-week', date: schedule[dayOfWeek][0].getStart(), format: "EEEE"}
             DateFormat {className: 'date', date: @getWeekDate(dayOfWeek), format: "dd MMM"}
           ]
-          div {className: 'events'}, _.map(schedule[dayOfWeek].sort(@byHours), (event) ->
+          div {className: 'events'}, _.map(schedule[dayOfWeek].sort(@byHours), (event) =>
             div {className: 'event'}, [
+              if @isCurrentTime(event) then img {className: 'current-event', src: '/images/current-event.png'} else ''
               div {className: 'time'}, [
                 DateFormat {date: event.getStart(), format: "HH:mm"}
                 ' - '
@@ -138,5 +139,20 @@ PersonalSchedule = React.createClass
 
 # в bounds[0] должен быть понедельник
   getWeekDate: (dayOfWeek) ->
-    now = new Date(@props.bounds[0])
+    now = new Date @props.bounds[0]
     new Date now.setDate(now.getDate() + parseInt(dayOfWeek) - 1)
+
+  isCurrentDay: (dayOfWeek) ->
+    now = new Date()
+    now.getDay() is parseInt(dayOfWeek) and @props.bounds[0].getTime() <= now.getTime() and now.getTime() <= @props.bounds[1]
+
+  isCurrentTime: (event) ->
+    now = @minutes new Date()
+    start = @minutes event.getStart()
+    end = @minutes event.getEnd()
+    if start > end then  not (end <= now and now <= start) else start <= now and now <= end
+
+  minutes: (date) ->
+    date.getHours() * 60 + date.getMinutes()
+
+
