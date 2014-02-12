@@ -8,17 +8,20 @@ module.exports = Backbone.Collection.extend
 	model: Suggestion
 
 	url: ->
-		if not @modelType
+		if not @__modelType
 			throw new Error('You must specify modelType before making query')
 
-		"#{config.apiUrl}/#{@modelType}"
+		"#{config.apiUrl}/#{@__modelType}"
 
 	modelType: (type)->
-		@modelType = type
+		@__modelType = type
 		this
+
+	searchMethod: (type)->
+		@__seachType = if type == 'prefix' then 'prefix' else 'q'
 
 	find: (text)->
 		@fetch
 			data:
-				prefix: text
+				"#{@__seachType or 'prefix'}": text
 
