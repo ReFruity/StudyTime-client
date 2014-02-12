@@ -19,9 +19,11 @@ module.exports = Backbone.Collection.extend
 
 	searchMethod: (type)->
 		@__seachType = if type == 'prefix' then 'prefix' else 'q'
+		this
 
 	find: (text)->
-		@fetch
-			data:
-				"#{@__seachType or 'prefix'}": text
+		if not @__seachType or @__seachType == 'prefix'
+			@fetch data: prefix: text
+		else
+			@fetch data: q: text
 

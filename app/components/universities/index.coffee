@@ -1,24 +1,33 @@
 React = require 'react'
 _ = require 'underscore'
 {span, div, i, h2, h3, h4, button, p, input, a, img} = React.DOM
+Universities = require '/collections/universities'
+{modelMixin} = require '/components/common', 'modelMixin'
 
 module.exports = React.createClass
+  mixins: [modelMixin]
+
   getInitialState: ->
-    unis: [
-      {name: 'УрФУ', city: 'Екатеринбург', full_name: 'Уральский Федеральный Университет имени первого президента россии Б.Н. Ельцина'},
-      {name: 'УрГЭУ', city: 'Екатеринбург', full_name: 'Уральский Государственный  Экономический Университет'},
-      {name: 'УрФУ', city: 'Екатеринбург', full_name: 'Уральский Федеральный Университет имени первого президента россии Б.Н. Ельцина'}
-    ]
+    unis: new Universities().fetchThis()
+    loading: yes
+
+  getBackboneModels: ->
+    [@state.unis]
 
   focusOnSearch: ->
     @refs['searchBar'].focus()
 
+  onModelUpdate: ->
+    @setState loading: no
+
   findUnis: (e) ->
-    @setState unis: [
-      {name: 'УрФУ', city: 'Екатеринбург', full_name: 'Уральский Федеральный Университет имени первого президента россии Б.Н. Ельцина'},
-      {name: 'УрГЭУ', city: 'Екатеринбург', full_name: 'Уральский Государственный  Экономический Университет'},
-      {name: 'УрФУ', city: 'Екатеринбург', full_name: 'Уральский Федеральный Университет имени первого президента россии Б.Н. Ельцина'}
-    ]
+    self = @
+    text = e.target.value
+    clearTimeout(@reqTimeOut) if @reqTimeOut
+    @reqTimeOut = setTimeout(->
+      self.setState loading: yes
+      self.state.unis.find(text)
+    , 60)
 
   render: ->
     div {className: 'home'},
@@ -29,7 +38,7 @@ module.exports = React.createClass
       PointsRow {}
       @transferPropsTo(CrossbrowserRow {})
       @transferPropsTo(OtherFeaturesRow {})
-      @transferPropsTo(SearchBar {ref: 'searchBar', onChange: @findUnis})
+      @transferPropsTo(SearchBar {ref: 'searchBar', onChange: @findUnis, loading: @state.loading})
       @transferPropsTo(UniversitiesRow {unis: @state.unis})
 
 HeaderRow = React.createClass
@@ -124,6 +133,7 @@ SearchBar = React.createClass
           div {className: 'col-sm-12 form-group'},
             h2 {}, 'Найди свой ВУЗ'
             input {ref: 'input', onChange: @props.onChange, className: 'form-control', placeholder: 'Поиск ВУЗа'}
+            span {className: 'loading'}, 'Загрузка...' if @props.loading
 
 
 UniversitiesRow = React.createClass
@@ -132,21 +142,21 @@ UniversitiesRow = React.createClass
       div {className: 'container'},
         div {className: 'row'},
           div {className: 'col-sm-4'},
-            _.map @props.unis, (uni, indx) ->
-              UniversityItem {uni: uni} if (indx+1)%2 == 0
+            _.map @props.unis.models, (uni, indx) ->
+              UniversityItem {uni: uni} if (indx+2)%2 == 0
           div {className: 'col-sm-4'},
-            _.map @props.unis, (uni, indx) ->
-              UniversityItem {uni: uni} if (indx+1)%2 != 0 and (indx+1)%3 != 0
+            _.map @props.unis.models, (uni, indx) ->
+              UniversityItem {uni: uni} if (indx+2)%2 != 0 and (indx+2)%3 != 0
           div {className: 'col-sm-4'},
-            _.map @props.unis, (uni, indx) ->
-              UniversityItem {uni: uni} if (indx+1)%2 != 0 and (indx+1)%3 != 0
+            _.map @props.unis.models, (uni, indx) ->
+              UniversityItem {uni: uni} if (indx+2)%2 != 0 and (indx+2)%3 == 0
 
 
 UniversityItem = React.createClass
   render: ->
-    a {className: 'uni-item', href: "/#{@props.uni.name}"},
+    a {className: 'uni-item', href: "/#{@props.uni.get('name')}"},
       h3 {},
-        span {className: 'name'}, @props.uni.name
-        span {className: 'city'}, @props.uni.city
-      h4 {}, @props.uni.full_name
+        span {className: 'name'}, @props.uni.get('name')
+        span {className: 'city'}, @props.uni.get('city')
+      h4 {}, @props.uni.get('full_name')
 
