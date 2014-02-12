@@ -15,10 +15,13 @@ module.exports =
     , this
 
   injectModel: (model) ->
-    if !~this.__syncedModels.indexOf(model) and this._lifeCycleState == 'MOUNTED'
-      updater = this.forceUpdate.bind(this, null);
+    if !~this.__syncedModels.indexOf(model)
+      if this.onModelUpdate
+        updater = this.onModelUpdate.bind(this, null);
+      else
+        updater = this.forceUpdate.bind(this, null);
       model.__updater = updater;
-      model.on('add change remove fetchError', updater, this);
+      model.on('add change remove fetchError fetchDone', updater, this);
 
   bindTo: (model, key) ->
     value: model.get(key)

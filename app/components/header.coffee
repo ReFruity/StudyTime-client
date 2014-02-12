@@ -33,17 +33,17 @@ module.exports = React.createClass
             ul {},
               if @props.route.faculty then [
                 li {className: classSet("active": @isCurrent("groups", "schedule"))},
-                  a {href: "/"},
+                  a {href: "#{@props.route.uni}/#{@props.route.faculty}"},
                     div {}, (i {className: "stico-schedule"})
                     i18n {}, 'layouts.main.navigation.schedule'
 
                 li {className: classSet("active": @isCurrent("places"))},
-                  a {href: "/places"},
+                  a {href: "#{@props.route.uni}/#{@props.route.faculty}/places"},
                     div {}, (i {className: "stico-map"})
                     i18n {}, 'layouts.main.navigation.places'
 
                 li {className: classSet("active": @isCurrent("courses"), 'courses':yes)},
-                  a {href: "/courses"},
+                  a {href: "#{@props.route.uni}/#{@props.route.faculty}/courses"},
                     div {}, (i {className: "stico-spec-courses"})
                     i18n {}, 'layouts.main.navigation.courses'
 

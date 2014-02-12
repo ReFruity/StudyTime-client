@@ -1,7 +1,7 @@
 /**
  * @license
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash exports="commonjs,node" include="map,object,keys,memoize,result,defaults,extend,escape,assign,sortBy,uniqueId,isEqual,isFunction,isObject,isNaN,isArray,isRegExp,each,isDate,clone,filter,defer"`
+ * Build: `lodash exports="commonjs,node" include="map,object,keys,memoize,result,defaults,extend,escape,assign,sortBy,uniqueId,isEqual,isFunction,isObject,isNaN,isArray,isRegExp,each,isDate,clone,filter,defer,indexOf,lastIndexOf"`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -115,6 +115,28 @@
   }
 
   /*--------------------------------------------------------------------------*/
+
+  /**
+   * The base implementation of `_.indexOf` without support for binary searches
+   * or `fromIndex` constraints.
+   *
+   * @private
+   * @param {Array} array The array to search.
+   * @param {*} value The value to search for.
+   * @param {number} [fromIndex=0] The index to search from.
+   * @returns {number} Returns the index of the matched value or `-1`.
+   */
+  function baseIndexOf(array, value, fromIndex) {
+    var index = (fromIndex || 0) - 1,
+        length = array ? array.length : 0;
+
+    while (++index < length) {
+      if (array[index] === value) {
+        return index;
+      }
+    }
+    return -1;
+  }
 
   /**
    * Used by `sortBy` to compare transformed `collection` elements, stable sorting
@@ -304,7 +326,9 @@
   /* Native method shortcuts for methods with the same name as other `lodash` methods */
   var nativeCreate = isNative(nativeCreate = Object.create) && nativeCreate,
       nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray,
-      nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys;
+      nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys,
+      nativeMax = Math.max,
+      nativeMin = Math.min;
 
   /** Used to lookup a built-in constructor by [[Class]] */
   var ctorByClass = {};
@@ -2023,6 +2047,146 @@
   /*--------------------------------------------------------------------------*/
 
   /**
+   * Gets the index at which the first occurrence of `value` is found using
+   * strict equality for comparisons, i.e. `===`. If the array is already sorted
+   * providing `true` for `fromIndex` will run a faster binary search.
+   *
+   * @static
+   * @memberOf _
+   * @category Arrays
+   * @param {Array} array The array to search.
+   * @param {*} value The value to search for.
+   * @param {boolean|number} [fromIndex=0] The index to search from or `true`
+   *  to perform a binary search on a sorted array.
+   * @returns {number} Returns the index of the matched value or `-1`.
+   * @example
+   *
+   * _.indexOf([1, 2, 3, 1, 2, 3], 2);
+   * // => 1
+   *
+   * _.indexOf([1, 2, 3, 1, 2, 3], 2, 3);
+   * // => 4
+   *
+   * _.indexOf([1, 1, 2, 2, 3, 3], 2, true);
+   * // => 2
+   */
+  function indexOf(array, value, fromIndex) {
+    if (typeof fromIndex == 'number') {
+      var length = array ? array.length : 0;
+      fromIndex = (fromIndex < 0 ? nativeMax(0, length + fromIndex) : fromIndex || 0);
+    } else if (fromIndex) {
+      var index = sortedIndex(array, value);
+      return array[index] === value ? index : -1;
+    }
+    return baseIndexOf(array, value, fromIndex);
+  }
+
+  /**
+   * Gets the index at which the last occurrence of `value` is found using strict
+   * equality for comparisons, i.e. `===`. If `fromIndex` is negative, it is used
+   * as the offset from the end of the collection.
+   *
+   * If a property name is provided for `callback` the created "_.pluck" style
+   * callback will return the property value of the given element.
+   *
+   * If an object is provided for `callback` the created "_.where" style callback
+   * will return `true` for elements that have the properties of the given object,
+   * else `false`.
+   *
+   * @static
+   * @memberOf _
+   * @category Arrays
+   * @param {Array} array The array to search.
+   * @param {*} value The value to search for.
+   * @param {number} [fromIndex=array.length-1] The index to search from.
+   * @returns {number} Returns the index of the matched value or `-1`.
+   * @example
+   *
+   * _.lastIndexOf([1, 2, 3, 1, 2, 3], 2);
+   * // => 4
+   *
+   * _.lastIndexOf([1, 2, 3, 1, 2, 3], 2, 3);
+   * // => 1
+   */
+  function lastIndexOf(array, value, fromIndex) {
+    var index = array ? array.length : 0;
+    if (typeof fromIndex == 'number') {
+      index = (fromIndex < 0 ? nativeMax(0, index + fromIndex) : nativeMin(fromIndex, index - 1)) + 1;
+    }
+    while (index--) {
+      if (array[index] === value) {
+        return index;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Uses a binary search to determine the smallest index at which a value
+   * should be inserted into a given sorted array in order to maintain the sort
+   * order of the array. If a callback is provided it will be executed for
+   * `value` and each element of `array` to compute their sort ranking. The
+   * callback is bound to `thisArg` and invoked with one argument; (value).
+   *
+   * If a property name is provided for `callback` the created "_.pluck" style
+   * callback will return the property value of the given element.
+   *
+   * If an object is provided for `callback` the created "_.where" style callback
+   * will return `true` for elements that have the properties of the given object,
+   * else `false`.
+   *
+   * @static
+   * @memberOf _
+   * @category Arrays
+   * @param {Array} array The array to inspect.
+   * @param {*} value The value to evaluate.
+   * @param {Function|Object|string} [callback=identity] The function called
+   *  per iteration. If a property name or object is provided it will be used
+   *  to create a "_.pluck" or "_.where" style callback, respectively.
+   * @param {*} [thisArg] The `this` binding of `callback`.
+   * @returns {number} Returns the index at which `value` should be inserted
+   *  into `array`.
+   * @example
+   *
+   * _.sortedIndex([20, 30, 50], 40);
+   * // => 2
+   *
+   * // using "_.pluck" callback shorthand
+   * _.sortedIndex([{ 'x': 20 }, { 'x': 30 }, { 'x': 50 }], { 'x': 40 }, 'x');
+   * // => 2
+   *
+   * var dict = {
+   *   'wordToNumber': { 'twenty': 20, 'thirty': 30, 'fourty': 40, 'fifty': 50 }
+   * };
+   *
+   * _.sortedIndex(['twenty', 'thirty', 'fifty'], 'fourty', function(word) {
+   *   return dict.wordToNumber[word];
+   * });
+   * // => 2
+   *
+   * _.sortedIndex(['twenty', 'thirty', 'fifty'], 'fourty', function(word) {
+   *   return this.wordToNumber[word];
+   * }, dict);
+   * // => 2
+   */
+  function sortedIndex(array, value, callback, thisArg) {
+    var low = 0,
+        high = array ? array.length : low;
+
+    // explicitly reference `identity` for better inlining in Firefox
+    callback = callback ? lodash.createCallback(callback, thisArg, 1) : identity;
+    value = callback(value);
+
+    while (low < high) {
+      var mid = (low + high) >>> 1;
+      (callback(array[mid]) < value)
+        ? low = mid + 1
+        : high = mid;
+    }
+    return low;
+  }
+
+  /**
    * Creates an object composed from arrays of `keys` and `values`. Provide
    * either a single two dimensional array, i.e. `[[key1, value1], [key2, value2]]`
    * or two arrays, one of `keys` and one of corresponding `values`.
@@ -2401,6 +2565,7 @@
   lodash.clone = clone;
   lodash.escape = escape;
   lodash.identity = identity;
+  lodash.indexOf = indexOf;
   lodash.isArguments = isArguments;
   lodash.isArray = isArray;
   lodash.isDate = isDate;
@@ -2411,8 +2576,10 @@
   lodash.isObject = isObject;
   lodash.isRegExp = isRegExp;
   lodash.isString = isString;
+  lodash.lastIndexOf = lastIndexOf;
   lodash.noop = noop;
   lodash.result = result;
+  lodash.sortedIndex = sortedIndex;
   lodash.uniqueId = uniqueId;
 
   /*--------------------------------------------------------------------------*/
