@@ -10,6 +10,7 @@ module.exports = React.createClass
   getInitialState: ->
     unis: new Universities().fetchThis()
     loading: yes
+    findMore: yes
 
   getBackboneModels: ->
     [@state.unis]
@@ -25,7 +26,9 @@ module.exports = React.createClass
     text = e.target.value
     clearTimeout(@reqTimeOut) if @reqTimeOut
     @reqTimeOut = setTimeout(->
-      self.setState loading: yes
+      self.setState
+        loading: yes
+        findMore: not text.length
       self.state.unis.find(text)
     , 60)
 
@@ -40,6 +43,8 @@ module.exports = React.createClass
       @transferPropsTo(OtherFeaturesRow {})
       @transferPropsTo(SearchBar {ref: 'searchBar', onChange: @findUnis, loading: @state.loading})
       @transferPropsTo(UniversitiesRow {unis: @state.unis})
+      if @state.findMore and not @state.loading
+        @transferPropsTo(FindMoreRow {toSearchHandler: @focusOnSearch})
 
 HeaderRow = React.createClass
   render: ->
@@ -55,6 +60,14 @@ HeaderRow = React.createClass
           div {className: 'col-sm-6 head-img'},
             img {src: './images/head-img.png', alt:"Anywhere"}
 
+FindMoreRow = React.createClass
+  render: ->
+    div {className: 'find-more-row'},
+      div {className: 'container'},
+        div {className: 'row'},
+          div {className: 'col-xs-12'},
+            p {}, 'И еще около 1000 ВУЗов'
+            a {onClick: @props.toSearchHandler}, 'Найди свой!'
 
 PointsRow = React.createClass
   render: ->
