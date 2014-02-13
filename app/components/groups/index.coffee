@@ -1,25 +1,39 @@
 React = require 'react'
 _ = require 'underscore'
 {span, div, h2, h3, a, button, p} = React.DOM
-BackButton =  require '/components/helpers/backButton'
+{backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
+{modelMixin} = require '/components/common', 'modelMixin'
+Faculty = require '/models/faculty'
+Groups = require '/collections/groups'
 
 module.exports = React.createClass
+  mixins: [modelMixin]
+
   getInitialState: ->
-    faculty: {name: 'ИМКН', full_name: 'Институт математики и компьютерных наук', university: {name: 'УрФУ'}}
-    groups: []
+    faculty: new Faculty().fetchThis(prefill:yes, expires:no, data: {university: @props.route.uni, name: @props.route.faculty})
+    groups: new Groups().fetchThis(prefill:yes, expires:no, data: {university: @props.route.uni, faculty: @props.route.faculty})
+    loaded: no
+
+  getBackboneModels: ->
+    [@state.faculty, @state.groups]
+
+  onModelUpdate: (m)->
+    switch m
+      when @state.faculty then @forceUpdate()
+      else @setState loaded: yes
 
   render: ->
-    div {className: 'groups'},
-      div {className: 'container'}, [
-        BackButton()
-        if @state.groups.length == 0
+    div {className: 'faculty'},
+      div {className: 'container'},
+        if not @state.loaded
+          span {className: 'loading'}, 'Загрузка...'
+        else if @state.groups.models.length == 0
           NoGroups {faculty: @state.faculty}
         else [
-          InfoRow {faculty: @state.faculty}
-          GroupsRow {groups: @state.groups}
-          AdminsRow {faculty: @state.faculty}
+          InfoRow {faculty: @state.faculty, route: @props.route}
+          GroupsRow {groups: @state.groups.models, route: @props.route}
+          AdminsRow {faculty: @state.faculty, route: @props.route}
         ]
-      ]
 
 
 NoGroups = React.createClass
@@ -71,39 +85,60 @@ InfoRow = React.createClass
   render: ->
     div {className: 'info row'},
       h2 {},
-        span {className:'name'}, @props.faculty.name
-        span {className:'uni'}, @props.faculty.university.name
-      h3 {}, @props.faculty.full_name
+        backButton {}
+        span {className: 'faculty'}, @props.faculty.get('name') or @props.route.faculty
+        span {className:'uni'}, if @props.faculty.has 'university' then @props.faculty.get('university').name+',' else ''
+        span {className:'full-name'}, @props.faculty.get('full_name')
+      mobileTitle {title: @props.faculty.get('name') or @props.route.faculty}
 
 
 GroupsRow = React.createClass
   render: ->
-    specs = []
-    for sidx in [0...@props.groups.length] by 4
-      rowChildren = []
-      specs.push div {className: 'row'}, rowChildren
-      for gidx in [sidx...Math.min(sidx+4, @props.groups.length)]
-        rowChildren.push SpecialityBlock {speciality: @props.groups[gidx]}
+    # Separate by speciality and course
+    specs = {}
+    for g in @props.groups
+      g = g.attributes
+      specs[g.speciality.name] = {} if not specs[g.speciality.name]
+      specs[g.speciality.name][g.course] = [] if not specs[g.speciality.name][g.course]
+      specs[g.speciality.name][g.course].push g
 
-    div {className: 'groups'},
-      div {className: 'container'}, specs
+    # Create rows with cpeciality blocks
+    specNames = _.keys(specs)
+    specsRows = []
+    for sidx in [0...specNames.length] by 4
+      rowChildren = []
+      specsRows.push div {className: 'row'}, rowChildren
+      for gidx in [sidx...Math.min(sidx+4, specNames.length)]
+        rowChildren.push SpecialityBlock {groups: specs[specNames[gidx]], name: specNames[gidx], route: @props.route}
+
+    # Render result
+    div {className: 'groups row'},
+      div {className: 'container'}, specsRows
 
 
 SpecialityBlock = React.createClass
   render: ->
-    div {className: 'col-sm-3 group'},
-      h3 {}, @props.speciality.name
-      _.map @props.speciality.groups, (course)->
-        div {className: 'course'},
-          _.map course, (g)->
-            a {}, g
+    {route, name} = @props
+    div {className: 'col-sm-3 speciality'},
+      h3 {}, name
+      div {className: 'spec-groups'},
+        _.map @props.groups, (course)->
+          div {className: 'course'},
+            _.map course, (g)->
+              a {href: "/#{route.uni}/#{route.faculty}/#{name}-#{g.name}"}, g.name
+            div {className: 'clearfix'}
 
 
 AdminsRow = React.createClass
   render: ->
-    div {className: 'admins'},
+    div {className: 'container admins'},
       h3 {}, 'администрация'
-      button {className: 'btn btn-success'}, 'Добавить администратора'
+      div {className: 'photos'},
+        span {className: 'small-photo'}
+        span {className: 'small-photo'}
+        span {className: 'small-photo'}
+      div {className: 'add-admin-btn'},
+        button {className: 'btn btn-success'}, 'Добавить админа'
 
 
 

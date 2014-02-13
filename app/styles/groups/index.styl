@@ -1,73 +1,115 @@
 @import '../_variables'
 @import "/bower_components/bootstrap-stylus/stylus/mixins"
 
-#schedule-index
-  user-select(none)
-  > .title
-    margin-bottom: 40px
 
-  .speciality
-    width: 25%
+@media $media-min-tablet
+  .faculty
+    .admins
+      padding 20px 0 0 0
+      position absolute
+      bottom 5px
+      left 0
+      right 0
 
-  .schedule-table
-    display table
-    padding 0
-    .schedule-row
-      display table-row
-      .speciality
-        display table-cell
-        border: 9px solid #fff
-        background: $brand-info-bg
+      h3
+        float left
+        font-size $font-size-medium
+        line-height 45px
+        margin 0
+        padding 0 10px 0 0
 
-        .course-content
-          overflow: hidden
-          padding: 5px 15px 25px
-          .line
-            overflow: hidden
-            .group
-              @media $media-min-tablet
-                padding 3px 5px
-              @media $media-min-desktop
-                padding 3px 10px
-              float left
-              text-decoration none
-              font-size $font-size-medium
+      .photos
+        float left
 
-  .select-group-container
-    margin-top 20px
-    margin-bottom: 30px
+      .add-admin-btn
+        float left
+        button
+          margin 6px 0 0 10px
+
+    .info
+      h2
+        margin 0
+        padding 0 0 20px 0
+        text-align center
+        .faculty
+          text-align center
+          display block
+          font-size $font-size-large*2
+        .uni, .full-name
+          padding 0 5px
+          font-size $font-size-medium
+          font-weight 300
+          color lighten($text-color, 50%)
+        a
+          display block
+          position absolute
+
+    .groups
+      padding-bottom 80px
+      .container
+        display table
+        width 100%
+        padding 0
+        margin 0
+
+        h3
+          text-align center
+          padding 0 0 10px 0
+
+        .row
+          display table-row
+          .speciality
+            float none
+            display table-cell
+            padding 0
+            background $brand-info-bg
+            border: 9px solid #fff
+            &:first-child
+              border-left none
+            &:last-child
+              border-right none
+            .spec-groups
+              padding 0 20px 20px 20px
+              .course
+                overflow: hidden
+              a
+                display block
+                float left
+                text-decoration none
+                font-size $font-size-medium
+                @media $media-min-tablet
+                  padding 3px 5px
+                @media $media-min-desktop
+                  padding 3px 10px
 
 @media $media-max-phone
-  #schedule-index
-    .schedule-table
-      display block
-      .schedule-row
-        display block
-        .speciality
-          border none
-          display block
-          width 100%
-          background #fff
-          h3
-            padding 20px 0 20px
-            margin 0
-            background darken($brand-info-bg, 7%)
-            border-top 1px solid #fff
-          .course-content
-            padding 0
-            .line
-              .group
-                padding 10px 20px
-                font-size $font-size-large
+  .faculty
+    .info
+      h2
+        display none
 
+    .admins
+      display none
 
-    &.container
-      max-width 100%
+    .groups .container
       padding 0
-      width 100%
-      &.col-md-10
+      margin 0
+      h3
+        text-align center
+        padding 15px
+        margin 0
+        font-size $font-size-medium
+        border-top 1px solid #fff
+        background $brand-info-bg
+      .speciality
         padding 0
-
-    .select-group-container
-      margin-top 10px
-      margin-bottom 20px
+        .spec-groups
+          padding 0
+          .course
+            overflow: hidden
+          a
+            display block
+            float left
+            text-decoration none
+            padding 10px 20px
+            font-size $font-size-medium
