@@ -45,6 +45,12 @@ data =
         address: 'Адрес'
         email: 'Почта'
         phone: 'Телефон'
+      place:
+        features:
+          opened: 'Открыта'
+          big: 'Большая'
+          projector: 'С проектором'
+          sockets: 'С розетками'
 
     buttons:
       sign_in: "Вход"
@@ -67,6 +73,7 @@ data =
       not_indicate: 'Не указано'
       schedule_is_blank: 'В рассписании ничего нет'
       loading: 'Загружается...'
+      places_are_occupied: 'Все аудитории заняты :('
 
     schedule:
       texts:
