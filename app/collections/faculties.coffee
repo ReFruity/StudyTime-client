@@ -1,7 +1,7 @@
 config = require 'config/config'
 Backbone = require 'backbone'
-Group = require 'models/group'
+Faculty = require 'models/faculty'
 
 module.exports = Backbone.Collection.extend
-  model: Group
-  url: "#{config.apiUrl}/group"
+  model: Faculty
+  url: "#{config.apiUrl}/faculty"

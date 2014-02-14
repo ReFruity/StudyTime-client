@@ -16,6 +16,7 @@ module.exports = React.createClass
     [@state.unis]
 
   focusOnSearch: ->
+    _gaq.push(['_trackEvent', 'Universities', 'Search Focus Buttons'])
     @refs['searchBar'].focus()
 
   onModelUpdate: ->
@@ -29,6 +30,7 @@ module.exports = React.createClass
       self.setState
         loading: yes
         findMore: not text.length
+      _gaq.push(['_trackEvent', 'Universities', 'Search', text]) if text.length
       self.state.unis.find(text)
     , 60)
 

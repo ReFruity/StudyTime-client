@@ -12,6 +12,8 @@ React = require 'react'
 if typeof window == 'undefined'
   app = nativeRequire('express')()
   fs = nativeRequire('fs')
+  sysPath = nativeRequire('path')
+  flstr = fs.readFileSync(sysPath.join(__dirname, 'app/assets/index.html'), 'utf8')
 
 serverRoute = (route, name, callback) ->
   route = @_routeToRegExp(route)
@@ -27,12 +29,8 @@ serverRoute = (route, name, callback) ->
       router._lastParams[route.names[i]] = v
     )
     router._lastName = name
-    React.renderComponentToString(router.getAppComponent(), (a)->
-      fs.readFile('app/assets/index.html', (err, b)->
-        if err
-          throw err
-        res.send(b.toString().replace(/id="content">/, 'id="content">'+a))
-      )
+    React.renderComponentToString(router.getAppComponent(), (divs)->
+      res.send(flstr.toString().replace(/id="content">/, 'id="content">'+divs))
     )
   )
 

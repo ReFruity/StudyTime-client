@@ -19,7 +19,7 @@ module.exports =
   componentWillMount: ->
     if forceViewType
       @viewType = forceViewType
-    else if(window)
+    else if typeof window != 'undefined'
       init = true
       self = @
       updateViewType = ->

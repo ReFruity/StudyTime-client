@@ -4,7 +4,7 @@
 #
 
 elementsList = []
-if window
+if typeof window != 'undefined'
   $ = require 'traversty'
   Gator = require('gator')
   Gator(document).on('click', (evt) ->
