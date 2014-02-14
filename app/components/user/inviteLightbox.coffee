@@ -1,5 +1,5 @@
 React = require 'react'
-{span, div, ul, li, nav, a, i, h2, h3, p} = React.DOM
+{span, div, ul, li, input, nav, a, i, h2, h3, p} = React.DOM
 {i18n, authorized, currentUserMixin} = require '/components/common', 'authorized', 'currentUserMixin'
 {classSet} = React.addons
 
@@ -11,12 +11,12 @@ module.exports = React.createClass
   onClose: ->
     @props.onClose()
 
+  getInitialState: ->
+    inviteLink: 'http://studytime.me/invite/123'
+
   render: ->
-    div {className: 'login-lightbox'},
-      h2 {}, 'Войдите'
-      p {}, ', используюя одну из социальных сетей'
-      div {className: 'row'},
-        div {className: 'col-xs-6'},
-          div {}, 'ВК'
-        div {className: 'col-xs-6'},
-          div {}, 'ФБ'
+    div {className: 'invite-lightbox'},
+      div {className: 'container'},
+        div {className: 'row'},
+          div {className: 'col-sm-12 form-group link'},
+            input {className: 'form-control', value: @state.inviteLink}
