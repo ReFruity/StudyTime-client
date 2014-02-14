@@ -1,7 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 lightbox = require 'lightbox'
-{span, div, h2, h3, a, button, p, img} = React.DOM
+{span, div, h2, h3, a, button, p, i} = React.DOM
 {backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
 {modelMixin, authorized} = require '/components/common', 'modelMixin', 'authorized'
 {inviteLightbox} = require '/components/user', 'inviteLightbox'
@@ -73,7 +73,7 @@ PosibleThings = React.createClass
 ScheduleUploader = React.createClass
   render: ->
     div {className: 'sched-uploader col-sm-4'},
-      img {src: '/images/upload.png', alt:"Upload schedule"}
+      i {className: 'stico-upload'}
       h3 {}, 'Загрзить расписание'
       p {}, 'Если у вас есть расписание факультета в формате Excel, PDF или DOC, мы можем подключить ваш факультет'
       button {className: 'btn btn-success'}, 'Выбрать файл'
@@ -82,7 +82,7 @@ ScheduleUploader = React.createClass
 AdminStarted = React.createClass
   render: ->
     div {className: 'admin-starter col-sm-4'},
-      img {src: '/images/admin.png', alt:"Admin"}
+      i {className: 'stico-admin'}
       h3 {}, 'Стать администратором'
       p {}, 'Став администратором факультета, вам придется заполнить некоторую информацию о факультете, после чего вы сможете заполнить расписание самостоятельно.'
       button {className: 'btn btn-success'}, 'Стать администратором'
@@ -93,7 +93,7 @@ InviteAdmin = React.createClass
 
   render: ->
     div {className: 'invinte-admin col-sm-4'},
-      img {src: '/images/invite.png', alt:"Invite user"}
+      i {className: 'stico-invite'}
       h3 {}, 'Пригласить администратора'
       p {}, 'Если вы не хотите заниматься администрированаем факультета, но знаете как связаться с тем, кто хотел бы этим заняться, то кнопка ниже для Вас'
       button {className: 'btn btn-success', onClick: @showInviteLightbox}, 'Пригласить администратора'
