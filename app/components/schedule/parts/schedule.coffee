@@ -39,38 +39,30 @@ SchedDataRow = React.createClass
   render: ->
     self = @
     {sched, timing, number, cellElem, detailsElem, curr, dows, details, cellProps} = @props
-    (div {className: classSet('container data-row':yes, 'exclude-co': details and details.dow in dows and details.number == number)}, [
-      (div {className: 'row'}, [
-        (div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)}, [
-          (h2 {className: 'number-id'}, [number])
-          (h3 {className: 'number-time'}, @minutesToHours(timing[number].start))
-        ])
-        (@props.dows.map (dow)->
-          data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
-          (SchedCell {dow: dow, number: number, curr: curr}, [
-            (cellElem _.assign({
-              dow: dow,
-              number: number,
-              data: data,
-              date: curr.dates[dow]}, cellProps or {}
-            ))
-          ])
-        )
-        div {className: 'clearfix'}
-        ((if details and detailsElem and details.dow in dows and details.number == number
-          (SchedDetails {}, [
-            (detailsElem _.assign({
-              data: details.data
-              dow: details.dow,
-              number: number,
-              date: curr.dates[details.dow]
-            }, cellProps or {}))
-          ])
-        else
-          undefined
-        ))
-      ])
-    ])
+    div {className: classSet('data-row':yes, 'exclude-co': details and details.dow in dows and details.number == number)},
+      div {className: 'container'},
+        div {className: 'row'},
+          div {className: classSet('row-number': true, 'current': curr.number == number and curr.dow in dows)},
+            h2 {className: 'number-id'}, [number]
+            h3 {className: 'number-time'}, @minutesToHours(timing[number].start)
+          @props.dows.map (dow)->
+            data = if sched[dow] and sched[dow][number] then sched[dow][number] else []
+            SchedCell {dow: dow, number: number, curr: curr},
+              cellElem _.assign {
+                dow: dow,
+                number: number,
+                data: data,
+                date: curr.dates[dow]
+              }, cellProps or {}
+          div {className: 'clearfix'}
+      if details and detailsElem and details.dow in dows and details.number == number
+        SchedDetails {},
+          detailsElem _.assign {
+            data: details.data
+            dow: details.dow,
+            number: number,
+            date: curr.dates[details.dow]
+          }, cellProps or {}
 
 ##
 # Show day of week names in block
