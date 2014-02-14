@@ -4,6 +4,44 @@
 
 @media $media-min-tablet
   .faculty
+    .no-groups
+      .sad-text
+        background $brand-info-bg
+        text-align center
+        padding 40px 20px
+        h2
+          color lighten($text-color, 50%)
+        p
+          font-size $font-size-medium
+
+      .posible-things
+        text-align center
+        padding-top 25px
+        padding-bottom 50px
+        &>div
+          p
+            color lighten($text-color, 30%)
+            padding 0 15px 10px 15px
+
+      @media $media-max-phone
+        .posible-things
+          padding 0 0
+          img
+            display block
+            float left
+            width 50px
+            margin 20px 10px 10px 0
+          p
+            padding 0 0 10px 0
+          h3
+            margin 0
+            padding 20px 0
+            border-top 1px solid darken($brand-info-bg, 10%)
+          .row > div:first-child
+            h3
+              border-top none
+
+
     .loading
       display block
       font-size $font-size-large
@@ -92,6 +130,38 @@
 
 @media $media-max-phone
   .faculty
+    .no-groups
+      .sad-text
+        background $brand-info-bg
+        text-align center
+        padding 10px 10px
+        h2
+          margin 10px
+          color lighten($text-color, 50%)
+          font-size $font-size-large
+        p
+          font-size $font-size-medium
+
+      .posible-things
+        padding 0 0 100px 0
+        img
+          display block
+          float left
+          width 50px
+          margin 20px 10px 10px 0
+        p
+          color lighten($text-color, 30%)
+          padding 0 0 10px 0
+        h3
+          margin 0
+          padding 20px 0
+          border-top 1px solid darken($brand-info-bg, 10%)
+        &>div
+          padding-bottom 15px
+        &>div:first-child
+          h3
+            border-top none
+
     .info
       h2
         display none

@@ -1,8 +1,10 @@
 React = require 'react'
 _ = require 'underscore'
-{span, div, h2, h3, a, button, p} = React.DOM
+lightbox = require 'lightbox'
+{span, div, h2, h3, a, button, p, img} = React.DOM
 {backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
 {modelMixin, authorized} = require '/components/common', 'modelMixin', 'authorized'
+{inviteLightbox} = require '/components/user', 'inviteLightbox'
 Faculty = require '/models/faculty'
 Groups = require '/collections/groups'
 
@@ -23,19 +25,23 @@ module.exports = React.createClass
 
   render: ->
     div {className: 'faculty'},
-      div {className: 'container'},
-        if not @state.loaded then [
+      if not @state.loaded then [
+        div {className: 'container'},
           div {className: 'row'},
             backButton {}
             span {className: 'loading'}, 'Загрузка...'
-        ]
-        else if @state.groups.models.length == 0
-          NoGroups {faculty: @state.faculty}
-        else [
+      ]
+      else if @state.groups.models.length != 0 then [
+        div {className: 'container'},
+          InfoRow {faculty: @state.faculty, route: @props.route}
+        NoGroups {faculty: @state.faculty}
+      ]
+      else [
+        div {className: 'container'},
           InfoRow {faculty: @state.faculty, route: @props.route}
           GroupsRow {groups: @state.groups.models, route: @props.route}
           AdminsRow {faculty: @state.faculty, route: @props.route}
-        ]
+      ]
 
 
 NoGroups = React.createClass
@@ -47,23 +53,27 @@ NoGroups = React.createClass
 
 SadNoGroupsRow = React.createClass
   render: ->
-    div {className: 'sad-text row'},
-      div {className: 'col-sm-12'},
-        h2 {}, 'К сожалению, факультет еще не подключен'
-        p {}, 'Но у Вас есть возможность наполнить свой факультет жизнью!'
+    div {className: 'sad-text'},
+      div {className: 'container'},
+        div {className: 'row'},
+          div {className: 'col-sm-12'},
+            h2 {}, 'К сожалению факультет еще не подключен'
+            p {}, 'Но у Вас есть возможность это исправить! Вы можете...'
 
 
 PosibleThings = React.createClass
   render: ->
-    div {className: 'posible-things row'},
-      ScheduleUploader {}
-      AdminStarted {}
-      InviteAdmin {}
+    div {className: 'container'},
+      div {className: 'posible-things row'},
+        ScheduleUploader {}
+        AdminStarted {}
+        InviteAdmin {}
 
 
 ScheduleUploader = React.createClass
   render: ->
     div {className: 'sched-uploader col-sm-4'},
+      img {src: '/images/upload.png', alt:"Upload schedule"}
       h3 {}, 'Загрзить расписание'
       p {}, 'Если у вас есть расписание факультета в формате Excel, PDF или DOC, мы можем подключить ваш факультет'
       button {className: 'btn btn-success'}, 'Выбрать файл'
@@ -72,16 +82,21 @@ ScheduleUploader = React.createClass
 AdminStarted = React.createClass
   render: ->
     div {className: 'admin-starter col-sm-4'},
+      img {src: '/images/admin.png', alt:"Admin"}
       h3 {}, 'Стать администратором'
       p {}, 'Став администратором факультета, вам придется заполнить некоторую информацию о факультете, после чего вы сможете заполнить расписание самостоятельно.'
       button {className: 'btn btn-success'}, 'Стать администратором'
 
 InviteAdmin = React.createClass
+  showInviteLightbox: ->
+    lightbox inviteLightbox
+
   render: ->
     div {className: 'invinte-admin col-sm-4'},
+      img {src: '/images/invite.png', alt:"Invite user"}
       h3 {}, 'Пригласить администратора'
       p {}, 'Если вы не хотите заниматься администрированаем факультета, но знаете как связаться с тем, кто хотел бы этим заняться, то кнопка ниже для Вас'
-      button {className: 'btn btn-success'}, 'Пригласить администратора'
+      button {className: 'btn btn-success', onClick: @showInviteLightbox}, 'Пригласить администратора'
 
 InfoRow = React.createClass
   render: ->
