@@ -27,13 +27,15 @@ PlacesFilter = React.createClass
     div {className: 'places-filter'}, [
       ul {}, [
         _.map @filters, (filter) =>
-          li {className: classSet(active: (@props.filter or {})[filter])}, [
+          val = (@props.filter or {})[filter]
+          li {className: classSet(active: val)}, [
             input {
               type: 'checkbox',
               id: "place-filter-#{filter}",
               ref: "#{filter}PlaceFilter",
               onChange: @handleChange,
               value: true
+              checked: val
             }
             label {htmlFor: "place-filter-#{filter}"}, t("attributes.place.features.#{filter}")
           ]
@@ -69,12 +71,11 @@ PlacesCell = React.createClass
     byBounds and byFilter
 
   render: ->
-    collection = _.filter @props.data, @filter
-
+    collection = _.filter(@props.data, @filter)
     enableDetails = collection.length > 6
     collection = if enableDetails then collection[0..5] else collection
 
-    a {href: @getDetailsHref(), className: 'place-cell cell-atom parity-0 hg-0'}, [
+    a {href: (if enableDetails then @getDetailsHref() else ''), className: 'place-cell cell-atom parity-0 hg-0'}, [
       div {className: 'atom-places'}, [
         if collection.length is 0
           t('messages.places_are_occupied')
@@ -89,11 +90,21 @@ PlacesCell = React.createClass
 ##########
 
 PlacesDetails = React.createClass
+  propTypes:
+    data: React.PropTypes.array.isRequired
+    filteredIds: React.PropTypes.array
+
+  filter: (place) ->
+    @props.filteredIds is undefined or @props.filteredIds.indexOf(place.id) >= 0
+
   render: ->
-    div {className: 'container class-details'}, [
-      # Navigation
-      'hello'
-    ]
+    collection = _.filter(@props.data, @filter)
+
+    div {className: classSet(container: true, 'cell-details': true, fade: collection.length == 0)},
+      div {className: 'places'},
+        _.map collection, (place) ->
+          span {}, place.name
+
 
 ##########
 
@@ -103,7 +114,7 @@ module.exports = React.createClass
 
   getInitialState: ->
     bounds: new Date().getWeekBounds()
-    filter: {}
+    filter: {opened: true}
     placesSchedule: new PlacesSchedule(faculty: @props.route.faculty).fetchThis
       prefill: yes,
       expires: no
@@ -129,16 +140,14 @@ module.exports = React.createClass
     )
 
   render: ->
+    filteredIds = @getFilteredIds()
+
     div {id: 'places-index', className: 'container'}, [
-      div {className: 'container sched-nav'}, [
-        div {className: 'row'}, [
-          nav.WeekSwitcher {switchWeekHandler: @updateBounds, bounds: @state.bounds}
-          nav.UpdateIndicator {updated: @state.placesSchedule.updatedAt() or new Date()}
-          BackButton()
-        ]
-      ]
 
       PlacesFilter onUserInput: @handleUserInput, filter: @state.filter
+      div {className: 'sched-nav'},
+        nav.WeekSwitcher {switchWeekHandler: @updateBounds, bounds: @state.bounds}
+      div {className: 'clearfix'}
 
       if @state.placesSchedule.timing() is undefined
         span {}, t('messages.loading')
@@ -155,6 +164,7 @@ module.exports = React.createClass
                 dow: @props.route.dow
                 number: @props.route.number
                 data: @state.placesSchedule.schedule()[@props.route.dow][@props.route.number]
+                filteredIds: filteredIds
             catch e
               undefined
           )
@@ -162,6 +172,6 @@ module.exports = React.createClass
             route: @props.route
             baseUrl: "/#{@props.route.uni}/#{@props.route.faculty}/places"
             bounds: @state.bounds
-            filteredIds: @getFilteredIds()
+            filteredIds: filteredIds
         )
     ]
