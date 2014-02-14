@@ -2,7 +2,7 @@ React = require 'react'
 _ = require 'underscore'
 {span, div, h2, h3, a, button, p} = React.DOM
 {backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
-{modelMixin} = require '/components/common', 'modelMixin'
+{modelMixin, authorized} = require '/components/common', 'modelMixin', 'authorized'
 Faculty = require '/models/faculty'
 Groups = require '/collections/groups'
 
@@ -11,11 +11,15 @@ module.exports = React.createClass
 
   getInitialState: ->
     faculty: new Faculty().fetchThis(prefill:yes, expires:no, data: {university: @props.route.uni, name: @props.route.faculty})
-    groups: new Groups().fetchThis(prefill:yes, expires:no, data: {university: @props.route.uni, faculty: @props.route.faculty})
+    groups: new Groups().fetchThis(prefill:yes, expires:no, success: @onGroupsLoaded, prefillSuccess: @onGroupsLoaded, data: {university: @props.route.uni, faculty: @props.route.faculty})
     loaded: no
 
   getBackboneModels: ->
     [@state.faculty, @state.groups]
+
+  onGroupsLoaded: ->
+    @state.loaded = yes
+    @forceUpdate()
 
   render: ->
     div {className: 'faculty'},
