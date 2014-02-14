@@ -17,16 +17,14 @@ module.exports = React.createClass
   getBackboneModels: ->
     [@state.faculty, @state.groups]
 
-  onModelUpdate: (m)->
-    switch m
-      when @state.faculty then @forceUpdate()
-      else @setState loaded: yes
-
   render: ->
     div {className: 'faculty'},
       div {className: 'container'},
-        if not @state.loaded
-          span {className: 'loading'}, 'Загрузка...'
+        if not @state.loaded then [
+          div {className: 'row'},
+            backButton {}
+            span {className: 'loading'}, 'Загрузка...'
+        ]
         else if @state.groups.models.length == 0
           NoGroups {faculty: @state.faculty}
         else [

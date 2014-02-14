@@ -4,6 +4,12 @@
 
 @media $media-min-tablet
   .faculty
+    .loading
+      display block
+      font-size $font-size-large
+      padding 0 0 40px 0
+      color lighten($text-color, 50%)
+
     .admins
       padding 20px 0 0 0
       position absolute
@@ -28,6 +34,7 @@
 
     .info
       h2
+        position relative
         margin 0
         padding 0 0 20px 0
         text-align center
@@ -43,6 +50,7 @@
         a
           display block
           position absolute
+          top 3px
 
     .groups
       padding-bottom 80px
