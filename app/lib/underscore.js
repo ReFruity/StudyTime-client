@@ -1,7 +1,7 @@
 /**
  * @license
  * Lo-Dash 2.4.1 (Custom Build) <http://lodash.com/>
- * Build: `lodash exports="commonjs,node" include="map,object,keys,memoize,result,defaults,extend,escape,assign,sortBy,uniqueId,isEqual,isFunction,isObject,isNaN,isArray,isRegExp,each,isDate,clone,filter,defer,indexOf,lastIndexOf"`
+ * Build: `lodash exports="commonjs,node" include="map,object,keys,memoize,result,defaults,extend,escape,assign,sortBy,uniqueId,isEqual,isFunction,isObject,isNaN,isArray,isRegExp,each,isDate,clone,filter,defer,indexOf,lastIndexOf,values"`
  * Copyright 2012-2013 The Dojo Foundation <http://dojofoundation.org/>
  * Based on Underscore.js 1.5.2 <http://underscorejs.org/LICENSE>
  * Copyright 2009-2013 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1797,6 +1797,31 @@
       value && typeof value == 'object' && toString.call(value) == stringClass || false;
   }
 
+  /**
+   * Creates an array composed of the own enumerable property values of `object`.
+   *
+   * @static
+   * @memberOf _
+   * @category Objects
+   * @param {Object} object The object to inspect.
+   * @returns {Array} Returns an array of property values.
+   * @example
+   *
+   * _.values({ 'one': 1, 'two': 2, 'three': 3 });
+   * // => [1, 2, 3] (property order is not guaranteed across environments)
+   */
+  function values(object) {
+    var index = -1,
+        props = keys(object),
+        length = props.length,
+        result = Array(length);
+
+    while (++index < length) {
+      result[index] = object[props[index]];
+    }
+    return result;
+  }
+
   /*--------------------------------------------------------------------------*/
 
   /**
@@ -2550,6 +2575,7 @@
   lodash.memoize = memoize;
   lodash.property = property;
   lodash.sortBy = sortBy;
+  lodash.values = values;
   lodash.zipObject = zipObject;
 
   // add aliases

@@ -4,6 +4,7 @@ React = require 'react'
 modelMixin = require '/components/common/modelMixin'
 Professors = require 'collections/professors'
 
+
 module.exports = React.createClass
   propTypes:
     route: React.PropTypes.object.isRequired

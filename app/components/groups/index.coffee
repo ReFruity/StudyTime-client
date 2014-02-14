@@ -48,7 +48,7 @@ PosibleThings = React.createClass
 ScheduleUploader = React.createClass
   render: ->
     div {className: 'sched-uploader col-sm-4'},
-      h3 {}, 'Загрзить расписание'
+      h3 {}, 'Загрузить расписание'
       p {}, 'Если у вас есть расписание факультета в формате Excel, PDF или DOC, мы можем подключить ваш факультет'
       button {className: 'btn btn-success'}, 'Выбрать файл'
 
