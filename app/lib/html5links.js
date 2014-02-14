@@ -17,9 +17,10 @@
     }
 }(this, function (Gator, Backbone) {
     Gator(document).on('click', 'a', function(e) {
-        e.preventDefault();
         var href = this.getAttribute('href')
-        if(href && href !== '#') {
+        var target = this.getAttribute('target')
+        if(href && href !== '#' && !target) {
+            e.preventDefault();
             Backbone.history.navigate(href, true);
         }
     })
