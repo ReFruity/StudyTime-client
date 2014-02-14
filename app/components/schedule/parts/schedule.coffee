@@ -56,6 +56,7 @@ SchedDataRow = React.createClass
             ))
           ])
         )
+        div {className: 'clearfix'}
         ((if details and detailsElem and details.dow in dows and details.number == number
           (SchedDetails {}, [
             (detailsElem _.assign({
