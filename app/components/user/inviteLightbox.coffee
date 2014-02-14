@@ -31,13 +31,13 @@ module.exports = React.createClass
     @setState emailSendingStatus: 1
 
   openVkPopup: ->
-    _gaq.push(['_trackEvent', 'Invite Lightbox', 'VKontakte')
+    _gaq.push(['_trackEvent', 'Invite Lightbox', 'VKontakte'])
     window.open("http://vkontakte.ru/share.php?url=#{@state.inviteLink}", 'Vk Share', 'height=400,width=600')
   openFbPopup: ->
-    _gaq.push(['_trackEvent', 'Invite Lightbox', 'Facebook')
+    _gaq.push(['_trackEvent', 'Invite Lightbox', 'Facebook'])
     window.open("http://facebook.com/share.php?u=#{@state.inviteLink}", 'Facebook Share', 'height=400,width=600')
   openTwPopup: ->
-    _gaq.push(['_trackEvent', 'Invite Lightbox', 'Twitter')
+    _gaq.push(['_trackEvent', 'Invite Lightbox', 'Twitter'])
     window.open("http://twitter.com/share?url=#{@state.inviteLink}", 'Twitter Share', 'height=400,width=600')
 
   render: ->
