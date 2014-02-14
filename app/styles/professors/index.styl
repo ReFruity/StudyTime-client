@@ -5,11 +5,7 @@
   .filter
     @media $media-max-phone
       margin-bottom 8px
-    img
-      width 60px
-      margin 0 30px
-      @media $media-max-phone
-        display none
+
     input
       display inline-block
       border 3px solid $brand-info
@@ -17,6 +13,7 @@
       height 41px
       font-size 16px
       color: $brand-primary
+      margin-top: -42px;
       &:focus
         outline none
       @media $media-min-desktop
@@ -24,6 +21,7 @@
       @media $media-tablet
         width 528px
       @media $media-max-phone
+        margin-top 0
         background url('/images/magnifier.png') no-repeat 97% center
 
 

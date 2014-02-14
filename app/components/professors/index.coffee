@@ -1,6 +1,6 @@
 _ = require 'underscore'
 React = require 'react'
-{div, input, img, span, a} = React.DOM
+{div, input, span, a, i, img} = React.DOM
 modelMixin = require '/components/common/modelMixin'
 Professors = require 'collections/professors'
 
@@ -40,7 +40,7 @@ ProfessorsFilter = React.createClass
   render: ->
     div {className: 'container'}, [
       div {className: 'filter'}, [
-        img src: '/images/professors-search.png'
+        i className: 'professors-search'
         input
           className: 'form-control'
           type: 'text',
@@ -60,13 +60,13 @@ ProfessorsList = React.createClass
     route: React.PropTypes.object.isRequired
 
   render: ->
-    i = 0
+    k = 0
     div {className: 'professors container'},
       (@props.collection.filter (item) =>
         "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
       ).map (item) =>
-        i += 1
-        if i % 4 is 0
+        k += 1
+        if k % 4 is 0
           [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]
         else
           ProfessorItem(item: item, route: @props.route)
