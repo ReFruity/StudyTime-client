@@ -105,7 +105,9 @@ module.exports = React.createClass
     bounds: new Date().getWeekBounds()
     filter: {}
     placesSchedule: new PlacesSchedule(faculty: @props.route.faculty).fetchThis
-      success: @forceUpdate.bind(@, null)
+      prefill: yes,
+      expires: no
+      prefillSuccess: @forceUpdate.bind(@, null)
 
   updateBounds: (bounds) ->
     @setState

@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 
 module.exports = Backbone.Model.extend
   urlRoot: "#{config.apiUrl}/user/"
+#  idAttribute: '_id'
 
   firstName: ->
     @get('identity') and @get('identity').name
@@ -21,6 +22,3 @@ module.exports = Backbone.Model.extend
 
   phone: ->
     t 'messages.not_indicate'
-
-  imageUrl: ->
-    '/images/professor-no-image.png'

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 React = require 'react'
 {div, input, span, a, i, img} = React.DOM
-modelMixin = require '/components/common/modelMixin'
+{photo, modelMixin} =  require '/components/common', 'photo', 'modelMixin'
 Professors = require 'collections/professors'
 
 
@@ -12,10 +12,12 @@ module.exports = React.createClass
   getInitialState: ->
     filterQuery: ''
     collection: new Professors().fetchThis
+      prefill: yes,
+      expires: no
       data:
         university: @props.route.uni
         faculty: @props.route.faculty
-      success: @forceUpdate.bind(@, null)
+      prefillSuccess: @forceUpdate.bind(@, null)
 
   handleUserInput: (filterQuery) ->
     @setState filterQuery: filterQuery
@@ -83,7 +85,7 @@ ProfessorItem = React.createClass
     {item} = @props
 
     a {className: 'professor col-sm-3', href: "#{@props.route.uni}/#{@props.route.faculty}/professors/#{item.get('_id')}"}, [
-      img src: item.imageUrl()
+      photo { id: item.get('_id'),  format: 'jpg', placeholder: 'professor-ph'} if item.get('_id')
       div {className: 'name'}, [
         div {className: 'second-name'}, item.secondName()
         div {className: 'first-name'}, "#{item.firstName()} #{item.middleName()}"
