@@ -18,6 +18,7 @@ module.exports = React.createClass
         university: @props.route.uni
         faculty: @props.route.faculty
       prefillSuccess: @forceUpdate.bind(@, null)
+      success: @forceUpdate.bind(@, null)
 
   handleUserInput: (filterQuery) ->
     @setState filterQuery: filterQuery
@@ -40,18 +41,17 @@ ProfessorsFilter = React.createClass
     )
 
   render: ->
-    div {className: 'container'}, [
-      div {className: 'filter'}, [
-        i className: 'professors-search'
-        input
-          className: 'form-control'
-          type: 'text',
-          placeholder: t('professors.index.search'),
-          value: @props.filterQuery,
-          onChange: @handleChange
-          ref: "filterQueryInput"
-      ]
-    ]
+    div {className: 'container'},
+      div {className: 'row'},
+        div {className: 'filter'},
+          i className: 'professors-search'
+          input
+            className: 'form-control'
+            type: 'text',
+            placeholder: t('professors.index.search'),
+            value: @props.filterQuery,
+            onChange: @handleChange
+            ref: "filterQueryInput"
 
 ##########
 

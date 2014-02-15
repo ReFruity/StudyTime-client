@@ -143,36 +143,35 @@ module.exports = React.createClass
     filteredIds = @getFilteredIds()
 
     div {id: 'places-index'},
-      div {className: 'row'},
-
-        div {className: 'container'},
+      div {className: 'container'},
+        div {className: 'row'},
           PlacesFilter onUserInput: @handleUserInput, filter: @state.filter
           div {className: 'sched-nav'},
             nav.WeekSwitcher {switchWeekHandler: @updateBounds, bounds: @state.bounds}
           div {className: 'clearfix'}
 
-        if @state.placesSchedule.timing() is undefined
-          span {}, t('messages.loading')
-        else
-          ScheduleView(
-            weekDate: @state.bounds[0]
-            cellElem: PlacesCell
-            detailsElem: PlacesDetails
-            sched: @state.placesSchedule.schedule() or {}
-            timing: @state.placesSchedule.timing() or {}
-            details: (
-              try
-                if @state.placesSchedule.schedule()[@props.route.dow][@props.route.number]
-                  dow: @props.route.dow
-                  number: @props.route.number
-                  data: @state.placesSchedule.schedule()[@props.route.dow][@props.route.number]
-                  filteredIds: filteredIds
-              catch e
-                undefined
-            )
-            cellProps:
-              route: @props.route
-              baseUrl: "/#{@props.route.uni}/#{@props.route.faculty}/places"
-              bounds: @state.bounds
-              filteredIds: filteredIds
+      if @state.placesSchedule.timing() is undefined
+        span {}, t('messages.loading')
+      else
+        ScheduleView(
+          weekDate: @state.bounds[0]
+          cellElem: PlacesCell
+          detailsElem: PlacesDetails
+          sched: @state.placesSchedule.schedule() or {}
+          timing: @state.placesSchedule.timing() or {}
+          details: (
+            try
+              if @state.placesSchedule.schedule()[@props.route.dow][@props.route.number]
+                dow: @props.route.dow
+                number: @props.route.number
+                data: @state.placesSchedule.schedule()[@props.route.dow][@props.route.number]
+                filteredIds: filteredIds
+            catch e
+              undefined
           )
+          cellProps:
+            route: @props.route
+            baseUrl: "/#{@props.route.uni}/#{@props.route.faculty}/places"
+            bounds: @state.bounds
+            filteredIds: filteredIds
+        )

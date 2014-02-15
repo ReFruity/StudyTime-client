@@ -82,6 +82,7 @@ ScheduleUploader = React.createClass
         uploadState: 1
         uploadProgress: percents
     file.start().done ->
+      _gaq.push(['_trackEvent', 'Upload Schedule'])
       self.setState
         uploadState: 2
 
@@ -110,12 +111,15 @@ ScheduleUploader = React.createClass
 
 
 AdminStarted = React.createClass
+  setAdminUser: ->
+    console.log "123"
+
   render: ->
     div {className: 'admin-starter col-sm-4'},
       i {className: 'stico-admin'}
       h3 {}, 'Стать администратором'
       p {}, 'Став администратором факультета, вам придется заполнить некоторую информацию о факультете, после чего вы сможете заполнить расписание самостоятельно.'
-      button {className: 'btn btn-success'}, 'Стать администратором'
+      authorized {elem: button, className: 'btn btn-success', onClick: @setAdminUser}, 'Стать администратором'
 
 InviteAdmin = React.createClass
   showInviteLightbox: ->
