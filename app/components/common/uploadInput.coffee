@@ -1,9 +1,12 @@
 React = require 'react'
+$ = require 'jquery'
+config = require 'config/config'
+_ = require 'underscore'
 {input} = React.DOM
 
 
 class FileUploader
-  constructor: (@file, @category, @subject) ->
+  constructor: (@file, @att, @sched, @photo) ->
     @name = @file.name
     @size = @file.size
     @errors = @file.errors
@@ -14,32 +17,56 @@ class FileUploader
   start: ->
     if @errors
       throw new Error('Cant start file uploading until it has errors')
+
+    # First of all register uploader
+    @signUpload().done (sign)->
+      console.log sign
+
+      # Create FormData
+      formDate = collateFormData(sign)
+      self = @
+
+      # Send file
+      $.ajax
+        xhr: ->
+          xhr = new XMLHttpRequest();
+          xhr.upload.addEventListener('progress', (evt) ->
+            if evt.lengthComputable and self.progress
+              self.progress(Math.floor((evt.loaded / evt.total) * 100))
+          , false)
+          xhr
+        url: 'https://studytime-files.s3.amazonaws.com:443/',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false
+
+  signUpload: ->
     $.ajax
-      xhr: ->
-        xhr = new XMLHttpRequest();
-        xhr.upload.addEventListener('progress', (evt) ->
-          if evt.lengthComputable and self.progress
-            self.progress(Math.floor((evt.loaded / evt.total) * 100))
-        , false)
-        xhr
-      url: 'https://studytime-files.s3.amazonaws.com:443/',
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false
-      success: (response)->
-        if self.props.success
-          self.props.success(response)
-      error: (jqXHR) ->
-        if @props.fail
-          self.props.fail(jqXHR)
+      url: "#{config.apiUrl}/upload/sign"
+      type: 'POST'
+      contentType: "application/json; charset=utf-8"
+      dataType: "json",
+      data: JSON.stringify ((
+        if @att
+          type: 'attachment'
+          subject: @att.subject
+        else if @sched
+          type: 'schedule'
+          uni: @sched.uni
+          faculty: @sched.faculty
+        else if @photo
+          type: 'photo'
+          user: @photo.user
+        else
+          throw new Error('Type of attachment not specified')
+      ))
 
-  registerUploaded: ->
-    console.log 'register'
 
-  collateFormData: ->
+  collateFormData: (sign)->
     files = @getDOMNode().files
     formData = new FormData()
+    ###
     if @props.id
       formData.append('reactUpload_id', @props.id);
     if @props.customParams
@@ -47,19 +74,12 @@ class FileUploader
         formData.append(k, @props.customParams[k]);
     for f in files
       formData.append(@props.name + '[]', f);
-    return formData
-
-  success: (func) ->
-    @success = func
-    return this
+    ###
+    formData
 
   progress: (func) ->
     @progress = func
-    return this
-
-  error: (func) ->
-    @error = func
-    return this
+    this
 
 ##
 # HTML5 upload input form for uploading attachments to some subject
@@ -70,11 +90,12 @@ module.exports = React.createClass
     allowedFileTypes: React.PropTypes.string
     maxSizeInBytes: React.PropTypes.number
     uploadFileHandler: React.PropTypes.func.isRequired
-    category: React.PropTypes.string.isRequired
-    subject: React.PropTypes.string.isRequired
+    attachment: React.PropTypes.object
+    schedule: React.PropTypes.object
+    photo: React.PropTypes.object
 
   getDefaultProps: ->
-    maxSizeInBytes: 104857600
+    maxSizeInBytes: 204857600
 
   validateFiles: ->
     errors = false
@@ -96,8 +117,10 @@ module.exports = React.createClass
   onFileSelected: ->
     self = @
     @validateFiles()
-    @getDOMNode().files.map (file) ->
-      self.props.uploadFileHandler(new FileUploader(file, self.props.category, self.props.subject))
+    _.map @getDOMNode().files, (file) ->
+      self.props.uploadFileHandler(new FileUploader(file, self.props.attachment, self.props.schedule, self.props.photo))
 
   render: ->
     @transferPropsTo(input {type: "file", onChange: @onFileSelected})
+
+
