@@ -6,6 +6,7 @@ app = require 'components/app'
 class MainRouter extends Router
   routes:
     "/": "universities/index"
+    "/404": "404/index"
     "/:uni": "faculties/index"
     "/:uni/:faculty": "groups/index"
     "/:uni/:faculty/professors": "professors/index"

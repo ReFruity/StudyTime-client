@@ -1,6 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 lightbox = require 'lightbox'
+router = require 'routes'
 {span, div, h2, h3, a, button, p, i} = React.DOM
 {backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
 {modelMixin, authorized, uploadInput} = require '/components/common', 'modelMixin', 'authorized', 'uploadInput'
@@ -34,7 +35,7 @@ module.exports = React.createClass
       else if @state.groups.models.length != 0 then [
         div {className: 'container'},
           InfoRow {faculty: @state.faculty, route: @props.route}
-        NoGroups {faculty: @state.faculty}
+        NoGroups {faculty: @state.faculty, route: @props.route}
       ]
       else [
         div {className: 'container'},
@@ -48,7 +49,7 @@ NoGroups = React.createClass
   render: ->
     div {className: 'no-groups'},
       SadNoGroupsRow {faculty: @props.faculty}
-      PosibleThings {faculty: @props.faculty}
+      PosibleThings {faculty: @props.faculty, route: @props.route}
 
 
 SadNoGroupsRow = React.createClass
@@ -66,7 +67,7 @@ PosibleThings = React.createClass
     div {className: 'container'},
       div {className: 'posible-things row'},
         ScheduleUploader {faculty: @props.faculty}
-        AdminStarted {}
+        AdminStarted {route: @props.route}
         InviteAdmin {}
 
 
@@ -77,22 +78,28 @@ ScheduleUploader = React.createClass
 
   onFileUpload: (file)->
     self = @
+    self.setState
+      uploadState: 1
     file.progress (percents)->
       self.setState
-        uploadState: 1
+        uploadState: 2
         uploadProgress: percents
     file.start().done ->
       _gaq.push(['_trackEvent', 'Upload Schedule'])
       self.setState
-        uploadState: 2
+        uploadState: 3
 
   render: ->
     div {className: 'sched-uploader col-sm-4'},
       switch @state.uploadState
         when 1
+          div {className: 'upld-done'},
+            div {className: 'wrap'},
+              h3 {}, 'Подготовка...'
+        when 2
           div {className: 'upld-progress'},
             span {}, @state.uploadProgress+'%'
-        when 2
+        when 3
           div {className: 'upld-done'},
             div {className: 'wrap'},
               h3 {}, 'Расписание загружено!'
@@ -112,7 +119,7 @@ ScheduleUploader = React.createClass
 
 AdminStarted = React.createClass
   setAdminUser: ->
-    console.log "123"
+    routes.navigate "/#{@props.route.uni}/#{@props.route.faculty}/editor", yes
 
   render: ->
     div {className: 'admin-starter col-sm-4'},
