@@ -3,7 +3,7 @@ _ = require 'underscore'
 lightbox = require 'lightbox'
 {span, div, h2, h3, a, button, p, i} = React.DOM
 {backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
-{modelMixin, authorized} = require '/components/common', 'modelMixin', 'authorized'
+{modelMixin, authorized, uploadInput} = require '/components/common', 'modelMixin', 'authorized', 'uploadInput'
 {inviteLightbox} = require '/components/user', 'inviteLightbox'
 Faculty = require '/models/faculty'
 Groups = require '/collections/groups'
@@ -65,18 +65,26 @@ PosibleThings = React.createClass
   render: ->
     div {className: 'container'},
       div {className: 'posible-things row'},
-        ScheduleUploader {}
+        ScheduleUploader {faculty: @props.faculty}
         AdminStarted {}
         InviteAdmin {}
 
 
 ScheduleUploader = React.createClass
+  onFileUpload: (file)->
+    file.start()
+
   render: ->
     div {className: 'sched-uploader col-sm-4'},
       i {className: 'stico-upload'}
       h3 {}, 'Загрзить расписание'
       p {}, 'Если у вас есть расписание факультета в формате Excel, PDF или DOC, мы можем подключить ваш факультет'
       button {className: 'btn btn-success'}, 'Выбрать файл'
+      if @props.faculty.has '_id'
+        uploadInput {
+          uploadFileHandler: @onFileUpload
+          schedule: {uni: @props.faculty.get('university').name, faculty: @props.faculty.get('name')}
+        }
 
 
 AdminStarted = React.createClass
