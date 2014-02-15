@@ -1,5 +1,6 @@
 _ = require 'underscore'
 React = require 'react'
+InfiniteScroll = require('react-infinite-scroll')(React)
 {div, input, span, a, i, img} = React.DOM
 {photo, modelMixin} =  require '/components/common', 'photo', 'modelMixin'
 Professors = require 'collections/professors'
@@ -61,18 +62,42 @@ ProfessorsList = React.createClass
     filterQuery: React.PropTypes.string
     route: React.PropTypes.object.isRequired
 
+
+  getInitialState: ->
+    count: 20
+
+  loadMore: ->
+    setTimeout =>
+      @setState count: @state.count + 4
+    , 1000
+
+  hasMore: ->
+    @state.count < @props.collection.length
+
   render: ->
+    console.log(@state.count, @props.collection.length)
+    console.log(@hasMore())
+
     k = 0
     div {className: 'professors container'},
-      (@props.collection.filter (item) =>
-        "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
-      ).map (item) =>
-        k += 1
-        if k % 4 is 0
-          [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]
-        else
-          ProfessorItem(item: item, route: @props.route)
+      InfiniteScroll {
+        loader: div({className: 'loader'}, t('messages.loading')),
+        loadMore: @loadMore
+        hasMore: @hasMore()
+      }, [
+        (@props.collection.filter (item) =>
+          "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
+        )[0...@state.count].map (item) =>
+          k += 1
+#          console.log(k)
+#          return '' if k > @state.count
+          if k % 4 is 0
+            [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]
+          else
+            ProfessorItem(item: item, route: @props.route)
+      ]
       div className: 'clearfix'
+
 
 ##########
 
