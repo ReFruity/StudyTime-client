@@ -73,7 +73,7 @@ data =
       not_indicate: 'Не указано'
       schedule_is_blank: 'В рассписании ничего нет'
       loading: 'Загружается...'
-      places_are_occupied: 'Все аудитории заняты :('
+      places_are_occupied: 'Все занято :('
 
     schedule:
       texts:

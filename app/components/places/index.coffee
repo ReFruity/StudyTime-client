@@ -72,8 +72,8 @@ PlacesCell = React.createClass
 
   render: ->
     collection = _.filter(@props.data, @filter)
-    enableDetails = collection.length > 6
-    collection = if enableDetails then collection[0..5] else collection
+    enableDetails = collection.length > 5
+    collection = if enableDetails then collection[0..4] else collection
 
     a {href: (if enableDetails then @getDetailsHref() else ''), className: 'place-cell cell-atom parity-0 hg-0'}, [
       div {className: 'atom-places'}, [
@@ -100,7 +100,7 @@ PlacesDetails = React.createClass
   render: ->
     collection = _.filter(@props.data, @filter)
 
-    div {className: classSet(container: true, 'cell-details': true, fade: collection.length == 0)},
+    div {className: classSet(container: true, 'places-details': true, fade: collection.length == 0)},
       div {className: 'places'},
         _.map collection, (place) ->
           span {}, place.name
@@ -142,12 +142,14 @@ module.exports = React.createClass
   render: ->
     filteredIds = @getFilteredIds()
 
-    div {id: 'places-index', className: 'container'},
+    div {id: 'places-index'},
       div {className: 'row'},
-        PlacesFilter onUserInput: @handleUserInput, filter: @state.filter
-        div {className: 'sched-nav'},
-          nav.WeekSwitcher {switchWeekHandler: @updateBounds, bounds: @state.bounds}
-        div {className: 'clearfix'}
+
+        div {className: 'container'},
+          PlacesFilter onUserInput: @handleUserInput, filter: @state.filter
+          div {className: 'sched-nav'},
+            nav.WeekSwitcher {switchWeekHandler: @updateBounds, bounds: @state.bounds}
+          div {className: 'clearfix'}
 
         if @state.placesSchedule.timing() is undefined
           span {}, t('messages.loading')

@@ -19,6 +19,7 @@ module.exports = React.createClass
       prefill: yes,
       expires: no
       prefillSuccess: @onLoad
+      success: @onLoad
 
   onLoad: ->
     @setState loaded: true

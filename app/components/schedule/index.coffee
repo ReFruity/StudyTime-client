@@ -2,7 +2,7 @@ React = require 'react'
 {span, div, a, p, button, h4} = React.DOM
 {studies, exams, vacation} = require '/components/schedule', 'studies', 'exams', 'vacation'
 {modelMixin} = require '/components/common', 'modelMixin'
-{Group} = require '/models', 'Group'
+Group = require '/models/group'
 
 ##
 # Component for manipulating with group star and their proxies

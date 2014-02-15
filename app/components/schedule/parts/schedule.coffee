@@ -54,7 +54,6 @@ SchedDataRow = React.createClass
                 data: data,
                 date: curr.dates[dow]
               }, cellProps or {}
-          div {className: 'clearfix'}
       if details and detailsElem and details.dow in dows and details.number == number
         SchedDetails {},
           detailsElem _.assign {

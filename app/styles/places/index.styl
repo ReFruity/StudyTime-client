@@ -2,6 +2,8 @@
 
 #places-index
   margin-bottom 40px
+  .sched-week-switcher
+    margin-top 4px
   .places-filter
     float left
     ul
@@ -10,12 +12,15 @@
       @media $media-max-phone
         margin-top 20px
       li
+        color: $link-color
         display inline-block
         margin-right 1px
         margin-bottom 1px
+        &:hover
+          color $link-hover-color
         &.active
+          color: #fff
           background $brand-info
-          color #fff
         input
           display none
         label
@@ -24,11 +29,12 @@
           font-weight 400
           margin 0
 
-  .cell-details
+  .places-details
     .places
+      margin 20px
+      color: $brand-info
       span
         display inline-block
         margin-right 15px
-        color #ffffff
         font-size $font-size-medium
 
