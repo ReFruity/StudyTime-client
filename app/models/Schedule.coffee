@@ -8,4 +8,7 @@ ScheduleModel = Backbone.Model.extend
   url: ->
     "#{config.apiUrl}/schedule/#{@get('type')}/#{@get('faculty')}" + (if @has('group') then "/#{@get('group')}" else "")
 
+  timing: ->
+    @get 'timing'
+
 module.exports = ScheduleModel

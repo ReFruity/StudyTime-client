@@ -34,7 +34,7 @@ module.exports = React.createClass
     render: ->
       detailsView = @props.route.detailsView or 'info'
 
-      div {className: 'container class-details cell-details'}, [
+      div {className: 'container class-details'}, [
         # Navigation
         nav {className: 'details-nav'}, [
           ul {}, [

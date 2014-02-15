@@ -88,27 +88,29 @@ module.exports = React.createClass
         welcomeStaff {}
 
       # Schedule
-      schedule {
-        weekDate: @state.bounds[0]
-        cellElem: classCell
-        detailsElem: classDetails
-        sched: @state.sched.get('schedule') or {}
-        timing: @state.sched.get('timing') or {}
-        details: (
-          try
-            if @state.sched.get("schedule")[route.dow][route.number][route.atom]
-              dow: route.dow
-              number: route.number
-              data: @state.sched.get("schedule")[route.dow][route.number][route.atom]
-          catch e
-            undefined
-        )
-        cellProps:
-          baseUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies"
-          cellUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies/#{route.dow}-#{route.number}-#{route.atom}"
-          editor: @state.editor
-          bounds: @state.bounds
-          switchEditorHandler: @onSwitchEditor
-          route: @props.route
-      }
+      if @state.sched.timing() is undefined
+        span {}, t('messages.loading')
+      else
+        schedule
+          weekDate: @state.bounds[0]
+          cellElem: classCell
+          detailsElem: classDetails
+          sched: @state.sched.get('schedule') or {}
+          timing: @state.sched.get('timing') or {}
+          details: (
+            try
+              if @state.sched.get("schedule")[route.dow][route.number][route.atom]
+                dow: route.dow
+                number: route.number
+                data: @state.sched.get("schedule")[route.dow][route.number][route.atom]
+            catch e
+              undefined
+          )
+          cellProps:
+            baseUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies"
+            cellUrl: "/#{route.uni}/#{route.faculty}/#{route.group}/studies/#{route.dow}-#{route.number}-#{route.atom}"
+            editor: @state.editor
+            bounds: @state.bounds
+            switchEditorHandler: @onSwitchEditor
+            route: @props.route
     ]
