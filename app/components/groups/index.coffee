@@ -71,20 +71,42 @@ PosibleThings = React.createClass
 
 
 ScheduleUploader = React.createClass
+  getInitialState: ->
+    uploadProgress: 0
+    uploadState: 0
+
   onFileUpload: (file)->
-    file.start()
+    self = @
+    file.progress (percents)->
+      self.setState
+        uploadState: 1
+        uploadProgress: percents
+    file.start().done ->
+      self.setState
+        uploadState: 2
 
   render: ->
     div {className: 'sched-uploader col-sm-4'},
+      switch @state.uploadState
+        when 1
+          div {className: 'upld-progress'},
+            span {}, @state.uploadProgress+'%'
+        when 2
+          div {className: 'upld-done'},
+            div {className: 'wrap'},
+              h3 {}, 'Расписание загружено!'
+              p {}, 'Мы обработаем ваше расписание так скоро, как это возможно'
+
       i {className: 'stico-upload'}
       h3 {}, 'Загрзить расписание'
       p {}, 'Если у вас есть расписание факультета в формате Excel, PDF или DOC, мы можем подключить ваш факультет'
-      button {className: 'btn btn-success'}, 'Выбрать файл'
-      if @props.faculty.has '_id'
-        uploadInput {
-          uploadFileHandler: @onFileUpload
-          schedule: {uni: @props.faculty.get('university').name, faculty: @props.faculty.get('name')}
-        }
+      div {className: 'upld-btn-wrap'},
+        button {className: 'btn btn-success'}, 'Выбрать файл'
+        if @props.faculty.has '_id'
+          uploadInput {
+            uploadFileHandler: @onFileUpload
+            schedule: {uni: @props.faculty.get('university').name, faculty: @props.faculty.get('name')}
+          }
 
 
 AdminStarted = React.createClass

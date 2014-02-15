@@ -5,6 +5,46 @@
 @media $media-min-tablet
   .faculty
     .no-groups
+      .sched-uploader
+        position relative
+
+        .upld-btn-wrap
+          position relative
+          input
+            position absolute
+            z-index 1000
+            left 0
+            right 0
+            width 130px
+            height 100%
+            top 0
+            margin 0 auto
+            opacity 0
+
+        .upld-progress, .upld-done
+          z-index 10000
+          position absolute
+          top 0
+          bottom 0
+          left 0
+          right 0
+          background-color rgba(255,255,255,0.9)
+          text-align: center
+          &:before
+            content ''
+            display inline-block
+            height 100%
+            vertical-align middle
+            margin-right -0.25em
+        .upld-done
+          .wrap
+            display: inline-block
+            vertical-align: middle
+        .upld-progress
+          font-size $font-size-large*1.5
+          color $brand-success
+
+
       .sad-text
         background $brand-info-bg
         text-align center
@@ -113,7 +153,8 @@
         h2
           margin 10px
           color lighten($text-color, 50%)
-          font-size $font-size-large
+          font-size $
+          font-size-large
         p
           font-size $font-size-medium
 
