@@ -1,7 +1,7 @@
 _ = require 'underscore'
 React = require 'react'
 {classSet} = React.addons
-{span, div, a, ul, li, label, input} = React.DOM
+{span, div, a, ul, li, label, input, i} = React.DOM
 PlacesSchedule = require '/models/schedules/placesSchedule'
 Place = require '/models/place'
 ScheduleView = require 'components/schedule/parts/schedule'
@@ -104,6 +104,11 @@ PlacesDetails = React.createClass
       div {className: 'places'},
         _.map collection, (place) ->
           span {}, place.name
+
+      div {className: 'details-close'},
+        a {href: "#{@props.baseUrl}"},
+          i {className: 'stico-cross'}
+#          span {}, t('schedule.details.close')
 
 
 ##########
