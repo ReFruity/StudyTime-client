@@ -1,6 +1,7 @@
 React = require 'react'
 _ = require 'underscore'
 lightbox = require 'lightbox'
+router = require 'routes'
 {span, div, h2, h3, a, button, p, i} = React.DOM
 {backButton, mobileTitle} =  require '/components/helpers', 'backButton', 'mobileTitle'
 {modelMixin, authorized, uploadInput} = require '/components/common', 'modelMixin', 'authorized', 'uploadInput'
@@ -34,7 +35,7 @@ module.exports = React.createClass
       else if @state.groups.models.length != 0 then [
         div {className: 'container'},
           InfoRow {faculty: @state.faculty, route: @props.route}
-        NoGroups {faculty: @state.faculty}
+        NoGroups {faculty: @state.faculty, route: @props.route}
       ]
       else [
         div {className: 'container'},
@@ -48,7 +49,7 @@ NoGroups = React.createClass
   render: ->
     div {className: 'no-groups'},
       SadNoGroupsRow {faculty: @props.faculty}
-      PosibleThings {faculty: @props.faculty}
+      PosibleThings {faculty: @props.faculty, route: @props.route}
 
 
 SadNoGroupsRow = React.createClass
@@ -66,34 +67,66 @@ PosibleThings = React.createClass
     div {className: 'container'},
       div {className: 'posible-things row'},
         ScheduleUploader {faculty: @props.faculty}
-        AdminStarted {}
+        AdminStarted {route: @props.route}
         InviteAdmin {}
 
 
 ScheduleUploader = React.createClass
+  getInitialState: ->
+    uploadProgress: 0
+    uploadState: 0
+
   onFileUpload: (file)->
-    file.start()
+    self = @
+    self.setState
+      uploadState: 1
+    file.progress (percents)->
+      self.setState
+        uploadState: 2
+        uploadProgress: percents
+    file.start().done ->
+      _gaq.push(['_trackEvent', 'Upload Schedule'])
+      self.setState
+        uploadState: 3
 
   render: ->
     div {className: 'sched-uploader col-sm-4'},
+      switch @state.uploadState
+        when 1
+          div {className: 'upld-done'},
+            div {className: 'wrap'},
+              h3 {}, 'Подготовка...'
+        when 2
+          div {className: 'upld-progress'},
+            span {}, @state.uploadProgress+'%'
+        when 3
+          div {className: 'upld-done'},
+            div {className: 'wrap'},
+              h3 {}, 'Расписание загружено!'
+              p {}, 'Мы обработаем ваше расписание так скоро, как это возможно'
+
       i {className: 'stico-upload'}
       h3 {}, 'Загрзить расписание'
       p {}, 'Если у вас есть расписание факультета в формате Excel, PDF или DOC, мы можем подключить ваш факультет'
-      button {className: 'btn btn-success'}, 'Выбрать файл'
-      if @props.faculty.has '_id'
-        uploadInput {
-          uploadFileHandler: @onFileUpload
-          schedule: {uni: @props.faculty.get('university').name, faculty: @props.faculty.get('name')}
-        }
+      div {className: 'upld-btn-wrap'},
+        button {className: 'btn btn-success'}, 'Выбрать файл'
+        if @props.faculty.has '_id'
+          uploadInput {
+            uploadFileHandler: @onFileUpload
+            schedule: {uni: @props.faculty.get('university').name, faculty: @props.faculty.get('name')}
+          }
 
 
 AdminStarted = React.createClass
+  setAdminUser: ->
+    router.navigate "/#{@props.route.uni}/#{@props.route.faculty}/editor", yes
+
   render: ->
     div {className: 'admin-starter col-sm-4'},
       i {className: 'stico-admin'}
       h3 {}, 'Стать администратором'
       p {}, 'Став администратором факультета, вам придется заполнить некоторую информацию о факультете, после чего вы сможете заполнить расписание самостоятельно.'
-      button {className: 'btn btn-success'}, 'Стать администратором'
+      authorized {elem: button, className: 'btn btn-success', onClick: @setAdminUser}, 'Стать администратором'
 
 InviteAdmin = React.createClass
   showInviteLightbox: ->

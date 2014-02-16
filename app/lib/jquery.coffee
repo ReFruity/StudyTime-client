@@ -75,9 +75,9 @@ else
     (options) ->
       throw new Error('You must provide options') if not options
       options.type = 'GET' if not options.type
-
-      xhr = new XMLHttpRequest()
+      xhr = _.result(options, 'xhr') or new XMLHttpRequest()
       deferred = defrd.Deferred()
+      xhr.withCredentials = yes
 
       if options.contentType
         options.headers = {} if not options.headers

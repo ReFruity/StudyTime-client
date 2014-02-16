@@ -1,6 +1,6 @@
 React = require 'react'
 {span, div, ul, li, nav, a, i} = React.DOM
-{i18n, authorized, currentUserMixin} = require '/components/common', 'authorized', 'currentUserMixin'
+{i18n, authorized, currentUserMixin, photo} = require '/components/common', 'authorized', 'currentUserMixin', 'photo'
 {classSet} = React.addons
 
 module.exports = React.createClass
@@ -11,7 +11,9 @@ module.exports = React.createClass
 
   render: ->
     if not @isUserAuthorized()
-      authorized {},
-        span {}, t('layouts.main.login')
+      div {className: 'login-wrap'},
+        authorized {},
+          span {}, t('layouts.main.login')
     else
-      span {'ava'}
+      div {className: 'ava-wrap'},
+        photo {size: 'small', id: @getCurrentUser()._id, format: 'jpg'}

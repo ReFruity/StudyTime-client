@@ -19,14 +19,30 @@ module.exports = React.createClass
         university: @props.route.uni
         faculty: @props.route.faculty
       prefillSuccess: @forceUpdate.bind(@, null)
+      success: @forceUpdate.bind(@, null)
+    count: 20
+
+  loadMore: ->
+    setTimeout =>
+      @setState count: @state.count + 20
+    , 1000
 
   handleUserInput: (filterQuery) ->
-    @setState filterQuery: filterQuery
+    @setState
+      filterQuery: filterQuery
+      count: 20
 
   render: ->
     div {id: 'professors-index'}, [
-      ProfessorsFilter filterQuery: @state.filterQuery, onUserInput: @handleUserInput
-      ProfessorsList collection: @state.collection, filterQuery: @state.filterQuery, route: @props.route
+      ProfessorsFilter
+        filterQuery: @state.filterQuery,
+        onUserInput: @handleUserInput,
+      ProfessorsList
+        collection: @state.collection,
+        filterQuery: @state.filterQuery,
+        route: @props.route
+        loadMore: @loadMore
+        count: @state.count
     ]
 
 ##########
@@ -41,18 +57,17 @@ ProfessorsFilter = React.createClass
     )
 
   render: ->
-    div {className: 'container'}, [
-      div {className: 'filter'}, [
-        i className: 'professors-search'
-        input
-          className: 'form-control'
-          type: 'text',
-          placeholder: t('professors.index.search'),
-          value: @props.filterQuery,
-          onChange: @handleChange
-          ref: "filterQueryInput"
-      ]
-    ]
+    div {className: 'container'},
+      div {className: 'row'},
+        div {className: 'filter'},
+          i className: 'professors-search'
+          input
+            className: 'form-control'
+            type: 'text',
+            placeholder: t('professors.index.search'),
+            value: @props.filterQuery,
+            onChange: @handleChange
+            ref: "filterQueryInput"
 
 ##########
 
@@ -61,33 +76,23 @@ ProfessorsList = React.createClass
     collection: React.PropTypes.object.isRequired
     filterQuery: React.PropTypes.string
     route: React.PropTypes.object.isRequired
-
-
-  getInitialState: ->
-    count: 20
-
-  loadMore: ->
-    setTimeout =>
-      @setState count: @state.count + 20
-    , 1000
-
-  hasMore: ->
-    @state.count < @props.collection.length
+    count: React.PropTypes.integer
+    loadMore: React.PropTypes.func.isRequired
 
   render: ->
-    console.log(@state.count, @props.collection.length)
-    console.log(@hasMore())
+    console.log(@props.count)
+
+    collection = @props.collection.filter (item) =>
+      "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
 
     k = 0
     div {className: 'professors container'},
       InfiniteScroll {
         loader: div({className: 'loading'}, t('messages.loading')),
-        loadMore: @loadMore
-        hasMore: @hasMore()
+        loadMore: @props.loadMore
+        hasMore: @props.count < collection.length
       }, [
-        (@props.collection.filter (item) =>
-          "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
-        )[0...@state.count].map (item) =>
+        collection[0...@props.count].map (item) =>
           k += 1
           if k % 4 is 0
             [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]

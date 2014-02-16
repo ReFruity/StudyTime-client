@@ -148,9 +148,8 @@ module.exports = React.createClass
     filteredIds = @getFilteredIds()
 
     div {id: 'places-index'},
-      div {className: 'row'},
-
-        div {className: 'container'},
+      div {className: 'container'},
+        div {className: 'row'},
           PlacesFilter onUserInput: @handleUserInput, filter: @state.filter
           div {className: 'sched-nav'},
             nav.WeekSwitcher {switchWeekHandler: @updateBounds, bounds: @state.bounds}

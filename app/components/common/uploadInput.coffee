@@ -19,12 +19,10 @@ class FileUploader
       throw new Error('Cant start file uploading until it has errors')
 
     # First of all register uploader
-    @signUpload().done (sign)->
-      console.log sign
-
+    self = @
+    @signUpload().then (sign)->
       # Create FormData
-      formDate = collateFormData(sign)
-      self = @
+      formData = self.collateFormData(sign)
 
       # Send file
       $.ajax
@@ -64,17 +62,24 @@ class FileUploader
 
 
   collateFormData: (sign)->
-    files = @getDOMNode().files
+    formDataHeader =
+      name: if @att or @sched then @name else (
+        dotPos = @name.lastIndexOf('.')
+        if dotPos then '.jpg' else @name.substr(dotPos+1)
+      )
+      utf8: 'true'
+      filename: '${filename}'
+      AWSAccessKeyId: 'AKIAJAGWQEQFFYROMVKQ'
+      acl: 'public-read'
+      policy: sign.policy
+      signature: sign.signature
+      success_action_status: '201'
+      key: sign.prefix + '${filename}'
+
     formData = new FormData()
-    ###
-    if @props.id
-      formData.append('reactUpload_id', @props.id);
-    if @props.customParams
-      for k of @props.customParams
-        formData.append(k, @props.customParams[k]);
-    for f in files
-      formData.append(@props.name + '[]', f);
-    ###
+    for key of formDataHeader
+      formData.append key, formDataHeader[key]
+    formData.append 'file', @file
     formData
 
   progress: (func) ->
