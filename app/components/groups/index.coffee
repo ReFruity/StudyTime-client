@@ -119,7 +119,7 @@ ScheduleUploader = React.createClass
 
 AdminStarted = React.createClass
   setAdminUser: ->
-    routes.navigate "/#{@props.route.uni}/#{@props.route.faculty}/editor", yes
+    router.navigate "/#{@props.route.uni}/#{@props.route.faculty}/editor", yes
 
   render: ->
     div {className: 'admin-starter col-sm-4'},

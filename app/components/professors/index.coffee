@@ -68,7 +68,7 @@ ProfessorsList = React.createClass
 
   loadMore: ->
     setTimeout =>
-      @setState count: @state.count + 4
+      @setState count: @state.count + 20
     , 1000
 
   hasMore: ->
@@ -81,7 +81,7 @@ ProfessorsList = React.createClass
     k = 0
     div {className: 'professors container'},
       InfiniteScroll {
-        loader: div({className: 'loader'}, t('messages.loading')),
+        loader: div({className: 'loading'}, t('messages.loading')),
         loadMore: @loadMore
         hasMore: @hasMore()
       }, [
@@ -89,8 +89,6 @@ ProfessorsList = React.createClass
           "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
         )[0...@state.count].map (item) =>
           k += 1
-#          console.log(k)
-#          return '' if k > @state.count
           if k % 4 is 0
             [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]
           else

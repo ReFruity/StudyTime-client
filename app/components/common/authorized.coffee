@@ -27,11 +27,12 @@ module.exports = React.createClass
 
     if user and user.roles
       if 'banned' not in user.roles
-        @props.onClick(e) if @props.onClick
+        @props.onClick() if @props.onClick
       else
         @showBannedLightbox()
       yes
-    no
+    else
+      no
 
   # Handle click on the component
   # and create gate to auth process if

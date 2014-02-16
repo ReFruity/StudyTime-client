@@ -43,6 +43,7 @@ else
       options.type = 'GET' if not options.type
       xhr = _.result(options, 'xhr') or new XMLHttpRequest()
       deferred = defrd.Deferred()
+      xhr.withCredentials = yes
 
       if options.contentType
         options.headers = {} if not options.headers
