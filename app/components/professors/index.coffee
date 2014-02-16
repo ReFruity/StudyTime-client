@@ -68,7 +68,7 @@ ProfessorsList = React.createClass
 
   loadMore: ->
     setTimeout =>
-      @setState count: @state.count + 4
+      @setState count: @state.count + 20
     , 1000
 
   hasMore: ->
@@ -81,7 +81,7 @@ ProfessorsList = React.createClass
     k = 0
     div {className: 'professors container'},
       InfiniteScroll {
-        loader: div({className: 'loader'}, t('messages.loading')),
+        loader: div({className: 'loading'}, t('messages.loading')),
         loadMore: @loadMore
         hasMore: @hasMore()
       }, [
