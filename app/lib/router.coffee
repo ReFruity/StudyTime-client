@@ -13,7 +13,7 @@ if typeof window == 'undefined'
   app = nativeRequire('express')()
   fs = nativeRequire('fs')
   sysPath = nativeRequire('path')
-  flstr = fs.readFileSync(sysPath.join(__dirname, 'app/assets/index.html'), 'utf8')
+  flstr = fs.readFileSync(sysPath.join(__dirname, '../index.html'), 'utf8')
 
 serverRoute = (route, name, callback) ->
   route = @_routeToRegExp(route)

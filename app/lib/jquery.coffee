@@ -4,8 +4,42 @@ defrd = require 'deferred'
 # Server side $.ajax implementation
 crossPlatformAjax = if typeof window == 'undefined'
   (options) ->
-    console.log "make 'ajax' call via http"
-    {}
+    http = nativeRequire('http')
+
+    throw new Error('You must provide options') if not options
+    options.type = 'GET' if not options.type
+
+    deferred = defrd.Deferred()
+
+    if options.type = 'GET'
+      if typeof options.data == 'object'
+        options.url += '?' + $.param(options.data)
+
+      output = ''
+
+      http.get(options.url, (res)->
+        status = res.statusCode
+        res.setEncoding('utf8')
+
+        res.on('data', (chunk)->
+          output += chunk
+        )
+
+        res.on('end', ()->
+          if (status >= 200 and status < 300) or (status is 304)
+            #console.log options.url + " " + status
+            op = JSON.parse output
+            #console.log op
+
+            options.success(op) if options.success
+            deferred.resolve(op) if deferred
+          else
+            options.error(output) if options.error
+            deferred.reject(output) if deferred
+        )
+      )
+
+      return deferred.promise()
 
 # Client side $.ajax implementation
 else

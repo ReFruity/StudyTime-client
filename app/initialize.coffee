@@ -4,6 +4,7 @@ require 'fetchThis'
 require 'helpers'
 require 'routes'
 require 'html5links'
+require 'jquery'
 
 # Run history on the client
 if typeof window != 'undefined'
