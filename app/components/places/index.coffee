@@ -157,7 +157,7 @@ module.exports = React.createClass
           div {className: 'clearfix'}
 
         if @state.placesSchedule.timing() is undefined
-          span {}, t('messages.loading')
+          div {className: 'loading'}, t('messages.loading')
         else
           ScheduleView(
             weekDate: @state.bounds[0]

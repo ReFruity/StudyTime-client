@@ -89,8 +89,6 @@ ProfessorsList = React.createClass
           "#{item.secondName()} #{item.firstName()} #{item.middleName()}".toLowerCase().search(@props.filterQuery.toLowerCase()) >= 0
         )[0...@state.count].map (item) =>
           k += 1
-#          console.log(k)
-#          return '' if k > @state.count
           if k % 4 is 0
             [ProfessorItem(item: item, route: @props.route), div {className: 'clearfix'}]
           else
