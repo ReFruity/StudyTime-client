@@ -1,0 +1,37 @@
+@import "../_variables"
+@import "/bower_components/bootstrap-stylus/stylus/mixins"
+
+header
+  nav
+    .ava-wrap
+      float right
+
+      &>span
+        position relative
+        display block
+        margin-left 5px
+        cursor pointer
+        height $navbar-height
+        width $navbar-height
+        overflow hidden
+        &:hover
+          box-shadow(inset 0 0 0 10px lighten($brand-info, 30%))
+        img
+          height $navbar-height
+
+    .login-wrap
+      float right
+
+      &>span
+        position relative
+        display block
+        margin-left 5px
+        background #fff
+        padding ((($navbar-height - $line-height-computed)/2) - 2) 9px
+        border 2px solid lighten($brand-info, 70%)
+        color $brand-info
+        border-radius 10px 10px 10px 0
+        cursor pointer
+        &:hover
+          text-decoration underline
+          border 2px solid lighten($brand-info, 30%)

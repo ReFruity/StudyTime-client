@@ -5,11 +5,12 @@ module.exports = React.createClass
   getDefaultProps: ->
     text: t('buttons.back')
 
-  back: ->
-    window.location = window.location.href.match(/(.*)\//)[1]
+  getBackHref: ->
+    match = window.location.href.match(/\/\/[^\/]+\/(.*)\//)
+    if match then '/'+match[1] else '/'
 
   render: ->
-    a {className: 'back-btn', onClick: @back}, [
+    a {className: 'back-btn', onClick: @back, href: @getBackHref()}, [
       i {className: 'stico-arrow-right rotate-180'}
       span {}, @props.text
     ]

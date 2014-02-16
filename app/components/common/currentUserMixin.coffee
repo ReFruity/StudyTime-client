@@ -10,6 +10,8 @@ if typeof window != 'undefined'
   window.loginCallback =
     onSuccess: ->
       currentUser.fetch()
+    onFailed: ->
+      console.log "cant login"
 
 ##
 # Mixin for tracking current logged in user

@@ -25,8 +25,7 @@ module.exports = React.createClass
               i18n {}, 'layouts.main.site_name'
 
           # Login button
-          div {className: 'login-wrap'},
-            userNavControl {}
+          userNavControl {}
 
           # Navigation buttons
           div {className: 'navbar'},
